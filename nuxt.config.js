@@ -1,6 +1,31 @@
+// import path from 'path'
 import colors from 'vuetify/es5/util/colors'
+// import dotenv from 'dotenv'
+// import {DIR_CONFIG} from './config/dirConfig'
+// import { CONST_ENV_TYPE } from './config/envConfig'
+
 require('dotenv').config()
 
+// {
+
+//   // const env = process.env.NODE_ENV
+//   // const device = process.env.DEVICE
+//   // const envFile = `.env.${device}`
+//   // console.log('[envFile]', envFile)
+//   // if (env === CONST_ENV_TYPE.PROD) {
+//   //   // PROD
+//   //   dotenv.config({ path: path.join(__dirname, envFile) })
+//   // }
+//   const device = null
+//   if(process.env.DEVICE === 'PC') {
+//     const device = 'pc'
+//   } else {
+//     const device = 'mobile'
+//   }
+
+// }
+
+console.log('[ENV >>>>> ]',process.env)
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -71,4 +96,17 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  server: { port: process.env.PORT },
+  dir: {
+    assets: 'assets'+process.env.DEVICE,
+    components: 'components'+process.env.DEVICE,
+    pages: 'pages-'+process.env.DEVICE,
+  },
+  buildDir: '.nuxt-'+process.env.DEVICE,
+  ssr: true,
+  generate: {
+    dir:'dist-'+process.env.DEVICE,
+  } 
+  
+  
 }

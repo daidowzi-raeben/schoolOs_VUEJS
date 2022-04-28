@@ -1,5 +1,8 @@
 <template>
+<div>
   <img class="vuetify-logo" alt="Vuetify Logo" src="/vuetify-logo.svg" />
+  sdf
+  </div>
 </template>
 
 <style>

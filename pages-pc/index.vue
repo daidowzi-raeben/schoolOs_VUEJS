@@ -81,8 +81,15 @@
 </template>
 
 <script>
+import NuxtLogo from '~/components-pc/NuxtLogo'
+import VuetifyLogo from '~/components-pc/VuetifyLogo'
 export default {
   name: 'IndexPage',
+  components: {
+    NuxtLogo,
+    VuetifyLogo
+    },
+  layout: 'default-pc',
   mounted() {
     console.log('[ENV]',process.env.VUE_APP_STR);
     console.log('[ENV]',process.env.DB_URL);
