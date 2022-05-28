@@ -25,13 +25,13 @@ require('dotenv').config()
 
 // }
 
-console.log('[ENV >>>>> ]',process.env)
+console.log('[ENV >>>>> ]', process.env)
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - ventez',
-    title: 'ventez',
+    titleTemplate: '%s - schoolos',
+    title: 'schoolos',
     htmlAttrs: {
       lang: 'en',
     },
@@ -59,7 +59,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -98,15 +98,13 @@ export default {
   build: {},
   server: { port: process.env.PORT },
   dir: {
-    assets: 'assets'+process.env.DEVICE,
-    components: 'components'+process.env.DEVICE,
-    pages: 'pages-'+process.env.DEVICE,
+    assets: 'assets' + process.env.DEVICE,
+    components: 'components' + process.env.DEVICE,
+    pages: 'pages-' + process.env.DEVICE,
   },
-  buildDir: '.nuxt-'+process.env.DEVICE,
+  buildDir: '.nuxt-' + process.env.DEVICE,
   ssr: true,
   generate: {
-    dir:'dist-'+process.env.DEVICE,
-  } 
-  
-  
+    dir: 'dist-' + process.env.DEVICE,
+  },
 }

@@ -1,4 +1,4 @@
-# ventez
+# schoolos
 
 ## Build Setup
 
@@ -33,7 +33,7 @@ context.isIos
 context.isWindows
 context.isMacOS
 context.isAndroid
- 
+
 instance.$device.isDesktop
 instance.$device.isMobile
 instance.$device.isTablet
