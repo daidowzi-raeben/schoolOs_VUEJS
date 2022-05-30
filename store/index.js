@@ -8,11 +8,12 @@ Vue.use(Vuex)
 const createStore = () => {
   return new Store({
     state: {
-      getMain: [],
+      getMainState: [],
     },
     mutations: {
       getMainSuccess(state, payload) {
-        state.getMain = payload
+        state.getMainState = payload
+        console.log('PAYLOAD', state.getMainState)
       },
       getMainFails(state, payload) {
         console.log(payload)
@@ -35,9 +36,11 @@ const createStore = () => {
           )
           .then((res) => {
             commit('getMainSuccess', res.data)
+            console.log('get', res.data)
           })
           .catch((res) => {
             commit('getMainFails', res)
+            console.log('false', res)
           })
       },
     },

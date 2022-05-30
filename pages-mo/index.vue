@@ -1,6 +1,7 @@
 <template>
   <div id="school-content">
-    <div class="content">
+    {{ getDataNotice[0].bd_content }}
+    <div class="content" style="display: none">
       <div class="content__top">
         <div class="content__top--notice flex">
           <p>
@@ -90,7 +91,7 @@
 // import NuxtLogo from '~/components-pc/NuxtLogo'
 // import VuetifyLogo from '~/components-pc/VuetifyLogo'
 // import { store } from "./store/index.js";
-
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'IndexPage',
   components: {},
@@ -112,7 +113,9 @@ export default {
       getDataStatus: [],
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['getMainState']),
+  },
   created() {
     console.log('[created]')
     this.$store.dispatch('getMain', this.params)
@@ -122,31 +125,17 @@ export default {
     console.log('[ENV]', process.env.DB_URL)
     console.log('[ENV]', process.env.VUE_APP_API)
     console.log('[mounted]')
-    // this.$nextTick(function () {
-    //   this.getData = this.$store.state
-    //   console.log(this.getData.getMain)
-    // })
-    this.$store.dispatch('getMain', this.params).then((res) => {
-      console.log(res)
-    })
-    // main api
 
-    // this.$store.dispatch('getMain', this.params).then((res) => {
-    //   console.log(this.$store.state.getMain.status)
-    // })
-    // this.getMainData()
-    // console.log(this.getData)
-    // type error
-    // this.getDataStatus = this.$store.state.getMain.status
+    // ACTIONS PARAMS
+    this.getMain(this.params)
+
+    // STATE INIT
+    this.$nextTick(function () {
+      this.getDataNotice = this.getMainState.notice
+    })
   },
   methods: {
-    getMainData() {
-      //   console.log('[nextTick]')
-      //   // this.$store.dispatch('getMain', this.params)
-      //   console.log(this.$store.state.getMain)
-      //   // this.getData = this.$store.state.getMain
-      // })
-    },
+    ...mapActions(['getMain']),
     getStatusHeight() {
       const totalStatus =
         this.getDataStatus.effort +
