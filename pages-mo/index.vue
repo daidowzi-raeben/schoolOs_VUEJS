@@ -1,16 +1,11 @@
 <template>
-  <div id="school-content">
-    {{ getDataNotice[0].bd_content }}
-    <div class="content" style="display: none">
+  <div v-if="MAIN_NOTICE" id="school-content">
+    <div class="content">
       <div class="content__top">
         <div class="content__top--notice flex">
           <p>
             [알림장]
-            <!-- {{
-              getDataNotice
-                ? getDataNotice.bd_subject
-                : '새로운 알림이 없습니다'
-            }} -->
+            {{ MAIN_NOTICE.bd_subject }}
           </p>
           <b-icon icon="chevron-right" class="flex-right"></b-icon>
         </div>
@@ -91,7 +86,7 @@
 // import NuxtLogo from '~/components-pc/NuxtLogo'
 // import VuetifyLogo from '~/components-pc/VuetifyLogo'
 // import { store } from "./store/index.js";
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   name: 'IndexPage',
   components: {},
@@ -109,16 +104,19 @@ export default {
         health: 0,
         intellect: 0,
       },
-      getDataNotice: [],
+      getDataNotice: {
+        bd_content: '111',
+      },
       getDataStatus: [],
+      test: '',
     }
   },
   computed: {
     ...mapState(['getMainState']),
+    ...mapGetters(['MAIN_NOTICE']),
   },
   created() {
     console.log('[created]')
-    this.$store.dispatch('getMain', this.params)
   },
   mounted() {
     console.log('[ENV]', process.env.VUE_APP_STR)
@@ -128,10 +126,9 @@ export default {
 
     // ACTIONS PARAMS
     this.getMain(this.params)
-
     // STATE INIT
     this.$nextTick(function () {
-      this.getDataNotice = this.getMainState.notice
+      console.log('MAIN_NOTICE', this.MAIN_NOTICE)
     })
   },
   methods: {

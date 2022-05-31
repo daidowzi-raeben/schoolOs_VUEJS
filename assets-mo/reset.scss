@@ -228,9 +228,13 @@ select {
   font-family: 'Noto Sans KR', sans-serif;
 }
 * {
+  box-sizing: border-box;
   &:focus {
     outline: none;
   }
+}
+.wd-full {
+  width: 100%;
 }
 #schoolOS {
   background-color: #fdfdfd;

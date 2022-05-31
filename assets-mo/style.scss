@@ -1,0 +1,58 @@
+.jelly {
+  &-btn {
+    height: 36px;
+    padding: 0 20px;
+    font-size: 13px;
+    border-radius: 4px;
+    font-weight: 400;
+    text-align: center;
+    &--default {
+      background-color: #fff;
+      color: #333;
+      border: solid 1px #c2c2c2;
+      &:hover {
+        border-color: #5e2bb8;
+      }
+    }
+    &--gray {
+      color: #fff !important;
+      border: solid 1px #5b606e;
+      background-color: #5b606e;
+    }
+    &--pink {
+      color: #fff !important;
+      border: solid 1px #5e2bb8;
+      background-color: #5e2bb8;
+    }
+    &--blue {
+      border: 1px solid #5e99cb;
+      color: #fff !important;
+      background: #5e99cb;
+    }
+    &--link {
+      color: #5e2bb8;
+      text-decoration: underline;
+      padding: 0;
+      margin: 0;
+    }
+    &.lg {
+      width: 221px;
+      height: 56px;
+      font-size: 17px;
+    }
+    &.md {
+      min-width: 100px;
+      height: 56px;
+      font-size: 17px;
+    }
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+  &-text {
+    height: 36px;
+    border: 1px solid #c2c2c2;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+}

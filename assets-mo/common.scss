@@ -3,6 +3,8 @@ $type2: #6f90d7;
 $type3: #57a8e9;
 $type4: #e58948;
 $gray: #acb5be;
+@import './reset.scss';
+@import './style.scss';
 #school-content {
   margin-top: 10px;
   p {

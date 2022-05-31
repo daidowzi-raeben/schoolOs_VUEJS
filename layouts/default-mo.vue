@@ -1,11 +1,11 @@
 <template>
-<div id="schoolOS">
+  <div id="schoolOS">
     <div class="schoolOS-content">
-        <HeaderLayout/>
-        <Nuxt />
-        <FooterLayout/>
+      <HeaderLayout />
+      <Nuxt />
+      <FooterLayout />
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -14,18 +14,16 @@ import FooterLayout from '~/components-mo/layout/FooterLayout.vue'
 export default {
   name: 'DefaultLayout',
   components: {
-      HeaderLayout,
-      FooterLayout
+    HeaderLayout,
+    FooterLayout,
   },
   data() {
-    return {
-      
-    }
+    return {}
   },
 }
 </script>
 
 <style lang="scss">
-@import '~/assets-mo/reset.scss';
-
+@import '~/assets-mo/layout.scss';
+@import '~/assets-mo/common.scss';
 </style>
