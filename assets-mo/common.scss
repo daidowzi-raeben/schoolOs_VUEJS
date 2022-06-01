@@ -143,6 +143,11 @@ a {
           }
         }
         &__content {
+          > .box {
+            padding: 15px 20px;
+            border-radius: 14.7px;
+            background-color: #fff;
+          }
           .flex {
             margin-top: 10px;
 
