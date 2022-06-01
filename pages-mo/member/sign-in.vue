@@ -1,12 +1,36 @@
 <template>
-  <div>
-    <div class="flex">
+  <div class="sos-login">
+    <div class="header">WELCOME</div>
+    <div class="sos-login__content">
       <form @submit.prevent="onClickLogin">
-        <input type="text" class="jelly-text" @input="loginID($event)" />
-        <input type="password" class="jelly-text" @input="loginPW($event)" />
-        <button type="submit" class="jelly-btn jelly-btn--default">
-          SIGN IN
-        </button>
+        <div>
+          <input
+            type="text"
+            class="jelly-text wd-full"
+            placeholder="아이디"
+            @input="loginID($event)"
+          />
+        </div>
+        <div class="m-t-2">
+          <input
+            type="password"
+            class="jelly-text wd-full"
+            placeholder="패스워드"
+            @input="loginPW($event)"
+          />
+        </div>
+        <div class="m-t-4">
+          <button
+            type="submit"
+            class="jelly-btn jelly-btn--pink wd-full md"
+            :disabled="disabled === true"
+          >
+            로그인
+          </button>
+        </div>
+        <div class="m-t-4 text-center">
+          <Nuxt-link to="/"> 아직 회원이 아닌가요? </Nuxt-link>
+        </div>
       </form>
     </div>
   </div>
@@ -23,6 +47,7 @@ export default {
         user_id: '',
         user_pw: '',
       },
+      disabled: true,
     }
   },
 
@@ -30,6 +55,7 @@ export default {
     ...mapState(['POST_AXIOS_CALLBACK_DATA']),
     ...mapGetters(['POST_AXIOS_CALLBACK_GETTER', 'LOGIN_LOCALSTORAGE']),
   },
+  watch: {},
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
   },
@@ -40,16 +66,20 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     loginID(event) {
-      console.log(event)
       this.params.user_id = event.target.value
+      !!this.params.user_pw && !!this.params.user_id
+        ? (this.disabled = false)
+        : (this.disabled = true)
     },
     loginPW(event) {
-      console.log(event)
       this.params.user_pw = event.target.value
+      !!this.params.user_pw && !!this.params.user_id
+        ? (this.disabled = false)
+        : (this.disabled = true)
     },
     onClickLogin() {
       this.POST_AXIOS(this.params)
-      // this.$router.push('/')
+      this.$router.push('/')
     },
   },
 }

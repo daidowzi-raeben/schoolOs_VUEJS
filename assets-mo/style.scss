@@ -55,4 +55,67 @@
     padding: 5px 10px;
     border-radius: 4px;
   }
+  &-color {
+    &--type1 {
+      color: $type1;
+    }
+    &--type2 {
+      color: $type2;
+    }
+    &--type3 {
+      color: $type3;
+    }
+    &--type4 {
+      color: $type4;
+    }
+    &--gray {
+      color: $gray;
+    }
+  }
+  &-badge {
+    padding: 8px 14px;
+    border-radius: 50px;
+    border: solid 1px #acb5be;
+    display: inline-block;
+    color: #111;
+    &.is_active {
+      border-color: $color;
+      background: $color;
+      color: #fff;
+    }
+  }
+  &-tab {
+    > ul {
+      background-color: #f2f3f5;
+      padding: 5px;
+      li {
+        width: 100%;
+        font-size: 14px;
+        text-align: center;
+        height: 32px;
+        line-height: 30px;
+        position: relative;
+        &.is_active {
+          background: $color;
+          border-radius: 4px;
+          color: #fff;
+          a {
+            color: #fff;
+          }
+        }
+        a {
+          position: absolute;
+          width: 100%;
+          line-height: 30px;
+          height: 100%;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+}
+.dotted {
+  border: 2px solid $gray;
+  border-style: dashed;
 }

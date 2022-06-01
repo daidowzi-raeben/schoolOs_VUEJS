@@ -86,6 +86,7 @@ video {
   font: inherit;
   vertical-align: baseline;
   position: relative;
+  line-height: 1.2;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -269,33 +270,80 @@ em {
 .bold {
   font-weight: bold;
 }
-
+.font {
+  @for $i from 12 to 50 {
+    &-#{$i} {
+      font-size: $i + 0px;
+    }
+  }
+}
+.inline {
+  display: inline-block;
+}
+.block {
+  display: block;
+}
 .m {
   &-l {
     @for $i from 1 to 10 {
       &-#{$i} {
-        margin-left: $i * 5px;
+        margin-left: $i * 5px !important;
       }
     }
   }
   &-r {
     @for $i from 1 to 10 {
       &-#{$i} {
-        margin-right: $i * 5px;
+        margin-right: $i * 5px !important;
       }
     }
   }
   &-t {
     @for $i from 1 to 10 {
       &-#{$i} {
-        margin-top: $i * 5px;
+        margin-top: $i * 5px !important;
       }
     }
   }
   &-b {
     @for $i from 1 to 10 {
       &-#{$i} {
-        margin-bottom: $i * 5px;
+        margin-bottom: $i * 5px !important;
+      }
+    }
+  }
+}
+.p {
+  @for $i from 1 to 10 {
+    &-#{$i} {
+      padding-left: $i * 5px !important;
+    }
+  }
+  &-l {
+    @for $i from 1 to 10 {
+      &-#{$i} {
+        padding-left: $i * 5px !important;
+      }
+    }
+  }
+  &-r {
+    @for $i from 1 to 10 {
+      &-#{$i} {
+        padding-right: $i * 5px !important;
+      }
+    }
+  }
+  &-t {
+    @for $i from 1 to 10 {
+      &-#{$i} {
+        padding-top: $i * 5px !important;
+      }
+    }
+  }
+  &-b {
+    @for $i from 1 to 10 {
+      &-#{$i} {
+        padding-bottom: $i * 5px !important;
       }
     }
   }

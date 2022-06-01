@@ -1,10 +1,38 @@
-$type1: #75caad;
-$type2: #6f90d7;
-$type3: #57a8e9;
-$type4: #e58948;
-$gray: #acb5be;
+@import './var.scss';
 @import './reset.scss';
 @import './style.scss';
+a {
+  color: #111;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.sos-login {
+  > .header {
+    position: fixed;
+    height: 100px;
+    line-height: 100px;
+    font-size: 30px;
+    text-align: center;
+    background: $color;
+    width: 100%;
+    color: #fff;
+    border-radius: 0 0 30px 30px;
+  }
+  &__content {
+    padding: 150px 16px 0;
+    .jelly-text {
+      height: 50px;
+      border: none;
+      border-bottom: 1px solid #c2c2c2;
+      border-radius: 0;
+      &:focus {
+        border-color: $color;
+      }
+    }
+  }
+}
 #school-content {
   margin-top: 10px;
   p {
@@ -73,16 +101,24 @@ $gray: #acb5be;
               }
               .stat {
                 border-radius: 3px;
-                &:nth-child(1) {
+              }
+              &:nth-child(1) {
+                .stat {
                   background: $type1;
                 }
-                &:nth-child(2) {
+              }
+              &:nth-child(2) {
+                .stat {
                   background: $type2;
                 }
-                &:nth-child(3) {
+              }
+              &:nth-child(3) {
+                .stat {
                   background: $type3;
                 }
-                &:nth-child(4) {
+              }
+              &:nth-child(4) {
+                .stat {
                   background: $type4;
                 }
               }
@@ -94,6 +130,7 @@ $gray: #acb5be;
     &__body {
       background-color: #f2f3f5;
       padding: 16px;
+      margin-top: 20px;
       > .box {
         padding: 15px 20px;
         border-radius: 14.7px;
@@ -108,10 +145,10 @@ $gray: #acb5be;
         &__content {
           .flex {
             margin-top: 10px;
-            &:first-child {
-              margin-top: 0;
-            }
+
             span {
+              margin-top: 8px;
+              display: inline-block;
               color: $gray;
               font-size: 12px;
             }
@@ -136,6 +173,16 @@ $gray: #acb5be;
               }
             }
           }
+        }
+      }
+      .account {
+        h3 {
+          padding-left: 5px;
+        }
+      }
+      .account-area {
+        &.dotted {
+          background: none;
         }
       }
     }

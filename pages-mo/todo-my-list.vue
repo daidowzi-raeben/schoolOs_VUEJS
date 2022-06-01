@@ -2,8 +2,10 @@
   <div>
     <div class="p-3 jelly-tab">
       <ul class="flex">
-        <li class="is_active">전체 퀘스트</li>
-        <li><nuxt-link to="/todo-my-list">나의 퀘스트</nuxt-link></li>
+        <li><nuxt-link to="/todo-list">전체 퀘스트</nuxt-link></li>
+        <li class="is_active">
+          <nuxt-link to="/todo-my-list">나의 퀘스트</nuxt-link>
+        </li>
       </ul>
     </div>
     <div class="p-l-3 p-r-3 p-b-3">
