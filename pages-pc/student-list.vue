@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <div>asd</div>
-  </div>
+  <div>asd</div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
-  name: 'TodoDetailTest',
+  layout: 'default-pc',
   data() {
     return {
       params: {},
@@ -17,7 +15,7 @@ export default {
 
   computed: {
     ...mapState(['LOGIN']),
-    ...mapGetters(['POST_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
+    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -25,14 +23,19 @@ export default {
   mounted() {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
-    this.params = this.LOGIN_STUDENT
-    this.params.type = 'questView'
+    this.params = this.LOGIN_TEACHER
+    this.params.type = 'studentList'
     this.GET_AXIOS(this.params)
   },
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     ...mapMutations([]),
+
+    // EVENT
+    onClickTodoDetail(idx) {
+      this.$router.push('/todo-detail/' + idx)
+    },
   },
 }
 </script>

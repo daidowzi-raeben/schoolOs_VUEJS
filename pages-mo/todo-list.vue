@@ -25,6 +25,7 @@
             v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.questListMain"
             :key="index"
             class="box quest m-b-2"
+            @click="onClickTodoDetail(v.idx)"
           >
             <div class="flex">
               <div class="label blue">{{ v.subject_cate }}</div>
@@ -32,7 +33,10 @@
                 <div class="flex m-t-0">
                   <div class="txt">
                     <p class="bold">{{ v.subject }}</p>
-                    <span>{{ v.start_day }} ~ {{ v.end_day }}</span>
+                    <span
+                      >{{ v.start_day | moment('YY.MM.DD') }} ~
+                      {{ v.end_day | moment('YY.MM.DD') }}</span
+                    >
                   </div>
                   <div class="pay text-right flex-right">
                     <p>
@@ -82,6 +86,11 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     ...mapMutations([]),
+
+    // EVENT
+    onClickTodoDetail(idx) {
+      this.$router.push('/todo-detail/' + idx)
+    },
   },
 }
 </script>

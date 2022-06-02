@@ -27,8 +27,8 @@ export default {
     ...mapMutations(['LOADING_INIT']),
     ...mapState(['LOADING']),
   },
-  methods() {
-    console.log('[LOADING_INIT]', this.LOADING_INIT())
+  mounted() {
+    console.log('[LOADING_INIT]', this.LOADING_INIT)
   },
 }
 </script>

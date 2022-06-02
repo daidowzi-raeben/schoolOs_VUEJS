@@ -1,0 +1,49 @@
+body {
+  background-color: #f8f8f8 !important;
+}
+#liveChat {
+  width: 250px;
+  height: 80vh;
+  position: fixed;
+  bottom: 0;
+  background-color: #000;
+  right: 0;
+}
+#jellyAdmin {
+  .jelly-admin {
+    > .gnb {
+      width: 180px;
+      min-height: 100vh;
+      background-color: $dark;
+      padding: 10px;
+      color: #fff;
+      nav {
+        > ul {
+          li {
+            margin-top: 10px;
+            font-size: 14px;
+            a {
+              color: #fff;
+            }
+            height: 36px;
+            padding-left: 15px;
+            line-height: 34px;
+            border-radius: 4px;
+            &.is_active {
+              background-color: $color;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+    .content {
+      min-height: 100vh;
+      background-color: #fff;
+      &__body {
+        max-width: 1000px;
+        padding: 20px;
+      }
+    }
+  }
+}

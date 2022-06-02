@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "pc-dev": "cross-env DEVICE=pc PORT=3000 nuxt",
-    "mo-dev": "cross-env DEVICE=mo PORT=4000  nuxt",
+    "mo-dev": "cross-env DEVICE=mo PORT=4000 nuxt",
     "admin-dev": "DEVICE=admin PORT=6000  nuxt",
     "dev": "DEVICE=pc  nuxt",
     "build": "nuxt build",
@@ -29,6 +29,7 @@
     "vue": "^2.6.14",
     "vue-fixed-header": "^3.2.15",
     "vue-lottie": "^0.2.1",
+    "vue-moment": "^4.1.0",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.6.1",

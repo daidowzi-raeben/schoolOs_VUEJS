@@ -14,7 +14,7 @@ const createStore = () => {
       GET_MAIN_STATE: [],
       POST_AXIOS_CALLBACK_DATA: [],
       GET_AXIOS_CALLBACK_DATA: [],
-      LOGIN: [],
+      LOGIN: {},
     },
     getters: {
       POST_AXIOS_CALLBACK_GETTER(state) {
@@ -32,11 +32,6 @@ const createStore = () => {
       LOGIN_STUDENT(state) {
         return localStorage.getItem('STUDENT')
           ? (state.LOGIN = JSON.parse(localStorage.getItem('STUDENT')))
-          : (state.LOGIN = '')
-      },
-      LOGIN_TEACHER(state) {
-        return localStorage.getItem('TEACHER')
-          ? (state.LOGIN = JSON.parse(localStorage.getItem('TEACHER')))
           : (state.LOGIN = '')
       },
     },
@@ -65,23 +60,33 @@ const createStore = () => {
         }
         console.log('LOGIN_LOCALSTORAGE')
         localStorage.clear()
-        if (process.env.DEVICE === 'mo') {
-          localStorage.setItem('STUDENT', JSON.stringify(payload))
-        } else {
+        if (process.env.DEVICE === 'pc') {
           localStorage.setItem('TEACHER', JSON.stringify(payload))
+        } else {
+          localStorage.setItem('STUDENT', JSON.stringify(payload))
         }
       },
       LOADING_INIT(state) {
         state.LOADING = true
       },
+      LOGIN_TEACHER(state) {
+        console.log('GETTER', localStorage.getItem('TEACHER'))
+        return localStorage.getItem('TEACHER')
+          ? (state.LOGIN = JSON.parse(localStorage.getItem('TEACHER')))
+          : (state.LOGIN = '')
+      },
     },
     actions: {
       // -------------------메인 컨텐츠
       getMain({ commit }, params) {
+        console.log(params)
         let URL_TYPE = ''
-        process.env.DEVICE === 'mo'
-          ? (URL_TYPE = 'student')
-          : (URL_TYPE = 'teacher')
+
+        if (process.env.DEVICE === 'pc') {
+          URL_TYPE = 'teacher'
+        } else {
+          URL_TYPE = 'student'
+        }
         axios
           // .get(process.env.VUE_APP_API + apiUrl.apiMain)
           .get(
@@ -106,9 +111,11 @@ const createStore = () => {
       },
       POST_AXIOS({ commit }, params, state) {
         let URL_TYPE = ''
-        process.env.DEVICE === 'mo'
-          ? (URL_TYPE = 'student')
-          : (URL_TYPE = 'teacher')
+        if (process.env.DEVICE === 'pc') {
+          URL_TYPE = 'teacher'
+        } else {
+          URL_TYPE = 'student'
+        }
         const FORM_DATA = new FormData()
         Object.entries(params).forEach((v, k, i) => {
           FORM_DATA.append(v[0], v[1])
@@ -117,14 +124,16 @@ const createStore = () => {
           .post(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', FORM_DATA)
           .then((res) => {
             commit('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
+            console.log('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             if (params.type === 'login') {
               const loginData = res.data
-              process.env.DEVICE === 'mo'
-                ? (loginData.sms_idx = res.data.idx)
-                : (loginData.smt_idx = res.data.idx)
+              if (process.env.DEVICE === 'pc') {
+                loginData.smt_idx = res.data.idx
+              } else {
+                loginData.sms_idx = res.data.idx
+              }
               commit('LOGIN_LOCALSTORAGE', loginData)
             }
-            console.log('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
           })
           .catch((res) => {
             if (params.type === 'login') {
@@ -135,12 +144,17 @@ const createStore = () => {
           })
       },
       GET_AXIOS({ commit }, params) {
+        console.log(params, process.env.DEVICE)
         let URL_TYPE = ''
-        process.env.DEVICE === 'mo'
-          ? (URL_TYPE = 'student')
-          : (URL_TYPE = 'teacher')
+        if (process.env.DEVICE === 'pc') {
+          URL_TYPE = 'teacher'
+        } else {
+          URL_TYPE = 'student'
+        }
         axios
-          .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', { params })
+          .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', {
+            params,
+          })
           .then((res) => {
             // 메인 데이터 합계
             if (params.type === 'main') {
