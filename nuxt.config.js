@@ -71,8 +71,17 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/device',
+    'nuxt-socket-io',
   ],
-
+  io: {
+    sockets: [
+      {
+        name: 'SOS_NODE_SERVER',
+        url: process.env.VUE_APP_NODE,
+        default: true,
+      },
+    ],
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
@@ -100,7 +109,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  server: { port: process.env.PORT },
+  server: { port: process.env.PORT, host: '0.0.0.0' },
   dir: {
     assets: 'assets' + process.env.DEVICE,
     components: 'components' + process.env.DEVICE,
