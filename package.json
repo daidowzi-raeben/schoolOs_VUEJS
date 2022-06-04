@@ -5,10 +5,11 @@
   "scripts": {
     "pc-dev": "cross-env DEVICE=pc PORT=3000 nuxt",
     "mo-dev": "cross-env DEVICE=mo PORT=4000 nuxt",
-    "mo-test" : "browser-sync start --proxy 'localhost:4000' --files ['css/*.css', 'js/*.js', '*.vue'] --port '4001'",
+    "mo-test": "browser-sync start --proxy 'localhost:4000' --files ['css/*.css', 'js/*.js', '*.vue'] --port '4001'",
     "admin-dev": "DEVICE=admin PORT=6000  nuxt",
     "dev": "DEVICE=pc  nuxt",
     "build": "nuxt build",
+    "mo-build": "cross-env DEVICE=mo PORT=4000 nuxt build",
     "start": "nuxt start",
     "pc-generate": "DEVICE=pc  nuxt generate",
     "mo-generate": "DEVICE=mo  nuxt generate",
