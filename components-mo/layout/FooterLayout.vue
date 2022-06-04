@@ -10,8 +10,15 @@
                 <p>홈</p>
               </nuxt-link>
             </li>
-            <li :class="$nuxt._route.name === 'todo-list' ? 'is_active' : ''">
-              <nuxt-link to="/todo-list">
+            <li
+              :class="
+                $nuxt._route.name === 'todo-list-id' ||
+                $route.name === 'todo-my-list-id'
+                  ? 'is_active'
+                  : ''
+              "
+            >
+              <nuxt-link to="/todo-list/0">
                 <b-icon icon="controller"></b-icon>
                 <p>퀘스트</p>
               </nuxt-link>
@@ -53,4 +60,7 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '~/assets-mo/layout.scss';
+@import '~/assets-mo/common.scss';
+</style>

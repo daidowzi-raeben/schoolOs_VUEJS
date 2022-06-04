@@ -215,18 +215,19 @@ table {
     url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf)
       format('opentype');
 }
-
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-input,
-textarea,
-select {
-  font-family: 'Noto Sans KR', sans-serif;
+html {
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  input,
+  textarea,
+  select {
+    font-family: 'Noto Sans KR', sans-serif;
+  }
 }
 * {
   box-sizing: border-box;
@@ -256,6 +257,12 @@ select {
   &-space {
     justify-content: space-between;
   }
+  &-full {
+    flex: 1;
+  }
+  &-shrink {
+    flex-shrink: 1;
+  }
 }
 a {
   //   color: #111 !important;
@@ -283,9 +290,7 @@ em {
 .block {
   display: block;
 }
-.flex-full {
-  flex: 1;
-}
+
 .m {
   &-l {
     @for $i from 0 to 20 {
@@ -319,7 +324,7 @@ em {
 .p {
   @for $i from 0 to 20 {
     &-#{$i} {
-      padding-left: $i * 5px !important;
+      padding: $i * 5px !important;
     }
   }
   &-l {

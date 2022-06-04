@@ -47,6 +47,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '~/assets-mo/common.scss';
-</style>
+<style lang="scss"></style>

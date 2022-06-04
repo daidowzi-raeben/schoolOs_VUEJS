@@ -71,6 +71,29 @@
     &--gray {
       color: $gray;
     }
+    &--888 {
+      color: #888;
+    }
+  }
+  &-background {
+    &--type1 {
+      background-color: $type1;
+    }
+    &--type2 {
+      background-color: $type2;
+    }
+    &--type3 {
+      background-color: $type3;
+    }
+    &--type4 {
+      background-color: $type4;
+    }
+    &--gray {
+      background-color: $gray;
+    }
+    &--888 {
+      color: #888;
+    }
   }
   &-badge {
     padding: 8px 14px;
@@ -83,6 +106,12 @@
       background: $color;
       color: #fff;
     }
+  }
+  &-point {
+    padding: 3px 5px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff !important;
   }
   &-tab {
     > ul {
@@ -115,10 +144,47 @@
     }
   }
 }
+.limit {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  &-1 {
+    -webkit-line-clamp: 1;
+  }
+  &-2 {
+    -webkit-line-clamp: 2;
+  }
+  &-3 {
+    -webkit-line-clamp: 3;
+  }
+  &-4 {
+    -webkit-line-clamp: 4;
+  }
+  &-5 {
+    -webkit-line-clamp: 5;
+  }
+}
 .dotted {
   border: 2px solid $gray;
   border-style: dashed;
 }
-.h60 {
-  min-height: 60vh;
+
+@for $i from 0 to 11 {
+  .h#{$i*10} {
+    min-height: $i * 10vh !important;
+  }
+}
+
+.loading {
+  text-align: center;
+  position: relative;
+  > img {
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

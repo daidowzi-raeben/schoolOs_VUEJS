@@ -102,14 +102,20 @@
       <div class="content__body">
         <div class="box quest">
           <div class="quest__title flex">
-            <h3>나의 퀘스트</h3>
+            <nuxt-link to="/todo-my-list">
+              <h3>나의 퀘스트</h3>
+            </nuxt-link>
             <b-icon class="m-l-1" icon="chevron-right"></b-icon>
+          </div>
+          <div v-if="!GET_AXIOS_CALLBACK_GETTER.quest" class="loading h20">
+            <img src="~/static/mo/loading/loading.gif" />
           </div>
           <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="quest__content">
             <div
               v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.quest"
               :key="index"
-              class="flex"
+              class="flex m-t-3"
+              @click="onClickTodoDetail(v.idx)"
             >
               <div class="label blue">{{ v.subject_cate }}</div>
               <div class="txt m-l-2">
@@ -119,7 +125,7 @@
               <div class="pay text-right flex-right">
                 <p>
                   <em class="bold">
-                    {{ v.price }}
+                    {{ v.price | comma }}
                   </em>
                   루피
                 </p>
@@ -145,17 +151,21 @@
             <div class="flex-right">
               <strong class="font-18 bold"
                 ><em>{{
-                  GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount
+                  GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount | comma
                 }}</em></strong
               >
               <span>루피</span>
             </div>
           </div>
           <div class="flex m-t-3">
-            <button class="jelly-btn jelly-btn--gray wd-full">이체</button>
-            <button class="jelly-btn jelly-btn--default wd-full m-l-2">
-              이체내역
-            </button>
+            <nuxt-link to="/bank-transfer" class="wd-full">
+              <button class="jelly-btn jelly-btn--gray wd-full">이체</button>
+            </nuxt-link>
+            <nuxt-link to="/bank-transfer-list" class="wd-full">
+              <button class="jelly-btn jelly-btn--default wd-full m-l-2">
+                이체내역
+              </button>
+            </nuxt-link>
           </div>
         </div>
         <div class="box account-area m-t-3 dotted text-center">
@@ -169,7 +179,7 @@
 
 <script>
 // import NuxtLogo from '~/components-pc/NuxtLogo'
-// import VuetifyLogo from '~/components-pc/VuetifyLogo'
+// import VuetifyLogo from '~/components-mo/modal/'
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'IndexPage',
@@ -211,7 +221,7 @@ export default {
 
     // DATA INIT
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
-    console.log(this.$nuxt, this.$config)
+    console.log(this.$nuxt, this.$config, this.LOGIN_CONFIG)
     this.params = this.LOGIN_STUDENT
     this.params.type = 'main'
     this.GET_AXIOS(this.params)
@@ -226,10 +236,11 @@ export default {
     ...mapMutations([]),
 
     // EVENT
+    onClickTodoDetail(idx) {
+      this.$router.push('/todo-detail/' + idx)
+    },
   },
 }
 </script>
 
-<style lang="scss">
-@import '~/assets-mo/common.scss';
-</style>
+<style lang="scss"></style>

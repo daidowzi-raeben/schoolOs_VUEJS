@@ -1,11 +1,13 @@
 @import './var.scss';
 @import './reset.scss';
 @import './style.scss';
-a {
-  color: #111;
-  text-decoration: none;
-  &:hover {
+#schoolOS {
+  a {
+    color: #111;
     text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 .sos-login {
@@ -101,6 +103,10 @@ a {
               }
               .stat {
                 border-radius: 3px;
+                height: 0;
+                transition-property: height;
+                transition-duration: 1s;
+                transition-delay: 1s;
               }
               &:nth-child(1) {
                 .stat {

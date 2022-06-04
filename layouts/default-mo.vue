@@ -1,6 +1,6 @@
 <template>
   <div id="schoolOS">
-    <div v-show="LOADING">asdasd</div>
+    <!-- <div v-show="LOADING">asdasd</div> -->
     <div class="schoolOS-content">
       <HeaderLayout />
       <Nuxt />
@@ -29,11 +29,11 @@ export default {
   },
   mounted() {
     console.log('[LOADING_INIT]', this.LOADING_INIT)
+    if (!localStorage.getItem('STUDENT')) {
+      // return this.$router.push('/member/sign-in')
+    }
   },
 }
 </script>
 
-<style lang="scss">
-@import '~/assets-mo/layout.scss';
-@import '~/assets-mo/common.scss';
-</style>
+<style lang="scss"></style>

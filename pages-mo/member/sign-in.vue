@@ -78,6 +78,7 @@ export default {
         : (this.disabled = true)
     },
     onClickLogin() {
+      this.params.type = 'login'
       this.POST_AXIOS(this.params)
       this.$router.push('/')
     },
