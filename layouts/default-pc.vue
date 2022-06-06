@@ -6,7 +6,7 @@
         <nav class="m-t-5">
           <ul>
             <li v-for="item in 5" :key="item">
-              <nuxt-link to="/">
+              <nuxt-link to="/" :class="item === 1 ? 'is_active' : ''">
                 <b-icon icon="bag" class="m-r-1"></b-icon>
                 gnb0{{ item }}
               </nuxt-link>

@@ -1,5 +1,9 @@
 <template>
-  <div>aasd</div>
+  <div>
+    <div class="box">asdsa</div>
+    <div class="box">asdsa</div>
+    <div class="box">asdsa</div>
+  </div>
 </template>
 
 <script>

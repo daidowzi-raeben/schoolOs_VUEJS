@@ -12,7 +12,7 @@
     "mo-build": "cross-env DEVICE=mo PORT=4000 nuxt build",
     "start": "nuxt start",
     "pc-generate": "DEVICE=pc  nuxt generate",
-    "mo-generate": "DEVICE=mo  nuxt generate",
+    "mo-generate": "nuxt generate",
     "admin-generate": "DEVICE=admin  nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check .",
