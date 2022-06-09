@@ -11,12 +11,30 @@ body {
   right: 0;
 }
 #jellyAdmin {
+  nav.hr {
+    padding-left: 10px;
+    span {
+      background: #f4f5fa;
+      padding: 0 5px;
+      color: rgba(94, 86, 105, 0.68);
+    }
+    &::before {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background-color: rgba(94, 86, 105, 0.14);
+      left: 0;
+      top: 55%;
+      position: absolute;
+    }
+  }
   .jelly-admin {
     > .gnb {
       width: 260px;
       min-height: 100vh;
       nav {
         width: 240px;
+        position: relative;
         > ul {
           li {
             margin-top: 10px;

@@ -13,6 +13,9 @@
             </li>
           </ul>
         </nav>
+        <nav class="hr">
+          <span class="font-12">1px solid rgba(94,86,105,.14)</span>
+        </nav>
       </div>
       <div class="flex-full m-l-2 content">
         <div class="content__body"><Nuxt /></div>
