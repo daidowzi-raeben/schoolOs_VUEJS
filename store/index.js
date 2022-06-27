@@ -15,6 +15,9 @@ const createStore = () => {
       POST_AXIOS_CALLBACK_DATA: [],
       GET_AXIOS_CALLBACK_DATA: [],
       LOGIN: [],
+
+      //  ---------------------------------[admin]
+      adminMainBG: [],
     },
     getters: {
       POST_AXIOS_CALLBACK_GETTER(state) {
@@ -73,6 +76,10 @@ const createStore = () => {
       },
       LOADING_INIT(state) {
         state.LOADING = true
+      },
+      //  ---------------------------------[admin]
+      ADMIN_MAIN_BG_MUTATIONS(state, payload) {
+        state.adminMainBG = payload
       },
     },
     actions: {
@@ -156,6 +163,19 @@ const createStore = () => {
           })
           .catch((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
+          })
+      },
+      GET_API_BG_PIXABAY({ commit }, params) {
+        const URL = `https://pixabay.com/api/?key=28223619-acf2f7347a14ed8608f2c4939&image_type=photo&pretty=true&lang=ko&safesearch=true&per_page=10&page=1&q=${params}`
+        axios
+          .get(URL)
+          .then((res) => {
+            // 메인 데이터 합계
+            commit('ADMIN_MAIN_BG_MUTATIONS', res.data)
+            console.log('ADMIN_MAIN_BG_MUTATIONS', res.data)
+          })
+          .catch((res) => {
+            console.log('ADMIN_MAIN_BG_MUTATIONS', res)
           })
       },
     },

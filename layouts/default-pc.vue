@@ -1,6 +1,6 @@
 <template>
   <div id="jellyAdmin">
-    <div class="jelly-admin flex">
+    <!-- <div class="jelly-admin flex">
       <div class="gnb">
         <h1>LOGO</h1>
         <nav class="m-t-5">
@@ -14,11 +14,11 @@
           </ul>
         </nav>
       </div>
-      <div class="flex-full m-l-2 content">
-        <div class="content__body"><Nuxt /></div>
-      </div>
-    </div>
-    <div id="liveChat">asd</div>
+      <div class="flex-full m-l-2 content"> -->
+    <div class="content__body"><Nuxt /></div>
+    <!-- </div>
+    </div> -->
+    <!-- <div id="liveChat">asd</div> -->
   </div>
 </template>
 

@@ -143,7 +143,13 @@ table {
 * {
   box-sizing: border-box;
 }
-
+.clb {
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
