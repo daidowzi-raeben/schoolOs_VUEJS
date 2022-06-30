@@ -242,6 +242,7 @@ $green-lighter: #7cd392;
       min-height: 100vh;
       nav {
         width: 240px;
+        position: relative;
         > ul {
           li {
             margin-top: 10px;
