@@ -1,97 +1,119 @@
 <template>
   <div>
-    <div id="jellyAdminBG" class="jellyAdminBG"></div>
-    <div id="jellyAdminheader">
-      <nav>
-        <div class="menu" @click="menuActiveNav">
-          <span id="menu-top" class="menu-global menu-top"></span>
-          <span id="menu-middle" class="menu-global menu-middle"></span>
-          <span id="menu-bottom" class="menu-global menu-bottom"></span>
-        </div>
-      </nav>
+    <div>
       <span>{{ today }}</span>
-      <h1>
-        써니제국
+      <h1 v-if="LOGIN_TEACHER">
+        {{ LOGIN_TEACHER.reg_country }}
         <span v-b-tooltip.hover title="오늘의 환율" class="spanBox">
           <b-icon icon="currency-dollar"></b-icon>1,000</span
         >
       </h1>
       <div class="p-l-5 m-t-5 m-b-5"></div>
-      <div class="student">
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.attendance" class="student">
         <div class="student__list">
           <h3>출결 현황</h3>
           <div class="flex m-t-3">
-            <div class="item">
-              <p class="title">정우성</p>
+            <div
+              v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.attendance"
+              :key="i"
+              class="item"
+            >
+              <p class="title">{{ v.reg_name }}</p>
               <div class="flex">
                 <div class="list">
-                  <p>미인정 결석</p>
+                  <p>{{ v.subject }}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="student">
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.notice" class="student">
         <div class="student__list">
           <h3 v-b-modal.mainNotice title="일어나">
-            알림장 미확인 ({{ studentName.length }})
+            알림장 미확인 ({{ GET_AXIOS_CALLBACK_GETTER.notice.length }})
           </h3>
           <div class="m-t-3 clb">
-            <div v-for="(item, index) in studentName" :key="index" class="item">
-              <div class="flex">
-                <p class="title">{{ item }} [LV.5]</p>
-                <div class="plant-area">
-                  <div class="plant flex-right">
-                    <div class="plant__leaves"></div>
+            <div
+              v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.notice"
+              :key="i"
+              class="item"
+            >
+              <template v-if="v.is_read === null">
+                <div class="flex">
+                  <p class="title">
+                    {{ v.reg_name }} [LV.{{
+                      Math.floor(
+                        (Number(v.effort) +
+                          Number(v.health) +
+                          Number(v.etiquette) +
+                          Number(v.intellect)) /
+                          4
+                      )
+                    }}]
+                  </p>
+                  <div class="plant-area">
+                    <div class="plant flex-right">
+                      <div class="plant__leaves"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </template>
             </div>
           </div>
         </div>
       </div>
-      <div class="student">
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="student">
         <div class="student__list">
-          <h3>진행중인 퀘스트 ({{ studentName.length }})</h3>
+          <h3 v-if="LOGIN_TEACHER">
+            진행중인 {{ LOGIN_TEACHER.todo_name }} ({{ studentName.length }})
+          </h3>
           <div class="m-t-3 clb">
-            <div
-              v-for="(item, index) in studentName"
-              :key="index"
-              class="item"
-              style="min-width: calc((100% / 5) - 20px)"
-            >
-              <div class="">
-                <p class="title">
-                  <span class="jelly-point m-t-0 jelly-background--type1 m-l-1"
-                    >M</span
+            <swiper>
+              <swiper-slide
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.quest"
+                :key="i"
+                class="item"
+                style="min-width: calc((100% / 3) - 20px)"
+              >
+                <div class="">
+                  <p class="title">
+                    <span
+                      class="jelly-point m-t-0 jelly-background--type1 m-l-1"
+                    >
+                      {{ v.cate === 1 ? 'M' : 'S' }}
+                    </span>
+                    {{ v.subject }}
+                  </p>
+                  <span class="jelly-point m-t-0 jelly-background--type1 m-l-1">
+                    {{ v.intellect }}</span
                   >
-                  이거슨 퀘스트
-                </p>
-                <span class="jelly-point m-t-0 jelly-background--type1 m-l-1"
-                  >5</span
-                >
-                <span class="jelly-point m-t-0 jelly-background--type2 m-l-1"
-                  >5</span
-                >
-                <span class="jelly-point m-t-0 jelly-background--type3 m-l-1"
-                  >5</span
-                >
-                <span class="jelly-point m-t-0 jelly-background--type4 m-l-1"
-                  >5</span
-                >
-              </div>
-            </div>
+                  <span
+                    class="jelly-point m-t-0 jelly-background--type2 m-l-1"
+                    >{{ v.effort }}</span
+                  >
+                  <span
+                    class="jelly-point m-t-0 jelly-background--type3 m-l-1"
+                    >{{ v.health }}</span
+                  >
+                  <span
+                    class="jelly-point m-t-0 jelly-background--type4 m-l-1"
+                    >{{ v.etiquette }}</span
+                  >
+                </div></swiper-slide
+              >
+            </swiper>
           </div>
         </div>
       </div>
+      <div class="student"></div>
     </div>
     <b-modal id="mainNotice"> 알림장이당아아아아아아아아ㅡ앙 </b-modal>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'IndexPage',
@@ -99,6 +121,8 @@ export default {
   layout: 'default-pc',
   data() {
     return {
+      LOGIN_CONFIG: {},
+      params: {},
       studentName: [
         '민준',
         '서준',
@@ -110,11 +134,12 @@ export default {
         '지호',
       ],
       today: '',
+      isReadLength: 0,
     }
   },
   computed: {
-    ...mapState(['LOGIN', 'adminMainBG']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
+    ...mapState(['LOGIN']),
+    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -122,28 +147,19 @@ export default {
   mounted() {
     //   DATA INIT
     // console.log(this.$nuxt, this.$config)
+    this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
+    console.log(this.$nuxt, this.$config, this.LOGIN_CONFIG)
+    this.params = this.LOGIN_TEACHER
+    this.params.type = 'main'
+    this.GET_AXIOS(this.params)
 
-    // pixabay api load
-    this.GET_API_BG_PIXABAY('나무')
-
-    setTimeout(() => {
-      const randNum = Math.floor(Math.random() * 9)
-      let imgUrl = this.adminMainBG.hits[randNum].largeImageURL
-      imgUrl
-        ? (imgUrl = this.adminMainBG.hits[randNum].largeImageURL)
-        : (imgUrl = '/pc/img/bg/london-bridge-by-sunny.jpg')
-      document.getElementById(
-        'jellyAdminBG'
-      ).style.backgroundImage = `url(${imgUrl})`
-
-      console.log(this.adminMainBG.hits[randNum].largeImageURL)
-    })
     this.today = this.getToday()
+    // console.log('================', this.isNoticeLength())
   },
   methods: {
     // init
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'GET_API_BG_PIXABAY']),
-    ...mapMutations(['ADMIN_MAIN_BG_MUTATIONS']),
+    ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
+    // ...mapMutations(),
 
     getToday() {
       const date = new Date()
@@ -152,15 +168,15 @@ export default {
       const day = ('0' + date.getDate()).slice(-2)
       return year + '.' + month + '.' + day
     },
-    menuActiveNav() {
-      document.getElementById('menu-top').classList.toggle('menu-top-click')
-      document
-        .getElementById('menu-middle')
-        .classList.toggle('menu-middle-click')
-      document
-        .getElementById('menu-bottom')
-        .classList.toggle('menu-bottom-click')
-    },
+
+    // isNoticeLength() {
+    //   setTimeout(() => {
+    //     const data = this.GET_AXIOS_CALLBACK_GETTER.notice
+    //     data.forEach((element) => {
+    //       console.log(element)
+    //     })
+    //   })
+    // },
   },
 }
 </script>

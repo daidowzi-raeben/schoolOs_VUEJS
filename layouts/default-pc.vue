@@ -1,6 +1,15 @@
 <template>
   <div id="jellyAdmin">
-    <!-- <div class="jelly-admin flex">
+    <div id="jellyAdminheader">
+      <div id="jellyAdminBG" class="jellyAdminBG"></div>
+      <nav>
+        <div class="menu" @click="menuActiveNav">
+          <span id="menu-top" class="menu-global menu-top"></span>
+          <span id="menu-middle" class="menu-global menu-middle"></span>
+          <span id="menu-bottom" class="menu-global menu-bottom"></span>
+        </div>
+      </nav>
+      <!-- <div class="jelly-admin flex">
       <div class="gnb">
         <h1>LOGO</h1>
         <nav class="m-t-5">
@@ -18,18 +27,59 @@
         </nav>
       </div>
       <div class="flex-full m-l-2 content"> -->
-    <div class="content__body"><Nuxt /></div>
-    <!-- </div>
+      <div class="content__body"><Nuxt /></div>
+      <!-- </div>
     </div> -->
-    <!-- <div id="liveChat">asd</div> -->
+      <!-- <div id="liveChat">asd</div> -->
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+
 export default {
   name: 'DefaultLayoutPC',
   data() {
     return {}
+  },
+  computed: {
+    ...mapState(['LOGIN', 'adminMainBG']),
+    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+  },
+  beforeCreate() {
+    // 인스턴스가 초기화 된 직후
+  },
+  mounted() {
+    // pixabay api load
+    this.GET_API_BG_PIXABAY('나무')
+
+    setTimeout(() => {
+      const randNum = Math.floor(Math.random() * 9)
+      let imgUrl = this.adminMainBG.hits[randNum].largeImageURL
+      imgUrl
+        ? (imgUrl = this.adminMainBG.hits[randNum].largeImageURL)
+        : (imgUrl = '/pc/img/bg/london-bridge-by-sunny.jpg')
+      document.getElementById(
+        'jellyAdminBG'
+      ).style.backgroundImage = `url(${imgUrl})`
+
+      console.log(this.adminMainBG.hits[randNum].largeImageURL)
+    })
+  },
+  methods: {
+    // init
+    ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'GET_API_BG_PIXABAY']),
+    ...mapMutations(['ADMIN_MAIN_BG_MUTATIONS']),
+    menuActiveNav() {
+      document.getElementById('menu-top').classList.toggle('menu-top-click')
+      document
+        .getElementById('menu-middle')
+        .classList.toggle('menu-middle-click')
+      document
+        .getElementById('menu-bottom')
+        .classList.toggle('menu-bottom-click')
+    },
   },
 }
 </script>

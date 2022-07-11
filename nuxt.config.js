@@ -49,9 +49,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/BootstrapVue.js',
-    '~/plugins/MomentVue.js',
-    '~/plugins/FilterVue.js',
+    { src: '~plugins/BootstrapVue.js', ssr: false },
+    { src: '~plugins/MomentVue.js', ssr: false },
+    { src: '~plugins/FilterVue.js', ssr: false },
+    { src: '~plugins/AwesomeSwiper.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -111,8 +112,8 @@ export default {
   build: {},
   server: { port: process.env.PORT, host: '0.0.0.0' },
   dir: {
-    assets: 'assets' + process.env.DEVICE,
-    components: 'components' + process.env.DEVICE,
+    assets: 'assets-' + process.env.DEVICE,
+    components: 'components-' + process.env.DEVICE,
     pages: 'pages-' + process.env.DEVICE,
   },
   buildDir: '.nuxt-' + process.env.DEVICE,

@@ -33,14 +33,18 @@ const createStore = () => {
           : ''
       },
       LOGIN_STUDENT(state) {
-        return localStorage.getItem('STUDENT')
-          ? (state.LOGIN = JSON.parse(localStorage.getItem('STUDENT')))
-          : (state.LOGIN = '')
+        if (typeof window !== 'undefined') {
+          return localStorage.getItem('STUDENT')
+            ? (state.LOGIN = JSON.parse(localStorage.getItem('STUDENT')))
+            : (state.LOGIN = '')
+        }
       },
       LOGIN_TEACHER(state) {
-        return localStorage.getItem('TEACHER')
-          ? (state.LOGIN = JSON.parse(localStorage.getItem('TEACHER')))
-          : (state.LOGIN = '')
+        if (typeof window !== 'undefined') {
+          return localStorage.getItem('TEACHER')
+            ? (state.LOGIN = JSON.parse(localStorage.getItem('TEACHER')))
+            : (state.LOGIN = '')
+        }
       },
     },
     mutations: {
@@ -150,7 +154,7 @@ const createStore = () => {
           .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', { params })
           .then((res) => {
             // 메인 데이터 합계
-            if (params.type === 'main') {
+            if (params.type === 'main' && process.env.DEVICE === 'mo') {
               const total =
                 res.data.status.intellect +
                 res.data.status.effort +
@@ -163,6 +167,7 @@ const createStore = () => {
           })
           .catch((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
+            console.log('URL_TYPE', URL_TYPE)
           })
       },
       GET_API_BG_PIXABAY({ commit }, params) {
