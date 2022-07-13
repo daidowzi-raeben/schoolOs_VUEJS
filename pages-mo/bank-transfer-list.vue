@@ -31,13 +31,13 @@ export default {
   },
   mounted() {
     //   DATA INIT
-    console.log(this.$nuxt, this.$config)
+    console.log(this.$nuxt, this.$config, this.rangeCalendar)
     this.params = this.LOGIN_STUDENT
     this.params.type = 'bankTransferList'
     this.GET_AXIOS(this.params)
 
     setTimeout(() => {
-      this.rangeCalendar = this.GET_AXIOS_CALLBACK_GETTER.monthDate
+      // this.rangeCalendar = this.GET_AXIOS_CALLBACK_GETTER.monthDate
     })
   },
   methods: {
