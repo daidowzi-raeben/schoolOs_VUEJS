@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <h1>User</h1>
+  <div v-if="GET_AXIOS_CALLBACK_GETTER">
+    <h1>{{ GET_AXIOS_CALLBACK_GETTER.bd_subject }}</h1>
     <p>User ID : {{ idx }} {{ a | comma }}</p>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+import { historyBack } from '~/config/util'
 
 export default {
   name: 'TodoDetail',
@@ -26,7 +27,7 @@ export default {
   },
   computed: {
     ...mapState(['LOGIN']),
-    ...mapGetters(['POST_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
+    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -38,6 +39,7 @@ export default {
     this.params.type = 'questView'
     this.params.idx = this.idx
     this.GET_AXIOS(this.params)
+    historyBack()
   },
   methods: {
     // init

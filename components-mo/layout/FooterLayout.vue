@@ -24,19 +24,19 @@
               </nuxt-link>
             </li>
             <li>
-              <nuxt-link to="/market-list">
+              <nuxt-link to="/market-list/0">
                 <b-icon icon="bag"></b-icon>
                 <p>마켓</p>
               </nuxt-link>
             </li>
             <li>
-              <nuxt-link to="/notice-list">
+              <nuxt-link to="/notice-list/1">
                 <b-icon icon="alarm"></b-icon>
                 <p>알림장</p>
               </nuxt-link>
             </li>
             <li>
-              <nuxt-link to="/sue-list">
+              <nuxt-link to="/sue-request">
                 <b-icon icon="exclamation-triangle"></b-icon>
                 <p>신고</p>
               </nuxt-link>

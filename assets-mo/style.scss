@@ -1,3 +1,25 @@
+#teacherChat {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  .isTeacherChat {
+    width: 100%;
+    height: 100vh;
+  }
+  .teacherChat-header {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: #000;
+    z-index: 999;
+    top: 0;
+    left: 0;
+  }
+}
 .jelly {
   &-btn {
     height: 36px;

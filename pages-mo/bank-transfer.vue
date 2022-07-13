@@ -1,10 +1,22 @@
 <template>
   <div id="school-content">
     <div>
-      계좌번호<br />
-      이름<br />
-      송금금액<br />
-      보내기버튼
+      <div class="">
+        <input v-model="accountNumber" type="tel" class="jelly-text" />
+      </div>
+      <div>
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.account">
+          {{
+            Number(
+              GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
+                GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
+            ) | comma
+          }}
+        </div>
+        <input v-model="accountPrice" type="tel" class="jelly-text" />
+        <Span>{{ accountPrice | comma }}</Span>
+      </div>
+      <button @click="onSubmit">전송</button>
     </div>
   </div>
 </template>
@@ -17,6 +29,9 @@ export default {
   data() {
     return {
       params: {},
+      paramsPost: {},
+      accountPrice: 0,
+      accountNumber: '',
     }
   },
 
@@ -31,9 +46,9 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
-    this.params.type = 'shopList'
+    this.params.type = 'bankTransfer'
     this.params.page = 1
-    // this.GET_AXIOS(this.params)
+    this.GET_AXIOS(this.params)
   },
   methods: {
     // init
@@ -41,11 +56,24 @@ export default {
     ...mapMutations([]),
 
     // EVENT
-    onClickTodoDetail(idx) {
-      this.$router.push('/todo-detail/' + idx)
+    onSubmit() {
+      const myPrice = Number(
+        this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
+          this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
+      )
+      if (this.accountPrice > myPrice) {
+        alert('?????????')
+      } else {
+        alert('send_sms_idx')
+        this.paramsPost = this.LOGIN_STUDENT
+        this.paramsPost.type = 'bankTransfer'
+        this.paramsPost.send_sms_idx = 11
+        this.paramsPost.pay = this.accountPrice
+        this.POST_AXIOS(this.paramsPost)
+      }
     },
   },
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

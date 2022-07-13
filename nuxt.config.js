@@ -51,8 +51,9 @@ export default {
   plugins: [
     { src: '~plugins/BootstrapVue.js', ssr: false },
     { src: '~plugins/MomentVue.js', ssr: false },
-    { src: '~plugins/FilterVue.js', ssr: false },
     { src: '~plugins/AwesomeSwiper.js', ssr: false },
+    { src: '~plugins/Vcaledar.js', ssr: false },
+    { src: '~plugins/filters.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

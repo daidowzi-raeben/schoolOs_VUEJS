@@ -1,11 +1,20 @@
 <template>
   <div id="school-content">
-    <div>
-      <v-date-picker v-model="rangeCalendar" color="purple" is-range />
+    <div v-if="GET_AXIOS_CALLBACK_GETTER.cate">
+      <ul class="flex">
+        <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.cate" :key="i">
+          <nuxt-link :to="'/market-list/' + v.idx">
+            {{ v.cate_name }}
+          </nuxt-link>
+        </li>
+      </ul>
     </div>
-    <div v-if="rangeCalendar">
-      {{ rangeCalendar.start | moment('YYYY-MM-DD') }}
-      {{ rangeCalendar.end | moment('YYYY-MM-DD') }}
+    <div v-if="GET_AXIOS_CALLBACK_GETTER.item">
+      <ul class="flex">
+        <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.item" :key="i">
+          {{ v.item_name }}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -15,10 +24,18 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
   layout: 'default-mo',
+  validate({ params }) {
+    return /^\d+$/.test(params.id)
+  },
+  asyncData({ params }) {
+    console.log(params)
+    return {
+      idx: params.id,
+    }
+  },
   data() {
     return {
       params: {},
-      rangeCalendar: null,
     }
   },
 
@@ -33,12 +50,10 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
-    this.params.type = 'bankTransferList'
+    this.params.type = 'shopList'
+    this.params.ssc_idx = this.idx
+    this.params.page = 1
     this.GET_AXIOS(this.params)
-
-    setTimeout(() => {
-      this.rangeCalendar = this.GET_AXIOS_CALLBACK_GETTER.monthDate
-    })
   },
   methods: {
     // init

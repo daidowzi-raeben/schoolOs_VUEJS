@@ -61,7 +61,7 @@
                     <p class="bold">{{ v.subject }}</p>
                     <span
                       >{{ v.start_day | moment('YY.MM.DD') }} ~
-                      {{ v.end_day | moment('YY.MM.DD') }}</span
+                      {{ v.end_day | 'YY.MM.DD' }}</span
                     >
                   </div>
                   <div class="pay text-right flex-right">

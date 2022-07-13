@@ -17,7 +17,13 @@ const createStore = () => {
       LOGIN: [],
 
       //  ---------------------------------[admin]
+
+      //  ---------------------------------[chat]
+      chatURL: 'http://localhost:9000',
+
+      //  ---------------------------------[output api]
       adminMainBG: [],
+      mySchoolInformation: [],
     },
     getters: {
       POST_AXIOS_CALLBACK_GETTER(state) {
@@ -84,6 +90,9 @@ const createStore = () => {
       //  ---------------------------------[admin]
       ADMIN_MAIN_BG_MUTATIONS(state, payload) {
         state.adminMainBG = payload
+      },
+      GET_API_MY_SCHOOL_SUCCESS(state, payload) {
+        state.mySchoolInformation = payload
       },
     },
     actions: {
@@ -181,6 +190,17 @@ const createStore = () => {
           })
           .catch((res) => {
             console.log('ADMIN_MAIN_BG_MUTATIONS', res)
+          })
+      },
+      GET_API_MY_SCHOOL({ commit }, params) {
+        axios
+          .get(process.env.VUE_APP_API + '/student.php', { params })
+          .then((res) => {
+            commit('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
+            console.log('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
+          })
+          .catch((res) => {
+            console.log('GET_API_MY_SCHOOL_FALSE', res)
           })
       },
     },
