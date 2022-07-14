@@ -1,31 +1,23 @@
 <template>
-  <div id="school-content">
-    <div v-if="GET_AXIOS_CALLBACK_GETTER.cate">
-      <ul class="flex">
-        <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.cate" :key="i">
-          <nuxt-link :to="'/market-list/' + v.idx">
-            {{ v.cate_name }}
-          </nuxt-link>
-        </li>
-      </ul>
-    </div>
-    <div v-if="GET_AXIOS_CALLBACK_GETTER.item">
-      <ul class="flex">
-        <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.item" :key="i">
-          <nuxt-link :to="'/market-detail/' + v.idx">
-            {{ v.item_name }}
-          </nuxt-link>
-        </li>
-      </ul>
+  <div v-if="GET_AXIOS_CALLBACK_GETTER.item">
+    <h1>{{ GET_AXIOS_CALLBACK_GETTER.item.item_name }}</h1>
+    <!-- <p>User ID : {{ idx }} {{ a | comma }}</p> -->
+    <div>
+      <button
+        v-if="GET_AXIOS_CALLBACK_GETTER.item.use_yn === '0'"
+        @click="onSubmit"
+      >
+        전송
+      </button>
     </div>
   </div>
 </template>
-
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+import { historyBack } from '~/config/util'
 
 export default {
-  layout: 'default-mo',
+  name: 'ShopDetail',
   validate({ params }) {
     return /^\d+$/.test(params.id)
   },
@@ -38,9 +30,10 @@ export default {
   data() {
     return {
       params: {},
+      paramsPost: {},
+      a: 100000000,
     }
   },
-
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
@@ -52,19 +45,23 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
-    this.params.type = 'shopList'
-    this.params.ssc_idx = this.idx
-    this.params.page = 1
+    this.params.type = 'itemView'
+    this.params.idx = this.idx
     this.GET_AXIOS(this.params)
+    console.log(this.params)
+    historyBack()
   },
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     ...mapMutations([]),
-
-    // EVENT
-    onClickTodoDetail(idx) {
-      this.$router.push('/todo-detail/' + idx)
+    onSubmit() {
+      this.paramsPost = this.LOGIN_STUDENT
+      this.paramsPost.idx = this.params.idx
+      this.paramsPost.type = 'itemView'
+      this.POST_AXIOS(this.params)
+      console.log(this.paramsPost)
+      // POST_AXIOS
     },
   },
 }

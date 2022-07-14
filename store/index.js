@@ -125,6 +125,7 @@ const createStore = () => {
           })
       },
       POST_AXIOS({ commit }, params, state) {
+        console.log('params', params)
         let URL_TYPE = ''
         process.env.DEVICE === 'mo'
           ? (URL_TYPE = 'student')
@@ -134,7 +135,11 @@ const createStore = () => {
           FORM_DATA.append(v[0], v[1])
         })
         axios
-          .post(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', FORM_DATA)
+          .post(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', FORM_DATA, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
           .then((res) => {
             commit('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             if (params.type === 'login') {
@@ -144,6 +149,30 @@ const createStore = () => {
                 : (loginData.smt_idx = res.data.idx)
               commit('LOGIN_LOCALSTORAGE', loginData)
             }
+            console.log('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
+          })
+          .catch((res) => {
+            if (params.type === 'login') {
+              const loginData = false
+              commit('LOGIN_LOCALSTORAGE', loginData)
+            }
+            console.log('POST_AXIOS_CALLBACK_DATA_FALIE', res)
+          })
+      },
+      POST_AXIOS_FORM({ commit }, params, state) {
+        console.log('params', params)
+        let URL_TYPE = ''
+        process.env.DEVICE === 'mo'
+          ? (URL_TYPE = 'student')
+          : (URL_TYPE = 'teacher')
+        axios
+          .post(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', params, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            commit('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             console.log('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
           })
           .catch((res) => {
@@ -172,7 +201,7 @@ const createStore = () => {
               res.data.status.total = total
             }
             commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
-            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
+            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS', res)
           })
           .catch((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
