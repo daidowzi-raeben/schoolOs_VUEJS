@@ -2,7 +2,15 @@
   <div id="school-content">
     <div>
       <div class="">
-        <input v-model="accountNumber" type="tel" class="jelly-text" />
+        <select v-if="GET_AXIOS_CALLBACK_GETTER.studentList" ref="sendStudent">
+          <option
+            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
+            :key="i"
+            :value="v.idx"
+          >
+            {{ v.reg_name }}
+          </option>
+        </select>
       </div>
       <div>
         <div v-if="GET_AXIOS_CALLBACK_GETTER.account">
@@ -67,8 +75,9 @@ export default {
         alert('send_sms_idx')
         this.paramsPost = this.LOGIN_STUDENT
         this.paramsPost.type = 'bankTransfer'
-        this.paramsPost.send_sms_idx = 11
+        this.paramsPost.send_sms_idx = this.$refs.sendStudent.value
         this.paramsPost.pay = this.accountPrice
+        console.log(this.paramsPost.send_sms_idx)
         this.POST_AXIOS(this.paramsPost)
       }
     },

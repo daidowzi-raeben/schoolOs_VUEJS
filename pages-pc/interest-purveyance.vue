@@ -1,5 +1,11 @@
 <template>
-  <div>asd</div>
+  <div>
+    <div v-if="GET_AXIOS_CALLBACK_GETTER.interest">
+      총액 {{ GET_AXIOS_CALLBACK_GETTER.interest.loan }} <br />
+      이자율 {{ GET_AXIOS_CALLBACK_GETTER.interest.month_interest }}% <br />
+      이자 {{ GET_AXIOS_CALLBACK_GETTER.interest.total_interest }} <br />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -7,18 +13,10 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
   layout: 'default-pc',
-  // validate({ params }) {
-  //   return /^\d+$/.test(params.id)
-  // },
-  // asyncData({ params }) {
-  //   console.log(params)
-  //   return {
-  //     idx: params.id,
-  //   }
-  // },
   data() {
     return {
       params: {},
+      paramsForm: {},
     }
   },
 
@@ -33,7 +31,7 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
-    this.params.type = 'studentList'
+    this.params.type = 'interestPurveyance'
     this.GET_AXIOS(this.params)
   },
   methods: {
@@ -42,8 +40,9 @@ export default {
     ...mapMutations([]),
 
     // EVENT
-    onClickTodoDetail(idx) {
-      this.$router.push('/todo-detail/' + idx)
+    onSubmit() {
+      console.log('onSubmit')
+      this.paramsForm = this.LOGIN_TEACHER
     },
   },
 }

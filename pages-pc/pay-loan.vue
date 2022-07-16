@@ -2,28 +2,22 @@
   <div>
     <div>
       <input v-model="pay" class="jelly-text" />
-      <input v-model="job_name" class="jelly-text" />
-      <button @click="onSubmit">생성</button>
-    </div>
-    <div v-if="GET_AXIOS_CALLBACK_GETTER">
-      <div v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER" :key="i">
-        {{ v.job_name }}
-      </div>
+      <button @click="onSubmit">빌리기</button>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
-import { axiosForm } from '~/config/util'
+// import { axiosForm } from '~/config/util'
 
 export default {
   layout: 'default-pc',
   data() {
     return {
       params: {},
+      paramsForm: {},
       pay: 0,
-      job_name: '',
     }
   },
 
@@ -38,7 +32,7 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
-    this.params.type = 'joblistTable'
+    this.params.type = 'loanList'
     this.GET_AXIOS(this.params)
   },
   methods: {
@@ -48,15 +42,10 @@ export default {
 
     // EVENT
     onSubmit() {
-      const FORM_DATA = new FormData()
-      FORM_DATA.append('type', 'joblist')
-      FORM_DATA.append('pay', this.pay)
-      FORM_DATA.append('job_name', this.job_name)
-      FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
-      axiosForm(FORM_DATA, '/teacher.php')
-      setTimeout(() => {
-        this.GET_AXIOS(this.params)
-      }, 500)
+      this.paramsForm = this.LOGIN_TEACHER
+      this.paramsForm.type = 'loanList'
+      this.paramsForm.pay = this.pay
+      this.POST_AXIOS(this.paramsForm)
     },
   },
 }

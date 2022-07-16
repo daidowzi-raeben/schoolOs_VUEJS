@@ -3,12 +3,6 @@
     <div>
       <input v-model="pay" class="jelly-text" />
       <input v-model="job_name" class="jelly-text" />
-      <button @click="onSubmit">생성</button>
-    </div>
-    <div v-if="GET_AXIOS_CALLBACK_GETTER">
-      <div v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER" :key="i">
-        {{ v.job_name }}
-      </div>
     </div>
   </div>
 </template>
@@ -39,7 +33,7 @@ export default {
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'joblistTable'
-    this.GET_AXIOS(this.params)
+    // this.GET_AXIOS(this.params)
   },
   methods: {
     // init
@@ -47,16 +41,11 @@ export default {
     ...mapMutations([]),
 
     // EVENT
-    onSubmit() {
+    onClickTodoDetail(idx) {
       const FORM_DATA = new FormData()
-      FORM_DATA.append('type', 'joblist')
-      FORM_DATA.append('pay', this.pay)
-      FORM_DATA.append('job_name', this.job_name)
-      FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      FORM_DATA.append('type', 'register')
       axiosForm(FORM_DATA, '/teacher.php')
-      setTimeout(() => {
-        this.GET_AXIOS(this.params)
-      }, 500)
+      axiosForm()
     },
   },
 }

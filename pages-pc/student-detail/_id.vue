@@ -7,15 +7,15 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
   layout: 'default-pc',
-  // validate({ params }) {
-  //   return /^\d+$/.test(params.id)
-  // },
-  // asyncData({ params }) {
-  //   console.log(params)
-  //   return {
-  //     idx: params.id,
-  //   }
-  // },
+  validate({ params }) {
+    return /^\d+$/.test(params.id)
+  },
+  asyncData({ params }) {
+    console.log(params)
+    return {
+      idx: params.id,
+    }
+  },
   data() {
     return {
       params: {},
@@ -33,7 +33,8 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
-    this.params.type = 'studentList'
+    this.params.sms_idx = this.idx
+    this.params.type = 'studentView'
     this.GET_AXIOS(this.params)
   },
   methods: {

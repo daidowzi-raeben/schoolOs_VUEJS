@@ -53,6 +53,7 @@ export default {
     { src: '~plugins/MomentVue.js', ssr: false },
     { src: '~plugins/AwesomeSwiper.js', ssr: false },
     { src: '~plugins/Vcaledar.js', ssr: false },
+    { src: '~plugins/HtmlEditor.js', ssr: false },
     { src: '~plugins/filters.js', ssr: false },
   ],
 
@@ -74,6 +75,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/device',
     'nuxt-socket-io',
+    'vue2-editor/nuxt',
   ],
   io: {
     sockets: [

@@ -33,7 +33,7 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
-    this.params.type = 'studentList'
+    this.params.type = 'catelistTable'
     this.GET_AXIOS(this.params)
   },
   methods: {

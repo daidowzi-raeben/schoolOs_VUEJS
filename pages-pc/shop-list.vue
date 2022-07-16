@@ -4,21 +4,15 @@
 
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+// import { axiosForm } from '~/config/util'
 
 export default {
   layout: 'default-pc',
-  // validate({ params }) {
-  //   return /^\d+$/.test(params.id)
-  // },
-  // asyncData({ params }) {
-  //   console.log(params)
-  //   return {
-  //     idx: params.id,
-  //   }
-  // },
   data() {
     return {
       params: {},
+      paramsForm: {},
+      pay: 0,
     }
   },
 
@@ -33,7 +27,7 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
-    this.params.type = 'studentList'
+    this.params.type = 'shopList'
     this.GET_AXIOS(this.params)
   },
   methods: {
@@ -42,8 +36,11 @@ export default {
     ...mapMutations([]),
 
     // EVENT
-    onClickTodoDetail(idx) {
-      this.$router.push('/todo-detail/' + idx)
+    onSubmit() {
+      this.paramsForm = this.LOGIN_TEACHER
+      this.paramsForm.type = 'loanList'
+      this.paramsForm.pay = this.pay
+      this.POST_AXIOS(this.paramsForm)
     },
   },
 }
