@@ -8,6 +8,23 @@
           <span id="menu-middle" class="menu-global menu-middle"></span>
           <span id="menu-bottom" class="menu-global menu-bottom"></span>
         </div>
+        <div id="adminGnb" class="adminGnb">
+          <div class="gnb">
+            <ul>
+              <li @click="onClickLinkTo('pay-loan')">대출받기</li>
+              <li @click="onClickLinkTo('')">직업관리</li>
+              <li @click="onClickLinkTo">학생관리</li>
+              <li @click="onClickLinkTo">학생관리</li>
+              <li @click="onClickLinkTo('shop-list')">상점관리</li>
+              <li @click="onClickLinkTo">세금관리</li>
+              <li @click="onClickLinkTo">고지서관리</li>
+              <li @click="onClickLinkTo">{{ LOGIN_CONFIG.todo_name }} 등록</li>
+              <li @click="onClickLinkTo">{{ LOGIN_CONFIG.todo_name }} 검사</li>
+              <li @click="onClickLinkTo">알림장 관리</li>
+              <li @click="onClickLinkTo('rule-detail')">규칙관리</li>
+            </ul>
+          </div>
+        </div>
       </nav>
       <!-- <div class="jelly-admin flex">
       <div class="gnb">
@@ -41,7 +58,9 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 export default {
   name: 'DefaultLayoutPC',
   data() {
-    return {}
+    return {
+      LOGIN_CONFIG: {},
+    }
   },
   computed: {
     ...mapState(['LOGIN', 'adminMainBG']),
@@ -52,10 +71,16 @@ export default {
   },
   mounted() {
     // pixabay api load
+    this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
     this.GET_API_BG_PIXABAY('나무')
 
+    document.getElementById(
+      'jellyAdminBG'
+    ).style.backgroundImage = `url(/pc/img/bg/london-bridge-by-sunny.jpg)`
+
     setTimeout(() => {
-      const randNum = Math.floor(Math.random() * 9)
+      const randNum = Math.floor(Math.random() * 3)
+      // const randNum = 1
       let imgUrl = this.adminMainBG.hits[randNum].largeImageURL
       imgUrl
         ? (imgUrl = this.adminMainBG.hits[randNum].largeImageURL)
@@ -79,12 +104,21 @@ export default {
       document
         .getElementById('menu-bottom')
         .classList.toggle('menu-bottom-click')
+      document.getElementById('adminGnb').classList.toggle('is_active')
+    },
+    onClickLinkTo(e) {
+      this.$router.push(`/${e}`)
+      this.menuActiveNav()
     },
   },
 }
 </script>
 
 <style lang="scss">
+body {
+  background-color: #000 !important;
+  color: rgba(94, 86, 105, 0.68);
+}
 @import '~/assets-mo/var.scss';
 @import '~/assets-mo/style.scss';
 @import '~/assets-mo/reset.scss';

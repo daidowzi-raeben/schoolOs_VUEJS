@@ -114,6 +114,7 @@
               </div>
             </div>
           </div>
+          <div @click="onClickSchoolSelect(20)">asasdasdasd</div>
         </div>
       </div>
     </div>

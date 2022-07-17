@@ -1,27 +1,48 @@
 <template>
   <div>
-    <div>
-      <span>{{ today }}</span>
-      <h1 v-if="LOGIN_TEACHER">
-        {{ LOGIN_TEACHER.reg_country }}
-        <span v-b-tooltip.hover title="오늘의 환율" class="spanBox">
-          <b-icon icon="currency-dollar"></b-icon>1,000</span
-        >
-      </h1>
-      <div class="p-l-5 m-t-5 m-b-5"></div>
-      <div v-if="GET_AXIOS_CALLBACK_GETTER.attendance" class="student">
-        <div class="student__list">
-          <h3>출결 현황</h3>
-          <div class="flex m-t-3">
-            <div
-              v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.attendance"
-              :key="i"
-              class="item"
-            >
-              <p class="title">{{ v.reg_name }}</p>
-              <div class="flex">
-                <div class="list">
-                  <p>{{ v.subject }}</p>
+    <div class="">
+      <div id="jellyAdminheader">
+        <span>{{ today }}</span>
+        <h1 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER.total_pay">
+          {{ LOGIN_TEACHER.reg_country }}
+          <span v-b-tooltip.hover title="현재 재산" class="spanBox">
+            {{ GET_AXIOS_CALLBACK_GETTER.total_pay.total_pay | comma }}
+            {{ LOGIN_CONFIG.reg_pay_unit }}
+          </span>
+        </h1>
+        <div class="p-l-5 m-t-5 m-b-5"></div>
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.attendance" class="student">
+          <div class="student__list">
+            <div class="flex m-t-3">
+              <div
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.attendance"
+                :key="i"
+                class="item"
+              >
+                <p class="title">이번달 이자</p>
+                <div class="flex">
+                  <div class="list">
+                    <p>{{ v.subject }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.attendance" class="student">
+          <div class="student__list">
+            <h3>출결 현황</h3>
+            <div class="flex m-t-3">
+              <div
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.attendance"
+                :key="i"
+                class="item"
+              >
+                <p class="title">{{ v.reg_name }}</p>
+                <div class="flex">
+                  <div class="list">
+                    <p>{{ v.subject }}</p>
+                  </div>
                 </div>
               </div>
             </div>

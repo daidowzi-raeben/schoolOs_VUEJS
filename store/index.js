@@ -209,7 +209,7 @@ const createStore = () => {
           })
       },
       GET_API_BG_PIXABAY({ commit }, params) {
-        const URL = `https://pixabay.com/api/?key=28223619-acf2f7347a14ed8608f2c4939&image_type=photo&pretty=true&lang=ko&safesearch=true&per_page=10&page=1&q=${params}`
+        const URL = `https://pixabay.com/api/?key=28223619-acf2f7347a14ed8608f2c4939&image_type=photo&pretty=true&lang=ko&safesearch=true&per_page=2&page=1&q=${params}`
         axios
           .get(URL)
           .then((res) => {

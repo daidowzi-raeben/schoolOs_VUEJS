@@ -9,9 +9,9 @@
     </v-overlay>
     <header>
       <div class="flex">
-        <!-- <h1>JELLY</h1> -->
+        <h1>JELLY</h1>
         <div class="flex-right notification">
-          <b-icon icon="chat-heart" @click="teacherChat"></b-icon>
+          <b-icon icon="bell" @click="teacherChat"></b-icon>
           <div v-if="isTeacherChat && chatURL" id="teacherChat">
             <div class="teacherChat-header" @click="teacherChat"></div>
             <iframe
