@@ -11,6 +11,7 @@
         <div id="adminGnb" class="adminGnb">
           <div class="gnb">
             <ul>
+              <li @click="onClickLinkTo('')">처음으로</li>
               <li @click="onClickLinkTo('qr-code')">가입코드</li>
               <li @click="onClickLinkTo('pay-loan')">대출받기</li>
               <li @click="onClickLinkTo('job-list')">직업관리</li>
@@ -24,6 +25,7 @@
               <li @click="onClickLinkTo">{{ LOGIN_CONFIG.todo_name }} 검사</li>
               <li @click="onClickLinkTo('notice-list')">알림장 관리</li>
               <li @click="onClickLinkTo('rule-detail')">규칙관리</li>
+              <li @click="onClickLinkTo('member/sign-out')">로그아웃</li>
             </ul>
           </div>
         </div>
@@ -74,7 +76,7 @@ export default {
   mounted() {
     // pixabay api load
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
-    this.GET_API_BG_PIXABAY('나무')
+    this.GET_API_BG_PIXABAY('여름')
 
     document.getElementById(
       'jellyAdminBG'

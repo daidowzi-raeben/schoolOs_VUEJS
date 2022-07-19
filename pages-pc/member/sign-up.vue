@@ -86,7 +86,7 @@
             v-model="todo_name"
             type="text"
             class="jelly-text"
-            placeholer="TODO LIST 이름 ex)퀘스트, 할일 등"
+            placeholder="TODO LIST 이름 ex)퀘스트, 할일 등"
           />
         </div>
         <div>
@@ -277,8 +277,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 * {
   color: rgb(40, 40, 40);
+}
+body {
+  background-color: #fff;
 }
 </style>

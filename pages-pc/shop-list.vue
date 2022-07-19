@@ -3,9 +3,9 @@
     <div class="">
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER">asdasdads</h1>
+        <h1 v-if="LOGIN_TEACHER">상점 관리</h1>
         <div class="m-t-15 m-l-4">
-          <h3 class="flex">
+          <h3 class="flex" style="color: #fff">
             카테고리 관리
             <span
               v-b-modal.cateInsert
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="m-t-15 m-l-4">
-          <h3 class="flex">
+          <h3 class="flex" style="color: #fff">
             상품 관리
             <span
               class="spanBox m-l-2"
@@ -58,7 +58,12 @@
                 class="item"
                 @click="onClickItemDetail(v.idx)"
               >
+                <!-- {{ process.env.VUE_APP_API }} -->
+                <img
+                  :src="`http://localhost:3095/data/teacher/shop/${v.item_thumb}`"
+                />
                 {{ v.item_name }}
+                <p>{{ v.item_price | comma }}</p>
               </div>
             </div>
           </div>

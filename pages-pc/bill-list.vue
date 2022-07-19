@@ -4,7 +4,7 @@
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <!-- <span>{{ today }}</span> -->
         <h1 v-if="LOGIN_TEACHER" class="">
-          asdas
+          세금관리
           <span
             class="spanBox m-l-2"
             style="color: #fff; font-size: 12px"
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <b-modal id="billInsert" size="lg" hide-footer hide-header visible>
+    <b-modal id="billInsert" size="lg" hide-footer hide-header>
       <div>
         <div class="">
           <div class="flex">

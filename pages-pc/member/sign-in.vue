@@ -29,7 +29,7 @@
           </button>
         </div>
         <div class="m-t-4 text-center">
-          <Nuxt-link to="/"> 아직 회원이 아닌가요? </Nuxt-link>
+          <Nuxt-link to="/member/sign-up"> 아직 회원이 아닌가요? </Nuxt-link>
         </div>
       </form>
     </div>
