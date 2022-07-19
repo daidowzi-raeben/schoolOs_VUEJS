@@ -29,7 +29,10 @@
                   <span v-if="LOGIN_TEACHER" class="input-focus m-t-1 m-l-2">
                     {{ LOGIN_TEACHER.reg_pay_unit }}
                   </span>
-                  <button class="jelly-btn jelly-btn--blue m-l-5">
+                  <button
+                    class="jelly-btn jelly-btn--blue m-l-5"
+                    @click="onSubmit"
+                  >
                     빌리기
                   </button>
                 </div>
@@ -101,8 +104,9 @@ export default {
     onSubmit() {
       this.paramsForm = this.LOGIN_TEACHER
       this.paramsForm.type = 'loanList'
-      this.paramsForm.pay = this.pay
+      this.paramsForm.pay = this.uncomma(this.pay)
       this.POST_AXIOS(this.paramsForm)
+      setTimeout(() => {}, 1000)
     },
     payComma(e) {
       this.pay = this.comma(this.uncomma(e.target.value))
