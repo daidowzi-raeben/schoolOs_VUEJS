@@ -6,6 +6,11 @@ body {
   transition-duration: 0.7s;
   transition-delay: 0.5s;
 }
+.notAnime {
+  transition-property: unset;
+  transition-duration: unset;
+  transition-delay: unset;
+}
 $green: #67b57d;
 $green-light: #6fc688;
 $green-lighter: #7cd392;
@@ -233,6 +238,10 @@ $green-lighter: #7cd392;
     box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
     cursor: pointer;
     padding: 10px 20px;
+    &.is_active {
+      color: #000 !important;
+      background-color: #fff;
+    }
   }
   .student {
     padding: 20px;

@@ -20,6 +20,15 @@
     left: 0;
   }
 }
+.toggleCalendar {
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  display: none;
+  &.is_active {
+    display: block;
+  }
+}
 .jelly {
   &-btn {
     height: 36px;
@@ -76,6 +85,9 @@
     border: 1px solid #c2c2c2;
     padding: 5px 10px;
     border-radius: 4px;
+    &--h {
+      height: 42px;
+    }
   }
   &-color {
     &--type1 {
@@ -163,6 +175,19 @@
           top: 0;
         }
       }
+    }
+  }
+  &-table {
+    width: 100%;
+    th {
+      background-color: #eee;
+    }
+    td {
+    }
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 10px 15px;
     }
   }
 }

@@ -8,7 +8,7 @@
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <!-- <span>{{ today }}</span> -->
         <h1 v-if="LOGIN_TEACHER">
-          {{ LOGIN_TEACHER.reg_country }} 규칙
+          {{ LOGIN_TEACHER.reg_country }} 규칙관리
           <!-- <span v-b-tooltip.hover title="현재 재산" class="spanBox">
             ㅁㄴㅇ
           </span> -->
@@ -17,7 +17,6 @@
           <div class="student__list">
             <div class="flex m-t-3">
               <div
-                v-if="GET_AXIOS_CALLBACK_GETTER.content"
                 class="item"
                 style="width: 100%; background: #fff; color: #000"
               >

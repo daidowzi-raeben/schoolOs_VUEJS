@@ -11,16 +11,18 @@
         <div id="adminGnb" class="adminGnb">
           <div class="gnb">
             <ul>
+              <li @click="onClickLinkTo('qr-code')">가입코드</li>
               <li @click="onClickLinkTo('pay-loan')">대출받기</li>
-              <li @click="onClickLinkTo('')">직업관리</li>
-              <li @click="onClickLinkTo">학생관리</li>
-              <li @click="onClickLinkTo">학생관리</li>
+              <li @click="onClickLinkTo('job-list')">직업관리</li>
+              <li @click="onClickLinkTo('student-list')">학생관리</li>
               <li @click="onClickLinkTo('shop-list')">상점관리</li>
-              <li @click="onClickLinkTo">세금관리</li>
-              <li @click="onClickLinkTo">고지서관리</li>
-              <li @click="onClickLinkTo">{{ LOGIN_CONFIG.todo_name }} 등록</li>
+              <li @click="onClickLinkTo('bill-list')">세금관리</li>
+              <li @click="onClickLinkTo('bill-student')">고지서관리</li>
+              <li @click="onClickLinkTo('todo-list')">
+                {{ LOGIN_CONFIG.todo_name }} 관리
+              </li>
               <li @click="onClickLinkTo">{{ LOGIN_CONFIG.todo_name }} 검사</li>
-              <li @click="onClickLinkTo">알림장 관리</li>
+              <li @click="onClickLinkTo('notice-list')">알림장 관리</li>
               <li @click="onClickLinkTo('rule-detail')">규칙관리</li>
             </ul>
           </div>

@@ -24,9 +24,11 @@ export default {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
+
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
   },
+
   mounted() {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
@@ -34,6 +36,7 @@ export default {
     this.params.type = 'interestPurveyance'
     this.GET_AXIOS(this.params)
   },
+
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),

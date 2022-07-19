@@ -1,53 +1,203 @@
 <template>
   <div>
-    <!-- <div>
-      <input v-model="pay" class="jelly-text" />
-      <button @click="onSubmit">빌리기</button>
-    </div> -->
     <div class="">
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER">상점관리</h1>
-        <div v-if="GET_AXIOS_CALLBACK_GETTER.shopCate" class="m-t-15 m-l-4">
-          <span
-            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.shopCate"
-            :key="`cate${i}`"
-            class="spanBox m-r-2"
-            style="color: #fff"
-          >
-            {{ v.cate_name }}
-          </span>
-          <span v-b-modal.cateInsert class="spanBox m-r-2" style="color: #fff">
-            +
-          </span>
+        <h1 v-if="LOGIN_TEACHER">asdasdads</h1>
+        <div class="m-t-15 m-l-4">
+          <h3 class="flex">
+            카테고리 관리
+            <span
+              v-b-modal.cateInsert
+              class="spanBox m-l-2"
+              style="color: #fff; font-size: 12px"
+            >
+              +
+            </span>
+          </h3>
+          <div class="m-t-10">
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate ? '' : 'is_active'"
+              style="color: #fff"
+              @click="onClickCategory('')"
+              >전체</span
+            >
+            <span v-if="GET_AXIOS_CALLBACK_GETTER.shopCate">
+              <span
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.shopCate"
+                :key="`cate${i}`"
+                class="spanBox m-r-2"
+                style="color: #fff"
+                :class="queryCate == v.idx ? 'is_active' : ''"
+                @click="onClickCategory(v.idx)"
+              >
+                {{ v.cate_name }}
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="m-t-15 m-l-4">
+          <h3 class="flex">
+            상품 관리
+            <span
+              class="spanBox m-l-2"
+              style="color: #fff; font-size: 12px"
+              @click="onClickItemInsert"
+            >
+              +
+            </span>
+          </h3>
         </div>
         <div class="student form">
           <div class="student__list">
-            <div class="flex m-t-3">
+            <div v-if="GET_AXIOS_CALLBACK_GETTER.shopItem" class="m-t-3">
               <div
-                v-if="GET_AXIOS_CALLBACK_GETTER.content"
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.shopItem"
+                :key="`shopItem${i}`"
                 class="item"
-                style="width: 100%; background: #fff; color: #000"
+                @click="onClickItemDetail(v.idx)"
               >
-                <vue-editor v-model="ruleContent"> </vue-editor>
-                <div class="text-center m-t-5">
-                  <button
-                    class="jelly-btn jelly-btn--pink lg"
-                    @click="onSubmit"
-                  >
-                    등록하기
-                  </button>
-                </div>
+                {{ v.item_name }}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <b-modal id="cateInsert" size="lg" hide-footer hide-header visible>
-      <div class="flex">
-        <span>카테고리 이름</span>
-        <input type="text" class="jelly-text" />
+    <b-modal id="itemInsert" size="lg" hide-footer hide-header>
+      <div class="">
+        <p>카테고리</p>
+        <select
+          v-if="GET_AXIOS_CALLBACK_GETTER.shopCate"
+          v-model="cateIdx"
+          class="jelly-text wd-full jelly-text--h"
+        >
+          <option :value="null">선택하세요 {{ cateIdx }}</option>
+          <option
+            v-for="v in GET_AXIOS_CALLBACK_GETTER.shopCate"
+            :key="v.idx"
+            :value="v.idx"
+            :selected="cateIdx == v.idx ? true : false"
+          >
+            {{ v.cate_name }}
+          </option>
+        </select>
+      </div>
+      <div class="m-t-5">
+        <p>상품명</p>
+        <input
+          v-model="itemName"
+          type="text"
+          class="jelly-text jelly-text--h wd-full"
+        />
+      </div>
+      <div class="m-t-5">
+        <div class="flex">
+          <div class="flex-full m-r-1 relative">
+            <p>판매종료일</p>
+            <v-date-picker
+              v-model="calendarSales"
+              :masks="masks"
+              class="notAnime"
+            >
+              <template v-slot="{ inputValue, inputEvents }">
+                <input
+                  class="jelly-text jelly-text--h wd-full"
+                  :value="inputValue"
+                  v-on="inputEvents"
+                />
+              </template>
+            </v-date-picker>
+          </div>
+          <div class="flex-full m-l-1">
+            <p>상품가격</p>
+            <input
+              v-model="itemPrice"
+              type="text"
+              class="jelly-text jelly-text--h wd-full text-right"
+            />
+          </div>
+          <span v-if="LOGIN_TEACHER" class="m-t-9">
+            {{ LOGIN_TEACHER.reg_pay_unit }}
+          </span>
+        </div>
+      </div>
+      <div class="m-t-5">
+        <div class="flex">
+          <div class="flex-full m-r-1 relative">
+            <p>할인 종료일</p>
+            <v-date-picker
+              v-model="calendarDiscountSales"
+              :masks="masks"
+              class="notAnime"
+            >
+              <template v-slot="{ inputValue, inputEvents }">
+                <input
+                  class="jelly-text jelly-text--h wd-full"
+                  :value="inputValue"
+                  v-on="inputEvents"
+                />
+              </template>
+            </v-date-picker>
+          </div>
+          <div class="flex-full m-l-1">
+            <p>할인가격</p>
+            <input
+              v-model="itemPriceDiscount"
+              type="text"
+              class="jelly-text jelly-text--h wd-full text-right"
+            />
+          </div>
+          <span v-if="LOGIN_TEACHER" class="m-t-9">
+            {{ LOGIN_TEACHER.reg_pay_unit }}
+          </span>
+        </div>
+      </div>
+      <div class="m-t-5">
+        <p>상품 이미지</p>
+        <input
+          id="itemThumb"
+          type="file"
+          class="jelly-text jelly-text--h wd-full"
+        />
+      </div>
+      <div class="m-t-5">
+        <vue-editor v-model="itemContent"> </vue-editor>
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('itemInsert')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onSubmitItem">
+          등록하기
+        </button>
+      </div>
+    </b-modal>
+    <b-modal
+      id="cateInsert"
+      ref="ref-cateInsert"
+      size="lg"
+      hide-footer
+      hide-header
+    >
+      <div class="">
+        <p>카테고리 이름</p>
+        <input v-model="cate_name" type="text" class="jelly-text wd-full" />
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('cateInsert')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onSubmit">
+          등록하기
+        </button>
       </div>
     </b-modal>
   </div>
@@ -55,7 +205,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
-// import { axiosForm } from '~/config/util'
+import { axiosForm } from '~/config/util'
 
 export default {
   layout: 'default-pc',
@@ -63,13 +213,43 @@ export default {
     return {
       params: {},
       paramsForm: {},
-      pay: 0,
+      calendarSales: null,
+      calendarDiscountSales: null,
+      cate_name: '',
+      cateIdx: '',
+      itemPrice: 0,
+      itemPriceDiscount: 0,
+      itemContent: '',
+      masks: {
+        input: 'YYYY-MM-DD',
+      },
+      itemName: '',
+      queryCate: null,
     }
   },
 
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+  },
+  watch: {
+    '$route.query.cate': {
+      handler(value) {
+        console.log(value)
+        this.queryCate = value
+        // if (this.queryCate) {
+        //   this.params = this.LOGIN_TEACHER
+        //   //   this.params.queryCate = value
+        //   this.params.type = 'shopList'
+        //   this.GET_AXIOS(this.params)
+        // } else {
+        //   this.params = this.LOGIN_TEACHER
+        //   this.params.type = 'shopList'
+        //   this.GET_AXIOS(this.params)
+        // }
+      },
+      immediate: true,
+    },
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -89,10 +269,91 @@ export default {
     // EVENT
     onSubmit() {
       this.paramsForm = this.LOGIN_TEACHER
-      this.paramsForm.type = 'loanList'
-      this.paramsForm.pay = this.pay
+      this.paramsForm.type = 'cateInsert'
+      this.paramsForm.cate_name = this.cate_name
       this.POST_AXIOS(this.paramsForm)
+      setTimeout(() => {
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'shopList'
+        this.GET_AXIOS(this.params)
+      }, 1000)
+      this.$bvModal.hide('cateInsert')
     },
+    onSubmitItem() {
+      const itemThumb = document.getElementById('itemThumb')
+      const FORM_DATA = new FormData()
+      Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
+        FORM_DATA.append(v[0], v[1])
+      })
+      FORM_DATA.append('type', 'itemInsert')
+      FORM_DATA.append('calendarSales', this.calendarSales)
+      FORM_DATA.append('calendarDiscountSales', this.calendarDiscountSales)
+      FORM_DATA.append('cateIdx', this.cateIdx)
+      FORM_DATA.append('itemPrice', this.itemPrice)
+      FORM_DATA.append('itemContent', this.itemContent)
+      FORM_DATA.append('itemName', this.itemName)
+      FORM_DATA.append('itemThumb', itemThumb.files[0])
+      FORM_DATA.append('itemPriceDiscount', this.itemPriceDiscount)
+      axiosForm(FORM_DATA, '/teacher.php')
+
+      //   this.paramsForm = this.LOGIN_TEACHER
+      //   this.paramsForm.type = 'itemInsert'
+      //   this.paramsForm.calendarSales = this.calendarSales
+      //   this.paramsForm. = this.calendarDiscountSales
+      //   this.paramsForm. = this.cateIdx
+      //   this.paramsForm. = this.itemPrice
+      //   this.paramsForm. = this.itemContent
+      //   this.paramsForm. = this.itemName
+      //   this.paramsForm.itemPriceDiscount = this.
+      //   this.POST_AXIOS(this.paramsForm)
+      setTimeout(() => {
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'shopList'
+        this.GET_AXIOS(this.params)
+      }, 1000)
+      this.$bvModal.hide('itemInsert')
+    },
+    isActiveCalendar(e) {
+      this.$refs[e].classList.toggle('is_active')
+    },
+    onClickCategory(e) {
+      if (e) {
+        this.$router.push(`/shop-list?cate=${e}`)
+      } else {
+        this.$router.push(`/shop-list`)
+      }
+    },
+    onClickItemDetail(e) {
+      this.params = this.LOGIN_TEACHER
+      this.params.type = 'shopList'
+      this.params.detailIdx = e
+      console.log(e)
+      this.GET_AXIOS(this.params)
+      setTimeout(() => {
+        this.calendarSales = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.end_day
+        this.calendarDiscountSales =
+          this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_dis_date
+        this.cateIdx = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.ssc_idx
+        this.itemPrice = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_price
+        this.itemContent =
+          this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_content
+        this.itemName = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_name
+        this.itemPriceDiscount =
+          this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_dis_price
+      }, 1000)
+      this.$bvModal.show('itemInsert')
+    },
+    onClickItemInsert() {
+      this.calendarSales = ''
+      this.calendarDiscountSales = ''
+      this.cateIdx = ''
+      this.itemPrice = ''
+      this.itemContent = ''
+      this.itemName = ''
+      this.itemPriceDiscount = ''
+      this.$bvModal.show('itemInsert')
+    },
+    //
   },
 }
 </script>
