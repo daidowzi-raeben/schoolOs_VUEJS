@@ -60,7 +60,7 @@
               >
                 <!-- {{ process.env.VUE_APP_API }} -->
                 <img
-                  :src="`http://localhost:3095/data/teacher/shop/${v.item_thumb}`"
+                  :src="`http://school-os.net:3095/data/teacher/shop/${v.item_thumb}`"
                 />
                 {{ v.item_name }}
                 <p>{{ v.item_price | comma }}</p>
