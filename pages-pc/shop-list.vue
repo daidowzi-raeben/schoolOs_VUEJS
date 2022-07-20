@@ -230,6 +230,7 @@ export default {
       },
       itemName: '',
       queryCate: null,
+      inputValue: new Date(),
     }
   },
 
