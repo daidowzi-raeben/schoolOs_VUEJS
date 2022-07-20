@@ -106,12 +106,14 @@
               :masks="masks"
               class="notAnime"
             >
-              <template v-slot="{ inputValue, inputEvents }">
-                <input
-                  class="jelly-text jelly-text--h wd-full"
-                  :value="inputValue"
-                  v-on="inputEvents"
-                />
+              <template #default="{ inputValue, inputEvents }">
+                <div>
+                  <input
+                    class="jelly-text jelly-text--h wd-full"
+                    :value="inputValue"
+                    v-on="inputEvents"
+                  />
+                </div>
               </template>
             </v-date-picker>
           </div>
@@ -137,7 +139,7 @@
               :masks="masks"
               class="notAnime"
             >
-              <template v-slot="{ inputValue, inputEvents }">
+              <template #default="{ inputValue, inputEvents }">
                 <input
                   class="jelly-text jelly-text--h wd-full"
                   :value="inputValue"
@@ -230,7 +232,7 @@ export default {
       },
       itemName: '',
       queryCate: null,
-      inputValue: new Date(),
+      // inputValue: new Date(),
     }
   },
 

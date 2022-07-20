@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div
+      id="jellyAdminBG"
+      class="jellyAdminBG"
+      :style="`background-image:url(${adminBackgroundImage});position:fixed;width:100%;height:100%;background-size:100% 100%; top:0; left:0; opacity:.5`"
+    ></div>
     <div v-if="!queryStep">
       <h1>Hellow, Jelly Word</h1>
       <div>
@@ -90,16 +95,16 @@
           />
         </div>
         <div>
-          <input id="reg_photo" type="file" />
+          <!-- <input id="reg_photo" type="file" /> -->
         </div>
       </div>
       <div><button @click="onClickNextStep(2)">다음</button></div>
     </div>
     <div v-if="queryStep == '2'">
-      <h1>교육청 소속을 알려주세요</h1>
+      <h1>학교를 검색하세요</h1>
       <div>
         <div>
-          <input v-model="searchSchool" type="text" />
+          <input v-model="searchSchool" class="jelly-text" type="text" />
           <button @click="onClickSchoolSearch">검색</button>
           <div>
             학교리스트
@@ -114,7 +119,6 @@
               </div>
             </div>
           </div>
-          <div @click="onClickSchoolSelect(20)">asasdasdasd</div>
         </div>
       </div>
     </div>
@@ -155,18 +159,17 @@
         운영에 따라 파산을 해야하는 경우가 발생할 수 있으니 신중히 운영하시기
         바랍니다.
       </div>
-      <select v-model="inflation">
+      <select v-model="inflation" class="jelly-text">
         <option value="Y">사용</option>
         <option value="N">미사용</option>
       </select>
       <div><button @click="onClickNextStep">가입하기</button></div>
     </div>
-    schoolMaster
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 import { axiosForm } from '~/config/util'
 
 export default {
@@ -188,9 +191,11 @@ export default {
       reg_class: '',
       reg_country: '',
       inflation: 'Y',
+      adminBackgroundImage: '/pc/img/bg/london-bridge-by-sunny.jpg',
     }
   },
   computed: {
+    ...mapState(['LOGIN', 'adminMainBG']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   watch: {
@@ -198,6 +203,14 @@ export default {
       handler(value) {
         console.log(value)
         this.queryStep = value
+        this.getAxios()
+      },
+      immediate: true,
+    },
+    adminMainBG: {
+      handler(value) {
+        console.log('================>', value)
+        this.adminBackgroundImage = value
       },
       immediate: true,
     },
@@ -206,15 +219,20 @@ export default {
     // this.queryStep = this.$route.query.step
   },
   mounted() {
+    this.GET_API_BG_PIXABAY('여름')
     console.log('query', this.$route.query)
     this.getAxios()
   },
   methods: {
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
+    ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'GET_API_BG_PIXABAY']),
+    ...mapMutations(['ADMIN_MAIN_BG_MUTATIONS']),
+
     getAxios() {
       if (this.queryStep === '4') {
         this.params.type = 'bankList'
-        this.GET_AXIOS(this.params)
+        setTimeout(() => {
+          this.GET_AXIOS(this.params)
+        })
       }
     },
     onClickNextStep(e) {
@@ -279,7 +297,7 @@ export default {
 
 <style lang="scss">
 * {
-  color: rgb(40, 40, 40);
+  color: #fff;
 }
 body {
   background-color: #fff;

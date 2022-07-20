@@ -22,7 +22,7 @@ const createStore = () => {
       chatURL: 'http://localhost:9000',
 
       //  ---------------------------------[output api]
-      adminMainBG: [],
+      adminMainBG: '/pc/img/bg/london-bridge-by-sunny.jpg',
       mySchoolInformation: [],
     },
     getters: {
@@ -214,8 +214,18 @@ const createStore = () => {
           .get(URL)
           .then((res) => {
             // 메인 데이터 합계
-            commit('ADMIN_MAIN_BG_MUTATIONS', res.data)
-            console.log('ADMIN_MAIN_BG_MUTATIONS', res.data)
+            const randNum = Math.floor(Math.random() * 9)
+            const imgUrl = res.data.hits[randNum].largeImageURL
+            if (imgUrl) {
+              commit('ADMIN_MAIN_BG_MUTATIONS', imgUrl)
+            }
+            console.log(
+              'ADMIN_MAIN_BG_MUTATIONS',
+              res.data,
+              randNum,
+              res.data.hits[2].largeImageURL,
+              res.data.hits
+            )
           })
           .catch((res) => {
             console.log('ADMIN_MAIN_BG_MUTATIONS', res)

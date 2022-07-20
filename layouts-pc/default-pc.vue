@@ -1,7 +1,11 @@
 <template>
   <div id="jellyAdmin">
     <div id="jellyAdminheader">
-      <div id="jellyAdminBG" class="jellyAdminBG"></div>
+      <div
+        id="jellyAdminBG"
+        class="jellyAdminBG"
+        :style="`background-image:url(${adminBackgroundImage}); `"
+      ></div>
       <nav>
         <div class="menu" @click="menuActiveNav">
           <span id="menu-top" class="menu-global menu-top"></span>
@@ -64,11 +68,21 @@ export default {
   data() {
     return {
       LOGIN_CONFIG: {},
+      adminBackgroundImage: '/pc/img/bg/london-bridge-by-sunny.jpg',
     }
   },
   computed: {
     ...mapState(['LOGIN', 'adminMainBG']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+  },
+  watch: {
+    adminMainBG: {
+      handler(value) {
+        console.log('================>', value)
+        this.adminBackgroundImage = value
+      },
+      immediate: true,
+    },
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -79,27 +93,16 @@ export default {
       this.$router.push(`/member/sign-in`)
     }
 
+    // document.getElementById(
+    //   'jellyAdminBG'
+    // ).style.backgroundImage = `url(${this.adminMainBG})`
+
     // pixabay api load
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
     this.GET_API_BG_PIXABAY('여름')
-
-    document.getElementById(
-      'jellyAdminBG'
-    ).style.backgroundImage = `url(/pc/img/bg/london-bridge-by-sunny.jpg)`
-
-    setTimeout(() => {
-      const randNum = Math.floor(Math.random() * 3)
-      // const randNum = 1
-      let imgUrl = this.adminMainBG.hits[randNum].largeImageURL
-      imgUrl
-        ? (imgUrl = this.adminMainBG.hits[randNum].largeImageURL)
-        : (imgUrl = '/pc/img/bg/london-bridge-by-sunny.jpg')
-      document.getElementById(
-        'jellyAdminBG'
-      ).style.backgroundImage = `url(${imgUrl})`
-
-      console.log(this.adminMainBG.hits[randNum].largeImageURL)
-    })
+    // setTimeout(() => {
+    //   console.log('this.adminMainBG', this.adminMainBG)
+    // }, 1000)
   },
   methods: {
     // init
