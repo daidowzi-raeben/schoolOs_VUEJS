@@ -74,6 +74,11 @@ export default {
     // 인스턴스가 초기화 된 직후
   },
   mounted() {
+    const loginCheck = localStorage.getItem('TEACHER')
+    if (!loginCheck) {
+      this.$router.push(`/member/sign-in`)
+    }
+
     // pixabay api load
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
     this.GET_API_BG_PIXABAY('여름')
