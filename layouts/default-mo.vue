@@ -38,6 +38,6 @@ export default {
 
 <style lang="scss">
 body {
-  background-color: transparent !important;
+  // background-color: transparent !important;
 }
 </style>

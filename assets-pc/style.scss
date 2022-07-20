@@ -1,0 +1,237 @@
+#teacherChat {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  .isTeacherChat {
+    width: 100%;
+    height: 100vh;
+  }
+  .teacherChat-header {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: #000;
+    z-index: 999;
+    top: 0;
+    left: 0;
+  }
+}
+.toggleCalendar {
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  display: none;
+  &.is_active {
+    display: block;
+  }
+}
+.jelly {
+  &-btn {
+    height: 36px;
+    padding: 0 20px;
+    font-size: 13px;
+    border-radius: 4px;
+    font-weight: 400;
+    text-align: center;
+    &--default {
+      background-color: #fff;
+      color: #333;
+      border: solid 1px #c2c2c2;
+      &:hover {
+        border-color: #5e2bb8;
+      }
+    }
+    &--gray {
+      color: #fff !important;
+      border: solid 1px #5b606e;
+      background-color: #5b606e;
+    }
+    &--pink {
+      color: #fff !important;
+      border: solid 1px #5e2bb8;
+      background-color: #5e2bb8;
+    }
+    &--blue {
+      border: 1px solid #5e99cb;
+      color: #fff !important;
+      background: #5e99cb;
+    }
+    &--link {
+      color: #5e2bb8;
+      text-decoration: underline;
+      padding: 0;
+      margin: 0;
+    }
+    &.lg {
+      width: 221px;
+      height: 56px;
+      font-size: 17px;
+    }
+    &.md {
+      min-width: 100px;
+      height: 56px;
+      font-size: 17px;
+    }
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+  &-text {
+    height: 36px;
+    border: 1px solid #c2c2c2;
+    padding: 5px 10px;
+    border-radius: 4px;
+    &--h {
+      height: 42px;
+    }
+  }
+  &-color {
+    &--type1 {
+      color: $type1;
+    }
+    &--type2 {
+      color: $type2;
+    }
+    &--type3 {
+      color: $type3;
+    }
+    &--type4 {
+      color: $type4;
+    }
+    &--gray {
+      color: $gray;
+    }
+    &--888 {
+      color: #888;
+    }
+  }
+  &-background {
+    &--type1 {
+      background-color: $type1;
+    }
+    &--type2 {
+      background-color: $type2;
+    }
+    &--type3 {
+      background-color: $type3;
+    }
+    &--type4 {
+      background-color: $type4;
+    }
+    &--gray {
+      background-color: $gray;
+    }
+    &--888 {
+      color: #888;
+    }
+  }
+  &-badge {
+    padding: 8px 14px;
+    border-radius: 50px;
+    border: solid 1px #acb5be;
+    display: inline-block;
+    color: #111;
+    &.is_active {
+      border-color: $color;
+      background: $color;
+      color: #fff;
+    }
+  }
+  &-point {
+    padding: 3px 5px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff !important;
+  }
+  &-tab {
+    > ul {
+      background-color: #f2f3f5;
+      padding: 5px;
+      li {
+        width: 100%;
+        font-size: 14px;
+        text-align: center;
+        height: 32px;
+        line-height: 30px;
+        position: relative;
+        &.is_active {
+          background: $color;
+          border-radius: 4px;
+          color: #fff;
+          a {
+            color: #fff;
+          }
+        }
+        a {
+          position: absolute;
+          width: 100%;
+          line-height: 30px;
+          height: 100%;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+  &-table {
+    width: 100%;
+    th {
+      background-color: #eee;
+    }
+    td {
+    }
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 10px 15px;
+    }
+  }
+}
+.limit {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  &-1 {
+    -webkit-line-clamp: 1;
+  }
+  &-2 {
+    -webkit-line-clamp: 2;
+  }
+  &-3 {
+    -webkit-line-clamp: 3;
+  }
+  &-4 {
+    -webkit-line-clamp: 4;
+  }
+  &-5 {
+    -webkit-line-clamp: 5;
+  }
+}
+.dotted {
+  border: 2px solid $gray;
+  border-style: dashed;
+}
+
+@for $i from 0 to 11 {
+  .h#{$i*10} {
+    min-height: $i * 10vh !important;
+  }
+}
+
+.loading {
+  text-align: center;
+  position: relative;
+  > img {
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

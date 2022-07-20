@@ -128,8 +128,8 @@ body {
   background-color: #000 !important;
   color: rgba(94, 86, 105, 0.68);
 }
-@import '~/assets-mo/var.scss';
-@import '~/assets-mo/style.scss';
-@import '~/assets-mo/reset.scss';
+@import '~/assets-pc/var.scss';
+@import '~/assets-pc/style.scss';
+@import '~/assets-pc/reset.scss';
 @import '~/assets-pc/layout.scss';
 </style>

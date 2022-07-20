@@ -118,6 +118,7 @@ export default {
     assets: 'assets-' + process.env.DEVICE,
     components: 'components-' + process.env.DEVICE,
     pages: 'pages-' + process.env.DEVICE,
+    layouts: 'layouts-' + process.env.DEVICE,
   },
   buildDir: '.nuxt-' + process.env.DEVICE,
   ssr: true,
