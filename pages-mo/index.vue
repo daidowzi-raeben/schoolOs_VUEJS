@@ -1,5 +1,5 @@
 <template>
-  <div v-if="GET_AXIOS_CALLBACK_GETTER" id="school-content">
+  <div v-if="GET_AXIOS_CALLBACK_GETTER.status" id="school-content">
     <div class="content">
       <div class="content__top">
         <div v-b-modal.ModalNotice class="content__top--notice flex">

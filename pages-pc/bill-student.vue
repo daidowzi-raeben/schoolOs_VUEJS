@@ -64,7 +64,7 @@
                 v-model="billStudent"
                 class="jelly-text wd-full"
               >
-                <option :value="null">전체발송</option>
+                <option value="all">전체발송</option>
                 <option
                   v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
                   :key="i"
@@ -124,7 +124,7 @@ export default {
     return {
       params: {},
       paramsPost: {},
-      billStudent: null,
+      billStudent: 'all',
       billPay: 0,
       billSubject: '',
       billContent: '',

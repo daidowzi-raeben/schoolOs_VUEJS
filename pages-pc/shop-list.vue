@@ -103,7 +103,7 @@
             <p>판매종료일</p>
             <v-date-picker
               v-model="calendarSales"
-              :masks="masks"
+              :masks="masks.input"
               class="notAnime"
             >
               <template #default="{ inputValue, inputEvents }">

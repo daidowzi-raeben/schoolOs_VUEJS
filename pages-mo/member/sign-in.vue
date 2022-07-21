@@ -61,6 +61,10 @@ export default {
   },
   mounted() {
     console.log(this.$nuxt)
+    const loginCheck = localStorage.getItem('STUDENT')
+    if (loginCheck) {
+      this.$router.push(`/`)
+    }
   },
   methods: {
     // init
@@ -79,6 +83,7 @@ export default {
     },
     onClickLogin() {
       this.params.type = 'login'
+      console.log('this.params', this.params)
       this.POST_AXIOS(this.params)
       this.$router.push('/')
     },

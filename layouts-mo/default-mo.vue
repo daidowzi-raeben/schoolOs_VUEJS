@@ -28,6 +28,10 @@ export default {
     ...mapState(['LOADING']),
   },
   mounted() {
+    const loginCheck = localStorage.getItem('STUDENT')
+    if (!loginCheck) {
+      this.$router.push(`/member/sign-in`)
+    }
     console.log('[LOADING_INIT]', this.LOADING_INIT)
     if (!localStorage.getItem('STUDENT')) {
       // return this.$router.push('/member/sign-in')
