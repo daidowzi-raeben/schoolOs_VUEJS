@@ -127,6 +127,12 @@ const createStore = () => {
       POST_AXIOS({ commit }, params, state) {
         console.log('params', params)
         let URL_TYPE = ''
+        console.log(process.env.DEVICE, process.env.DEVICE, process.env.DEVICE)
+        console.log(
+          process.env.VUE_APP_API,
+          process.env.DEVICE,
+          process.env.DEVICE
+        )
         process.env.DEVICE === 'mo'
           ? (URL_TYPE = 'student')
           : (URL_TYPE = 'teacher')
