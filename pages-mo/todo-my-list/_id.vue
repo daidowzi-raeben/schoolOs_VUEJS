@@ -35,7 +35,9 @@
     <div class="content">
       <div class="content__body m-t-1 h60">
         <div class="account">
-          <h3>중요퀘스트</h3>
+          <h3 v-if="LOGIN_STUDENT.t_todo_name">
+            진행중인 나의 {{ LOGIN_STUDENT.t_todo_name }}
+          </h3>
         </div>
         <!-- <div
           v-if="!GET_AXIOS_CALLBACK_GETTER.questListMy"
@@ -43,6 +45,16 @@
         >
           <img src="~/static/mo/loading/loading.gif" />
         </div> -->
+        <div
+          v-if="
+            !GET_AXIOS_CALLBACK_GETTER.questListMy && LOGIN_STUDENT.t_todo_name
+          "
+          class="quest__content m-t-3"
+        >
+          <div class="text-center p-t-10 jelly-color--type4">
+            <strong>할 수 있는 일을 찾아 '수락' 버튼을 눌러보세요</strong>
+          </div>
+        </div>
         <div
           v-if="GET_AXIOS_CALLBACK_GETTER.questListMy"
           class="quest__content m-t-3"
@@ -70,8 +82,79 @@
                     </button> -->
                   </div>
                 </div>
-                <div class="m-t-2 jelly-color--888 limit limit-3">
-                  {{ v.contents.replaceAll(/\!\[|\].*.[)]/g, '') }}
+                <div class="m-t-2 flex flex-full">
+                  <div>
+                    보상
+                    <strong class="bold font-18 m-l-1"
+                      ><em>{{ v.price }}</em></strong
+                    >
+                    <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                      LOGIN_STUDENT.t_reg_pay_unit
+                    }}</span>
+                  </div>
+                  <div class="flex-right">
+                    <div class="flex m-t-0">
+                      <span
+                        class="jelly-point m-t-0 jelly-background--type1 m-l-1"
+                        >{{ v.intellect }}</span
+                      >
+                      <span
+                        class="jelly-point m-t-0 jelly-background--type2 m-l-1"
+                        >{{ v.effort }}</span
+                      >
+                      <span
+                        class="jelly-point m-t-0 jelly-background--type3 m-l-1"
+                        >{{ v.health }}</span
+                      >
+                      <span
+                        class="jelly-point m-t-0 jelly-background--type4 m-l-1"
+                        >{{ v.etiquette }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content__body m-t-1 h60">
+        <div class="account">
+          <h3>완료</h3>
+        </div>
+        <!-- <div
+          v-if="!GET_AXIOS_CALLBACK_GETTER.questListMy"
+          class="loading h20"
+        >
+          <img src="~/static/mo/loading/loading.gif" />
+        </div> -->
+
+        <div
+          v-if="GET_AXIOS_CALLBACK_GETTER.questListMyComplete"
+          class="quest__content m-t-3"
+        >
+          <div
+            v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.questListMyComplete"
+            :key="index"
+            class="box quest m-b-3"
+            @click="onClickTodoDetail(v.idx)"
+          >
+            <div class="flex">
+              <div class="label blue">{{ v.cate_subject }}</div>
+              <div class="flex-full m-l-2">
+                <div class="flex m-t-0">
+                  <div class="txt">
+                    <p class="bold">{{ v.subject }}</p>
+                    <span
+                      >{{ v.start_day | moment('YY.MM.DD') }} ~
+                      {{ v.end_day | moment('YY.MM.DD') }}</span
+                    >
+                  </div>
+                  <div class="pay text-right flex-right">
+                    <!-- <button class="jelly-btn jelly-btn--default">
+                      자세히 보기
+                    </button> -->
+                  </div>
                 </div>
                 <div class="m-t-2 flex flex-full">
                   <div>
@@ -79,7 +162,9 @@
                     <strong class="bold font-18 m-l-1"
                       ><em>{{ v.price }}</em></strong
                     >
-                    루피
+                    <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                      LOGIN_STUDENT.t_reg_pay_unit
+                    }}</span>
                   </div>
                   <div class="flex-right">
                     <div class="flex m-t-0">

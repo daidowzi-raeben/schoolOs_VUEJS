@@ -35,13 +35,18 @@
     <div class="content">
       <div class="content__body m-t-1 h60">
         <div class="account">
-          <h3>중요퀘스트</h3>
+          <h3 v-if="LOGIN_STUDENT.t_todo_name">
+            진행중인 {{ LOGIN_STUDENT.t_todo_name }}
+          </h3>
         </div>
         <div
-          v-if="!GET_AXIOS_CALLBACK_GETTER.questListMain"
-          class="loading h20"
+          v-if="
+            !GET_AXIOS_CALLBACK_GETTER.questListMain &&
+            LOGIN_STUDENT.t_todo_name
+          "
+          class="quest__content m-t-3"
         >
-          <img src="~/static/mo/loading/loading.gif" />
+          아직 할 수 있는 일이 없어요 :D
         </div>
         <div
           v-if="GET_AXIOS_CALLBACK_GETTER.questListMain"
@@ -70,16 +75,16 @@
                     </button> -->
                   </div>
                 </div>
-                <div class="m-t-2 jelly-color--888 limit limit-3">
-                  {{ v.contents.replaceAll(/\!\[|\].*.[)]/g, '') }}
-                </div>
+
                 <div class="m-t-2 flex flex-full">
                   <div>
                     보상
                     <strong class="bold font-18 m-l-1"
                       ><em>{{ v.price }}</em></strong
                     >
-                    루피
+                    <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                      LOGIN_STUDENT.t_reg_pay_unit
+                    }}</span>
                   </div>
                   <div class="flex-right">
                     <div class="flex m-t-0">
@@ -107,7 +112,9 @@
           </div>
         </div>
         <div class="account">
-          <h3>서브퀘스트</h3>
+          <h3 v-if="LOGIN_STUDENT.t_todo_name">
+            종료된 {{ LOGIN_STUDENT.t_todo_name }}
+          </h3>
         </div>
         <div v-if="!GET_AXIOS_CALLBACK_GETTER.questListSub" class="loading h20">
           <img src="~/static/mo/loading/loading.gif" />
@@ -139,16 +146,16 @@
                     </button> -->
                   </div>
                 </div>
-                <div class="m-t-2 jelly-color--888 limit limit-3">
-                  {{ v.contents.replaceAll(/\!\[|\].*.[)]/g, '') }}
-                </div>
+
                 <div class="m-t-2 flex flex-full">
                   <div>
                     보상
                     <strong class="bold font-18 m-l-1"
                       ><em>{{ v.price }}</em></strong
                     >
-                    루피
+                    <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                      LOGIN_STUDENT.t_reg_pay_unit
+                    }}</span>
                   </div>
                   <div class="flex-right">
                     <div class="flex m-t-0">

@@ -10,6 +10,91 @@
     }
   }
 }
+.historyBack {
+  font-size: 30px;
+}
+.shopDetailImage {
+  width: calc(100% - 30px);
+  background: #eee;
+  height: 200px;
+  margin: 15px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #eee;
+  > img {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  > div {
+    text-align: center;
+    font-size: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.matketItem {
+  ul {
+    width: 100%;
+    position: relative;
+    li {
+      float: left;
+      width: 45%;
+      margin-bottom: 25px;
+      margin-right: 5%;
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
+      .image {
+        background: #eee;
+        height: 100px;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        > img {
+          position: absolute;
+          min-width: 100%;
+          min-height: 100%;
+          height: auto;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+        > div {
+          text-align: center;
+          font-size: 40px;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+    &::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+}
+.quest-fixed {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  button {
+    width: 100%;
+    border-radius: 0;
+    height: 50px;
+  }
+}
 .sos-login {
   > .header {
     position: fixed;
@@ -175,6 +260,9 @@
               margin-top: 2px;
               &.blue {
                 background-color: #0078ff;
+              }
+              &.gray {
+                background-color: #888;
               }
             }
             .txt,

@@ -127,7 +127,9 @@
                   <em class="bold">
                     {{ v.price | comma }}
                   </em>
-                  루피
+                  <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                    LOGIN_STUDENT.t_reg_pay_unit
+                  }}</span>
                 </p>
                 <span>{{ v.d_day }}일남음</span>
               </div>
@@ -154,7 +156,9 @@
                   GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount | comma
                 }}</em></strong
               >
-              <span>루피</span>
+              <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                LOGIN_STUDENT.t_reg_pay_unit
+              }}</span>
             </div>
           </div>
           <div class="flex m-t-3">

@@ -62,9 +62,11 @@ export default {
   mounted() {
     console.log(this.$nuxt)
     const loginCheck = localStorage.getItem('STUDENT')
-    if (loginCheck) {
-      this.$router.push(`/`)
-    }
+    setTimeout(() => {
+      if (loginCheck) {
+        this.$router.push('/')
+      }
+    }, 1000)
   },
   methods: {
     // init
@@ -85,7 +87,12 @@ export default {
       this.params.type = 'login'
       console.log('this.params', this.params)
       this.POST_AXIOS(this.params)
-      this.$router.push('/')
+      setTimeout(() => {
+        const loginCheck = localStorage.getItem('STUDENT')
+        if (loginCheck) {
+          this.$router.push('/')
+        }
+      }, 1000)
     },
   },
 }

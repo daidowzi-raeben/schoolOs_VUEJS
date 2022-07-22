@@ -2,18 +2,18 @@
   <div id="school-content">
     <div class="p-3 jelly-tab">
       <ul class="flex">
-        <li class="is_active">새로운 알림장</li>
-        <li><nuxt-link to="/notice-read-list/0">모든 알림장</nuxt-link></li>
+        <li><nuxt-link to="/notice-list/0">새로운 알림장</nuxt-link></li>
+        <li class="is_active">모든 알림장</li>
       </ul>
     </div>
     <div class="content">
       <div class="content__body m-t-1 h60">
         <div
-          v-if="GET_AXIOS_CALLBACK_GETTER.newNotice"
+          v-if="GET_AXIOS_CALLBACK_GETTER.notice"
           class="quest__content m-t-3"
         >
           <div
-            v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.newNotice"
+            v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.notice"
             :key="index"
             class="box quest m-b-3"
             @click="onClickBillDetail(v.idx)"
