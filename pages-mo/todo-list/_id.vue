@@ -34,16 +34,13 @@
     </div>
     <div class="content">
       <div class="content__body m-t-1 h60">
-        <div class="account">
+        <div v-if="LOGIN_STUDENT" class="account">
           <h3 v-if="LOGIN_STUDENT.t_todo_name">
             진행중인 {{ LOGIN_STUDENT.t_todo_name }}
           </h3>
         </div>
         <div
-          v-if="
-            !GET_AXIOS_CALLBACK_GETTER.questListMain &&
-            LOGIN_STUDENT.t_todo_name
-          "
+          v-if="!GET_AXIOS_CALLBACK_GETTER.questListMain"
           class="quest__content m-t-3"
         >
           아직 할 수 있는 일이 없어요 :D
@@ -111,7 +108,7 @@
             </div>
           </div>
         </div>
-        <div class="account">
+        <div v-if="LOGIN_STUDENT" class="account">
           <h3 v-if="LOGIN_STUDENT.t_todo_name">
             종료된 {{ LOGIN_STUDENT.t_todo_name }}
           </h3>

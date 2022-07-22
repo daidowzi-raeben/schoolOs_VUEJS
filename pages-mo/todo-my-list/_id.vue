@@ -34,7 +34,7 @@
     </div>
     <div class="content">
       <div class="content__body m-t-1 h60">
-        <div class="account">
+        <div v-if="LOGIN_STUDENT" class="account">
           <h3 v-if="LOGIN_STUDENT.t_todo_name">
             진행중인 나의 {{ LOGIN_STUDENT.t_todo_name }}
           </h3>
@@ -46,9 +46,7 @@
           <img src="~/static/mo/loading/loading.gif" />
         </div> -->
         <div
-          v-if="
-            !GET_AXIOS_CALLBACK_GETTER.questListMy && LOGIN_STUDENT.t_todo_name
-          "
+          v-if="!GET_AXIOS_CALLBACK_GETTER.questListMy"
           class="quest__content m-t-3"
         >
           <div class="text-center p-t-10 jelly-color--type4">
