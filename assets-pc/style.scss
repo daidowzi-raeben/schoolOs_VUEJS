@@ -30,6 +30,21 @@
   }
 }
 .jelly {
+  &-table {
+    width: 100%;
+    border: 1px solid #ddd;
+    tr.is_active {
+      background-color: #f8f8f8;
+    }
+    th {
+      text-align: center;
+    }
+    th,
+    td {
+      padding: 5px 7px;
+      border: 1px solid #ddd;
+    }
+  }
   &-btn {
     height: 36px;
     padding: 0 20px;

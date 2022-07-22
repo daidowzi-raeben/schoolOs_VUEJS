@@ -14,7 +14,9 @@ const createStore = () => {
       GET_MAIN_STATE: [],
       POST_AXIOS_CALLBACK_DATA: [],
       GET_AXIOS_CALLBACK_DATA: [],
+      GET_AXIOS_CALLBACK_DATA_SUB: [],
       LOGIN: [],
+      GET_AXIOS_CALLBACK_DATA_BILL: '',
 
       //  ---------------------------------[admin]
 
@@ -68,6 +70,13 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_SUCCESS(state, payload) {
         // state.LOADING = true
         state.GET_AXIOS_CALLBACK_DATA = payload
+      },
+      GET_AXIOS_CALLBACK_DATA_SUCCESS_BILL(state, payload) {
+        // state.LOADING = true
+        state.GET_AXIOS_CALLBACK_DATA_BILL = payload
+      },
+      GET_AXIOS_CALLBACK_DATA_SUCCESS_SUB(state, payload) {
+        state.GET_AXIOS_CALLBACK_DATA_SUB = payload
       },
       LOGIN_LOCALSTORAGE(state, payload) {
         if (payload === false) {
@@ -206,7 +215,13 @@ const createStore = () => {
                 res.data.status.etiquette
               res.data.status.total = total
             }
-            commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
+            if (params.type === 'billStudentCnt') {
+              commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_BILL', res.data.cnt)
+            } else if (params.type === 'attendance') {
+              commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_SUB', res.data)
+            } else {
+              commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
+            }
             console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS', res)
           })
           .catch((res) => {

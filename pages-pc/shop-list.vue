@@ -101,7 +101,14 @@
         <div class="flex">
           <div class="flex-full m-r-1 relative">
             <p>판매종료일</p>
-            <v-date-picker
+            <div class="relative">
+              <b-form-datepicker
+                v-model="calendarSales"
+                class="jelly-text jelly-text--h wd-full"
+                @context="onClickCalendarSales"
+              ></b-form-datepicker>
+            </div>
+            <!-- <v-date-picker
               v-model="calendarSales"
               :masks="masks.input"
               class="notAnime"
@@ -115,7 +122,7 @@
                   />
                 </div>
               </template>
-            </v-date-picker>
+            </v-date-picker> -->
           </div>
           <div class="flex-full m-l-1">
             <p>상품가격</p>
@@ -134,6 +141,15 @@
         <div class="flex">
           <div class="flex-full m-r-1 relative">
             <p>할인 종료일</p>
+            <div>
+              <b-form-datepicker
+                v-model="calendarDiscountSales"
+                type="date"
+                class="jelly-text jelly-text--h wd-full"
+                @context="onClickCalendarDiscountSales"
+              ></b-form-datepicker>
+            </div>
+            <!--             
             <v-date-picker
               v-model="calendarDiscountSales"
               :masks="masks"
@@ -146,7 +162,7 @@
                   v-on="inputEvents"
                 />
               </template>
-            </v-date-picker>
+            </v-date-picker> -->
           </div>
           <div class="flex-full m-l-1">
             <p>할인가격</p>
@@ -222,7 +238,10 @@ export default {
       paramsForm: {},
       calendarSales: null,
       calendarDiscountSales: null,
+      calendarSalesDate: null,
+      calendarDiscountSalesDate: null,
       cate_name: '',
+      context: null,
       cateIdx: '',
       itemPrice: 0,
       itemPriceDiscount: 0,
@@ -294,8 +313,11 @@ export default {
         FORM_DATA.append(v[0], v[1])
       })
       FORM_DATA.append('type', 'itemInsert')
-      FORM_DATA.append('calendarSales', this.calendarSales)
-      FORM_DATA.append('calendarDiscountSales', this.calendarDiscountSales)
+      FORM_DATA.append('calendarSales', this.calendarSalesDate.activeYMD)
+      FORM_DATA.append(
+        'calendarDiscountSales',
+        this.calendarDiscountSalesDate.activeYMD
+      )
       FORM_DATA.append('cateIdx', this.cateIdx)
       FORM_DATA.append('itemPrice', this.itemPrice)
       FORM_DATA.append('itemContent', this.itemContent)
@@ -323,6 +345,14 @@ export default {
     },
     isActiveCalendar(e) {
       this.$refs[e].classList.toggle('is_active')
+    },
+    onClickCalendarSales(ctx) {
+      this.calendarSalesDate = ctx
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    },
+    onClickCalendarDiscountSales(ctx) {
+      this.calendarDiscountSalesDate = ctx
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     },
     onClickCategory(e) {
       if (e) {

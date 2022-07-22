@@ -26,7 +26,6 @@
                 v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
                 :key="i"
                 class="item"
-                @click="onClickStudentDetail(v.sms_idx)"
               >
                 <div class="flex">
                   <p class="title">
@@ -51,6 +50,20 @@
                     (Number(v.PtotalAccount) - Number(v.MtotalAccount)) | comma
                   }}
                   {{ LOGIN_TEACHER.reg_pay_unit }}
+                </div>
+                <div class="flex m-t-3">
+                  <button
+                    class="flex-full jelly-btn jelly-btn--default m-r-1"
+                    @click="onClickAttendanceDetail(v.sms_idx)"
+                  >
+                    출결관리
+                  </button>
+                  <button
+                    class="flex-full jelly-btn jelly-btn--default m-l-1"
+                    @click="onClickStudentDetail(v.sms_idx)"
+                  >
+                    정보확인
+                  </button>
                 </div>
               </div>
             </div>
@@ -235,6 +248,74 @@
         </div>
       </div>
     </b-modal>
+    <b-modal id="studentAttendance" size="xl" hide-footer hide-header>
+      <div>
+        <div class="">
+          <div class="flex">
+            <div class="flex-full">
+              <p>출결날짜</p>
+              <b-form-datepicker
+                v-model="attendanceInsert.smsa_date"
+                type="date"
+                class="jelly-text jelly-text--h wd-full"
+              ></b-form-datepicker>
+            </div>
+            <div class="flex-full m-l-2 m-r-2">
+              <p>구분</p>
+              <input
+                v-model="attendanceInsert.subject"
+                type="text"
+                class="jelly-text wd-full"
+                placeholder="미인정 출석"
+              />
+            </div>
+            <div class="flex-full">
+              <p>사유</p>
+              <input
+                v-model="attendanceInsert.content"
+                type="text"
+                class="jelly-text wd-full"
+                placeholder=""
+              />
+            </div>
+          </div>
+          <div class="m-t-3 text-center">
+            <button
+              class="jelly-btn jelly-btn--default"
+              @click="$bvModal.hide('studentAttendance')"
+            >
+              닫기
+            </button>
+            <button
+              class="jelly-btn jelly-btn--default"
+              @click="onSubmitAttendanceDetail"
+            >
+              저장
+            </button>
+          </div>
+          <div class="m-t-5">
+            <table v-if="GET_AXIOS_CALLBACK_DATA_SUB" class="jelly-table">
+              <tr>
+                <th>날짜</th>
+                <th>구분</th>
+                <th>사유</th>
+              </tr>
+              <tr v-for="(v, i) in GET_AXIOS_CALLBACK_DATA_SUB" :key="i">
+                <td>
+                  {{ v.smsa_date }}
+                </td>
+                <td>
+                  {{ v.subject }}
+                </td>
+                <td>
+                  {{ v.content }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -257,6 +338,8 @@ export default {
       params: {},
       paramsPost: {},
       paramsPostWeek: {},
+      paramsAttendance: {},
+      paramsPostAttendance: {},
       student: {
         class_number: '',
         reg_id: '',
@@ -271,11 +354,17 @@ export default {
         job: '',
         sms_idx: '',
       },
+      attendance: {
+        type: 'attendance',
+      },
+      attendanceInsert: {
+        smsa_date: '',
+      },
     }
   },
 
   computed: {
-    ...mapState(['LOGIN']),
+    ...mapState(['LOGIN', 'GET_AXIOS_CALLBACK_DATA_SUB']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   beforeCreate() {
@@ -294,8 +383,26 @@ export default {
     ...mapMutations([]),
 
     // EVENT
-    onClickTodoDetail(idx) {
-      this.$router.push('/todo-detail/' + idx)
+    onClickAttendanceDetail(idx) {
+      this.paramsAttendance = this.attendance
+      this.paramsAttendance.type = 'attendance'
+      this.paramsAttendance.sms_idx = idx
+      console.log(this.paramsAttendance)
+      this.GET_AXIOS(this.paramsAttendance)
+      this.$bvModal.show('studentAttendance')
+    },
+    onSubmitAttendanceDetail() {
+      this.paramsPostAttendance.type = 'attendance'
+      this.paramsPostAttendance.sms_idx = this.paramsAttendance.sms_idx
+      this.paramsPostAttendance.smt_idx = this.LOGIN_TEACHER.smt_idx
+      this.paramsPostAttendance.smsa_date = this.attendanceInsert.smsa_date
+      this.paramsPostAttendance.subject = this.attendanceInsert.subject
+      this.paramsPostAttendance.content = this.attendanceInsert.content
+      this.POST_AXIOS(this.paramsPostAttendance)
+      setTimeout(() => {
+        this.GET_AXIOS(this.paramsPostAttendance)
+        console.log(this.paramsAttendance)
+      }, 1000)
     },
     onClickStudentDetail(e) {
       this.params = this.LOGIN_TEACHER

@@ -26,9 +26,9 @@
               <li @click="onClickLinkTo('todo-list')">
                 {{ LOGIN_CONFIG.todo_name }} 관리
               </li>
-              <li @click="onClickLinkTo">{{ LOGIN_CONFIG.todo_name }} 검사</li>
               <li @click="onClickLinkTo('notice-list')">알림장 관리</li>
               <li @click="onClickLinkTo('rule-detail')">규칙관리</li>
+              <li @click="onClickLinkTo('teacher-setting')">환경설정</li>
               <li @click="onClickLinkTo('member/sign-out')">로그아웃</li>
             </ul>
           </div>

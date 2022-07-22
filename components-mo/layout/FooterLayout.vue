@@ -36,6 +36,17 @@
               </nuxt-link>
             </li>
             <li>
+              <nuxt-link to="/bill-list">
+                <b-icon icon="percent"></b-icon>
+                <p>
+                  벌금카드
+                  <span v-if="GET_AXIOS_CALLBACK_DATA_BILL" class="badge">{{
+                    GET_AXIOS_CALLBACK_DATA_BILL
+                  }}</span>
+                </p>
+              </nuxt-link>
+            </li>
+            <li>
               <nuxt-link to="/sue-request">
                 <b-icon icon="exclamation-triangle"></b-icon>
                 <p>신고</p>
@@ -49,13 +60,29 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+
 export default {
   name: 'DefaultLayoutFooter',
   data() {
-    return {}
+    return {
+      paramsBill: {},
+    }
+  },
+  computed: {
+    ...mapState(['LOGIN', 'GET_AXIOS_CALLBACK_DATA_BILL']),
+    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   mounted() {
     console.log('FOOTER', this.$nuxt._route.name)
+    this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
+    this.paramsBill = this.LOGIN_CONFIG
+    this.paramsBill.type = 'billStudentCnt'
+    this.GET_AXIOS(this.paramsBill)
+  },
+  methods: {
+    ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
+    ...mapMutations([]),
   },
 }
 </script>
