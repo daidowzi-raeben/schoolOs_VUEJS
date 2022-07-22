@@ -10,7 +10,10 @@
               id="ModalNotice"
               :title="GET_AXIOS_CALLBACK_GETTER.notice.bd_subject"
             >
-              <div v-html="GET_AXIOS_CALLBACK_GETTER.notice.bd_content"></div>
+              <div
+                class="img-full"
+                v-html="GET_AXIOS_CALLBACK_GETTER.notice.bd_content"
+              ></div>
             </b-modal>
           </p>
           <p v-else>새로운 알림장이 없습니다</p>
@@ -153,7 +156,9 @@
             <div class="flex-right">
               <strong class="font-18 bold"
                 ><em>{{
-                  GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount | comma
+                  (GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
+                    GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
+                    | comma
                 }}</em></strong
               >
               <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{

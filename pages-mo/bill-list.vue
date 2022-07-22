@@ -68,7 +68,6 @@
               v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.billComplete"
               :key="index"
               class="box quest m-b-3"
-              @click="onClickBillDetail(v.idx)"
             >
               <div class="flex">
                 <div class="label gray">완납</div>

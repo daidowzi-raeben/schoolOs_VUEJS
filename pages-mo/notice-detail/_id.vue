@@ -28,7 +28,7 @@
                 padding: 10px;
                 border-radius: 10px;
               "
-              class=""
+              class="img-full"
               v-html="GET_AXIOS_CALLBACK_GETTER.bd_content"
             ></div>
           </div>

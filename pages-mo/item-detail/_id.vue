@@ -57,22 +57,12 @@
                       padding: 10px;
                       border-radius: 10px;
                     "
-                    class="m-t-5"
+                    class="m-t-5 img-full"
                     v-html="GET_AXIOS_CALLBACK_GETTER.item_content"
                   ></div>
                 </div>
               </div>
             </div>
-            <div
-              v-if="GET_AXIOS_CALLBACK_GETTER.contents"
-              style="
-                background-color: #f2f3f5;
-                padding: 10px;
-                border-radius: 10px;
-              "
-              class="m-l-3 m-r-3"
-              v-html="GET_AXIOS_CALLBACK_GETTER.contents"
-            ></div>
           </div>
         </div>
       </div>

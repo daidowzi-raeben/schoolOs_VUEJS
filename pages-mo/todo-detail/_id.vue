@@ -87,7 +87,7 @@
                 padding: 10px;
                 border-radius: 10px;
               "
-              class="m-l-3 m-r-3"
+              class="m-l-3 m-r-3 img-full"
               v-html="GET_AXIOS_CALLBACK_GETTER.contents"
             ></div>
           </div>
