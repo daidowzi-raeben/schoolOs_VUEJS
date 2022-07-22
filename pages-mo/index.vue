@@ -105,10 +105,14 @@
       <div class="content__body">
         <div class="box quest">
           <div class="quest__title flex">
-            <nuxt-link to="/todo-my-list">
+            <nuxt-link to="/todo-my-list/0">
               <h3>나의 퀘스트</h3>
             </nuxt-link>
-            <b-icon class="m-l-1" icon="chevron-right"></b-icon>
+            <b-icon
+              class="m-l-1"
+              icon="chevron-right"
+              style="margin-top: 2px"
+            ></b-icon>
           </div>
           <div v-if="!GET_AXIOS_CALLBACK_GETTER.quest" class="loading h20">
             <img src="~/static/mo/loading/loading.gif" />

@@ -1,5 +1,90 @@
 <template>
   <div id="school-content">
+    <div class="historyBack m-l-3 m-b-5">
+      <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
+    </div>
+    <div class="content">
+      <div class="m-t-1 h60">
+        <div class="account">
+          <div
+            v-if="GET_AXIOS_CALLBACK_GETTER.account && LOGIN_STUDENT"
+            class="quest__content m-t-3 m-l-3 m-r-3"
+          >
+            <div class="box quest m-b-3">
+              <span class="jelly-color--888"> 총 </span>
+              <span class="bold" style="font-size: 20px">
+                {{
+                  Number(
+                    GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
+                      GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
+                  ) | comma
+                }}
+              </span>
+              <span class="jelly-color--888">
+                {{ LOGIN_STUDENT.t_reg_pay_unit }}
+              </span>
+            </div>
+
+            <div class="m-t-4">
+              <select
+                v-if="GET_AXIOS_CALLBACK_GETTER.studentList"
+                ref="sendStudent"
+                class="jelly-text jelly-text--h wd-full"
+              >
+                <option :value="null">누구에게 이체할까요?</option>
+                <option
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
+                  :key="i"
+                  :value="v.idx"
+                >
+                  {{ v.reg_name }}
+                </option>
+              </select>
+            </div>
+            <div class="m-t-2">
+              <input
+                v-model="accountPrice"
+                type="tel"
+                class="jelly-text jelly-text--h wd-full"
+                placeholder="얼마를 이체할까요?"
+                @input="payComma($event)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quest-fixed">
+        <button
+          class="jelly-btn jelly-btn--pink"
+          @click="$bvModal.show('completeFile')"
+        >
+          이체하기
+        </button>
+      </div>
+    </div>
+    <b-modal id="completeFile" size="lg" hide-footer hide-header>
+      <div>
+        <p>정말 이체 할까요?</p>
+      </div>
+      <div class="m-t-5 flex">
+        <button
+          class="jelly-btn jelly-btn--default m-r-1 flex-full"
+          style="border-radius: 0"
+          @click="$bvModal.hide('completeFile')"
+        >
+          취소하기
+        </button>
+        <button
+          class="jelly-btn jelly-btn--pink flex-full m-l-1"
+          style="border-radius: 0"
+          @click="onSubmit()"
+        >
+          이체하기
+        </button>
+      </div>
+    </b-modal>
+  </div>
+  <!-- <div id="school-content">
     <div>
       <div class="">
         <select v-if="GET_AXIOS_CALLBACK_GETTER.studentList" ref="sendStudent">
@@ -26,19 +111,19 @@
       </div>
       <button @click="onSubmit">전송</button>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
-  layout: 'default-mo',
+  // layout: 'default-mo',
   data() {
     return {
       params: {},
       paramsPost: {},
-      accountPrice: 0,
+      accountPrice: null,
       accountNumber: '',
     }
   },
@@ -72,14 +157,36 @@ export default {
       if (this.accountPrice > myPrice) {
         alert('?????????')
       } else {
-        alert('send_sms_idx')
+        // alert('send_sms_idx')
         this.paramsPost = this.LOGIN_STUDENT
         this.paramsPost.type = 'bankTransfer'
         this.paramsPost.send_sms_idx = this.$refs.sendStudent.value
         this.paramsPost.pay = this.accountPrice
         console.log(this.paramsPost.send_sms_idx)
         this.POST_AXIOS(this.paramsPost)
+        this.$bvModal.hide('completeFile')
+        setTimeout(() => {
+          this.params = this.LOGIN_STUDENT
+          this.params.type = 'bankTransfer'
+          this.params.page = 1
+          this.GET_AXIOS(this.params)
+          alert('이체가 완료되었습니다.')
+        }, 1000)
       }
+    },
+    payComma(e) {
+      this.pay = this.comma(this.uncomma(e.target.value))
+    },
+    comma(str) {
+      str = String(str)
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+    },
+    uncomma(str) {
+      str = String(str)
+      return str.replace(/[^\d]+/g, '')
+    },
+    resetInput(e) {
+      e.target.value = ''
     },
   },
 }
