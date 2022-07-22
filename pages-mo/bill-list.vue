@@ -12,7 +12,7 @@
           <h3>미납 고지서</h3>
         </div>
         <div
-          v-if="!GET_AXIOS_CALLBACK_GETTER.billNon && LOGIN_STUDENT.t_todo_name"
+          v-if="!GET_AXIOS_CALLBACK_GETTER.billNon"
           class="quest__content m-t-3"
         >
           <div class="text-center p-t-3 p-b-5 jelly-color--type4">
