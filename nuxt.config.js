@@ -112,7 +112,14 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    html: {
+      minify: {
+        collapseWhitespace: true, // as @dario30186 mentioned
+        removeComments: true, // 👈 add this line
+      },
+    },
+  },
   server: { port: process.env.PORT, host: '0.0.0.0' },
   dir: {
     assets: 'assets-' + process.env.DEVICE,
