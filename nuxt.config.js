@@ -49,12 +49,12 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~plugins/BootstrapVue.js', ssr: false },
-    { src: '~plugins/MomentVue.js', ssr: false },
-    { src: '~plugins/AwesomeSwiper.js', ssr: false },
-    { src: '~plugins/Vcaledar.js', ssr: false },
-    { src: '~plugins/HtmlEditor.js', ssr: false },
-    { src: '~plugins/filters.js', ssr: false },
+    { src: '~plugins/BootstrapVue.js', ssr: false, mode: 'client' },
+    { src: '~plugins/MomentVue.js', ssr: false, mode: 'client' },
+    { src: '~plugins/AwesomeSwiper.js', ssr: false, mode: 'client' },
+    { src: '~plugins/Vcaledar.js', ssr: false, mode: 'client' },
+    { src: '~plugins/HtmlEditor.js', ssr: false, mode: 'client' },
+    { src: '~plugins/filters.js', ssr: false, mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

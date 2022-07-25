@@ -96,6 +96,14 @@ const createStore = () => {
       LOADING_INIT(state) {
         state.LOADING = true
       },
+      LOGOUT_INIT(state) {
+        state.GET_MAIN_STATE = null
+        state.POST_AXIOS_CALLBACK_DATA = null
+        state.GET_AXIOS_CALLBACK_DATA = null
+        state.GET_AXIOS_CALLBACK_DATA_SUB = null
+        state.LOGIN = null
+        state.GET_AXIOS_CALLBACK_DATA_BILL = null
+      },
       //  ---------------------------------[admin]
       ADMIN_MAIN_BG_MUTATIONS(state, payload) {
         state.adminMainBG = payload
