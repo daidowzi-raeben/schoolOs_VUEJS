@@ -1,9 +1,13 @@
 <template>
   <div id="school-content">
     <div class="p-3 jelly-tab">
-      <ul class="flex">
-        <li><nuxt-link to="/todo-list/0">전체 퀘스트</nuxt-link></li>
-        <li class="is_active">나의 퀘스트</li>
+      <ul v-if="LOGIN_STUDENT.t_todo_name" class="flex">
+        <li>
+          <nuxt-link to="/todo-list/0"
+            >전체 {{ LOGIN_STUDENT.t_todo_name }}</nuxt-link
+          >
+        </li>
+        <li class="is_active">나의 {{ LOGIN_STUDENT.t_todo_name }}</li>
       </ul>
     </div>
     <div v-if="GET_AXIOS_CALLBACK_GETTER.questCate" class="p-l-3 p-r-3 p-b-3">

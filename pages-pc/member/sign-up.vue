@@ -6,7 +6,7 @@
       :style="`background-image:url(${adminBackgroundImage});position:fixed;width:100%;height:100%;background-size:100% 100%; top:0; left:0; opacity:.5`"
     ></div>
     <div v-if="!queryStep">
-      <h1>Hellow, Jelly Word</h1>
+      <h1>Hello, Jelly Word</h1>
       <div>
         스쿨오에스 젤리는 학급의 사회 문화와 경제학에 도움을 주며 무료로 사용할
         수 있습니다.
@@ -160,6 +160,7 @@
         바랍니다.
       </div>
       <select v-model="inflation" class="jelly-text">
+        <option value="">선택</option>
         <option value="Y">사용</option>
         <option value="N">미사용</option>
       </select>
@@ -232,7 +233,7 @@ export default {
         this.params.type = 'bankList'
         setTimeout(() => {
           this.GET_AXIOS(this.params)
-        })
+        }, 1000)
       }
     },
     onClickNextStep(e) {

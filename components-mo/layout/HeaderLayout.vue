@@ -1,12 +1,12 @@
 <template>
   <div class="jelly-header">
-    <v-overlay :value="loading" z-index="10000">
+    <!-- <v-overlay :value="loading" z-index="10000">
       <v-progress-circular
         indeterminate
         size="64"
         color="primary"
       ></v-progress-circular>
-    </v-overlay>
+    </v-overlay> -->
     <header>
       <div class="flex">
         <h1>JELLY</h1>

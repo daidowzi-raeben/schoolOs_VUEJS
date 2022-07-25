@@ -1,5 +1,8 @@
 <template>
   <div id="jellyAdmin">
+    <div v-if="LOADING" id="LOADING">
+      <img src="~/static/img/loading.gif" />
+    </div>
     <div id="jellyAdminheader">
       <div
         id="jellyAdminBG"
@@ -72,7 +75,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['LOGIN', 'adminMainBG']),
+    ...mapState(['LOGIN', 'adminMainBG', 'LOADING']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   watch: {

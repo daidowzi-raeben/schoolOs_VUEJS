@@ -20,7 +20,9 @@
             >
               <nuxt-link to="/todo-list/0">
                 <b-icon icon="controller"></b-icon>
-                <p>퀘스트</p>
+                <p v-if="LOGIN_STUDENT">
+                  {{ LOGIN_STUDENT.t_todo_name }}
+                </p>
               </nuxt-link>
             </li>
             <li>
@@ -35,7 +37,7 @@
                 <p>알림장</p>
               </nuxt-link>
             </li>
-            <li>
+            <!-- <li>
               <nuxt-link to="/bill-list">
                 <b-icon icon="percent"></b-icon>
                 <p>
@@ -45,7 +47,7 @@
                   }}</span>
                 </p>
               </nuxt-link>
-            </li>
+            </li> -->
             <li>
               <nuxt-link to="/sue-request">
                 <b-icon icon="exclamation-triangle"></b-icon>
@@ -71,7 +73,7 @@ export default {
   },
   computed: {
     ...mapState(['LOGIN', 'GET_AXIOS_CALLBACK_DATA_BILL']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
   },
   mounted() {
     console.log('FOOTER', this.$nuxt._route.name)
@@ -79,6 +81,7 @@ export default {
     this.paramsBill = this.LOGIN_CONFIG
     this.paramsBill.type = 'billStudentCnt'
     this.GET_AXIOS(this.paramsBill)
+    console.log('FOOTER==========', this.LOGIN_CONFIG)
   },
   methods: {
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),

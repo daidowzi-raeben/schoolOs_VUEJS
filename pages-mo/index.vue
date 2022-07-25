@@ -106,7 +106,9 @@
         <div class="box quest">
           <div class="quest__title flex">
             <nuxt-link to="/todo-my-list/0">
-              <h3>나의 퀘스트</h3>
+              <h3 v-if="LOGIN_STUDENT.t_todo_name">
+                나의 {{ LOGIN_STUDENT.t_todo_name }}
+              </h3>
             </nuxt-link>
             <b-icon
               class="m-l-1"

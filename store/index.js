@@ -94,6 +94,9 @@ const createStore = () => {
         }
       },
       LOADING_INIT(state) {
+        state.LOADING = false
+      },
+      LOADING_TRUE(state) {
         state.LOADING = true
       },
       LOGOUT_INIT(state) {
@@ -135,6 +138,7 @@ const createStore = () => {
           .then((res) => {
             commit('getMainSuccess', res.data)
             console.log('get', res.data)
+            commit('LOADING_INIT')
           })
           .catch((res) => {
             commit('getMainFails', res)
@@ -142,6 +146,7 @@ const createStore = () => {
           })
       },
       POST_AXIOS({ commit }, params, state) {
+        commit('LOADING_TRUE')
         console.log('params', params)
         let URL_TYPE = ''
         console.log(process.env.DEVICE, process.env.DEVICE, process.env.DEVICE)
@@ -173,6 +178,7 @@ const createStore = () => {
               commit('LOGIN_LOCALSTORAGE', loginData)
             }
             console.log('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
+            commit('LOADING_INIT')
           })
           .catch((res) => {
             if (params.type === 'login') {
@@ -183,6 +189,7 @@ const createStore = () => {
           })
       },
       POST_AXIOS_FORM({ commit }, params, state) {
+        commit('LOADING_TRUE')
         console.log('params', params)
         let URL_TYPE = ''
         process.env.DEVICE === 'mo'
@@ -197,6 +204,7 @@ const createStore = () => {
           .then((res) => {
             commit('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             console.log('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
+            commit('LOADING_INIT')
           })
           .catch((res) => {
             if (params.type === 'login') {
@@ -207,6 +215,8 @@ const createStore = () => {
           })
       },
       GET_AXIOS({ commit }, params) {
+        commit('LOADING_TRUE')
+
         let URL_TYPE = ''
         process.env.DEVICE === 'mo'
           ? (URL_TYPE = 'student')
@@ -231,6 +241,7 @@ const createStore = () => {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             }
             console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS', res)
+            commit('LOADING_INIT')
           })
           .catch((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
@@ -255,16 +266,20 @@ const createStore = () => {
               res.data.hits[2].largeImageURL,
               res.data.hits
             )
+            commit('LOADING_INIT')
           })
           .catch((res) => {
             console.log('ADMIN_MAIN_BG_MUTATIONS', res)
           })
       },
       GET_API_MY_SCHOOL({ commit }, params) {
+        commit('LOADING_TRUE')
+
         axios
           .get(process.env.VUE_APP_API + '/student.php', { params })
           .then((res) => {
             commit('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
+            commit('LOADING_INIT')
             console.log('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
           })
           .catch((res) => {

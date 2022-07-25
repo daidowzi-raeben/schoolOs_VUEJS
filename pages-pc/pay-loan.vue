@@ -106,7 +106,11 @@ export default {
       this.paramsForm.type = 'loanList'
       this.paramsForm.pay = this.uncomma(this.pay)
       this.POST_AXIOS(this.paramsForm)
-      setTimeout(() => {}, 1000)
+      setTimeout(() => {
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'loanList'
+        this.GET_AXIOS(this.params)
+      }, 1000)
     },
     payComma(e) {
       this.pay = this.comma(this.uncomma(e.target.value))

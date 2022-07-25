@@ -1,30 +1,45 @@
 <template>
   <div id="school-content">
-    <select v-if="GET_AXIOS_CALLBACK_GETTER" @change="onChangeStudent($event)">
-      <option
-        v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
-        :key="i"
-        :value="v.idx"
+    <div class="content p-3">
+      <p>친구 선택</p>
+      <select
+        v-if="GET_AXIOS_CALLBACK_GETTER"
+        v-model="sms_idx_to"
+        class="jelly-text jelly-text--h wd-full m-t-2"
+        @change="onChangeStudent($event)"
       >
-        {{ v.reg_name }}
-      </option>
-    </select>
-    <b-calendar
-      v-model="sueDate"
-      locale="ko"
-      :hide-header="false"
-      block
-      @context="onContext"
-    ></b-calendar>
-    <p>
-      Value: <b>'{{ sueDate }}'</b>
-    </p>
-    <input v-model="sueSubject" />
-    <p class="mb-0">Context:</p>
-    <pre class="small">{{ context }}</pre>
-    <textarea v-model="sueContent"></textarea>
-    <div>
-      <button @click="onSubmit">전송</button>
+        <option :value="null">선택하세요</option>
+        <option
+          v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
+          :key="i"
+          :value="v.idx"
+        >
+          {{ v.reg_name }}
+        </option>
+      </select>
+      <p class="m-t-3">신고일</p>
+      <b-form-datepicker
+        v-model="sueDate"
+        type="date"
+        class="jelly-text jelly-text--h wd-full m-t-2"
+      ></b-form-datepicker>
+      <p class="m-t-3">잘못한 일</p>
+      <input
+        v-model="sueSubject"
+        class="jelly-text jelly-text--h wd-full m-t-2"
+      />
+      <p class="m-t-3">자세한 내용</p>
+
+      <textarea
+        v-model="sueContent"
+        class="jelly-text m-t-2 jelly-text--h wd-full"
+        style="height: 150px"
+      ></textarea>
+      <div class="m-t-3">
+        <button class="jelly-btn jelly-btn--pink wd-full" @click="onSubmit">
+          전송
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +58,7 @@ export default {
       paramsPost: {},
       sueSubject: '',
       sueContent: '',
+      sms_idx_to: null,
     }
   },
   computed: {
@@ -71,6 +87,7 @@ export default {
       this.paramsPost.type = 'sueInsert'
       this.paramsPost.subject = this.sueSubject
       this.paramsPost.content = this.sueContent
+      this.paramsPost.sms_idx_to = this.sms_idx_to
       this.paramsPost.status = '1'
       this.paramsPost.sue_date = this.sueDate
       this.POST_AXIOS(this.paramsPost)

@@ -265,10 +265,11 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'POST_AXIOS_FORM']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
 
     // 퀘스트 수락
     onSubmitApply() {
+      this.LOADING_TRUE()
       this.paramsPostApply.type = 'questApply'
       this.paramsPostApply.idx = this.idx
       this.paramsPostApply.sms_idx = this.LOGIN_STUDENT.sms_idx

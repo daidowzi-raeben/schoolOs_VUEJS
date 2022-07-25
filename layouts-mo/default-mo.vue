@@ -1,5 +1,8 @@
 <template>
   <div id="schoolOS">
+    <div v-if="LOADING" id="LOADING">
+      <img src="~/static/img/loading.gif" />
+    </div>
     <!-- <div v-show="LOADING">asdasd</div> -->
     <div class="schoolOS-content">
       <HeaderLayout />
@@ -24,7 +27,6 @@ export default {
     return {}
   },
   computed: {
-    ...mapMutations(['LOADING_INIT']),
     ...mapState(['LOADING']),
   },
   mounted() {
@@ -36,6 +38,9 @@ export default {
     if (!localStorage.getItem('STUDENT')) {
       // return this.$router.push('/member/sign-in')
     }
+  },
+  methods: {
+    ...mapMutations(['LOADING_INIT']),
   },
 }
 </script>
