@@ -54,10 +54,7 @@
         </div>
       </div>
       <div class="quest-fixed">
-        <button
-          class="jelly-btn jelly-btn--pink"
-          @click="$bvModal.show('completeFile')"
-        >
+        <button class="jelly-btn jelly-btn--pink" @click="onClickSendModal">
           이체하기
         </button>
       </div>
@@ -149,30 +146,44 @@ export default {
     ...mapMutations([]),
 
     // EVENT
-    onSubmit() {
+
+    onClickSendModal() {
       const myPrice = Number(
         this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
           this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
       )
-      if (this.accountPrice > myPrice) {
-        alert('?????????')
-      } else {
-        // alert('send_sms_idx')
-        this.paramsPost = this.LOGIN_STUDENT
-        this.paramsPost.type = 'bankTransfer'
-        this.paramsPost.send_sms_idx = this.$refs.sendStudent.value
-        this.paramsPost.pay = this.accountPrice
-        console.log(this.paramsPost.send_sms_idx)
-        this.POST_AXIOS(this.paramsPost)
-        this.$bvModal.hide('completeFile')
-        setTimeout(() => {
-          this.params = this.LOGIN_STUDENT
-          this.params.type = 'bankTransfer'
-          this.params.page = 1
-          this.GET_AXIOS(this.params)
-          alert('이체가 완료되었습니다.')
-        }, 1000)
+      if (!this.$refs.sendStudent.value) {
+        alert('보낼 사람을 선택해 주세요.')
+        return false
       }
+      if (this.accountPrice <= 0) {
+        alert('금액을 다시 입력해주세요')
+        return false
+      }
+      if (this.accountPrice > myPrice) {
+        alert('잔액이 부족해요')
+        return false
+      } else {
+        this.$bvModal.show('completeFile')
+      }
+    },
+    onSubmit() {
+      // alert('send_sms_idx')
+      this.paramsPost = this.LOGIN_STUDENT
+      this.paramsPost.type = 'bankTransfer'
+      this.paramsPost.send_sms_idx = this.$refs.sendStudent.value
+      this.paramsPost.pay = this.accountPrice
+      console.log(this.paramsPost.send_sms_idx)
+      this.POST_AXIOS(this.paramsPost)
+      this.$bvModal.hide('completeFile')
+      setTimeout(() => {
+        this.params = this.LOGIN_STUDENT
+        this.params.type = 'bankTransfer'
+        this.params.page = 1
+        this.GET_AXIOS(this.params)
+        alert('이체가 완료되었습니다.')
+        this.$router.push(`/`)
+      }, 1000)
     },
     payComma(e) {
       this.pay = this.comma(this.uncomma(e.target.value))

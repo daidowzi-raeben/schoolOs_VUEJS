@@ -231,7 +231,7 @@
                   {{ v.send_sms_name }} 에게 출금
                 </td>
                 <td v-if="v.case_result === '입금'">
-                  {{ v.send_sms_name }} 에게 입금
+                  {{ v.send_sms_name }} 으로부터 입금
                 </td>
                 <td v-if="v.case_result === '쇼핑'">
                   {{ v.buy_item_name }} 구입

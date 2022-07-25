@@ -25,13 +25,27 @@
                 </p>
               </nuxt-link>
             </li>
-            <li>
+            <li
+              :class="
+                $nuxt._route.name === 'market-list-id' ||
+                $route.name === 'market-detail-id'
+                  ? 'is_active'
+                  : ''
+              "
+            >
               <nuxt-link to="/market-list/0">
                 <b-icon icon="bag"></b-icon>
                 <p>마켓</p>
               </nuxt-link>
             </li>
-            <li>
+            <li
+              :class="
+                $nuxt._route.name === 'notice-list-id' ||
+                $route.name === 'notice-detail-id'
+                  ? 'is_active'
+                  : ''
+              "
+            >
               <nuxt-link to="/notice-list/1">
                 <b-icon icon="alarm"></b-icon>
                 <p>알림장</p>
@@ -48,7 +62,7 @@
                 </p>
               </nuxt-link>
             </li> -->
-            <li>
+            <li :class="$nuxt._route.name === 'sue-request' ? 'is_active' : ''">
               <nuxt-link to="/sue-request">
                 <b-icon icon="exclamation-triangle"></b-icon>
                 <p>신고</p>

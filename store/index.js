@@ -17,6 +17,7 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_SUB: [],
       LOGIN: [],
       GET_AXIOS_CALLBACK_DATA_BILL: '',
+      studentIdMSG: '',
 
       //  ---------------------------------[admin]
 
@@ -53,6 +54,9 @@ const createStore = () => {
             ? (state.LOGIN = JSON.parse(localStorage.getItem('TEACHER')))
             : (state.LOGIN = '')
         }
+      },
+      STUDENT_ID_CHECK(state) {
+        return state.studentIdMSG
       },
     },
     mutations: {
@@ -113,6 +117,9 @@ const createStore = () => {
       },
       GET_API_MY_SCHOOL_SUCCESS(state, payload) {
         state.mySchoolInformation = payload
+      },
+      GET_STUDENT_ID_SUCCESS(state, payload) {
+        state.studentIdMSG = payload
       },
     },
     actions: {
@@ -281,6 +288,19 @@ const createStore = () => {
             commit('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
             commit('LOADING_INIT')
             console.log('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
+          })
+          .catch((res) => {
+            console.log('GET_API_MY_SCHOOL_FALSE', res)
+          })
+      },
+      GET_STUDENT_ID({ commit }, params) {
+        commit('LOADING_TRUE')
+        axios
+          .get(process.env.VUE_APP_API + '/student.php', { params })
+          .then((res) => {
+            commit('GET_STUDENT_ID_SUCCESS', res.data)
+            commit('LOADING_INIT')
+            console.log('GET_STUDENT_ID_SUCCESS', res)
           })
           .catch((res) => {
             console.log('GET_API_MY_SCHOOL_FALSE', res)

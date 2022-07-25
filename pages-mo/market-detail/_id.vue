@@ -88,10 +88,7 @@
       </div>
     </div>
     <div v-if="GET_AXIOS_CALLBACK_GETTER.is_end === 'N'" class="quest-fixed">
-      <button
-        class="jelly-btn jelly-btn--pink"
-        @click="$bvModal.show('completeFile')"
-      >
+      <button class="jelly-btn jelly-btn--pink" @click="onClickModal">
         구매하기
       </button>
     </div>
@@ -171,6 +168,18 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     ...mapMutations([]),
+
+    onClickModal() {
+      const totalPay =
+        Number(this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount) -
+        Number(this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
+      console.log(totalPay)
+      if (totalPay < this.GET_AXIOS_CALLBACK_GETTER.item_price) {
+        alert('잔액이 부족해요')
+      } else {
+        this.$bvModal.show('completeFile')
+      }
+    },
     onSubmit() {
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.idx = this.params.idx

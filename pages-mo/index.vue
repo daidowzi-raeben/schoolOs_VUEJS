@@ -2,21 +2,24 @@
   <div v-if="GET_AXIOS_CALLBACK_GETTER.status" id="school-content">
     <div class="content">
       <div class="content__top">
-        <div v-b-modal.ModalNotice class="content__top--notice flex">
-          <p v-if="GET_AXIOS_CALLBACK_GETTER.notice">
-            [알림장]
-            {{ GET_AXIOS_CALLBACK_GETTER.notice.bd_subject }}
-            <b-modal
-              id="ModalNotice"
-              :title="GET_AXIOS_CALLBACK_GETTER.notice.bd_subject"
-            >
+        <div
+          v-b-modal.ModalNotice
+          hide-footer
+          hide-header
+          class="content__top--notice flex"
+        >
+          <p
+            v-if="GET_AXIOS_CALLBACK_GETTER.rule && LOGIN_STUDENT.t_reg_country"
+          >
+            {{ LOGIN_STUDENT.t_reg_country }} 규칙 확인하기
+            <b-modal id="ModalNotice">
               <div
                 class="img-full"
-                v-html="GET_AXIOS_CALLBACK_GETTER.notice.bd_content"
+                v-html="GET_AXIOS_CALLBACK_GETTER.rule.content"
               ></div>
             </b-modal>
           </p>
-          <p v-else>새로운 알림장이 없습니다</p>
+          <p v-else>아직 규칙이 정해지지 않았어요</p>
           <b-icon icon="chevron-right" class="flex-right"></b-icon>
         </div>
         <div class="content__top--level flex">
@@ -24,7 +27,40 @@
             <div class="profile__avatar flex">
               <div class="photo">
                 <img
-                  src="http://news.kbs.co.kr/data/news/2019/06/20/4226019_130.jpg"
+                  v-if="
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 19
+                  "
+                  src="~/static/mo/plant/level_1.jpg"
+                />
+                <img
+                  v-if="
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) >
+                      19 &&
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 29
+                  "
+                  src="~/static/mo/plant/level_2.jpg"
+                />
+                <img
+                  v-if="
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) >
+                      29 &&
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 39
+                  "
+                  src="~/static/mo/plant/level_3.jpg"
+                />
+                <img
+                  v-if="
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) >
+                      39 &&
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 49
+                  "
+                  src="~/static/mo/plant/level_4.jpg"
+                />
+                <img
+                  v-if="
+                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) > 49
+                  "
+                  src="~/static/mo/plant/level_5.jpg"
                 />
               </div>
               <div class="name">

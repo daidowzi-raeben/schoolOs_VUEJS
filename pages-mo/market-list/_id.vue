@@ -69,6 +69,7 @@
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
+  name: 'MarketList',
   layout: 'default-mo',
   validate({ params }) {
     return /^\d+$/.test(params.id)
