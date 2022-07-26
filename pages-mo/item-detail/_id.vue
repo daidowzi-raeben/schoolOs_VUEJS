@@ -56,6 +56,7 @@
                       background-color: #f2f3f5;
                       padding: 10px;
                       border-radius: 10px;
+                      white-space: pre-line;
                     "
                     class="m-t-5 img-full"
                     v-html="GET_AXIOS_CALLBACK_GETTER.item_content"

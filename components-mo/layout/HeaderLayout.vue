@@ -10,9 +10,9 @@
     <header>
       <div class="flex">
         <h1>JELLY</h1>
-        <!-- <div class="flex-right notification">
-          <b-icon icon="bell" @click="teacherChat"></b-icon>
-          <div v-if="isTeacherChat && chatURL" id="teacherChat">
+        <div class="flex-right notification">
+          <b-icon icon="upc-scan"></b-icon>
+          <!-- <div v-if="isTeacherChat && chatURL" id="teacherChat">
             <div class="teacherChat-header" @click="teacherChat"></div>
             <iframe
               :src="
@@ -27,8 +27,8 @@
               class="isTeacherChat"
               scrolling="no"
             ></iframe>
-          </div>
-        </div> -->
+          </div> -->
+        </div>
       </div>
     </header>
   </div>

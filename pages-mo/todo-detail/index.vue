@@ -227,7 +227,7 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import { historyBack, axiosForm } from '~/config/util'
 
 export default {
-  name: 'TodoDetail',
+  name: 'TodoDetailIndex',
   // layout: 'default-mo',
 
   validate({ params }) {

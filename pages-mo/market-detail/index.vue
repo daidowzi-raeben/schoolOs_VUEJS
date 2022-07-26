@@ -131,7 +131,7 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import { historyBack } from '~/config/util'
 
 export default {
-  name: 'ShopDetail',
+  name: 'MarketDetailIndex',
   validate({ params }) {
     return /^\d+$/.test(params.id)
   },

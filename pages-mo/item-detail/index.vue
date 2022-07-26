@@ -32,19 +32,9 @@
                   <div class="flex m-t-0">
                     <div class="txt">
                       <p class="bold">
-                        {{ GET_AXIOS_CALLBACK_GETTER.item_price | comma }}
+                        {{ GET_AXIOS_CALLBACK_GETTER.item_name }} 상품을
+                        사용하고 싶다면 선생님에게 보여주세요!
                       </p>
-                      <span style="font-size: 12px" class="jelly-color--888">
-                        <!-- {{
-                          GET_AXIOS_CALLBACK_GETTER.start_day
-                            | moment('YY.MM.DD')
-                        }}
-                        ~ -->
-                        {{
-                          GET_AXIOS_CALLBACK_GETTER.end_day | moment('YY.MM.DD')
-                        }}
-                        까지만 구매할 수 있어요.
-                      </span>
                     </div>
                     <div class="pay text-right flex-right">
                       <!-- <button class="jelly-btn jelly-btn--default">
@@ -74,31 +64,29 @@
                 </div>
               </div>
             </div>
-            <div
-              v-if="GET_AXIOS_CALLBACK_GETTER.contents"
-              style="
-                background-color: #f2f3f5;
-                padding: 10px;
-                border-radius: 10px;
-              "
-              class="m-l-3 m-r-3"
-              v-html="GET_AXIOS_CALLBACK_GETTER.contents"
-            ></div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="GET_AXIOS_CALLBACK_GETTER.is_end === 'N'" class="quest-fixed">
-      <button class="jelly-btn jelly-btn--pink" @click="onClickModal">
-        구매하기
+    <div v-if="GET_AXIOS_CALLBACK_GETTER.use_yn === '0'" class="quest-fixed">
+      <button
+        class="jelly-btn jelly-btn--pink"
+        @click="$bvModal.show('completeFile')"
+      >
+        사용하기
       </button>
     </div>
-    <div v-if="GET_AXIOS_CALLBACK_GETTER.is_end === 'Y'" class="quest-fixed">
-      <button class="jelly-btn jelly-btn--gray">기간이 종료되었습니다.</button>
+    <div v-if="GET_AXIOS_CALLBACK_GETTER.use_yn === '1'" class="quest-fixed">
+      <button class="jelly-btn jelly-btn--gray">
+        이미 사용된 상품 입니다.
+      </button>
     </div>
     <b-modal id="completeFile" size="lg" hide-footer hide-header>
       <div>
-        <p>상품을 구매하시겠습니까?</p>
+        <p>선생님은 아래 사용하기 버튼을 눌러주세요.</p>
+        <p class="jelly-color--type4">
+          아래 사용하기 버튼을 누르면 이 상품은 더 이상 사용할 수 없어요!
+        </p>
       </div>
       <div class="m-t-5 flex">
         <button
@@ -113,16 +101,21 @@
           style="border-radius: 0"
           @click="onSubmit()"
         >
-          구매하기
+          사용하기
         </button>
       </div>
     </b-modal>
   </div>
-  <!-- <div v-if="GET_AXIOS_CALLBACK_GETTER">
-    <h1>{{ GET_AXIOS_CALLBACK_GETTER.item_name }}</h1>
+  <!-- <div v-if="GET_AXIOS_CALLBACK_GETTER.item">
+    <h1>{{ GET_AXIOS_CALLBACK_GETTER.item.item_name }}</h1>
     <p>User ID : {{ idx }} {{ a | comma }}</p>
     <div>
-      <button @click="onSubmit">전송</button>
+      <button
+        v-if="GET_AXIOS_CALLBACK_GETTER.item.use_yn === '0'"
+        @click="onSubmit"
+      >
+        전송
+      </button>
     </div>
   </div> -->
 </template>
@@ -131,7 +124,7 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import { historyBack } from '~/config/util'
 
 export default {
-  name: 'ShopDetail',
+  name: 'ItemDetailIndex',
   validate({ params }) {
     return /^\d+$/.test(params.id)
   },
@@ -159,7 +152,7 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
-    this.params.type = 'shopView'
+    this.params.type = 'itemView'
     this.params.idx = this.idx
     this.GET_AXIOS(this.params)
     console.log(this.params)
@@ -169,32 +162,20 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     ...mapMutations([]),
-
-    onClickModal() {
-      const totalPay =
-        Number(this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount) -
-        Number(this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
-      console.log(totalPay)
-      if (totalPay < this.GET_AXIOS_CALLBACK_GETTER.item_price) {
-        alert('잔액이 부족해요')
-      } else {
-        this.$bvModal.show('completeFile')
-      }
-    },
     onSubmit() {
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.idx = this.params.idx
-      this.paramsPost.itemPrice = this.GET_AXIOS_CALLBACK_GETTER.discount
-      this.paramsPost.type = 'shopBuy'
-      this.POST_AXIOS(this.paramsPost)
-
+      this.paramsPost.type = 'itemView'
+      this.POST_AXIOS(this.params)
       console.log(this.paramsPost)
-      alert(
-        this.GET_AXIOS_CALLBACK_GETTER.item_name +
-          ' 상품을 구매했습니다. 나의 구매내역에서 확인할 수 있어요.'
-      )
-      this.$bvModal.hide('completeFile')
       // POST_AXIOS
+      this.$bvModal.hide('completeFile')
+      setTimeout(() => {
+        this.params = this.LOGIN_STUDENT
+        this.params.type = 'itemView'
+        this.params.idx = this.idx
+        this.GET_AXIOS(this.params)
+      }, 1000)
     },
   },
 }

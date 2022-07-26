@@ -55,6 +55,7 @@ export default {
     { src: '~plugins/Vcaledar.js', ssr: false, mode: 'client' },
     { src: '~plugins/HtmlEditor.js', ssr: false, mode: 'client' },
     { src: '~plugins/filters.js', ssr: false, mode: 'client' },
+    { src: '~plugins/QrCode.js', ssr: false, mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

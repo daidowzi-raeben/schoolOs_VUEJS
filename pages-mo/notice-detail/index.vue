@@ -47,7 +47,7 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import { historyBack } from '~/config/util'
 
 export default {
-  name: 'NoticeDetail',
+  name: 'NoticeDetailIndex',
   validate({ params }) {
     return /^\d+$/.test(params.id)
   },
