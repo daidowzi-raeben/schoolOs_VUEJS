@@ -40,11 +40,12 @@
       <ul v-if="GET_AXIOS_CALLBACK_GETTER.item">
         <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.item" :key="i">
           <nuxt-link :to="'/market-detail/' + v.idx">
-            <div class="image">
+            <div class="image relative">
               <img
                 v-if="v.item_thumb"
                 :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
               />
+              <!-- <div class="market-caption"></div> -->
               <div v-if="!v.item_thumb">
                 <b-icon icon="flower2"></b-icon>
               </div>
@@ -52,7 +53,13 @@
             <strong class="m-t-2" style="display: block">{{
               v.item_name
             }}</strong>
-            <p class="m-t-1">{{ v.item_price | comma }}</p>
+            <p style="font-size: 12px; color: #888">{{ v.item_int }}개 남음</p>
+            <p class="m-t-1">
+              <em>{{ v.item_price | comma }}</em>
+              <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                LOGIN_STUDENT.t_reg_pay_unit
+              }}</span>
+            </p>
           </nuxt-link>
         </li>
       </ul>

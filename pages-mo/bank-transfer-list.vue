@@ -1,6 +1,11 @@
 <template>
   <div id="school-content">
-    <div class="historyBack m-l-3 m-b-5">
+    <div v-if="$route.query.history" class="historyBack m-l-3 m-b-5">
+      <nuxt-link to="/">
+        <b-icon icon="arrow-left"></b-icon>
+      </nuxt-link>
+    </div>
+    <div v-if="!$route.query.history" class="historyBack m-l-3 m-b-5">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
     </div>
     <div v-if="GET_AXIOS_CALLBACK_GETTER.monthDate" class="content p-l-3 p-r-3">
@@ -69,7 +74,10 @@
                         v.penalty_memo
                       }}</em>
                       <em v-if="v.case_result === '주급'" style="color: #111"
-                        >주급지급</em
+                        >주급 지급</em
+                      >
+                      <em v-if="v.case_result === '현금'" style="color: #111"
+                        >현금 출금</em
                       >
                       <em
                         v-if="v.case_result === '에러'"
@@ -107,6 +115,7 @@ export default {
       paramsPost: {},
       start_day: '',
       end_day: '',
+      isHistory: '',
     }
   },
 

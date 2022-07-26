@@ -25,6 +25,7 @@
               <li @click="onClickLinkTo('student-list')">학생관리</li>
               <li @click="onClickLinkTo('shop-list')">상점관리</li>
               <li @click="onClickLinkTo('bill-list')">세금관리</li>
+              <li @click="onClickLinkTo('sue-list')">신고관리</li>
               <li @click="onClickLinkTo('bill-student')">고지서관리</li>
               <li @click="onClickLinkTo('todo-list')">
                 {{ LOGIN_CONFIG.todo_name }} 관리

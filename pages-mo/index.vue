@@ -232,45 +232,56 @@
             </div>
           </div>
         </div>
-        <div class="account m-t-4">
-          <h3>나의 통장</h3>
-        </div>
+        <div class="account m-t-4"></div>
         <div
           v-if="GET_AXIOS_CALLBACK_GETTER.account"
           class="box account-area m-t-2"
         >
-          <div class="flex">
-            <div>
-              <p>{{ GET_AXIOS_CALLBACK_GETTER.account.account_number }}</p>
-              <span class="jelly-color--gray font-12">{{
-                GET_AXIOS_CALLBACK_GETTER.account.nick_name
-              }}</span>
+          <h3>
+            나의 통장
+            <b-icon
+              class="m-l-1"
+              icon="chevron-right"
+              style="margin-top: 2px"
+            ></b-icon>
+          </h3>
+          <nuxt-link to="/bank-transfer-list" class="wd-full">
+            <div class="flex m-t-2">
+              <div>
+                <p>{{ GET_AXIOS_CALLBACK_GETTER.account.account_number }}</p>
+                <span class="jelly-color--gray font-12">{{
+                  GET_AXIOS_CALLBACK_GETTER.account.nick_name
+                }}</span>
+              </div>
+              <div class="flex-right">
+                <strong class="font-18 bold"
+                  ><em>{{
+                    (GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
+                      GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
+                      | comma
+                  }}</em></strong
+                >
+                <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                  LOGIN_STUDENT.t_reg_pay_unit
+                }}</span>
+              </div>
             </div>
-            <div class="flex-right">
-              <strong class="font-18 bold"
-                ><em>{{
-                  (GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
-                    GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
-                    | comma
-                }}</em></strong
-              >
-              <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
-                LOGIN_STUDENT.t_reg_pay_unit
-              }}</span>
-            </div>
-          </div>
+          </nuxt-link>
           <div class="flex m-t-3">
             <nuxt-link to="/bank-transfer" class="wd-full">
               <button class="jelly-btn jelly-btn--gray wd-full">이체</button>
             </nuxt-link>
-            <nuxt-link to="/bank-transfer-list" class="wd-full">
+            <nuxt-link to="/bank-transfer-cash" class="wd-full">
               <button class="jelly-btn jelly-btn--default wd-full m-l-2">
-                이체내역
+                출금
               </button>
             </nuxt-link>
           </div>
         </div>
-        <div class="box account-area m-t-3 dotted text-center">
+        <div
+          class="box account-area m-t-3 dotted text-center"
+          onclick="alert('아직 준비중이에요')"
+        >
           <b-icon v-b-toggle.notification icon="plus" class="font-30"></b-icon>
           <p>새로운 통장을 만들어보세요</p>
         </div>

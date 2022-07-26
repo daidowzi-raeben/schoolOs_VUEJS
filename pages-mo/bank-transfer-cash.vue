@@ -24,29 +24,13 @@
                 {{ LOGIN_STUDENT.t_reg_pay_unit }}
               </span>
             </div>
-
-            <div class="m-t-4">
-              <select
-                v-if="GET_AXIOS_CALLBACK_GETTER.studentList"
-                ref="sendStudent"
-                class="jelly-text jelly-text--h wd-full"
-              >
-                <option :value="null">누구에게 이체할까요?</option>
-                <option
-                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
-                  :key="i"
-                  :value="v.idx"
-                >
-                  {{ v.reg_name }}
-                </option>
-              </select>
-            </div>
+            <div><em>출금 담당자와 함께 출금하세요!</em></div>
             <div class="m-t-2 relative">
               <input
                 :value="accountPrice"
                 type="tel"
                 class="jelly-text jelly-text--h wd-full text-right p-r-10"
-                placeholder="얼마를 이체할까요?"
+                placeholder="얼마를 출금할까요?"
                 @input="payComma($event)"
                 @click="resetInput($event)"
               />
@@ -61,13 +45,14 @@
       </div>
       <div class="quest-fixed">
         <button class="jelly-btn jelly-btn--pink" @click="onClickSendModal">
-          이체하기
+          출금하기
         </button>
       </div>
     </div>
     <b-modal id="completeFile" size="lg" hide-footer hide-header>
       <div>
-        <p>정말 이체 할까요?</p>
+        <p>출금 확인 버튼은 담당자가 눌러야 해요!</p>
+        <p>출금 확인 후 담당자에게 출금 금액만큼 화폐를 꼭 받아가세요!</p>
       </div>
       <div class="m-t-5 flex">
         <button
@@ -82,7 +67,7 @@
           style="border-radius: 0"
           @click="onSubmit()"
         >
-          이체하기
+          출금하기
         </button>
       </div>
     </b-modal>
@@ -142,7 +127,7 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
-    this.params.type = 'bankTransfer'
+    this.params.type = 'bankTransferCash'
     this.params.page = 1
     this.GET_AXIOS(this.params)
   },
@@ -158,10 +143,7 @@ export default {
         this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
           this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
       )
-      if (!this.$refs.sendStudent.value) {
-        alert('보낼 사람을 선택해 주세요.')
-        return false
-      }
+
       if (this.accountPrice <= 0) {
         alert('금액을 다시 입력해주세요')
         return false
@@ -176,20 +158,15 @@ export default {
     onSubmit() {
       // alert('send_sms_idx')
       this.paramsPost = this.LOGIN_STUDENT
-      this.paramsPost.type = 'bankTransfer'
-      this.paramsPost.send_sms_idx = this.$refs.sendStudent.value
-      this.paramsPost.pay = this.accountPrice
+      this.paramsPost.type = 'bankTransferCash'
+      this.paramsPost.pay = this.uncomma(this.accountPrice)
       console.log(this.paramsPost.send_sms_idx)
       this.POST_AXIOS(this.paramsPost)
       this.$bvModal.hide('completeFile')
       setTimeout(() => {
-        this.params = this.LOGIN_STUDENT
-        this.params.type = 'bankTransfer'
-        this.params.page = 1
-        this.GET_AXIOS(this.params)
-        alert('이체가 완료되었습니다.')
-        this.$router.push(`/`)
-      }, 1000)
+        alert('출금이 완료되었습니다. 꼭 화폐를 지급받으세요')
+        this.$router.push(`/bank-transfer-list?history=home`)
+      }, 1500)
     },
     payComma(e) {
       this.accountPrice = this.comma(this.uncomma(e.target.value))

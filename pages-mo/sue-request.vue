@@ -91,6 +91,7 @@ export default {
       this.paramsPost.status = '1'
       this.paramsPost.sue_date = this.sueDate
       this.POST_AXIOS(this.paramsPost)
+      alert('선생님께 안전하게 전달했어요!')
     },
   },
 }
