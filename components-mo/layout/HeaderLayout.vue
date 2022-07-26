@@ -11,7 +11,9 @@
       <div class="flex">
         <h1>JELLY</h1>
         <div class="flex-right notification">
-          <b-icon icon="upc-scan"></b-icon>
+          <nuxt-link to="/qr-scan">
+            <b-icon icon="upc-scan"></b-icon>
+          </nuxt-link>
           <!-- <div v-if="isTeacherChat && chatURL" id="teacherChat">
             <div class="teacherChat-header" @click="teacherChat"></div>
             <iframe
