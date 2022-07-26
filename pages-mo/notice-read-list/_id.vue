@@ -9,6 +9,12 @@
     <div class="content">
       <div class="content__body m-t-1 h60">
         <div
+          v-if="!GET_AXIOS_CALLBACK_GETTER.notice"
+          class="quest__content m-t-3 p-t-5 text-center font-14"
+        >
+          첫 알림장을 기다려 보세요 :D
+        </div>
+        <div
           v-if="GET_AXIOS_CALLBACK_GETTER.notice"
           class="quest__content m-t-3"
         >

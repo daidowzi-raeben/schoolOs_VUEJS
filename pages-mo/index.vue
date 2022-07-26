@@ -139,6 +139,54 @@
         </div>
       </div>
       <div class="content__body">
+        <div
+          v-if="
+            GET_AXIOS_CALLBACK_GETTER.billNon &&
+            GET_AXIOS_CALLBACK_GETTER.billNon.length > 0
+          "
+          class="box quest m-b-5"
+        >
+          <div class="quest__title flex">
+            <h3 v-if="LOGIN_STUDENT.t_todo_name">나의 고지서</h3>
+
+            <!-- <b-icon
+              class="m-l-1"
+              icon="chevron-right"
+              style="margin-top: 2px"
+            ></b-icon> -->
+          </div>
+          <div v-if="GET_AXIOS_CALLBACK_GETTER.billNon" class="quest__content">
+            <div
+              v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.billNon"
+              :key="index"
+              class="m-t-3"
+              @click="onClickBillDetail(v.idx, v.pay)"
+            >
+              <div class="flex">
+                <div class="txt m-l-2">
+                  <p>{{ v.subject }}</p>
+                  <span>{{ v.code }}</span>
+                </div>
+                <div class="pay text-right flex-right">
+                  <p>
+                    <em class="bold">
+                      {{ v.pay | comma }}
+                    </em>
+                    <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                      LOGIN_STUDENT.t_reg_pay_unit
+                    }}</span>
+                  </p>
+                </div>
+              </div>
+              <div
+                class="m-t-2 font-12"
+                style="background: #f8f8f8; padding: 10px"
+              >
+                {{ v.content }}
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="box quest">
           <div class="quest__title flex">
             <nuxt-link to="/todo-my-list/0">
@@ -152,8 +200,11 @@
               style="margin-top: 2px"
             ></b-icon>
           </div>
-          <div v-if="!GET_AXIOS_CALLBACK_GETTER.quest" class="loading h20">
-            <img src="~/static/mo/loading/loading.gif" />
+          <div
+            v-if="GET_AXIOS_CALLBACK_GETTER.quest.length === 0"
+            class="quest__content"
+          >
+            <div class="p-5 text-center font-14">아직 수락한 일이 없어요.</div>
           </div>
           <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="quest__content">
             <div
@@ -225,6 +276,23 @@
         </div>
       </div>
     </div>
+    <b-modal id="billDetail" size="lg" hide-footer hide-header>
+      <h4 style="font-size: 16px">고지서 금액만큼 납부 할까요?</h4>
+      <div class="m-t-5 flex text-center">
+        <button
+          class="jelly-btn jelly-btn--default flex-full m-r-1"
+          @click="$bvModal.hide('billDetail')"
+        >
+          취소
+        </button>
+        <button
+          class="jelly-btn jelly-btn--pink flex-full m-l-1"
+          @click="onSubmit"
+        >
+          납부
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -251,6 +319,9 @@ export default {
       },
       getDataStatus: [],
       test: '',
+      paramsPost: {},
+      detailIdx: '',
+      detailPay: '',
     }
   },
   computed: {
@@ -289,6 +360,33 @@ export default {
     // EVENT
     onClickTodoDetail(idx) {
       this.$router.push('/todo-detail/' + idx)
+    },
+    onClickBillDetail(idx, pay) {
+      this.detailIdx = idx
+      this.detailPay = pay
+      const totalPay =
+        Number(this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount) -
+        Number(this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
+      if (this.detailPay > totalPay) {
+        alert('납부할 수 있는 금액이 부족해요')
+      } else {
+        this.$bvModal.show('billDetail')
+      }
+    },
+    onSubmit() {
+      console.log(this.detailIdx)
+
+      this.paramsPost.type = 'billListStudent'
+      this.paramsPost.idx = this.detailIdx
+      this.paramsPost.sms_idx = this.LOGIN_STUDENT.sms_idx
+      this.paramsPost.smt_idx = this.LOGIN_STUDENT.smt_idx
+      this.POST_AXIOS(this.paramsPost)
+      setTimeout(() => {
+        this.params = this.LOGIN_STUDENT
+        this.params.type = 'billListStudent'
+        this.GET_AXIOS(this.params)
+        this.$bvModal.hide('billDetail')
+      }, 1000)
     },
   },
 }

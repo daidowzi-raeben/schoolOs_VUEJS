@@ -17,7 +17,7 @@
           {{ v.reg_name }}
         </option>
       </select>
-      <p class="m-t-3">신고일</p>
+      <p class="m-t-3">사건 발생일</p>
       <b-form-datepicker
         v-model="sueDate"
         type="date"

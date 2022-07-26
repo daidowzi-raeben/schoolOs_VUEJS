@@ -28,6 +28,7 @@
             <li
               :class="
                 $nuxt._route.name === 'market-list-id' ||
+                $nuxt._route.name === 'item-list-id' ||
                 $route.name === 'market-detail-id'
                   ? 'is_active'
                   : ''
@@ -41,6 +42,7 @@
             <li
               :class="
                 $nuxt._route.name === 'notice-list-id' ||
+                $nuxt._route.name === 'notice-read-list-id' ||
                 $route.name === 'notice-detail-id'
                   ? 'is_active'
                   : ''

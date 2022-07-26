@@ -10,7 +10,7 @@
     <header>
       <div class="flex">
         <h1>JELLY</h1>
-        <div class="flex-right notification">
+        <!-- <div class="flex-right notification">
           <b-icon icon="bell" @click="teacherChat"></b-icon>
           <div v-if="isTeacherChat && chatURL" id="teacherChat">
             <div class="teacherChat-header" @click="teacherChat"></div>
@@ -28,7 +28,7 @@
               scrolling="no"
             ></iframe>
           </div>
-        </div>
+        </div> -->
       </div>
     </header>
   </div>

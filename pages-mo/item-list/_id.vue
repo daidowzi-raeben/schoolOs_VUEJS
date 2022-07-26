@@ -34,6 +34,9 @@
     </div> -->
     <div class="matketItem m-l-3 m-r-3">
       <h3>미사용 상품</h3>
+      <div v-if="!GET_AXIOS_CALLBACK_GETTER.item">
+        <div class="p-5 text-center font-14">아직 구매한 상품이 없어요.</div>
+      </div>
       <ul v-if="GET_AXIOS_CALLBACK_GETTER.item">
         <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.item" :key="i">
           <nuxt-link :to="'/item-detail/' + v.idx">
@@ -54,7 +57,10 @@
         </li>
       </ul>
     </div>
-    <div class="matketItem m-l-3 m-r-3">
+    <div
+      v-if="GET_AXIOS_CALLBACK_GETTER.itemUse"
+      class="matketItem m-l-3 m-r-3"
+    >
       <h3>사용완료 상품</h3>
       <ul v-if="GET_AXIOS_CALLBACK_GETTER.itemUse">
         <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.itemUse" :key="i">

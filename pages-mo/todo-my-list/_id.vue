@@ -53,8 +53,8 @@
           v-if="!GET_AXIOS_CALLBACK_GETTER.questListMy"
           class="quest__content m-t-3"
         >
-          <div class="text-center p-t-10 jelly-color--type4">
-            <strong>할 수 있는 일을 찾아 '수락' 버튼을 눌러보세요</strong>
+          <div class="p-5 text-center font-14">
+            할 수 있는 일을 찾아 '수락' 버튼을 눌러보세요.
           </div>
         </div>
         <div
@@ -120,7 +120,10 @@
           </div>
         </div>
       </div>
-      <div class="content__body m-t-1 h60">
+      <div
+        v-if="GET_AXIOS_CALLBACK_GETTER.questListMyComplete"
+        class="content__body m-t-1 h60"
+      >
         <div class="account">
           <h3>완료</h3>
         </div>

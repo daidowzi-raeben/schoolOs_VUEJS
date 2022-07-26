@@ -29,7 +29,7 @@
           </button>
         </div>
         <div class="m-t-4 text-center">
-          <Nuxt-link to="/member/sign-up"> 아직 회원이 아닌가요? </Nuxt-link>
+          아이디가 없다면 <br />선생님에게 QR코드를 요청하세요
         </div>
       </form>
     </div>

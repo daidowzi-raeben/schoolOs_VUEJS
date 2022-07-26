@@ -33,6 +33,10 @@
       </nuxt-link>
     </div>
     <div class="matketItem m-l-3 m-r-3">
+      <div v-if="!GET_AXIOS_CALLBACK_GETTER.item">
+        <div class="p-5 text-center font-14">아직 등록된 상품이 없어요.</div>
+      </div>
+
       <ul v-if="GET_AXIOS_CALLBACK_GETTER.item">
         <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.item" :key="i">
           <nuxt-link :to="'/market-detail/' + v.idx">

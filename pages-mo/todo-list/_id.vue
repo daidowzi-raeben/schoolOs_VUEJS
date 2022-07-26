@@ -1,9 +1,11 @@
 <template>
   <div id="school-content">
     <div class="p-3 jelly-tab">
-      <ul v-if="LOGIN_STUDENT.t_todo_name" class="flex">
-        <li class="is_active">전체 {{ LOGIN_STUDENT.t_todo_name }}</li>
-        <li>
+      <ul v-if="LOGIN_STUDENT" class="flex">
+        <li v-if="LOGIN_STUDENT.t_todo_name" class="is_active">
+          전체 {{ LOGIN_STUDENT.t_todo_name }}
+        </li>
+        <li v-if="LOGIN_STUDENT.t_todo_name">
           <nuxt-link to="/todo-my-list/0"
             >나의 {{ LOGIN_STUDENT.t_todo_name }}</nuxt-link
           >
@@ -47,7 +49,9 @@
           v-if="!GET_AXIOS_CALLBACK_GETTER.questListMain"
           class="quest__content m-t-3"
         >
-          아직 할 수 있는 일이 없어요 :D
+          <div class="p-5 text-center font-14">
+            아직 할 수 있는 일이 없어요.
+          </div>
         </div>
         <div
           v-if="GET_AXIOS_CALLBACK_GETTER.questListMain"
@@ -112,11 +116,20 @@
             </div>
           </div>
         </div>
-        <div v-if="LOGIN_STUDENT" class="account">
-          <h3 v-if="LOGIN_STUDENT.t_todo_name">
+        <div
+          v-if="LOGIN_STUDENT && GET_AXIOS_CALLBACK_GETTER.questListSub"
+          class="account"
+        >
+          <h3
+            v-if="
+              LOGIN_STUDENT.t_todo_name &&
+              GET_AXIOS_CALLBACK_GETTER.questListSub
+            "
+          >
             종료된 {{ LOGIN_STUDENT.t_todo_name }}
           </h3>
         </div>
+
         <div
           v-if="GET_AXIOS_CALLBACK_GETTER.questListSub"
           class="quest__content m-t-3"
