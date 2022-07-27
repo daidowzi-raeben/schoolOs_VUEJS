@@ -11,8 +11,9 @@
       <div class="flex">
         <h1>JELLY</h1>
         <div class="flex-right notification">
-          <nuxt-link to="/qr-scan">
-            <b-icon icon="upc-scan"></b-icon>
+          <nuxt-link to="/rank-list">
+            <!-- <b-icon icon="upc-scan"></b-icon> -->
+            <img src="~/static/mo/icon/ic_rank_top.jpg" width="30" />
           </nuxt-link>
           <!-- <div v-if="isTeacherChat && chatURL" id="teacherChat">
             <div class="teacherChat-header" @click="teacherChat"></div>

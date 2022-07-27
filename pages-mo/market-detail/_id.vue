@@ -189,10 +189,20 @@ export default {
       this.POST_AXIOS(this.paramsPost)
 
       console.log(this.paramsPost)
-      alert(
-        this.GET_AXIOS_CALLBACK_GETTER.item_name +
-          ' 상품을 구매했습니다. 나의 구매내역에서 확인할 수 있어요.'
-      )
+      if (
+        confirm(
+          '상품을 구매했어요\n나의 구매내역에서 확인할 수 있어요.\n이동할까요?'
+        )
+      ) {
+        this.$router.push('/item-list/0')
+      } else {
+        return this.$bvModal.hide('completeFile')
+      }
+
+      // alert(
+      //   this.GET_AXIOS_CALLBACK_GETTER.item_name +
+      //     ' 상품을 구매했습니다.\n 나의 구매내역에서 확인할 수 있어요.'
+      // )
       this.$bvModal.hide('completeFile')
       // POST_AXIOS
     },

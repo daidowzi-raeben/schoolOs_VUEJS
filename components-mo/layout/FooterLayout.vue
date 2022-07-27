@@ -3,7 +3,7 @@
     <footer>
       <div class="nav">
         <nav class="m-t-1">
-          <ul class="flex flex-space">
+          <ul class="flex flex-space m-l-2 m-r-2">
             <li :class="$nuxt._route.name === 'index' ? 'is_active' : ''">
               <nuxt-link to="/">
                 <b-icon icon="house"></b-icon>

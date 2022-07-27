@@ -1,16 +1,43 @@
 <template>
   <div id="school-content">
+    <div class="content">
+      <div class="content__top">
+        <div v-b-modal.ModalNotice class="content__top--notice flex">
+          <p
+            v-if="GET_AXIOS_CALLBACK_GETTER.rule && LOGIN_STUDENT.t_reg_country"
+          >
+            {{ LOGIN_STUDENT.t_reg_country }} 규칙 확인하기
+            <b-modal id="ModalNotice" hide-footer>
+              <div
+                class="img-full"
+                v-html="GET_AXIOS_CALLBACK_GETTER.rule.content"
+              ></div>
+              <div class="m-t-3">
+                <button
+                  class="jelly-btn jelly-btn--default wd-full"
+                  @click="$bvModal.hide('ModalNotice')"
+                >
+                  닫기
+                </button>
+              </div>
+            </b-modal>
+          </p>
+          <p v-else>아직 규칙이 정해지지 않았어요</p>
+          <b-icon icon="chevron-right" class="flex-right"></b-icon>
+        </div>
+      </div>
+    </div>
     <div class="content p-3">
       <p>친구 선택</p>
       <select
-        v-if="GET_AXIOS_CALLBACK_GETTER"
+        v-if="GET_AXIOS_CALLBACK_GETTER.studentList"
         v-model="sms_idx_to"
         class="jelly-text jelly-text--h wd-full m-t-2"
         @change="onChangeStudent($event)"
       >
         <option :value="null">선택하세요</option>
         <option
-          v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
+          v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
           :key="i"
           :value="v.idx"
         >
@@ -69,7 +96,7 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
-    this.params.type = 'studentList'
+    this.params.type = 'sueList'
     this.GET_AXIOS(this.params)
   },
   methods: {

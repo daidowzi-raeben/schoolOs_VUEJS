@@ -2,21 +2,24 @@
   <div v-if="GET_AXIOS_CALLBACK_GETTER.status" id="school-content">
     <div class="content">
       <div class="content__top">
-        <div
-          v-b-modal.ModalNotice
-          hide-footer
-          hide-header
-          class="content__top--notice flex"
-        >
+        <div v-b-modal.ModalNotice class="content__top--notice flex">
           <p
             v-if="GET_AXIOS_CALLBACK_GETTER.rule && LOGIN_STUDENT.t_reg_country"
           >
             {{ LOGIN_STUDENT.t_reg_country }} 규칙 확인하기
-            <b-modal id="ModalNotice">
+            <b-modal id="ModalNotice" hide-footer>
               <div
                 class="img-full"
                 v-html="GET_AXIOS_CALLBACK_GETTER.rule.content"
               ></div>
+              <div class="m-t-3">
+                <button
+                  class="jelly-btn jelly-btn--default wd-full"
+                  @click="$bvModal.hide('ModalNotice')"
+                >
+                  닫기
+                </button>
+              </div>
             </b-modal>
           </p>
           <p v-else>아직 규칙이 정해지지 않았어요</p>
@@ -25,8 +28,16 @@
         <div class="content__top--level flex">
           <div class="profile">
             <div class="profile__avatar flex">
-              <div class="photo">
+              <div v-b-modal.profileImage class="photo">
                 <img
+                  v-if="!LOGIN_STUDENT.reg_photo"
+                  src="http://api.school-os.net/data/student/profile/default.png"
+                />
+                <img
+                  v-if="LOGIN_STUDENT.reg_photo"
+                  :src="`http://api.school-os.net/data/student/profile/${LOGIN_STUDENT.reg_photo}`"
+                />
+                <!-- <img
                   v-if="
                     Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 19
                   "
@@ -61,7 +72,7 @@
                     Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) > 49
                   "
                   src="~/static/mo/plant/level_5.jpg"
-                />
+                /> -->
               </div>
               <div class="name">
                 <strong>
@@ -304,6 +315,38 @@
         </button>
       </div>
     </b-modal>
+    <b-modal id="profileImage" size="sm" hide-footer hide-header>
+      <div>
+        <img
+          v-if="!LOGIN_STUDENT.reg_photo"
+          src="http://api.school-os.net/data/student/profile/default.png"
+          width="100%"
+        />
+        <img
+          v-if="LOGIN_STUDENT.reg_photo"
+          :src="`http://api.school-os.net/data/student/profile/${LOGIN_STUDENT.reg_photo}`"
+          width="100%"
+        />
+      </div>
+      <div class="m-t-3">
+        <p>프로필 수정</p>
+        <input id="reg_photo" type="file" class="jelly-text jelly-text--h" />
+      </div>
+      <div class="m-t-5 flex text-center">
+        <button
+          class="jelly-btn jelly-btn--default flex-full m-r-1"
+          @click="$bvModal.hide('profileImage')"
+        >
+          닫기
+        </button>
+        <button
+          class="jelly-btn jelly-btn--pink flex-full m-l-1"
+          @click="onSubmitProfile"
+        >
+          업로드
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -333,6 +376,7 @@ export default {
       paramsPost: {},
       detailIdx: '',
       detailPay: '',
+      profile: '',
     }
   },
   computed: {
@@ -366,7 +410,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_INIT', 'LOADING_TRUE']),
 
     // EVENT
     onClickTodoDetail(idx) {
@@ -394,10 +438,40 @@ export default {
       this.POST_AXIOS(this.paramsPost)
       setTimeout(() => {
         this.params = this.LOGIN_STUDENT
-        this.params.type = 'billListStudent'
+        this.params.type = 'main'
         this.GET_AXIOS(this.params)
+        alert('정상적으로 납부되었습니다.')
         this.$bvModal.hide('billDetail')
       }, 1000)
+    },
+    onSubmitProfile() {
+      // profileImage
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      const photoFile = document.getElementById('reg_photo')
+
+      frm.append('reg_photo', photoFile.files[0])
+      frm.append('type', 'profileImage')
+      frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
+      frm.append('reg_id', this.LOGIN_STUDENT.reg_id)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/student.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res.data)
+          this.$bvModal.hide('profileImage')
+          this.LOGIN_STUDENT.reg_photo = res.data
+          setTimeout(() => {
+            localStorage.setItem('STUDENT', JSON.stringify(this.LOGIN_STUDENT))
+            this.LOADING_INIT()
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
   },
 }

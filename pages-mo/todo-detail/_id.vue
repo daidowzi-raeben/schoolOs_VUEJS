@@ -1,5 +1,8 @@
 <template>
   <div id="school-content">
+    <div v-if="LOADING" id="LOADING">
+      <img src="~/static/img/loading.gif" />
+    </div>
     <div class="historyBack m-l-3 m-b-5">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
     </div>
@@ -46,6 +49,7 @@
                       )
                     }}
                   </div> -->
+                  <h4 class="m-t-5 font-14">성공하면 보상을 받을 수 있어요</h4>
                   <div class="m-t-2 flex flex-full">
                     <div>
                       보상
@@ -77,6 +81,55 @@
                       </div>
                     </div>
                   </div>
+                  <div
+                    v-if="
+                      GET_AXIOS_CALLBACK_GETTER.m_price != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.m_intellect != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.m_effort != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.m_health != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.m_etiquette != '0'
+                    "
+                  >
+                    <h4
+                      class="m-t-3 p-t-3 font-14"
+                      style="border-top: 1px solid #f1f1f1"
+                    >
+                      실패하면 패널티가 적용되요
+                    </h4>
+                    <div class="m-t-2 flex flex-full">
+                      <div>
+                        패널티
+                        <strong class="bold font-18 m-l-1"
+                          ><em>{{
+                            GET_AXIOS_CALLBACK_GETTER.m_price
+                          }}</em></strong
+                        >
+                        <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+                          LOGIN_STUDENT.t_reg_pay_unit
+                        }}</span>
+                      </div>
+                      <div class="flex-right">
+                        <div class="flex m-t-0">
+                          <span
+                            class="jelly-point m-t-0 jelly-background--type1 m-l-1"
+                            >{{ GET_AXIOS_CALLBACK_GETTER.m_intellect }}</span
+                          >
+                          <span
+                            class="jelly-point m-t-0 jelly-background--type2 m-l-1"
+                            >{{ GET_AXIOS_CALLBACK_GETTER.m_effort }}</span
+                          >
+                          <span
+                            class="jelly-point m-t-0 jelly-background--type3 m-l-1"
+                            >{{ GET_AXIOS_CALLBACK_GETTER.m_health }}</span
+                          >
+                          <span
+                            class="jelly-point m-t-0 jelly-background--type4 m-l-1"
+                            >{{ GET_AXIOS_CALLBACK_GETTER.m_etiquette }}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -88,7 +141,7 @@
                 border-radius: 10px;
                 white-space: pre-line;
               "
-              class="m-l-3 m-r-3 img-full"
+              class="m-l-3 m-r-3 img-full m-t-5"
               v-html="GET_AXIOS_CALLBACK_GETTER.contents"
             ></div>
           </div>
@@ -224,7 +277,7 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
-import { historyBack, axiosForm } from '~/config/util'
+import { historyBack } from '~/config/util'
 
 export default {
   name: 'TodoDetail',
@@ -248,7 +301,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['LOGIN']),
+    ...mapState(['LOGIN', 'LOADING']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
   },
   beforeCreate() {
@@ -262,6 +315,8 @@ export default {
     this.params.idx = this.idx
     this.GET_AXIOS(this.params)
     historyBack()
+    // this.LOADING_TRUE()
+    // console.log('LOADING', this.LOADING)
   },
   methods: {
     // init
@@ -284,6 +339,7 @@ export default {
       }, 1000)
     },
     onSubmitComplete() {
+      this.LOADING_TRUE()
       const frm = new FormData()
       const photoFile = document.getElementById('photo')
 
@@ -296,14 +352,26 @@ export default {
       frm.append('sms_idx', this.params.sms_idx)
       frm.append('smt_idx', this.LOGIN_STUDENT.smt_idx)
       console.log(frm)
-      axiosForm(frm, '/student.php')
-      this.$bvModal.hide('completeFile')
-      setTimeout(() => {
-        this.params = this.LOGIN_STUDENT
-        this.params.type = 'questView'
-        this.params.idx = this.idx
-        this.GET_AXIOS(this.params)
-      }, 1000)
+      // axiosForm(frm, '/student.php')
+      this.$axios
+        .post(process.env.VUE_APP_API + '/student.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res.data)
+          this.$bvModal.hide('completeFile')
+          setTimeout(() => {
+            this.params = this.LOGIN_STUDENT
+            this.params.type = 'questView'
+            this.params.idx = this.idx
+            this.GET_AXIOS(this.params)
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
     // onClickComplete() {
     //   this.$bvModal.show('itemInsert')
