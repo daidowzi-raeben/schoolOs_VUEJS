@@ -284,6 +284,11 @@ $green-lighter: #7cd392;
         p.title {
           font-size: 18px;
           color: #fff;
+          white-space: normal;
+          display: -webkit-box;
+          -webkit-line-clamp: 1; /* 텍스트를 자를 때 원하는 단위 ex) 3줄 */
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       }
       .list {

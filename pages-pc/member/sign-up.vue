@@ -5,166 +5,239 @@
       class="jellyAdminBG"
       :style="`background-image:url(${adminBackgroundImage});position:fixed;width:100%;height:100%;background-size:100% 100%; top:0; left:0; opacity:.5`"
     ></div>
-    <div v-if="!queryStep">
-      <h1>Hello, Jelly Word</h1>
-      <div>
-        스쿨오에스 젤리는 학급의 사회 문화와 경제학에 도움을 주며 무료로 사용할
-        수 있습니다.
-        <br />
-        주 거래 은행을 통해 대출을 받아 이자를 상환하고, 학생들에게 직업을
-        부여하며 주급을 지급할 수 있습니다.
-        <br />
-        또한 부랴부랴 설명
-      </div>
-      <div>
-        <input
-          v-model="reg_country"
-          type="text"
-          class="jelly-text"
-          placeholder="학급 이름"
-        />
-      </div>
-      <div><button @click="onClickNextStep">다음</button></div>
-    </div>
-    <div v-if="queryStep == '1'">
-      <h1>회원가입을 시작합니다</h1>
-      <div>기본정보를 입력해 주세요</div>
-      <div>
-        <div>
+    <div style="width: 1200px; margin: 50px auto">
+      <div v-if="!queryStep">
+        <h1 style="font-size: 50px">Hello, Jelly Word</h1>
+        <div class="font-20 m-t-10" style="line-height: 30px">
+          스쿨오에스 젤리는 학급의 사회 문화와 경제학에 도움을 주며 무료로
+          사용할 수 있습니다.
+          <br />
+          주 거래 은행을 통해 대출을 받아 이자를 상환하고, 학생들에게 직업을
+          부여하며 주급을 지급할 수 있습니다.
+          <br />
+          우리 학급의 이름을 알려주세요.
+        </div>
+        <div class="m-t-10">
           <input
-            v-model="reg_id"
+            v-model="reg_country"
             type="text"
             class="jelly-text"
-            placeholder="아이디"
+            style="background: #fff; color: #000; height: 50px; width: 300px"
+            placeholder="학급 이름"
           />
         </div>
         <div>
-          <input
-            v-model="reg_pw"
-            type="text"
-            class="jelly-text"
-            placeholder="패스워드"
-          />
-        </div>
-        <div>
-          <input
-            v-model="reg_pw2"
-            type="text"
-            class="jelly-text"
-            placeholder="패스워드"
-          />
-        </div>
-        <div>
-          <input
-            v-model="reg_name"
-            type="text"
-            class="jelly-text"
-            placeholder="이름"
-          />
-        </div>
-        <div>
-          <input
-            v-model="reg_email"
-            type="text"
-            class="jelly-text"
-            placeholder="이메일"
-          />
-        </div>
-        <div>
-          <input
-            v-model="reg_phone"
-            type="text"
-            class="jelly-text"
-            placeholder="연락처"
-          />
-        </div>
-        <div>
-          <input
-            v-model="reg_pay_unit"
-            type="text"
-            class="jelly-text"
-            placeholder="화폐이름"
-          />
-        </div>
-        <div>
-          <input
-            v-model="todo_name"
-            type="text"
-            class="jelly-text"
-            placeholder="TODO LIST 이름 ex)퀘스트, 할일 등"
-          />
-        </div>
-        <div>
-          <!-- <input id="reg_photo" type="file" /> -->
+          <button
+            class="jelly-btn jelly-btn--default m-t-10"
+            @click="onClickNextStep"
+          >
+            다음 >
+          </button>
         </div>
       </div>
-      <div><button @click="onClickNextStep(2)">다음</button></div>
-    </div>
-    <div v-if="queryStep == '2'">
-      <h1>학교를 검색하세요</h1>
-      <div>
-        <div>
-          <input v-model="searchSchool" class="jelly-text" type="text" />
-          <button @click="onClickSchoolSearch">검색</button>
+      <div v-if="queryStep == '1'">
+        <h1 style="font-size: 50px">회원가입을 시작합니다</h1>
+        <div class="font-20 m-t-10" style="line-height: 30px">
+          기본정보를 입력해 주세요
+        </div>
+        <div class="m-t-10">
           <div>
-            학교리스트
-            <div v-if="GET_AXIOS_CALLBACK_GETTER.schoolList">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.schoolList"
-                :key="i"
-                @click="onClickSchoolSelect(v.idx)"
-              >
-                {{ v.school }}
-                {{ v.addr }}
+            <input
+              v-model="reg_id"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="아이디"
+            />
+          </div>
+          <div class="m-t-5">
+            <input
+              v-model="reg_pw"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="패스워드"
+            />
+          </div>
+          <div class="m-t-5">
+            <input
+              v-model="reg_pw2"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="패스워드"
+            />
+          </div>
+          <div class="m-t-5">
+            <input
+              v-model="reg_name"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="이름"
+            />
+          </div>
+          <div class="m-t-5">
+            <input
+              v-model="reg_email"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="이메일"
+            />
+          </div>
+          <div class="m-t-5">
+            <input
+              v-model="reg_phone"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="연락처"
+            />
+          </div>
+          <div class="m-t-5">
+            <input
+              v-model="reg_pay_unit"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="화폐이름"
+            />
+          </div>
+          <div class="m-t-5">
+            <input
+              v-model="todo_name"
+              type="text"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              placeholder="TODO LIST 이름 ex)퀘스트, 할일 등"
+            />
+          </div>
+          <div>
+            <!-- <input id="reg_photo" type="file" /> -->
+          </div>
+        </div>
+        <div>
+          <button
+            class="jelly-btn jelly-btn--default m-t-10"
+            @click="onClickNextStep(2)"
+          >
+            다음 >
+          </button>
+        </div>
+      </div>
+      <div v-if="queryStep == '2'">
+        <h1 style="font-size: 50px">학교를 검색하세요</h1>
+        <div>
+          <div>
+            <input
+              v-model="searchSchool"
+              class="jelly-text"
+              style="background: #fff; color: #000; height: 50px; width: 300px"
+              type="text"
+            />
+            <button
+              class="jelly-btn jelly-btn--default m-t-10"
+              style="height: 50px"
+              @click="onClickSchoolSearch"
+            >
+              검색
+            </button>
+            <div>
+              <!-- 학교리스트 -->
+              <div v-if="GET_AXIOS_CALLBACK_GETTER.schoolList" class="m-t-5">
+                <div
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.schoolList"
+                  :key="i"
+                  style="
+                    border-bottom: 1px solid #ddd;
+                    margin: 10px 0;
+                    padding: 10px;
+                  "
+                  @click="onClickSchoolSelect(v.idx)"
+                >
+                  {{ v.school }}
+                  {{ v.addr }}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-if="queryStep == '3'">
-      <h1>학년과 학급을 알려주세요</h1>
-      <div>
-        <input v-model="reg_level" type="text" class="jelly-text" />학년
-        <input v-model="reg_class" type="text" class="jelly-text" />반
-      </div>
-      <div><button @click="onClickNextStep(4)">다음</button></div>
-    </div>
-    <div v-if="queryStep == '4'">
-      <h1>주 거래 은행을 선택합니다.</h1>
-      <div>
-        주 거래 은행에 따라 금리가 다르며, 변동금리는 이용자 및 대출 금액에 따라
-        금리변동 폭이 클수도 적을수도 있습니다.<br />
-        주 거래 은행은 변경할 수 없으니 신중히 선택해 주시기 바랍니다.
-      </div>
-      <div v-if="GET_AXIOS_CALLBACK_GETTER.bankList">
-        <div
-          v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.bankList"
-          :key="`bank${i}`"
-          @click="onClickSchoolBank(v.idx)"
-        >
-          {{ v.sb_name }}
-          <span v-if="v.interest_type === '0'">변동</span>
-          <span v-else>고정</span>
-          {{ v.interest_total }}%
+      <div v-if="queryStep == '3'">
+        <h1 style="font-size: 50px">학년과 학급을 알려주세요</h1>
+        <div class="m-t-10">
+          <input
+            v-model="reg_level"
+            type="text"
+            class="jelly-text"
+            style="background: #fff; color: #000; height: 50px; width: 300px"
+          />학년
+          <input
+            v-model="reg_class"
+            type="text"
+            class="jelly-text m-l-3"
+            style="background: #fff; color: #000; height: 50px; width: 300px"
+          />반
+        </div>
+        <div>
+          <button
+            class="jelly-btn jelly-btn--default m-t-10"
+            @click="onClickNextStep(4)"
+          >
+            다음
+          </button>
         </div>
       </div>
-    </div>
-    <div v-if="queryStep == '5'">
-      <h1>인플레이션 모드를 사용하시겠습니까?</h1>
-      <div>
-        인플레이션 모드는 학급이 주 거래 은행을 통해 대출을 받을때마다 화폐의
-        가치가 떨어지며, 상점에서 구입 가능한 상품들에 인플레이션이 적용됩니다.
-        <br />
-        운영에 따라 파산을 해야하는 경우가 발생할 수 있으니 신중히 운영하시기
-        바랍니다.
+      <div v-if="queryStep == '4'">
+        <h1 style="font-size: 50px">주 거래 은행을 선택합니다.</h1>
+        <div class="m-t-10" style="line-height: 30px">
+          주 거래 은행에 따라 금리가 다르며, 변동금리는 이용자 및 대출 금액에
+          따라 금리변동 폭이 클수도 적을수도 있습니다.<br />
+          주 거래 은행은 변경할 수 없으니 신중히 선택해 주시기 바랍니다.
+        </div>
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.bankList" class="m-t-10">
+          <div
+            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.bankList"
+            :key="`bank${i}`"
+            style="border-bottom: 1px solid #ddd; margin: 10px 0; padding: 10px"
+            @click="onClickSchoolBank(v.idx)"
+          >
+            {{ v.sb_name }}
+            <span v-if="v.interest_type === '0'">변동금리</span>
+            <span v-else>고정금리</span>
+            {{ v.interest_total }}%
+          </div>
+        </div>
       </div>
-      <select v-model="inflation" class="jelly-text">
-        <option value="">선택</option>
-        <option value="Y">사용</option>
-        <option value="N">미사용</option>
-      </select>
-      <div><button @click="onClickNextStep">가입하기</button></div>
+      <div v-if="queryStep == '5'">
+        <h1 style="font-size: 50px">인플레이션 모드를 사용하시겠습니까?</h1>
+        <div class="m-t-10" style="line-height: 30px">
+          인플레이션 모드는 학급이 주 거래 은행을 통해 대출을 받을때마다 화폐의
+          가치가 떨어지며, 상점에서 구입 가능한 상품들에 인플레이션이
+          적용됩니다.
+          <br />
+          운영에 따라 파산을 해야하는 경우가 발생할 수 있으니 신중히 운영하시기
+          바랍니다.
+        </div>
+        <select
+          v-model="inflation"
+          class="jelly-text m-t-10"
+          style="background: #fff; color: #000; height: 50px; width: 300px"
+        >
+          <option :value="null">선택</option>
+          <option value="Y">사용</option>
+          <option value="N">미사용</option>
+        </select>
+        <div>
+          <button
+            class="jelly-btn jelly-btn--default m-t-10"
+            @click="onClickNextStep"
+          >
+            가입하기
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
