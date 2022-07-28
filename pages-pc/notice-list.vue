@@ -36,6 +36,16 @@
       </div>
     </div>
     <b-modal id="itemInsert" size="lg" hide-footer hide-header>
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.noticeRead" class="m-t-5">
+        <p>읽지않음</p>
+        <span
+          v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.noticeRead"
+          :key="i"
+          class="m-r-2"
+        >
+          {{ v.reg_name }}
+        </span>
+      </div>
       <div class="m-t-5">
         <p>제목</p>
         <input

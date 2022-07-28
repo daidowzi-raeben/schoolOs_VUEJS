@@ -148,6 +148,10 @@ export default {
         alert('금액을 다시 입력해주세요')
         return false
       }
+      if (myPrice === 0) {
+        alert('잔액이 부족해요')
+        return false
+      }
       if (this.accountPrice > myPrice) {
         alert('잔액이 부족해요')
         return false

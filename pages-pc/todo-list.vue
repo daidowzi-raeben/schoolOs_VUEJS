@@ -343,9 +343,27 @@
         >
           닫기
         </button>
-        <button class="jelly-btn jelly-btn--pink" @click="onSubmit">
+        <button class="jelly-btn jelly-btn--pink" @click="onSubmitCate">
           등록하기
         </button>
+      </div>
+    </b-modal>
+    <b-modal id="fileDataSlide" size="lg" hide-footer hide-header>
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.participationFile">
+        <swiper :options="swiperOption">
+          <swiper-slide
+            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.participationFile"
+            :key="i"
+          >
+            <img
+              :src="`http://api.school-os.net/data/student/quest/${v.file_name}`"
+              width="100%"
+            />
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
       </div>
     </b-modal>
     <b-modal id="questConfirm" size="lg" hide-footer hide-header>
@@ -363,6 +381,7 @@
               <th>읽음여부</th>
               <th>수락여부</th>
               <th>제출여부</th>
+              <th>인증샷</th>
               <th>관리</th>
             </tr>
           </thead>
@@ -373,24 +392,40 @@
             :class="v.is_confirm === 'Y' ? 'is_active' : ''"
           >
             <td>{{ v.reg_name }}</td>
-            <td>{{ v.is_read }}</td>
-            <td>{{ v.is_status }}</td>
-            <td>{{ v.is_complete }}</td>
+            <td>{{ v.is_read === 'Y' ? '읽음' : '안읽음' }}</td>
+            <td>{{ v.is_status === 'Y' ? '수락' : '미수락' }}</td>
+            <td v-if="v.is_confirm === 'N'">
+              {{ v.is_complete === 'Y' ? '제출' : '미제출' }}
+            </td>
+            <td v-if="v.is_confirm === 'R'">다시 제출</td>
+            <td v-if="!v.is_confirm">미제출</td>
+            <td v-if="v.is_confirm === 'Y'">완료</td>
+            <td v-if="v.is_confirm === 'F'">실패</td>
             <td>
               <button
+                class="jelly-btn jelly-btn--default"
+                @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
+              >
+                확인하기
+              </button>
+            </td>
+            <td class="text-left">
+              <button
+                v-if="v.is_confirm !== 'F'"
                 class="jelly-btn jelly-btn--default"
                 @click="onSubmitConfirm('F', v.sq_idx, v.idx)"
               >
                 실패
               </button>
               <button
+                v-if="v.is_complete && v.is_confirm !== 'R'"
                 class="jelly-btn jelly-btn--default"
                 @click="onSubmitConfirm('R', v.sq_idx, v.idx)"
               >
                 다시 제출
               </button>
               <button
-                v-if="v.is_complete"
+                v-if="v.is_complete && v.is_confirm !== 'Y'"
                 class="jelly-btn jelly-btn--pink"
                 @click="onSubmitConfirm('Y', v.sq_idx, v.idx)"
               >
@@ -420,6 +455,19 @@ export default {
   layout: 'default-pc',
   data() {
     return {
+      swiperOption: {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      },
       params: {},
       paramsForm: {},
       paramsDetail: {},
@@ -448,16 +496,18 @@ export default {
         effort: '',
         health: '',
         etiquette: '',
-        m_price: '',
-        m_intellect: '',
-        m_effort: '',
-        m_health: '',
-        m_etiquette: '',
+        m_price: '0',
+        m_intellect: '0',
+        m_effort: '0',
+        m_health: '0',
+        m_etiquette: '0',
         start_day: '',
         end_day: '',
         type: '',
       },
       confirm: {},
+      fileData: {},
+      cateForm: {},
     }
   },
 
@@ -541,6 +591,19 @@ export default {
         this.$router.push(`/shop-list`)
       }
     },
+    onSubmitCate() {
+      this.cateForm.subject = this.cate_name
+      this.cateForm.smt_idx = this.LOGIN_TEACHER.smt_idx
+      this.cateForm.type = 'cateWrite'
+      this.POST_AXIOS(this.cateForm)
+
+      this.$bvModal.hide('cateInsert')
+      setTimeout(() => {
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'questList'
+        this.GET_AXIOS(this.params)
+      }, 1000)
+    },
     onClickItemDetail(e) {
       this.noticeIdx = e
       this.paramsDetail = this.LOGIN_TEACHER
@@ -566,6 +629,7 @@ export default {
         this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.view.subject
         this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.view.contents
         console.log(this.GET_AXIOS_CALLBACK_GETTER.participation)
+        console.log(this.GET_AXIOS_CALLBACK_GETTER.participationFile)
       }, 1500)
       this.$bvModal.show('questConfirm')
     },
@@ -590,6 +654,14 @@ export default {
         console.log(sqIdx)
         this.GET_AXIOS(this.paramsDetail)
       }, 1500)
+    },
+    onClickFileDetail(idx, sms) {
+      this.fileData = this.LOGIN_TEACHER
+      this.fileData.type = 'questList'
+      this.fileData.idx = idx
+      this.fileData.sms_idx = sms
+      this.GET_AXIOS(this.fileData)
+      this.$bvModal.show('fileDataSlide')
     },
     //
   },
