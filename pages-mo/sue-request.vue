@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
     onContext(ctx) {
       this.context = ctx
       console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')

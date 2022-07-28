@@ -147,7 +147,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
     onClickBillDetail(idx) {

@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'GET_API_MY_SCHOOL']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
   },
 }
 </script>

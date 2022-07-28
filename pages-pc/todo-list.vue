@@ -187,14 +187,6 @@
       </div>
       <div class="m-t-5 flex">
         <div class="flex-full m-r-1">
-          <p>보상</p>
-          <input
-            v-model="quest.price"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full m-r-1">
           <p>시작일</p>
           <div>
             <b-form-datepicker
@@ -214,6 +206,14 @@
         </div>
       </div>
       <div class="m-t-5 flex">
+        <div class="flex-full m-r-1">
+          <p>보상금</p>
+          <input
+            v-model="quest.price"
+            type="text"
+            class="jelly-text jelly-text--h wd-full"
+          />
+        </div>
         <div class="flex-full">
           <p>지능</p>
           <input
@@ -242,6 +242,50 @@
           <p>예절</p>
           <input
             v-model="quest.etiquette"
+            type="text"
+            class="jelly-text jelly-text--h wd-full"
+          />
+        </div>
+      </div>
+      <div class="m-t-5">실패 시 패널티 사용</div>
+      <span>- 부호를 사용하지 않고 작성해 주세요</span>
+      <div class="flex m-t-2">
+        <div class="flex-full m-r-1">
+          <p>보상금</p>
+          <input
+            v-model="quest.m_price"
+            type="text"
+            class="jelly-text jelly-text--h wd-full"
+          />
+        </div>
+        <div class="flex-full">
+          <p>지능</p>
+          <input
+            v-model="quest.m_intellect"
+            type="text"
+            class="jelly-text jelly-text--h wd-full"
+          />
+        </div>
+        <div class="flex-full m-r-1 m-l-1">
+          <p>노력</p>
+          <input
+            v-model="quest.m_effort"
+            type="text"
+            class="jelly-text jelly-text--h wd-full"
+          />
+        </div>
+        <div class="flex-full m-r-1">
+          <p>건강</p>
+          <input
+            v-model="quest.m_health"
+            type="text"
+            class="jelly-text jelly-text--h wd-full"
+          />
+        </div>
+        <div class="flex-full">
+          <p>예절</p>
+          <input
+            v-model="quest.m_etiquette"
             type="text"
             class="jelly-text jelly-text--h wd-full"
           />
@@ -335,9 +379,15 @@
             <td>
               <button
                 class="jelly-btn jelly-btn--default"
-                @click="onSubmitConfirm('N', v.sq_idx, v.idx)"
+                @click="onSubmitConfirm('F', v.sq_idx, v.idx)"
               >
                 실패
+              </button>
+              <button
+                class="jelly-btn jelly-btn--default"
+                @click="onSubmitConfirm('R', v.sq_idx, v.idx)"
+              >
+                다시 제출
               </button>
               <button
                 v-if="v.is_complete"
@@ -398,6 +448,11 @@ export default {
         effort: '',
         health: '',
         etiquette: '',
+        m_price: '',
+        m_intellect: '',
+        m_effort: '',
+        m_health: '',
+        m_etiquette: '',
         start_day: '',
         end_day: '',
         type: '',
@@ -442,7 +497,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
     onSubmit() {
@@ -473,7 +528,7 @@ export default {
         this.params = this.LOGIN_TEACHER
         this.params.type = 'questList'
         this.GET_AXIOS(this.params)
-      }, 1000)
+      }, 1500)
       this.$bvModal.hide('itemInsert')
     },
     isActiveCalendar(e) {
@@ -496,8 +551,9 @@ export default {
       setTimeout(() => {
         this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.view.subject
         this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.view.contents
+        this.quest = this.GET_AXIOS_CALLBACK_GETTER.view
+        this.$bvModal.show('itemInsert')
       }, 1500)
-      this.$bvModal.show('itemInsert')
     },
     onClickItemDetailConfirm(e) {
       this.noticeIdx = e

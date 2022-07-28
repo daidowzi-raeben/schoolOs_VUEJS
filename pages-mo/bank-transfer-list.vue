@@ -61,8 +61,10 @@
                         {{ v.buy_item_name }} 구입
                       </em>
                       <em v-if="v.case_result === '보상'"
-                        >{{ v.quest_name }} 보상</em
-                      >
+                        >{{ v.quest_name }}
+                        <span v-if="v.status === '0'">보상</span>
+                        <span v-if="v.status === '1'">차감</span>
+                      </em>
                       <em v-if="v.case_result === '기타'" style="color: #111">{{
                         v.etc_memo
                       }}</em>
@@ -85,7 +87,7 @@
                       ></em>
                     </p>
                     <div
-                      class="flex-right text-right m-t-1"
+                      class="flex-right text-right flex-shrink m-t-1"
                       :class="v.status === '1' ? 'jelly-color--type4' : ''"
                     >
                       <span v-if="v.status === '1'">-</span>
@@ -142,7 +144,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
     onClickTodoDetail(idx) {

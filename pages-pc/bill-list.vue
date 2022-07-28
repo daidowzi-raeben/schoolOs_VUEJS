@@ -77,7 +77,13 @@
         <div class="m-t-5">
           <div class="flex-full m-l-1">
             <p>금액</p>
-            <input v-model="billPay" type="text" class="jelly-text wd-full" />
+            <input
+              :value="billPay"
+              type="text"
+              class="jelly-text wd-full"
+              @input="payComma($event)"
+              @click="resetInput($event)"
+            />
           </div>
         </div>
         <div class="m-t-5 text-center">
@@ -129,7 +135,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
     onClickBillInsert() {
@@ -139,19 +145,46 @@ export default {
       this.$bvModal.show('billInsert')
     },
     onSubmit() {
-      this.paramsPost = this.LOGIN_TEACHER
-      this.paramsPost.type = 'billList'
-      this.paramsPost.billCateList = this.billCateList
-      this.paramsPost.billPay = this.billPay
-      this.paramsPost.billSubject = this.billSubject
-      this.POST_AXIOS(this.paramsPost)
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      frm.append('type', 'billList')
+      frm.append('billCateList', this.billCateList)
+      frm.append('billPay', this.uncomma(this.billPay))
+      frm.append('billSubject', this.billSubject)
 
-      setTimeout(() => {
-        this.params = this.LOGIN_TEACHER
-        this.params.type = 'billList'
-        this.GET_AXIOS(this.params)
-        this.$bvModal.hide('billInsert')
-      }, 1500)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          this.$bvModal.hide('billInsert')
+          setTimeout(() => {
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'billList'
+            this.GET_AXIOS(this.params)
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
+    },
+    payComma(e) {
+      this.billPay = this.comma(this.uncomma(e.target.value))
+    },
+    comma(str) {
+      str = String(str)
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+    },
+    uncomma(str) {
+      str = String(str)
+      return str.replace(/[^\d]+/g, '')
+    },
+    resetInput(e) {
+      e.target.value = ''
     },
   },
 }

@@ -161,7 +161,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations([]),
+    ...mapMutations(['LOADING_TRUE']),
     onSubmit() {
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.idx = this.params.idx
