@@ -178,8 +178,9 @@ export default {
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.type = 'bankTransfer'
       this.paramsPost.send_sms_idx = this.$refs.sendStudent.value
-      this.paramsPost.pay = this.accountPrice
+      this.paramsPost.pay = this.uncomma(this.accountPrice)
       console.log(this.paramsPost.send_sms_idx)
+      console.log(this.paramsPost.pay)
       this.POST_AXIOS(this.paramsPost)
       this.$bvModal.hide('completeFile')
       setTimeout(() => {

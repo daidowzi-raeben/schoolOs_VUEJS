@@ -35,7 +35,7 @@
                 />
                 <img
                   v-if="LOGIN_STUDENT.reg_photo"
-                  :src="`http://api.school-os.net/data/student/profile/${LOGIN_STUDENT.reg_photo}`"
+                  :src="`http://api.school-os.net/data/student/profile/thumb/${LOGIN_STUDENT.reg_photo}`"
                 />
                 <!-- <img
                   v-if="
@@ -330,7 +330,12 @@
       </div>
       <div class="m-t-3">
         <p>프로필 수정</p>
-        <input id="reg_photo" type="file" class="jelly-text jelly-text--h" />
+        <input
+          id="reg_photo"
+          ref="reg_photo"
+          type="file"
+          class="jelly-text jelly-text--h"
+        />
       </div>
       <div class="m-t-5 flex text-center">
         <button
@@ -445,8 +450,13 @@ export default {
       }, 1000)
     },
     onSubmitProfile() {
+      if (!this.$refs.reg_photo.value) {
+        return alert('사진을 먼저 업로드 해주세요')
+      }
+
       // profileImage
       this.LOADING_TRUE()
+      this.$bvModal.hide('profileImage')
       const frm = new FormData()
       const photoFile = document.getElementById('reg_photo')
 
@@ -462,7 +472,6 @@ export default {
         })
         .then((res) => {
           console.log(res.data)
-          this.$bvModal.hide('profileImage')
           this.LOGIN_STUDENT.reg_photo = res.data
           setTimeout(() => {
             localStorage.setItem('STUDENT', JSON.stringify(this.LOGIN_STUDENT))

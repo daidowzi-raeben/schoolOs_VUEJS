@@ -31,18 +31,28 @@
             class="box quest m-b-3"
           >
             <div class="flex">
-              <div class="label blue">LV.{{ Number(v.reg_level) }}</div>
+              <div class="rankProfile" @click="profileDetail(v.reg_photo)">
+                <img
+                  v-if="!v.reg_photo"
+                  src="http://api.school-os.net/data/student/profile/default.png"
+                />
+                <img
+                  v-if="v.reg_photo"
+                  :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                />
+              </div>
               <div class="flex-full m-l-2">
                 <div class="flex m-t-0">
-                  <div class="txt">
+                  <div class="txt m-t-1">
                     <p class="bold">{{ v.reg_name }}</p>
+                    <p class="m-t-2">LV.{{ Number(v.reg_level) }}</p>
                     <span>
                       {{ v.job_name }}
                     </span>
                   </div>
 
                   <div class="flex-right">
-                    <div class="flex m-t-0">
+                    <div class="flex m-t-4">
                       <span
                         class="jelly-point m-t-0 jelly-background--type1 m-l-1"
                         >{{ Number(v.intellect) }}</span
@@ -68,6 +78,19 @@
         </div>
       </div>
     </div>
+    <b-modal id="profileImage" size="sm" hide-footer hide-header>
+      <div>
+        <img :src="profileDetailImage" width="100%" />
+      </div>
+      <div class="m-t-5 flex text-center">
+        <button
+          class="jelly-btn jelly-btn--default flex-full wd-full m-r-1"
+          @click="$bvModal.hide('profileImage')"
+        >
+          닫기
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -82,6 +105,7 @@ export default {
       start_day: '',
       end_day: '',
       isHistory: '',
+      profileDetailImage: '',
     }
   },
 
@@ -105,6 +129,14 @@ export default {
     ...mapMutations([]),
 
     // EVENT
+    profileDetail(image) {
+      this.profileDetailImage = ''
+      if (!image) {
+        return false
+      }
+      this.profileDetailImage = `http://api.school-os.net/data/student/profile/${image}`
+      this.$bvModal.show('profileImage')
+    },
   },
 }
 </script>
