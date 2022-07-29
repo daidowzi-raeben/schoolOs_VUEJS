@@ -1,7 +1,7 @@
 <template>
   <div id="school-content">
     <div class="p-3 jelly-tab">
-      <ul v-if="LOGIN_STUDENT.t_todo_name" class="flex">
+      <ul v-if="LOGIN_STUDENT && LOGIN_STUDENT.t_todo_name" class="flex">
         <li>
           <nuxt-link to="/todo-list/0"
             >전체 {{ LOGIN_STUDENT.t_todo_name }}</nuxt-link
