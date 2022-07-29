@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-if="LOGIN_CONFIG && GET_AXIOS_CALLBACK_GETTER.total_pay">
     <div class="">
       <div id="jellyAdminheader">
         <span>{{ today }}</span>
-        <h1 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER.total_pay">
-          {{ LOGIN_TEACHER.reg_country }}
+        <h1 v-if="LOGIN_CONFIG && GET_AXIOS_CALLBACK_GETTER.total_pay">
+          {{ LOGIN_CONFIG.reg_country }}
           <span v-b-tooltip.hover title="현재 재산" class="spanBox">
             {{ GET_AXIOS_CALLBACK_GETTER.total_pay.total_pay | comma }}
             {{ LOGIN_CONFIG.reg_pay_unit }}
@@ -34,8 +34,8 @@
 
       <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="student">
         <div class="student__list">
-          <h3 v-if="LOGIN_TEACHER">
-            진행중인 {{ LOGIN_TEACHER.todo_name }} ({{ studentName.length }})
+          <h3 v-if="LOGIN_CONFIG">
+            진행중인 {{ LOGIN_CONFIG.todo_name }} ({{ studentName.length }})
           </h3>
           <div class="m-t-3 clb">
             <div
@@ -111,7 +111,7 @@ export default {
     // console.log(this.$nuxt, this.$config)
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
     console.log(this.$nuxt, this.$config, this.LOGIN_CONFIG)
-    this.params = this.LOGIN_TEACHER
+    this.params = this.LOGIN_CONFIG
     this.params.type = 'main'
     this.GET_AXIOS(this.params)
 

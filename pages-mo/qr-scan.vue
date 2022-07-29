@@ -57,7 +57,7 @@ export default {
         alert('잘못된 QR CODE 입니다.')
         this.$router.push(`/`)
       } else {
-        this.$router.push(this.qrData)
+        this.$router.push(decodedString)
       }
       // /member/sign-up
     },
