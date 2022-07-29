@@ -1,12 +1,12 @@
 <template>
-  <div v-if="GET_AXIOS_CALLBACK_GETTER.status" id="school-content">
+  <div v-if="LOGIN_CONFIG && GET_AXIOS_CALLBACK_GETTER" id="school-content">
     <div class="content">
       <div class="content__top">
         <div v-b-modal.ModalNotice class="content__top--notice flex">
           <p
-            v-if="GET_AXIOS_CALLBACK_GETTER.rule && LOGIN_STUDENT.t_reg_country"
+            v-if="GET_AXIOS_CALLBACK_GETTER.rule && LOGIN_CONFIG.t_reg_country"
           >
-            {{ LOGIN_STUDENT.t_reg_country }} 규칙 확인하기
+            {{ LOGIN_CONFIG.t_reg_country }} 규칙 확인하기
             <b-modal id="ModalNotice" hide-footer>
               <div
                 class="img-full"
@@ -28,14 +28,14 @@
         <div class="content__top--level flex">
           <div class="profile">
             <div class="profile__avatar flex">
-              <div v-b-modal.profileImage class="photo">
+              <div v-if="LOGIN_CONFIG" v-b-modal.profileImage class="photo">
                 <img
-                  v-if="!LOGIN_STUDENT.reg_photo"
+                  v-if="!LOGIN_CONFIG.reg_photo"
                   src="http://api.school-os.net/data/student/profile/default.png"
                 />
                 <img
-                  v-if="LOGIN_STUDENT.reg_photo"
-                  :src="`http://api.school-os.net/data/student/profile/thumb/${LOGIN_STUDENT.reg_photo}`"
+                  v-if="LOGIN_CONFIG.reg_photo"
+                  :src="`http://api.school-os.net/data/student/profile/thumb/${LOGIN_CONFIG.reg_photo}`"
                 />
                 <!-- <img
                   v-if="
@@ -157,8 +157,8 @@
           "
           class="box quest m-b-5"
         >
-          <div class="quest__title flex">
-            <h3 v-if="LOGIN_STUDENT.t_todo_name">나의 고지서</h3>
+          <div v-if="LOGIN_CONFIG" class="quest__title flex">
+            <h3 v-if="LOGIN_CONFIG.t_todo_name">나의 고지서</h3>
 
             <!-- <b-icon
               class="m-l-1"
@@ -183,8 +183,8 @@
                     <em class="bold">
                       {{ v.pay | comma }}
                     </em>
-                    <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
-                      LOGIN_STUDENT.t_reg_pay_unit
+                    <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
+                      LOGIN_CONFIG.t_reg_pay_unit
                     }}</span>
                   </p>
                 </div>
@@ -200,9 +200,9 @@
         </div>
         <div class="box quest">
           <div class="quest__title flex">
-            <nuxt-link to="/todo-my-list/0">
-              <h3 v-if="LOGIN_STUDENT.t_todo_name">
-                나의 {{ LOGIN_STUDENT.t_todo_name }}
+            <nuxt-link v-if="LOGIN_CONFIG" to="/todo-my-list/0">
+              <h3 v-if="LOGIN_CONFIG.t_todo_name">
+                나의 {{ LOGIN_CONFIG.t_todo_name }}
               </h3>
             </nuxt-link>
             <b-icon
@@ -211,10 +211,7 @@
               style="margin-top: 2px"
             ></b-icon>
           </div>
-          <div
-            v-if="GET_AXIOS_CALLBACK_GETTER.quest.length === 0"
-            class="quest__content"
-          >
+          <div v-if="!GET_AXIOS_CALLBACK_GETTER.quest" class="quest__content">
             <div class="p-5 text-center font-14">아직 수락한 일이 없어요.</div>
           </div>
           <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="quest__content">
@@ -234,8 +231,8 @@
                   <em class="bold">
                     {{ v.price | comma }}
                   </em>
-                  <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
-                    LOGIN_STUDENT.t_reg_pay_unit
+                  <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
+                    LOGIN_CONFIG.t_reg_pay_unit
                   }}</span>
                 </p>
                 <span>{{ v.d_day }}일남음</span>
@@ -272,8 +269,8 @@
                       | comma
                   }}</em></strong
                 >
-                <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
-                  LOGIN_STUDENT.t_reg_pay_unit
+                <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
+                  LOGIN_CONFIG.t_reg_pay_unit
                 }}</span>
               </div>
             </div>
@@ -316,15 +313,15 @@
       </div>
     </b-modal>
     <b-modal id="profileImage" size="sm" hide-footer hide-header>
-      <div>
+      <div v-if="LOGIN_CONFIG">
         <img
-          v-if="!LOGIN_STUDENT.reg_photo"
+          v-if="!LOGIN_CONFIG.reg_photo"
           src="http://api.school-os.net/data/student/profile/default.png"
           width="100%"
         />
         <img
-          v-if="LOGIN_STUDENT.reg_photo"
-          :src="`http://api.school-os.net/data/student/profile/${LOGIN_STUDENT.reg_photo}`"
+          v-if="LOGIN_CONFIG.reg_photo"
+          :src="`http://api.school-os.net/data/student/profile/${LOGIN_CONFIG.reg_photo}`"
           width="100%"
         />
       </div>
@@ -402,11 +399,13 @@ export default {
     console.log('[mounted]')
 
     // DATA INIT
-    this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
-    console.log(this.$nuxt, this.$config, this.LOGIN_CONFIG)
-    this.params = this.LOGIN_STUDENT
-    this.params.type = 'main'
-    this.GET_AXIOS(this.params)
+    setTimeout(() => {
+      this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
+      console.log(this.$nuxt, this.$config, this.LOGIN_CONFIG)
+      this.params = this.LOGIN_CONFIG
+      this.params.type = 'main'
+      this.GET_AXIOS(this.params)
+    })
 
     // EVENT
     // console.log('GET', this.GET_AXIOS_CALLBACK_GETTER)
@@ -438,11 +437,11 @@ export default {
 
       this.paramsPost.type = 'billListStudent'
       this.paramsPost.idx = this.detailIdx
-      this.paramsPost.sms_idx = this.LOGIN_STUDENT.sms_idx
-      this.paramsPost.smt_idx = this.LOGIN_STUDENT.smt_idx
+      this.paramsPost.sms_idx = this.LOGIN_CONFIG.sms_idx
+      this.paramsPost.smt_idx = this.LOGIN_CONFIG.smt_idx
       this.POST_AXIOS(this.paramsPost)
       setTimeout(() => {
-        this.params = this.LOGIN_STUDENT
+        this.params = this.LOGIN_CONFIG
         this.params.type = 'main'
         this.GET_AXIOS(this.params)
         alert('정상적으로 납부되었습니다.')
@@ -462,8 +461,8 @@ export default {
 
       frm.append('reg_photo', photoFile.files[0])
       frm.append('type', 'profileImage')
-      frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
-      frm.append('reg_id', this.LOGIN_STUDENT.reg_id)
+      frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
+      frm.append('reg_id', this.LOGIN_CONFIG.reg_id)
       this.$axios
         .post(process.env.VUE_APP_API + '/student.php', frm, {
           header: {
@@ -472,9 +471,9 @@ export default {
         })
         .then((res) => {
           console.log(res.data)
-          this.LOGIN_STUDENT.reg_photo = res.data
+          this.LOGIN_CONFIG.reg_photo = res.data
           setTimeout(() => {
-            localStorage.setItem('STUDENT', JSON.stringify(this.LOGIN_STUDENT))
+            localStorage.setItem('STUDENT', JSON.stringify(this.LOGIN_CONFIG))
             this.LOADING_INIT()
           })
         })

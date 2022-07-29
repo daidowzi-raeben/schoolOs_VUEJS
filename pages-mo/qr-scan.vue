@@ -50,7 +50,8 @@ export default {
     ...mapMutations(['LOADING_TRUE']),
     onDecode(decodedString) {
       console.log(decodedString)
-      this.qrData = decodedString
+      this.qrData = decodedString.substr(15)
+      // /member/sign-up
     },
 
     // EVENT

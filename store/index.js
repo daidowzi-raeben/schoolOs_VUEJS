@@ -16,7 +16,7 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA: [],
       GET_AXIOS_CALLBACK_DATA_SUB: [],
       LOGIN: [],
-      GET_AXIOS_CALLBACK_DATA_BILL: '',
+      GET_AXIOS_CALLBACK_DATA_BILL: [],
       studentIdMSG: '',
 
       //  ---------------------------------[admin]

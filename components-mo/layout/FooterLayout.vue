@@ -20,8 +20,8 @@
             >
               <nuxt-link to="/todo-list/0">
                 <b-icon icon="controller"></b-icon>
-                <p v-if="LOGIN_STUDENT">
-                  {{ LOGIN_STUDENT.t_todo_name }}
+                <p v-if="LOGIN_CONFIG">
+                  {{ LOGIN_CONFIG.t_todo_name }}
                 </p>
               </nuxt-link>
             </li>
@@ -85,6 +85,7 @@ export default {
   data() {
     return {
       paramsBill: {},
+      LOGIN_CONFIG: {},
     }
   },
   computed: {
@@ -94,9 +95,6 @@ export default {
   mounted() {
     console.log('FOOTER', this.$nuxt._route.name)
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
-    this.paramsBill = this.LOGIN_CONFIG
-    this.paramsBill.type = 'billStudentCnt'
-    this.GET_AXIOS(this.paramsBill)
     console.log('FOOTER==========', this.LOGIN_CONFIG)
   },
   methods: {

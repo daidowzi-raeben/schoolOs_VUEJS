@@ -29,7 +29,7 @@
           </button>
         </div>
         <div class="m-t-4 text-center">
-          아이디가 없다면 <br />선생님에게 QR코드를 요청하세요
+          <nuxt-link to="qr-scan"> 아이디가 없으신가요? </nuxt-link>
         </div>
       </form>
     </div>
@@ -92,7 +92,7 @@ export default {
         if (loginCheck) {
           this.$router.push('/')
         }
-      }, 1000)
+      })
     },
   },
 }

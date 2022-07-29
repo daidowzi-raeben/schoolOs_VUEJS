@@ -38,35 +38,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   data() {
-    return {
-      loading: true,
-      isTeacherChat: false,
-    }
+    return {}
   },
-  computed: {
-    ...mapState(['LOGIN', 'chatURL']),
-  },
-  mounted() {
-    // console.log(this.LOGIN, this.chatURL)
-    this.finish()
-  },
-  methods: {
-    start() {
-      this.loading = true
-    },
-    finish() {
-      this.loading = false
-    },
-    teacherChat() {
-      this.isTeacherChat === false
-        ? (this.isTeacherChat = true)
-        : (this.isTeacherChat = false)
-    },
-  },
+  computed: {},
 }
 </script>
 

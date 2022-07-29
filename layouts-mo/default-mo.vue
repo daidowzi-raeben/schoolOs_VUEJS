@@ -24,14 +24,16 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      loginCheck: {},
+    }
   },
   computed: {
     ...mapState(['LOADING']),
   },
   mounted() {
-    const loginCheck = localStorage.getItem('STUDENT')
-    if (!loginCheck) {
+    this.loginCheck = localStorage.getItem('STUDENT')
+    if (!this.loginCheck) {
       this.$router.push(`/member/sign-in`)
     }
     console.log('[LOADING_INIT]', this.LOADING_INIT)
