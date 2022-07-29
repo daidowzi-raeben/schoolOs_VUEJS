@@ -29,7 +29,7 @@
           </button>
         </div>
         <div class="m-t-4 text-center">
-          <nuxt-link to="qr-scan"> 아이디가 없으신가요? </nuxt-link>
+          <nuxt-link to="../qr-scan"> 아이디가 없으신가요? </nuxt-link>
         </div>
       </form>
     </div>
