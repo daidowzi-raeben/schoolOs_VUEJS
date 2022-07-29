@@ -14,7 +14,9 @@
           @decode="onDecode"
         ></qrcode-stream>
       </div>
-      <div>선생님의 QR코드를 통해 가입할 수 있습니다.</div>
+      <div class="text-center m-t-5">
+        선생님의 QR코드를 통해 가입할 수 있습니다.
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +52,7 @@ export default {
     ...mapMutations(['LOADING_TRUE']),
     onDecode(decodedString) {
       console.log(decodedString)
-      this.qrData = decodedString.substr(15)
+      this.qrData = decodedString.substr(0, 15)
       if (this.qrData !== '/member/sign-up') {
         alert('잘못된 QR CODE 입니다.')
         this.$router.push(`/`)
