@@ -81,6 +81,22 @@
                       <em v-if="v.case_result === '현금'" style="color: #111"
                         >현금 출금</em
                       >
+                      <em v-if="v.case_result === '알림장'" style="color: #111"
+                        >알림장 읽음 보상</em
+                      >
+                      <em v-if="v.case_result === '세금'" style="color: #111">{{
+                        v.tax_name
+                      }}</em>
+                      <em
+                        v-if="v.case_result === '알바비지급'"
+                        style="color: #111"
+                        >[{{ v.alba_name }}] {{ v.alba_reg_name }}에게 지급</em
+                      >
+                      <em
+                        v-if="v.case_result === '알바비'"
+                        style="color: #111"
+                        >{{ v.alba_name }}</em
+                      >
                       <em
                         v-if="v.case_result === '에러'"
                         style="color: #111"

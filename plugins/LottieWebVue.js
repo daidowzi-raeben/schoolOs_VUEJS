@@ -1,4 +1,6 @@
-import Vue from 'vue'
-import LottieAnimation from 'lottie-web-vue'
+import lottie from 'lottie-web'
 
-Vue.use(LottieAnimation)
+// makes lottie api available from this.$lottie in a nuxt application
+export default ({ app }, inject) => {
+  inject('lottie', lottie)
+}

@@ -27,16 +27,16 @@
             </li>
             <li
               :class="
-                $nuxt._route.name === 'market-list-id' ||
-                $nuxt._route.name === 'item-list-id' ||
-                $route.name === 'market-detail-id'
+                $nuxt._route.name === 'parttime-list-id' ||
+                $nuxt._route.name === 'parttime-my-list-id'
                   ? 'is_active'
                   : ''
               "
             >
-              <nuxt-link to="/market-list/0">
-                <b-icon icon="bag"></b-icon>
-                <p>마켓</p>
+              <nuxt-link to="/parttime-list/0">
+                <!-- <b-icon icon="bag"></b-icon> -->
+                <b-icon icon="phone-vibrate"></b-icon>
+                <p>알바고</p>
               </nuxt-link>
             </li>
             <li

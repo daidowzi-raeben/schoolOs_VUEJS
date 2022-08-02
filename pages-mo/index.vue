@@ -211,10 +211,18 @@
               style="margin-top: 2px"
             ></b-icon>
           </div>
-          <div v-if="!GET_AXIOS_CALLBACK_GETTER.quest" class="quest__content">
-            <div class="p-5 text-center font-14">아직 수락한 일이 없어요.</div>
-          </div>
           <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="quest__content">
+            <div
+              v-if="GET_AXIOS_CALLBACK_GETTER.quest.length === 0"
+              class="p-3 text-center font-14"
+            >
+              <nuxt-link to="/todo-list/0">
+                <em>
+                  아직 수락한 일이 없어요.<br />여기를 터치하여 할 수 있는 일을
+                  찾아보세요
+                </em></nuxt-link
+              >
+            </div>
             <div
               v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.quest"
               :key="index"
@@ -245,14 +253,16 @@
           v-if="GET_AXIOS_CALLBACK_GETTER.account"
           class="box account-area m-t-2"
         >
-          <h3>
-            나의 통장
-            <b-icon
-              class="m-l-1"
-              icon="chevron-right"
-              style="margin-top: 2px"
-            ></b-icon>
-          </h3>
+          <nuxt-link to="/bank-transfer-list">
+            <h3>
+              나의 통장
+              <b-icon
+                class="m-l-1"
+                icon="chevron-right"
+                style="margin-top: 2px"
+              ></b-icon>
+            </h3>
+          </nuxt-link>
           <nuxt-link to="/bank-transfer-list" class="wd-full">
             <div class="flex m-t-2">
               <div>

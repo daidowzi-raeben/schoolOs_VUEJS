@@ -15,7 +15,7 @@
           첫 알림장을 기다려 보세요 :D
         </div>
         <div
-          v-if="GET_AXIOS_CALLBACK_GETTER.notice"
+          v-if="GET_AXIOS_CALLBACK_GETTER.notice && GET_AXIOS_CALLBACK_GETTER"
           class="quest__content m-t-3"
         >
           <div

@@ -11,11 +11,19 @@
       <div class="flex">
         <h1>JELLY</h1>
         <div class="flex-right notification">
-          <nuxt-link to="/rank-list">
-            <!-- <b-icon icon="upc-scan"></b-icon> -->
-            <img src="~/static/mo/icon/ic_rank_top.jpg" width="30" />
-          </nuxt-link>
-          <!-- <div v-if="isTeacherChat && chatURL" id="teacherChat">
+          <div class="flex">
+            <nuxt-link
+              to="/market-list/0"
+              style="margin-top: 2px"
+              class="m-r-1"
+            >
+              <b-icon icon="bag"></b-icon>
+            </nuxt-link>
+            <nuxt-link to="/rank-list">
+              <!-- <b-icon icon="upc-scan"></b-icon> -->
+              <img src="~/static/mo/icon/ic_rank_top.jpg" width="30" />
+            </nuxt-link>
+            <!-- <div v-if="isTeacherChat && chatURL" id="teacherChat">
             <div class="teacherChat-header" @click="teacherChat"></div>
             <iframe
               :src="
@@ -31,6 +39,7 @@
               scrolling="no"
             ></iframe>
           </div> -->
+          </div>
         </div>
       </div>
     </header>
