@@ -218,7 +218,7 @@ export default {
     },
     onClickItemInsert() {
       this.noticeIdx = null
-      this.noticeSubject = ''
+      this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.week
       this.noticeContent = ''
       this.$bvModal.show('itemInsert')
     },

@@ -34,6 +34,9 @@
                       <p class="bold">
                         {{ GET_AXIOS_CALLBACK_GETTER.item_price | comma }}
                       </p>
+                      <p class="m-t-1">
+                        남은 수량 : {{ GET_AXIOS_CALLBACK_GETTER.item_int }}
+                      </p>
                       <span style="font-size: 12px" class="jelly-color--888">
                         <!-- {{
                           GET_AXIOS_CALLBACK_GETTER.start_day
@@ -45,7 +48,19 @@
                         }}
                         까지만 구매할 수 있어요.
                       </span>
+
+                      <div class="m-t-2 itemInt flex">
+                        <button @click="onClickItemInt('m')">-</button>
+                        <input
+                          v-model="itemInt"
+                          type="tel"
+                          readonly
+                          class="text-center"
+                        />
+                        <button @click="onClickItemInt('p')">+</button>
+                      </div>
                     </div>
+
                     <div class="pay text-right flex-right">
                       <!-- <button class="jelly-btn jelly-btn--default">
                       자세히 보기
@@ -90,6 +105,12 @@
     </div>
     <div v-if="GET_AXIOS_CALLBACK_GETTER.is_end === 'N'" class="quest-fixed">
       <button class="jelly-btn jelly-btn--pink" @click="onClickModal">
+        <span>{{
+          (Number(GET_AXIOS_CALLBACK_GETTER.item_price) * itemInt) | comma
+        }}</span>
+        <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
+          LOGIN_STUDENT.t_reg_pay_unit
+        }}</span>
         구매하기
       </button>
     </div>
@@ -146,6 +167,7 @@ export default {
       params: {},
       paramsPost: {},
       a: 100000000,
+      itemInt: 1,
     }
   },
   computed: {
@@ -175,15 +197,31 @@ export default {
         Number(this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount) -
         Number(this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
       console.log(totalPay)
-      if (totalPay < this.GET_AXIOS_CALLBACK_GETTER.item_price) {
+      if (
+        totalPay <
+        Number(this.GET_AXIOS_CALLBACK_GETTER.item_price) * this.itemInt
+      ) {
         alert('잔액이 부족해요')
       } else {
         this.$bvModal.show('completeFile')
       }
     },
+    onClickItemInt(mode) {
+      if (mode === 'm' && this.itemInt === 1) {
+        return alert('1개 이상 구매가 가능합니다.')
+      }
+      if (mode === 'p' && this.itemInt === 10) {
+        return alert('최대 10개까지 구매가 가능합니다.')
+      }
+      if (this.itemInt + 1 > this.GET_AXIOS_CALLBACK_GETTER.item_int) {
+        return alert('재고수량보다 많이 선택되었어요.')
+      }
+      mode === 'm' ? this.itemInt-- : this.itemInt++
+    },
     onSubmit() {
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.idx = this.params.idx
+      this.paramsPost.itemInt = this.itemInt
       this.paramsPost.itemPrice = this.GET_AXIOS_CALLBACK_GETTER.discount
       this.paramsPost.type = 'shopBuy'
       this.POST_AXIOS(this.paramsPost)

@@ -8,7 +8,7 @@
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <!-- <span>{{ today }}</span> -->
         <h1 v-if="LOGIN_TEACHER">
-          {{ LOGIN_TEACHER.reg_country }} 규칙관리
+          <!-- {{ LOGIN_TEACHER.reg_country }} 규칙관리 -->
           <!-- <span v-b-tooltip.hover title="현재 재산" class="spanBox">
             ㅁㄴㅇ
           </span> -->
@@ -20,7 +20,51 @@
                 class="item"
                 style="width: 100%; background: #fff; color: #000"
               >
-                <vue-editor v-model="ruleContent"> </vue-editor>
+                <div class="text-right">
+                  <span @click="onClickRuleAdd">+</span>
+                  <span @click="onClickRuleRemove">-</span>
+                </div>
+                <table class="jelly-table">
+                  <col style="width: 80px" />
+                  <col style="width: auto" />
+                  <col style="width: 100px" />
+                  <col style="width: auto" />
+                  <tr>
+                    <th>번호</th>
+                    <th>규칙</th>
+                    <th>벌금</th>
+                    <th>벌칙</th>
+                  </tr>
+                  <tr v-for="(v, i) in ruleLength" :key="i" :ref="`rule${i}`">
+                    <td class="text-center">{{ i + 1 }}</td>
+                    <td>
+                      <input
+                        v-model="ruleSubject[i]"
+                        type="text"
+                        class="jelly-text wd-full"
+                        style="color: #000"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        v-model="rulePay[i]"
+                        type="text"
+                        class="jelly-text wd-full text-right"
+                        style="color: #000"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        v-model="rulePenalty[i]"
+                        type="text"
+                        class="jelly-text wd-full"
+                        style="color: #000"
+                      />
+                    </td>
+                  </tr>
+                </table>
+                {{ ruleSubject }}
+                <!-- <vue-editor v-model="ruleContent"> </vue-editor>
                 <div class="text-center m-t-5">
                   <button
                     class="jelly-btn jelly-btn--pink lg"
@@ -28,7 +72,7 @@
                   >
                     등록하기
                   </button>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -48,6 +92,10 @@ export default {
       ruleContent: '',
       params: {},
       paramsPost: {},
+      ruleLength: 1,
+      ruleSubject: [],
+      rulePay: [],
+      rulePenalty: [],
     }
   },
   computed: {
@@ -81,6 +129,12 @@ export default {
       setTimeout(() => {
         alert('저장되었습니다.')
       })
+    },
+    onClickRuleAdd() {
+      this.ruleLength++
+    },
+    onClickRuleRemove(i) {
+      this.ruleLength--
     },
   },
 }
