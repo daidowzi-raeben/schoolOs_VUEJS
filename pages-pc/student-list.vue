@@ -207,7 +207,10 @@
             수정하기
           </button>
         </div>
-        <div class="m-t-5 text-center">
+        <div
+          class="m-t-5 text-center"
+          style="max-height: 40vh; overflow-y: scroll"
+        >
           <table class="jelly-table">
             <thead>
               <tr>
@@ -227,21 +230,46 @@
                 <td :class="v.status === '1' ? 'jelly-color--type4' : ''">
                   {{ v.pay | comma }}
                 </td>
-                <td v-if="v.case_result === '출금'">
+                <td v-if="v.case_result === '출금'" style="color: #111">
                   {{ v.send_sms_name }} 에게 출금
                 </td>
-                <td v-if="v.case_result === '입금'">
+                <td v-if="v.case_result === '입금'" style="color: #111">
                   {{ v.send_sms_name }} 으로부터 입금
                 </td>
-                <td v-if="v.case_result === '쇼핑'">
+                <td v-if="v.case_result === '쇼핑'" style="color: #111">
                   {{ v.buy_item_name }} 구입
                 </td>
-                <td v-if="v.case_result === '보상'">{{ v.quest_name }} 보상</td>
-                <td v-if="v.case_result === '기타'">{{ v.etc_memo }}</td>
-                <td v-if="v.case_result === '대출'"></td>
-                <td v-if="v.case_result === '벌금'">{{ v.penalty_memo }}</td>
-                <td v-if="v.case_result === '주급'">주급지급</td>
-                <td v-if="v.case_result === '에러'"></td>
+                <td v-if="v.case_result === '보상'">
+                  {{ v.quest_name }}
+                  <span v-if="v.status === '0'">보상</span>
+                  <span v-if="v.status === '1'">차감</span>
+                </td>
+                <td v-if="v.case_result === '기타'" style="color: #111">
+                  {{ v.etc_memo }}
+                </td>
+                <td v-if="v.case_result === '대출'" style="color: #111"></td>
+                <td v-if="v.case_result === '벌금'" style="color: #111">
+                  {{ v.penalty_memo }}
+                </td>
+                <td v-if="v.case_result === '주급'" style="color: #111">
+                  주급 지급
+                </td>
+                <td v-if="v.case_result === '현금'" style="color: #111">
+                  현금 출금
+                </td>
+                <td v-if="v.case_result === '알림장'" style="color: #111">
+                  알림장 읽음 보상
+                </td>
+                <td v-if="v.case_result === '세금'" style="color: #111">
+                  {{ v.tax_name }}
+                </td>
+                <td v-if="v.case_result === '알바비지급'" style="color: #111">
+                  [{{ v.alba_name }}] {{ v.alba_reg_name }}에게 지급
+                </td>
+                <td v-if="v.case_result === '알바비'" style="color: #111">
+                  {{ v.alba_name }}
+                </td>
+                <td v-if="v.case_result === '에러'" style="color: #111"></td>
               </tr>
             </tbody>
           </table>
@@ -448,7 +476,10 @@ export default {
       this.POST_AXIOS(this.paramsPost)
       setTimeout(() => {
         alert('주급이 지급되었습니다.')
-      }, 500)
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'studentList'
+        this.GET_AXIOS(this.params)
+      }, 1500)
     },
   },
 }

@@ -18,7 +18,12 @@
           <div class="student__list">
             <div class="flex m-t-3">
               <div class="item" style="width: 100%">
-                <p>필요한 액수를 입력하세요</p>
+                <p>
+                  필요한 액수를 입력하세요 (현재 금리
+                  <span v-if="GET_AXIOS_CALLBACK_GETTER.total_pay"
+                    >{{ GET_AXIOS_CALLBACK_GETTER.total_pay.interest }}%</span
+                  >)
+                </p>
                 <div class="d-flex">
                   <input
                     :value="pay"
@@ -31,7 +36,13 @@
                   </span>
                   <button
                     class="jelly-btn jelly-btn--blue m-l-5"
-                    @click="onSubmit"
+                    @click="onSubmit('r')"
+                  >
+                    갚기
+                  </button>
+                  <button
+                    class="jelly-btn jelly-btn--pink m-l-5"
+                    @click="onSubmit('l')"
                   >
                     빌리기
                   </button>
@@ -101,9 +112,10 @@ export default {
     ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
-    onSubmit() {
+    onSubmit(m) {
       this.paramsForm = this.LOGIN_TEACHER
       this.paramsForm.type = 'loanList'
+      this.paramsForm.mode = m
       this.paramsForm.pay = this.uncomma(this.pay)
       this.POST_AXIOS(this.paramsForm)
       setTimeout(() => {

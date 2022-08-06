@@ -23,6 +23,7 @@
               <li @click="onClickLinkTo('pay-loan')">대출받기</li>
               <li @click="onClickLinkTo('job-list')">직업관리</li>
               <li @click="onClickLinkTo('student-list')">학생관리</li>
+              <li @click="onClickLinkTo('parttime-list')">알바관리</li>
               <li @click="onClickLinkTo('shop-list')">상점관리</li>
               <li @click="onClickLinkTo('bill-list')">세금관리</li>
               <li @click="onClickLinkTo('sue-list')">신고관리</li>

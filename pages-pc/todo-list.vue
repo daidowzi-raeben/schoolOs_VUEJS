@@ -368,7 +368,7 @@
     </b-modal>
     <b-modal id="questConfirm" size="lg" hide-footer hide-header>
       <div class="">
-        <p>검사</p>
+        <!-- <p>검사</p> -->
       </div>
       <div>
         <table
@@ -377,6 +377,7 @@
         >
           <thead>
             <tr>
+              <th><input v-model="selectAll" type="checkbox" /></th>
               <th>이름</th>
               <th>읽음여부</th>
               <th>수락여부</th>
@@ -391,6 +392,16 @@
             class="text-center"
             :class="v.is_confirm === 'Y' ? 'is_active' : ''"
           >
+            <th>
+              <input
+                v-if="v.is_read === 'Y' && v.is_confirm !== 'Y'"
+                :id="`checked${v.sq_idx}`"
+                :key="i"
+                v-model="checked"
+                type="checkbox"
+                :value="v.sqm_idx"
+              />
+            </th>
             <td>{{ v.reg_name }}</td>
             <td>{{ v.is_read === 'Y' ? '읽음' : '안읽음' }}</td>
             <td>{{ v.is_status === 'Y' ? '수락' : '미수락' }}</td>
@@ -413,21 +424,21 @@
               <button
                 v-if="v.is_confirm !== 'F'"
                 class="jelly-btn jelly-btn--default"
-                @click="onSubmitConfirm('F', v.sq_idx, v.idx)"
+                @click="onSubmitConfirm('F', v.sq_idx, v.idx, '')"
               >
                 실패
               </button>
               <button
                 v-if="v.is_complete && v.is_confirm !== 'R'"
                 class="jelly-btn jelly-btn--default"
-                @click="onSubmitConfirm('R', v.sq_idx, v.idx)"
+                @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
               >
                 다시 제출
               </button>
               <button
                 v-if="v.is_complete && v.is_confirm !== 'Y'"
                 class="jelly-btn jelly-btn--pink"
-                @click="onSubmitConfirm('Y', v.sq_idx, v.idx)"
+                @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
               >
                 성공
               </button>
@@ -442,6 +453,13 @@
         >
           닫기
         </button>
+        <button
+          v-if="checked.length > 0"
+          class="jelly-btn jelly-btn--pink"
+          @click="onSubmitConfirm('Y', noticeIdx, noticeIdx, 'all')"
+        >
+          일괄 완료 처리
+        </button>
       </div>
     </b-modal>
   </div>
@@ -455,6 +473,7 @@ export default {
   layout: 'default-pc',
   data() {
     return {
+      allCheck: false,
       swiperOption: {
         slidesPerView: 1,
         spaceBetween: 30,
@@ -508,12 +527,35 @@ export default {
       confirm: {},
       fileData: {},
       cateForm: {},
+      checked: [],
+      checkedTF: false,
     }
   },
 
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    selectAll: {
+      get() {
+        return this.GET_AXIOS_CALLBACK_GETTER.participation
+          ? this.checked
+            ? this.checked.length ===
+              this.GET_AXIOS_CALLBACK_GETTER.participation.length
+            : false
+          : false
+      },
+      set(value) {
+        const selected = []
+
+        if (value) {
+          this.GET_AXIOS_CALLBACK_GETTER.participation.forEach((com) => {
+            selected.push(com.sqm_idx)
+          })
+        }
+
+        this.checked = selected
+      },
+    },
   },
   watch: {
     '$route.query.cate': {
@@ -619,6 +661,7 @@ export default {
       }, 1500)
     },
     onClickItemDetailConfirm(e) {
+      this.checked = []
       this.noticeIdx = e
       this.paramsDetail = this.LOGIN_TEACHER
       this.paramsDetail.type = 'questList'
@@ -639,18 +682,19 @@ export default {
       this.noticeContent = ''
       this.$bvModal.show('itemInsert')
     },
-    onSubmitConfirm(isStatus, sqIdx, smsIdx) {
+    onSubmitConfirm(isStatus, sqIdx, smsIdx, mode) {
       this.confirm.type = 'questconfirm'
       this.confirm.sms_idx = smsIdx
       this.confirm.idx = sqIdx
       this.confirm.status = isStatus
+      this.confirm.checked = this.checked
+      mode === 'all' ? (this.confirm.mode = 'all') : (this.confirm.mode = null)
       this.POST_AXIOS(this.confirm)
-      this.GET_AXIOS(this.paramsDetail)
       setTimeout(() => {
         this.noticeIdx = sqIdx
         this.paramsDetail = this.LOGIN_TEACHER
         this.paramsDetail.type = 'questList'
-        this.paramsDetail.idx = sqIdx
+        this.paramsDetail.idx = this.noticeIdx
         console.log(sqIdx)
         this.GET_AXIOS(this.paramsDetail)
       }, 1500)
@@ -663,6 +707,9 @@ export default {
       this.GET_AXIOS(this.fileData)
       this.$bvModal.show('fileDataSlide')
     },
+    // onClickCheckbox(e, idx, i) {
+    //   this.checked[i] = idx
+    // },
     //
   },
 }

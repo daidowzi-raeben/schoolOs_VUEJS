@@ -61,6 +61,8 @@
                 <!-- {{ process.env.VUE_APP_API }} -->
                 <img
                   :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
+                  width="200"
+                  height="200"
                 />
                 {{ v.item_name }}
                 <p>{{ v.item_price | comma }}</p>
@@ -96,6 +98,10 @@
           type="text"
           class="jelly-text jelly-text--h wd-full"
         />
+      </div>
+      <div class="m-t-5">
+        <p>재고</p>
+        <input v-model="itemInt" type="text" class="jelly-text jelly-text--h" />
       </div>
       <div class="m-t-5">
         <div class="flex">
@@ -195,8 +201,19 @@
         >
           닫기
         </button>
-        <button class="jelly-btn jelly-btn--pink" @click="onSubmitItem">
+        <button
+          v-if="!params.detailIdx"
+          class="jelly-btn jelly-btn--pink"
+          @click="onSubmitItem"
+        >
           등록하기
+        </button>
+        <button
+          v-if="params.detailIdx"
+          class="jelly-btn jelly-btn--pink"
+          @click="onSubmitItemEdit"
+        >
+          수정하기
         </button>
       </div>
     </b-modal>
@@ -246,6 +263,7 @@ export default {
       itemPrice: 0,
       itemPriceDiscount: 0,
       itemContent: '',
+      itemInt: '',
       masks: {
         input: 'YYYY-MM-DD',
       },
@@ -318,6 +336,7 @@ export default {
         'calendarDiscountSales',
         this.calendarDiscountSalesDate.activeYMD
       )
+      FORM_DATA.append('itemInt', this.itemInt)
       FORM_DATA.append('cateIdx', this.cateIdx)
       FORM_DATA.append('itemPrice', this.itemPrice)
       FORM_DATA.append('itemContent', this.itemContent)
@@ -340,7 +359,46 @@ export default {
         this.params = this.LOGIN_TEACHER
         this.params.type = 'shopList'
         this.GET_AXIOS(this.params)
-      }, 1000)
+      }, 2000)
+      this.$bvModal.hide('itemInsert')
+    },
+    onSubmitItemEdit() {
+      const itemThumb = document.getElementById('itemThumb')
+      const FORM_DATA = new FormData()
+      Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
+        FORM_DATA.append(v[0], v[1])
+      })
+      FORM_DATA.append('type', 'itemEdit')
+      FORM_DATA.append('calendarSales', this.calendarSalesDate.activeYMD)
+      FORM_DATA.append(
+        'calendarDiscountSales',
+        this.calendarDiscountSalesDate.activeYMD
+      )
+      FORM_DATA.append('itemInt', this.itemInt)
+      FORM_DATA.append('cateIdx', this.cateIdx)
+      FORM_DATA.append('idx', this.params.detailIdx)
+      FORM_DATA.append('itemPrice', this.itemPrice)
+      FORM_DATA.append('itemContent', this.itemContent)
+      FORM_DATA.append('itemName', this.itemName)
+      FORM_DATA.append('itemThumb', itemThumb.files[0])
+      FORM_DATA.append('itemPriceDiscount', this.itemPriceDiscount)
+      axiosForm(FORM_DATA, '/teacher.php')
+
+      //   this.paramsForm = this.LOGIN_TEACHER
+      //   this.paramsForm.type = 'itemInsert'
+      //   this.paramsForm.calendarSales = this.calendarSales
+      //   this.paramsForm. = this.calendarDiscountSales
+      //   this.paramsForm. = this.cateIdx
+      //   this.paramsForm. = this.itemPrice
+      //   this.paramsForm. = this.itemContent
+      //   this.paramsForm. = this.itemName
+      //   this.paramsForm.itemPriceDiscount = this.
+      //   this.POST_AXIOS(this.paramsForm)
+      setTimeout(() => {
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'shopList'
+        this.GET_AXIOS(this.params)
+      }, 2000)
       this.$bvModal.hide('itemInsert')
     },
     isActiveCalendar(e) {
@@ -376,9 +434,10 @@ export default {
         this.itemContent =
           this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_content
         this.itemName = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_name
+        this.itemInt = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_int
         this.itemPriceDiscount =
           this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_dis_price
-      }, 1000)
+      }, 3000)
       this.$bvModal.show('itemInsert')
     },
     onClickItemInsert() {

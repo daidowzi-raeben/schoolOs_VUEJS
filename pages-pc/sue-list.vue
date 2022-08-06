@@ -17,7 +17,7 @@
                 @click="onClickItemDetail(v.idx)"
               >
                 <div class="">
-                  <p class="title">{{ v.subject }}</p>
+                  <p class="title">{{ v.new_subject }}</p>
                   <p>
                     신고자 : {{ v.sms_name }} / 신고대상 : {{ v.sms_name_to }}
                   </p>
@@ -56,7 +56,7 @@
                 @click="onClickItemDetail(v.idx)"
               >
                 <div class="">
-                  <p class="title">{{ v.subject }}</p>
+                  <p class="title">{{ v.new_subject }}</p>
                   <p>
                     신고자 : {{ v.sms_name }} / 신고대상 : {{ v.sms_name_to }}
                   </p>
@@ -104,10 +104,17 @@
           <p>사건 발생일</p>
           {{ GET_AXIOS_CALLBACK_GETTER.detail.sue_date }}
         </div>
+        <div
+          v-if="Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0"
+          class="flex-full m-l-1"
+        >
+          <p>벌금</p>
+          {{ Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) | comma }}
+        </div>
       </div>
       <div class="m-t-5 flex">
         <div class="flex-full m-r-1">
-          {{ GET_AXIOS_CALLBACK_GETTER.detail.subject }}
+          {{ GET_AXIOS_CALLBACK_GETTER.detail.new_subject }}
         </div>
       </div>
       <div class="m-t-5 flex">
@@ -122,8 +129,18 @@
         >
           닫기
         </button>
-        <button class="jelly-btn jelly-btn--pink" @click="onSubmit">
+        <button class="jelly-btn jelly-btn--default" @click="onSubmit">
           완료하기
+        </button>
+        <button
+          v-if="
+            Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0 &&
+            GET_AXIOS_CALLBACK_GETTER.detail.status_bill === '0'
+          "
+          class="jelly-btn jelly-btn--pink"
+          @click="onSubmitBill"
+        >
+          고지서 발송
         </button>
       </div>
     </b-modal>
@@ -301,6 +318,39 @@ export default {
         console.log(sqIdx)
         this.GET_AXIOS(this.paramsDetail)
       }, 1500)
+    },
+    onSubmitBill() {
+      // this.noticeIdx
+      if (this.GET_AXIOS_CALLBACK_GETTER.detail) {
+        const FORM_DATA = new FormData()
+        console.log(this.idx)
+        FORM_DATA.append('type', 'billListStudent')
+        FORM_DATA.append('sueIdx', this.idx)
+        FORM_DATA.append(
+          'billStudent',
+          this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
+        )
+        FORM_DATA.append(
+          'smt_idx',
+          this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx_to
+        )
+        FORM_DATA.append('billSubject', '규칙위반')
+        FORM_DATA.append(
+          'billContent',
+          this.GET_AXIOS_CALLBACK_GETTER.detail.new_subject
+        )
+        FORM_DATA.append(
+          'billPay',
+          this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
+        )
+        axiosForm(FORM_DATA, '/teacher.php')
+
+        setTimeout(() => {
+          alert('고지서가 발송되었습니다.')
+
+          this.$bvModal.hide('itemInsert')
+        }, 1500)
+      }
     },
     //
   },

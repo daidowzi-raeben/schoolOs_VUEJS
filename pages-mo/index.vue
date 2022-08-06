@@ -8,10 +8,27 @@
           >
             {{ LOGIN_CONFIG.t_reg_country }} 규칙 확인하기
             <b-modal id="ModalNotice" hide-footer>
-              <div
-                class="img-full"
-                v-html="GET_AXIOS_CALLBACK_GETTER.rule.content"
-              ></div>
+              <div class="img-full">
+                <ul>
+                  <li
+                    v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rule"
+                    :key="i"
+                    class="m-b-2 p-b-2"
+                    style="border-bottom: 1px solid #eee"
+                  >
+                    <div class="font-14">{{ v.subject }}</div>
+                    <div
+                      v-if="LOGIN_CONFIG"
+                      class="m-t-1 jelly-color--888 font-12"
+                    >
+                      {{ v.penalty + LOGIN_CONFIG.t_reg_pay_unit }}
+                      {{
+                        v.penalty_etc ? ' / ' + v.penalty_etc : v.penalty_etc
+                      }}
+                    </div>
+                  </li>
+                </ul>
+              </div>
               <div class="m-t-3">
                 <button
                   class="jelly-btn jelly-btn--default wd-full"
