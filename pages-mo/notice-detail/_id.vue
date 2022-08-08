@@ -17,10 +17,16 @@
       <em class="font-14 bold" style="font-size: 16px">
         {{ GET_AXIOS_CALLBACK_GETTER.noticePay.notice_pay }}
       </em>
-      <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
-        LOGIN_STUDENT.t_reg_pay_unit
-      }}</span>
-      가 지급됐어요
+      <span v-if="LOGIN_STUDENT.t_reg_pay_unit">
+        {{ LOGIN_STUDENT.t_reg_pay_unit }}
+        {{
+          isEndWithConsonant(LOGIN_STUDENT.t_reg_pay_unit) === false
+            ? '가'
+            : '이'
+        }}
+      </span>
+
+      지급됐어요
     </div>
     <div v-if="GET_AXIOS_CALLBACK_GETTER.noticeDetail" class="content">
       <div class="m-t-1 h60">
@@ -140,6 +146,12 @@ export default {
         // this.isCoinView = false
         this.$refs.animationElement.style.display = 'none'
       }, 1500)
+    },
+    isEndWithConsonant(korStr) {
+      const finalChrCode = korStr.charCodeAt(korStr.length - 1)
+      // 0 = 받침 없음, 그 외 = 받침 있음
+      const finalConsonantCode = (finalChrCode - 44032) % 28
+      return finalConsonantCode !== 0
     },
   },
 }

@@ -628,9 +628,9 @@ export default {
     },
     onClickCategory(e) {
       if (e) {
-        this.$router.push(`/shop-list?cate=${e}`)
+        this.$router.push(`/todo-list?cate=${e}`)
       } else {
-        this.$router.push(`/shop-list`)
+        this.$router.push(`/todo-list`)
       }
     },
     onSubmitCate() {

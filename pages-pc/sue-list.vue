@@ -328,7 +328,7 @@ export default {
         FORM_DATA.append('sueIdx', this.idx)
         FORM_DATA.append(
           'billStudent',
-          this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
+          this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx
         )
         FORM_DATA.append(
           'smt_idx',
