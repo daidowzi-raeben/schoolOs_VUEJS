@@ -328,11 +328,11 @@ export default {
         FORM_DATA.append('sueIdx', this.idx)
         FORM_DATA.append(
           'billStudent',
-          this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx
+          this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx_to
         )
         FORM_DATA.append(
           'smt_idx',
-          this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx_to
+          this.GET_AXIOS_CALLBACK_GETTER.detail.smt_idx
         )
         FORM_DATA.append('billSubject', '규칙위반')
         FORM_DATA.append(
