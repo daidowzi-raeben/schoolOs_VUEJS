@@ -18,6 +18,13 @@
               {{ GET_AXIOS_CALLBACK_GETTER.lastWeek.lastWeek }} </span
             >)
           </span>
+          <span
+            v-b-modal.studentInsert
+            class="spanBox m-l-2"
+            style="color: #fff; font-size: 12px"
+          >
+            +
+          </span>
         </h1>
         <div class="student form">
           <div class="student__list">
@@ -112,7 +119,7 @@
         <div class="m-t-5">
           <div class="flex">
             <div class="flex-full">
-              <p>학급번호</p>
+              <p>출석번호</p>
               <input
                 v-model="student.classNumber"
                 type="text"
@@ -344,6 +351,77 @@
         </div>
       </div>
     </b-modal>
+    <b-modal id="studentInsert" size="xl" hide-footer hide-header>
+      <div class="">
+        <div class="flex">
+          <div class="flex-full">
+            <p>이름</p>
+            <input
+              v-model="studentInsert.reg_name"
+              type="text"
+              class="jelly-text wd-full"
+            />
+          </div>
+          <div class="flex-full m-l-2 m-r-2">
+            <p>아이디</p>
+            <input
+              v-model="studentInsert.reg_id"
+              type="text"
+              class="jelly-text wd-full"
+            />
+          </div>
+          <div class="flex-full">
+            <p>패스워드 변경</p>
+            <input
+              v-model="studentInsert.reg_pw"
+              type="text"
+              class="jelly-text wd-full"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="m-t-5">
+        <div class="flex">
+          <div class="flex-full">
+            <p>출석번호</p>
+            <input
+              v-model="studentInsert.class_number"
+              type="text"
+              class="jelly-text wd-full"
+            />
+          </div>
+          <div class="flex-full m-l-2 m-r-2">
+            <p>직업</p>
+            <select
+              v-if="GET_AXIOS_CALLBACK_GETTER.jobList2"
+              v-model="studentInsert.job"
+              class="jelly-text wd-full"
+            >
+              <option :value="null">선택하세요</option>
+              <option
+                v-for="v in GET_AXIOS_CALLBACK_GETTER.jobList2"
+                :key="v.idx"
+                :value="v.idx"
+              >
+                {{ v.job_name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex-full"></div>
+        </div>
+        <div class="m-t-5 text-center">
+          <button
+            class="jelly-btn jelly-btn--default"
+            @click="$bvModal.hide('studentInsert')"
+          >
+            닫기
+          </button>
+          <button class="jelly-btn jelly-btn--pink" @click="onSubmitInsert">
+            저장
+          </button>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -380,6 +458,15 @@ export default {
         total_pay: 0,
         classNumber: '',
         job: '',
+        sms_idx: '',
+      },
+      studentInsert: {
+        class_number: '',
+        reg_id: '',
+        reg_pw: '',
+        reg_name: '',
+        job: null,
+        reg_code: '',
         sms_idx: '',
       },
       attendance: {
@@ -470,16 +557,50 @@ export default {
       this.POST_AXIOS(this.paramsPost)
     },
     onClickWeeklyPay() {
-      this.paramsPost = this.LOGIN_TEACHER
-      this.paramsPost.type = 'weeklyPay'
-      console.log('paramsPost', this.paramsPost)
-      this.POST_AXIOS(this.paramsPost)
-      setTimeout(() => {
-        alert('주급이 지급되었습니다.')
-        this.params = this.LOGIN_TEACHER
-        this.params.type = 'studentList'
-        this.GET_AXIOS(this.params)
-      }, 1500)
+      if (confirm('주급을 지급하겠습니까?')) {
+        this.paramsPost = this.LOGIN_TEACHER
+        this.paramsPost.type = 'weeklyPay'
+        console.log('paramsPost', this.paramsPost)
+        this.POST_AXIOS(this.paramsPost)
+        setTimeout(() => {
+          alert('주급이 지급되었습니다.')
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'studentList'
+          this.GET_AXIOS(this.params)
+        }, 1500)
+      }
+    },
+    onSubmitInsert() {
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('reg_code', this.LOGIN_TEACHER.reg_code)
+      frm.append('reg_id', this.studentInsert.reg_id)
+      frm.append('class_number', this.studentInsert.class_number)
+      frm.append('reg_pw', this.studentInsert.reg_pw)
+      frm.append('reg_name', this.studentInsert.reg_name)
+      frm.append('job', this.studentInsert.job)
+      frm.append('type', 'register')
+
+      this.$axios
+        .post(process.env.VUE_APP_API + '/student.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          this.LOADING_TRUE()
+          console.log(res.data)
+          alert('학생이 추가되었습니다.')
+          this.$bvModal.hide('studentInsert')
+          setTimeout(() => {
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'studentList'
+            this.GET_AXIOS(this.params)
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
   },
 }

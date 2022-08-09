@@ -237,6 +237,9 @@ html {
   select {
     font-family: 'Noto Sans KR', sans-serif;
   }
+  select {
+    background: url('/img/chevron-down.svg') no-repeat 97% 45%;
+  }
 }
 * {
   box-sizing: border-box;
@@ -270,7 +273,7 @@ html {
     flex: 1;
   }
   &-shrink {
-    flex-shrink: 1;
+    flex-shrink: 0;
   }
 }
 a {

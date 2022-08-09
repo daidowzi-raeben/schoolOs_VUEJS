@@ -226,7 +226,12 @@
     >
       <div class="">
         <p>카테고리 이름</p>
-        <input v-model="cate_name" type="text" class="jelly-text wd-full" />
+        <input
+          v-model="cate_name"
+          type="text"
+          class="jelly-text wd-full"
+          @keyup.enter="onSubmit"
+        />
       </div>
       <div class="m-t-5 text-center">
         <button

@@ -5,10 +5,10 @@
       class="jellyAdminBG"
       :style="`background-image:url(${adminBackgroundImage});position:fixed;width:100%;height:100%;background-size:100% 100%; top:0; left:0; opacity:.5`"
     ></div>
-    <div style="width: 1200px; margin: 50px auto">
+    <div style="width: 1200px; margin: 50px auto" class="text-white">
       <div v-if="!queryStep">
-        <h1 style="font-size: 50px">Hello, Jelly Word</h1>
-        <div class="font-20 m-t-10" style="line-height: 30px">
+        <h1 class="text-white" style="font-size: 50px">Hello, Jelly Word</h1>
+        <div class="font-20 m-t-10 text-white" style="line-height: 30px">
           스쿨오에스 젤리는 학급의 사회 문화와 경제학에 도움을 주며 무료로
           사용할 수 있습니다.
           <br />
@@ -36,8 +36,10 @@
         </div>
       </div>
       <div v-if="queryStep == '1'">
-        <h1 style="font-size: 50px">회원가입을 시작합니다</h1>
-        <div class="font-20 m-t-10" style="line-height: 30px">
+        <h1 class="text-white" style="font-size: 50px">
+          회원가입을 시작합니다
+        </h1>
+        <div class="font-20 m-t-10 text-white" style="line-height: 30px">
           기본정보를 입력해 주세요
         </div>
         <div class="m-t-10">
@@ -53,7 +55,7 @@
           <div class="m-t-5">
             <input
               v-model="reg_pw"
-              type="text"
+              type="password"
               class="jelly-text"
               style="background: #fff; color: #000; height: 50px; width: 300px"
               placeholder="패스워드"
@@ -62,7 +64,7 @@
           <div class="m-t-5">
             <input
               v-model="reg_pw2"
-              type="text"
+              type="password"
               class="jelly-text"
               style="background: #fff; color: #000; height: 50px; width: 300px"
               placeholder="패스워드"
@@ -127,7 +129,7 @@
         </div>
       </div>
       <div v-if="queryStep == '2'">
-        <h1 style="font-size: 50px">학교를 검색하세요</h1>
+        <h1 class="text-white" style="font-size: 50px">학교를 검색하세요</h1>
         <div>
           <div>
             <input
@@ -165,7 +167,9 @@
         </div>
       </div>
       <div v-if="queryStep == '3'">
-        <h1 style="font-size: 50px">학년과 학급을 알려주세요</h1>
+        <h1 class="text-white" style="font-size: 50px">
+          학년과 학급을 알려주세요
+        </h1>
         <div class="m-t-10">
           <input
             v-model="reg_level"
@@ -190,8 +194,10 @@
         </div>
       </div>
       <div v-if="queryStep == '4'">
-        <h1 style="font-size: 50px">주 거래 은행을 선택합니다.</h1>
-        <div class="m-t-10" style="line-height: 30px">
+        <h1 class="text-white" style="font-size: 50px">
+          주 거래 은행을 선택합니다.
+        </h1>
+        <div class="m-t-10 text-white" style="line-height: 30px">
           주 거래 은행에 따라 금리가 다르며, 변동금리는 이용자 및 대출 금액에
           따라 금리변동 폭이 클수도 적을수도 있습니다.<br />
           주 거래 은행은 변경할 수 없으니 신중히 선택해 주시기 바랍니다.
@@ -211,8 +217,10 @@
         </div>
       </div>
       <div v-if="queryStep == '5'">
-        <h1 style="font-size: 50px">인플레이션 모드를 사용하시겠습니까?</h1>
-        <div class="m-t-10" style="line-height: 30px">
+        <h1 class="text-white" style="font-size: 50px">
+          인플레이션 모드를 사용하시겠습니까?
+        </h1>
+        <div class="m-t-10 text-white" style="line-height: 30px">
           인플레이션 모드는 학급이 주 거래 은행을 통해 대출을 받을때마다 화폐의
           가치가 떨어지며, 상점에서 구입 가능한 상품들에 인플레이션이
           적용됩니다.
@@ -370,9 +378,9 @@ export default {
 </script>
 
 <style lang="scss">
-* {
-  color: #fff;
-}
+// * {
+//   color: #fff;
+// }
 body {
   background-color: #fff;
 }

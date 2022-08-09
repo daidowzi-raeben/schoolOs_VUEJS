@@ -12,7 +12,16 @@
                   <img :src="GET_AXIOS_CALLBACK_GETTER.image" width="200" />
                 </div>
                 <div class="m-t-10 text-center">
-                  위 QR코드를 통해 학생들 회원가입이 가능합니다.
+                  위 QR코드 또는 아래 유알엘을 통해 학생들 회원가입이
+                  가능합니다.
+                </div>
+                <div
+                  v-if="GET_AXIOS_CALLBACK_GETTER"
+                  class="m-t-10 text-center font-16"
+                >
+                  https://app.school-os.net/member/sign-up?reg_code={{
+                    GET_AXIOS_CALLBACK_GETTER.subtitle
+                  }}
                 </div>
               </div>
             </div>

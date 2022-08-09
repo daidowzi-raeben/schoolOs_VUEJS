@@ -138,6 +138,15 @@ export default {
       console.log('==============================', e.target.value)
     },
     onSubmit() {
+      if (
+        !this.sueSubject ||
+        !this.sueContent ||
+        !this.sueDate ||
+        !this.sms_idx_to
+      ) {
+        alert('모든 내용을 입력해 주세요.')
+        return false
+      }
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.type = 'sueInsert'
       if (this.sueSubject === 'etc') {

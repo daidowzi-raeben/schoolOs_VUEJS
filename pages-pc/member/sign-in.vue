@@ -87,4 +87,8 @@ export default {
 
 <style lang="scss">
 @import '~/assets-pc/common.scss';
+.sos-login {
+  min-height: 100vh;
+  background: #fff;
+}
 </style>

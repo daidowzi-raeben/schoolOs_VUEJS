@@ -59,6 +59,15 @@
             required
           />
         </div>
+        <div class="m-t-4">
+          <p>출석번호</p>
+          <input
+            v-model="params.class_number"
+            type="text"
+            class="jelly-text jelly-text--h wd-full m-t-2"
+            required
+          />
+        </div>
         <button
           type="submit"
           class="jelly-btn jelly-text--h jelly-btn--pink wd-full m-t-5"
@@ -82,6 +91,7 @@ export default {
         reg_pw: '',
         reg_pw2: '',
         reg_name: '',
+        class_number: '',
       },
       pwChk: '',
       formChk: 0,
@@ -125,6 +135,7 @@ export default {
       this.paramsPost.reg_id = this.params.reg_id
       this.paramsPost.reg_pw = this.params.reg_pw
       this.paramsPost.reg_name = this.params.reg_name
+      this.paramsPost.class_number = this.params.class_number
       this.POST_AXIOS(this.paramsPost)
       alert('가입이 완료되었어요.')
       this.$router.push('/member/sign-in')

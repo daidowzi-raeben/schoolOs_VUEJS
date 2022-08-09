@@ -163,14 +163,16 @@ export default {
     // EVENT
 
     onSubmit() {
-      //   if (
-      //     !this.alba.subject ||
-      //     !this.alba.content ||
-      //     !this.alba.pay ||
-      //     !this.alba.personnel
-      //   ) {
-      //     return alert('모든 항목을 입력해 주세요')
-      //   }
+      if (
+        !this.alba.subject ||
+        !this.alba.content ||
+        !this.alba.pay ||
+        !this.alba.personnel ||
+        !this.alba.start_day ||
+        !this.alba.end_day
+      ) {
+        return alert('모든 항목을 입력해 주세요')
+      }
       if (confirm('등록할까요?')) {
         this.LOADING_TRUE()
         const frm = new FormData()

@@ -1,12 +1,26 @@
 <template>
   <div id="school-content">
-    <div v-if="$route.query.history" class="historyBack m-l-3 m-b-5">
-      <nuxt-link to="/">
-        <b-icon icon="arrow-left"></b-icon>
-      </nuxt-link>
-    </div>
-    <div v-if="!$route.query.history" class="historyBack m-l-3 m-b-5">
-      <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
+    <div class="flex">
+      <div v-if="$route.query.history" class="historyBack m-l-3 m-b-5">
+        <nuxt-link to="/">
+          <b-icon icon="arrow-left"></b-icon>
+        </nuxt-link>
+      </div>
+      <div v-if="!$route.query.history" class="historyBack m-l-3 m-b-5">
+        <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
+      </div>
+      <div
+        v-if="GET_AXIOS_CALLBACK_GETTER && GET_AXIOS_CALLBACK_GETTER.totalPay"
+        class="text-center flex-full p-r-6 m-t-2 font-12"
+      >
+        총
+        <strong class="font-18"
+          ><em>{{
+            GET_AXIOS_CALLBACK_GETTER.totalPay.totalPay | comma
+          }}</em></strong
+        >
+        <span v-if="LOGIN_STUDENT">{{ LOGIN_STUDENT.t_reg_pay_unit }}</span>
+      </div>
     </div>
     <div v-if="GET_AXIOS_CALLBACK_GETTER.monthDate" class="content p-l-3 p-r-3">
       <div class="">
@@ -24,6 +38,17 @@
           class="jelly-text jelly-text--h wd-full flex-full m-t-2"
           placeholder="종료일"
         ></b-form-datepicker>
+      </div>
+      <div class="m-t-3">
+        <p>종료일</p>
+        <select
+          v-model="status"
+          class="jelly-text jelly-text--h wd-full flex-full m-t-2"
+        >
+          <option :value="null">전체</option>
+          <option value="0">입금</option>
+          <option value="1">출금</option>
+        </select>
       </div>
       <div class="m-t-3 text-center">
         <button class="jelly-btn jelly-btn--pink wd-full" @click="onSubmit">
@@ -58,10 +83,11 @@
                         {{ v.send_sms_name }} 으로부터 입금
                       </em>
                       <em v-if="v.case_result === '쇼핑'" style="color: #111">
-                        {{ v.buy_item_name }} 구입
+                        [마켓] {{ v.buy_item_name }} 구입
                       </em>
-                      <em v-if="v.case_result === '보상'"
-                        >{{ v.quest_name }}
+                      <em v-if="v.case_result === '보상'">
+                        [{{ LOGIN_STUDENT ? LOGIN_STUDENT.t_todo_name : '' }}]
+                        {{ v.quest_name }}
                         <span v-if="v.status === '0'">보상</span>
                         <span v-if="v.status === '1'">차감</span>
                       </em>
@@ -72,9 +98,9 @@
                         v-if="v.case_result === '대출'"
                         style="color: #111"
                       ></em>
-                      <em v-if="v.case_result === '벌금'" style="color: #111">{{
-                        v.penalty_memo
-                      }}</em>
+                      <em v-if="v.case_result === '벌금'" style="color: #111"
+                        >[벌금] {{ v.penalty_memo }}</em
+                      >
                       <em v-if="v.case_result === '주급'" style="color: #111"
                         >주급 지급</em
                       >
@@ -92,10 +118,8 @@
                         style="color: #111"
                         >[{{ v.alba_name }}] {{ v.alba_reg_name }}에게 지급</em
                       >
-                      <em
-                        v-if="v.case_result === '알바비'"
-                        style="color: #111"
-                        >{{ v.alba_name }}</em
+                      <em v-if="v.case_result === '알바비'" style="color: #111"
+                        >[알바고] {{ v.alba_name }}</em
                       >
                       <em
                         v-if="v.case_result === '에러'"
@@ -134,6 +158,7 @@ export default {
       start_day: '',
       end_day: '',
       isHistory: '',
+      status: null,
     }
   },
 
@@ -167,16 +192,18 @@ export default {
       this.$router.push('/todo-detail/' + idx)
     },
     onSubmit() {
+      this.LOADING_TRUE()
       this.params = this.LOGIN_STUDENT
       this.params.start_day = this.start_day
       this.params.end_day = this.end_day
+      this.params.status = this.status
       this.params.type = 'bankTransferList'
       this.GET_AXIOS(this.params)
 
       setTimeout(() => {
-        this.start_day = this.GET_AXIOS_CALLBACK_GETTER.monthDate.start_day
-        this.end_day = this.GET_AXIOS_CALLBACK_GETTER.monthDate.end_day
-        // this.rangeCalendar = this.GET_AXIOS_CALLBACK_GETTER.monthDate
+        // this.start_day = this.GET_AXIOS_CALLBACK_GETTER.monthDate.start_day
+        // this.end_day = this.GET_AXIOS_CALLBACK_GETTER.monthDate.end_day
+        // this.status = this.GET_AXIOS_CALLBACK_GETTER.status
       }, 1000)
     },
   },

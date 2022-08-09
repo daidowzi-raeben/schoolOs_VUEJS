@@ -29,7 +29,8 @@
           </button>
         </div>
         <div class="m-t-4 text-center">
-          <nuxt-link to="../qr-scan"> 아이디가 없으신가요? </nuxt-link>
+          <nuxt-link to="../qr-scan" class="m-r-3"> QR코드 가입 </nuxt-link>
+          <nuxt-link to="./sign-teacher"> 선생님 찾기 </nuxt-link>
         </div>
       </form>
     </div>
@@ -37,7 +38,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -71,6 +72,8 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
+    ...mapMutations(['LOADING_TRUE']),
+
     loginID(event) {
       this.params.user_id = event.target.value
       !!this.params.user_pw && !!this.params.user_id
@@ -84,15 +87,18 @@ export default {
         : (this.disabled = true)
     },
     onClickLogin() {
+      this.LOADING_TRUE()
       this.params.type = 'login'
       console.log('this.params', this.params)
       this.POST_AXIOS(this.params)
       setTimeout(() => {
+        this.LOADING_TRUE()
+
         const loginCheck = localStorage.getItem('STUDENT')
         if (loginCheck) {
           this.$router.push('/')
         }
-      })
+      }, 1000)
     },
   },
 }
