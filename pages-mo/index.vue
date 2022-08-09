@@ -358,7 +358,7 @@
           id="reg_photo"
           ref="reg_photo"
           type="file"
-          class="jelly-text jelly-text--h"
+          class="jelly-text jelly-text--h flex-full"
         />
       </div>
       <div class="m-t-5 flex text-center">
