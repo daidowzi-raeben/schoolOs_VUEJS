@@ -34,7 +34,7 @@ export default {
     this.params.type = 'studentList'
     this.paramsSchool.type = 'mySchoolInformation'
     this.paramsSchool.smt_idx = this.LOGIN_STUDENT.smt_idx
-    this.GET_AXIOS(this.params)
+    // this.GET_AXIOS(this.params)
     this.GET_API_MY_SCHOOL(this.paramsSchool)
 
     setTimeout(() => {
