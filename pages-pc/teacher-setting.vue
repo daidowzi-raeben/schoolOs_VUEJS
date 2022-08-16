@@ -44,6 +44,24 @@
                     {{ LOGIN_TEACHER.reg_pay_unit }}
                   </span>
                 </div>
+                <p class="m-t-5">젤리복권</p>
+                <div class="d-flex">
+                  <select v-model="tax.jb_mode" class="jelly-text">
+                    <option :value="null">선택하세요</option>
+                    <option value="Y">Y</option>
+                    <option value="N">N</option>
+                  </select>
+                </div>
+                <p class="m-t-5">젤리복권 구매가격</p>
+                <div class="d-flex">
+                  <input
+                    v-model="tax.jb_pay"
+                    class="jelly-text jelly-text--under text-right m-l-2"
+                  />
+                  <span v-if="LOGIN_TEACHER" class="input-focus m-t-1 m-l-2">
+                    {{ LOGIN_TEACHER.reg_pay_unit }}
+                  </span>
+                </div>
                 <div class="m-t-5 text-center">
                   <button class="jelly-btn jelly-btn--blue" @click="onSubmit">
                     수정
@@ -77,6 +95,8 @@ export default {
         tax_dose_nm: '',
         tax_semen_nm: '',
         type: 'teacherTax',
+        jb_mode: null,
+        jb_pay: 0,
       },
     }
   },
@@ -102,6 +122,8 @@ export default {
       this.tax.tax_dose_nm = this.GET_AXIOS_CALLBACK_GETTER.tax_dose_nm
       this.tax.tax_semen = this.GET_AXIOS_CALLBACK_GETTER.tax_semen
       this.tax.tax_semen_nm = this.GET_AXIOS_CALLBACK_GETTER.tax_semen_nm
+      this.tax.jb_mode = this.GET_AXIOS_CALLBACK_GETTER.teacher.jb_mode
+      this.tax.jb_pay = this.GET_AXIOS_CALLBACK_GETTER.teacher.jb_pay
     }, 1500)
 
     console.log(

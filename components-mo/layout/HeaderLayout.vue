@@ -9,19 +9,31 @@
     </v-overlay> -->
     <header>
       <div class="flex">
-        <h1>JELLY</h1>
+        <h1 @click="onClickEasterEgg">JELLY</h1>
         <div class="flex-right notification">
           <div class="flex">
-            <nuxt-link
+            <!-- <nuxt-link
               to="/market-list/0"
               style="margin-top: 2px"
               class="m-r-1"
             >
               <b-icon icon="bag"></b-icon>
+            </nuxt-link> -->
+            <nuxt-link to="/market-list/0" class="m-r-2">
+              <!-- <b-icon icon="upc-scan"></b-icon> -->
+              <img src="~/static/mo/icon/store.png" width="30" />
+            </nuxt-link>
+            <nuxt-link
+              v-if="teacher && teacher.jb_mode === 'Y'"
+              to="/lottery-buy"
+              class="m-r-2"
+            >
+              <!-- <b-icon icon="upc-scan"></b-icon> -->
+              <img src="~/static/mo/icon/gambling.png" width="30" />
             </nuxt-link>
             <nuxt-link to="/rank-list">
               <!-- <b-icon icon="upc-scan"></b-icon> -->
-              <img src="~/static/mo/icon/ic_rank_top.jpg" width="30" />
+              <img src="~/static/mo/icon/top-three.png" width="28" />
             </nuxt-link>
             <!-- <div v-if="isTeacherChat && chatURL" id="teacherChat">
             <div class="teacherChat-header" @click="teacherChat"></div>
@@ -49,9 +61,39 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      egg: 0,
+      LOGIN_CONFIG: {},
+      teacher: {},
+    }
   },
   computed: {},
+  mounted() {
+    this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
+    this.LOADING = true
+    const frm = new FormData()
+    frm.append('type', 'teacher_chk')
+    frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+    this.$axios
+      .post(process.env.VUE_APP_API + '/student.php', frm)
+      .then((res) => {
+        console.log('================', res.data)
+        this.teacher = res.data
+      })
+      .catch((res) => {
+        console.log('AXIOS FALSE', res)
+        this.LOADING = false
+      })
+  },
+  methods: {
+    onClickEasterEgg() {
+      this.egg++
+      console.log(this.egg)
+      if (this.egg === 10) {
+        alert('그만눌러')
+      }
+    },
+  },
 }
 </script>
 

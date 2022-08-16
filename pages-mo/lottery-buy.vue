@@ -5,17 +5,23 @@
     </div>
     <div class="historyBack m-l-3 m-b-5 flex">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
-      <span
-        class="jelly-point m-t-0 jelly-background--type4 font-12 flex-right m-r-3"
-        style="padding-top: 7px"
+      <nuxt-link
+        to="/lottery-winning"
+        class="flex-right"
+        style="margin-top: -10px"
       >
-        당첨자 발표
-      </span>
+        <span
+          class="jelly-point jelly-background--type4 font-12 m-r-3"
+          style="padding: 6px 8px"
+        >
+          당첨자 발표
+        </span>
+      </nuxt-link>
     </div>
     <div v-if="lottoView">
       <div class="p-l-3 p-r-3 text-center">
         젤리복권 {{ enterResult.th }}회차
-        <div>
+        <div class="font-14">
           구매가격 : {{ enterResult.pay | comma }}
           <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
             LOGIN_CONFIG.t_reg_pay_unit
@@ -198,9 +204,12 @@ export default {
       this.LOADING = true
       const frm = new FormData()
       frm.append('mode', 'rand')
+      frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
+      frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
       this.$axios
         .post(process.env.VUE_APP_API + '/lotto.php', frm)
         .then((res) => {
+          console.log(res)
           const numArry = this.lottoNumber
           for (let n = 0; n < numArry.length; n++) {
             this.$refs[
@@ -242,6 +251,13 @@ export default {
             .post(process.env.VUE_APP_API + '/lotto.php', frm)
             .then((res) => {
               console.log(res.data)
+              if (res.data.success === 'FALSE') {
+                console.log(res)
+                alert('구매금액이 부족해요')
+                this.LOADING = false
+
+                return
+              }
               this.isBuy = true
               this.LOADING = false
               alert(
