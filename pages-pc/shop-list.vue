@@ -287,16 +287,16 @@ export default {
       handler(value) {
         console.log(value)
         this.queryCate = value
-        // if (this.queryCate) {
-        //   this.params = this.LOGIN_TEACHER
-        //   //   this.params.queryCate = value
-        //   this.params.type = 'shopList'
-        //   this.GET_AXIOS(this.params)
-        // } else {
-        //   this.params = this.LOGIN_TEACHER
-        //   this.params.type = 'shopList'
-        //   this.GET_AXIOS(this.params)
-        // }
+        if (this.queryCate) {
+          this.params = this.LOGIN_TEACHER
+          this.params.queryCate = value
+          this.params.type = 'shopList'
+          this.GET_AXIOS(this.params)
+        } else {
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'shopList'
+          this.GET_AXIOS(this.params)
+        }
       },
       immediate: true,
     },

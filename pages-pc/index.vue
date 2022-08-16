@@ -35,7 +35,8 @@
       <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="student">
         <div class="student__list">
           <h3 v-if="LOGIN_CONFIG">
-            진행중인 {{ LOGIN_CONFIG.todo_name }} ({{ studentName.length }})
+            진행중인 {{ LOGIN_CONFIG.todo_name }}
+            <!-- ({{ studentName.length }}) -->
           </h3>
           <div class="m-t-3 clb">
             <div

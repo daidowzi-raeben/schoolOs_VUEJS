@@ -44,7 +44,13 @@
         <table class="jelly-table">
           <tr>
             <th>작성자</th>
-            <td>{{ GET_AXIOS_CALLBACK_GETTER.albaDetail.reg_name }}</td>
+            <td>
+              {{
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.reg_name
+                  ? GET_AXIOS_CALLBACK_GETTER.albaDetail.reg_name
+                  : '선생님'
+              }}
+            </td>
             <th>알바비</th>
             <td>{{ GET_AXIOS_CALLBACK_GETTER.albaDetail.pay }}</td>
             <th>기간</th>
