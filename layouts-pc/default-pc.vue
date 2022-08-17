@@ -9,6 +9,7 @@
         class="jellyAdminBG"
         :style="`background-image:url(${adminBackgroundImage}); `"
       ></div>
+      <div class="requestAdmin" @click="onClickRequest">피드백</div>
       <nav>
         <div class="menu" @click="menuActiveNav">
           <span id="menu-top" class="menu-global menu-top"></span>
@@ -62,6 +63,31 @@
     </div> -->
       <!-- <div id="liveChat">asd</div> -->
     </div>
+    <b-modal id="requestModal" size="lg" hide-footer hide-header>
+      <div class="m-t-5">
+        <p>제목</p>
+        <input
+          v-model="request.subject"
+          type="text"
+          class="jelly-text jelly-text--h wd-full"
+        />
+      </div>
+
+      <div class="m-t-5">
+        <vue-editor v-model="request.content"> </vue-editor>
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('requestModal')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onSubmitRequest">
+          등록하기
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -74,6 +100,11 @@ export default {
     return {
       LOGIN_CONFIG: {},
       adminBackgroundImage: '/pc/img/bg/london-bridge-by-sunny.jpg',
+      request: {
+        subject: null,
+        content: null,
+        url: '',
+      },
     }
   },
   computed: {
@@ -93,6 +124,10 @@ export default {
     // 인스턴스가 초기화 된 직후
   },
   mounted() {
+    console.log(
+      '========= router =========',
+      this.$router.currentRoute.fullPath
+    )
     const loginCheck = localStorage.getItem('TEACHER')
     if (!loginCheck) {
       this.$router.push(`/member/sign-in`)
@@ -104,7 +139,7 @@ export default {
 
     // pixabay api load
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
-    this.GET_API_BG_PIXABAY('여름')
+    this.GET_API_BG_PIXABAY('가을')
     // setTimeout(() => {
     //   console.log('this.adminMainBG', this.adminMainBG)
     // }, 1000)
@@ -123,9 +158,48 @@ export default {
         .classList.toggle('menu-bottom-click')
       document.getElementById('adminGnb').classList.toggle('is_active')
     },
+    onSubmitRequest() {
+      this.request.url = this.$router.currentRoute.fullPath
+      const frm = new FormData()
+      frm.append('type', 'request')
+      frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+      frm.append('subject', this.request.subject)
+      frm.append('content', this.request.content)
+      frm.append('url', this.request.url)
+      console.log('frm', frm)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res.data)
+          alert('접수되었습니다.')
+          this.$bvModal.hide('requestModal')
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
+    },
     onClickLinkTo(e) {
       this.$router.push(`/${e}`)
       this.menuActiveNav()
+    },
+    onClickRequest(e) {
+      // this.noticeIdx = e
+      // this.paramsDetail = this.LOGIN_TEACHER
+      // this.paramsDetail.type = 'noticeList'
+      // this.paramsDetail.noticeIdx = e
+      // console.log(e)
+      // this.GET_AXIOS(this.paramsDetail)
+      // setTimeout(() => {
+      //   this.noticeSubject =
+      //     this.GET_AXIOS_CALLBACK_GETTER.noticeView[0].bd_subject
+      //   this.noticeContent =
+      //     this.GET_AXIOS_CALLBACK_GETTER.noticeView[0].bd_content
+      // }, 1500)
+      this.$bvModal.show('requestModal')
     },
   },
 }

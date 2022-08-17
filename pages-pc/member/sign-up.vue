@@ -24,6 +24,7 @@
             class="jelly-text"
             style="background: #fff; color: #000; height: 50px; width: 300px"
             placeholder="학급 이름"
+            @keyup.enter="onClickNextStep"
           />
         </div>
         <div>
@@ -113,6 +114,7 @@
               class="jelly-text"
               style="background: #fff; color: #000; height: 50px; width: 300px"
               placeholder="TODO LIST 이름 ex)퀘스트, 할일 등"
+              @keyup.enter="onClickNextStep(2)"
             />
           </div>
           <div>
@@ -137,6 +139,7 @@
               class="jelly-text"
               style="background: #fff; color: #000; height: 50px; width: 300px"
               type="text"
+              @keyup.enter="onClickSchoolSearch"
             />
             <button
               class="jelly-btn jelly-btn--default m-t-10"
@@ -182,6 +185,7 @@
             type="text"
             class="jelly-text m-l-3"
             style="background: #fff; color: #000; height: 50px; width: 300px"
+            @keyup.enter="onClickNextStep(4)"
           />반
         </div>
         <div>

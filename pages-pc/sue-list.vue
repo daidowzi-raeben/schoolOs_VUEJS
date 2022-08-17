@@ -3,7 +3,7 @@
     <div class="">
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <!-- <span>{{ today }}</span> -->
-        <!-- <h1 v-if="LOGIN_TEACHER">신고 관리</h1> -->
+        <h1 v-if="LOGIN_TEACHER">신고 관리</h1>
         <div class="m-t-15 m-l-4"></div>
         <div v-if="GET_AXIOS_CALLBACK_GETTER.sue" class="student form">
           <div class="student__list">

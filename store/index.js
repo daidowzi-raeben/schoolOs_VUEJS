@@ -115,6 +115,9 @@ const createStore = () => {
       ADMIN_MAIN_BG_MUTATIONS(state, payload) {
         state.adminMainBG = payload
       },
+      ADMIN_MAIN_BG_FALSE_MUTATIONS(state, payload) {
+        state.adminMainBG = payload
+      },
       GET_API_MY_SCHOOL_SUCCESS(state, payload) {
         state.mySchoolInformation = payload
       },
@@ -276,6 +279,10 @@ const createStore = () => {
             commit('LOADING_INIT')
           })
           .catch((res) => {
+            commit(
+              'ADMIN_MAIN_BG_FALSE_MUTATIONS',
+              '/pc/img/bg/london-bridge-by-sunny.jpg'
+            )
             console.log('ADMIN_MAIN_BG_MUTATIONS', res)
           })
       },

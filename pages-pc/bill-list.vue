@@ -145,6 +145,13 @@ export default {
       this.$bvModal.show('billInsert')
     },
     onSubmit() {
+      if (
+        Number(this.uncomma(this.billPay)) >
+          Number(this.GET_AXIOS_CALLBACK_GETTER.teacher.total_pay) &&
+        this.GET_AXIOS_CALLBACK_GETTER.teacher.inflation === 'Y'
+      ) {
+        return alert('잔액이 부족합니다. 대출 후 진행해 주세요.')
+      }
       this.LOADING_TRUE()
       const frm = new FormData()
       frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)

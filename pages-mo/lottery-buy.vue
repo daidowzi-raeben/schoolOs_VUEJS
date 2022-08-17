@@ -80,7 +80,12 @@
         </button>
       </div>
     </div>
-    <div v-else>saasd</div>
+    <div v-else>
+      <div v-if="firstLotto === true" class="text-center">
+        다음주 월요일 9시부터 <br />
+        젤리복권을 구매할 수 있어요.
+      </div>
+    </div>
   </div>
 </template>
 
@@ -100,6 +105,7 @@ export default {
       enterResult: [],
       isBuy: false,
       nextDate: '',
+      firstLotto: false,
     }
   },
   mounted() {
@@ -165,7 +171,8 @@ export default {
             })
           }
         } else {
-          alert('불량')
+          // alert('불량')
+          this.firstLotto = true
         }
         console.log(res.data)
         this.LOADING = false

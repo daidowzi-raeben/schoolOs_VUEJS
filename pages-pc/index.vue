@@ -10,6 +10,60 @@
             {{ LOGIN_CONFIG.reg_pay_unit }}
           </span>
         </h1>
+
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.teacher" class="student">
+          <div class="student__list clb">
+            <h3>환경 설정</h3>
+            <div class="m-t-3">
+              <div
+                v-if="GET_AXIOS_CALLBACK_GETTER.teacher.rule_cnt === '0'"
+                class="item"
+              >
+                <nuxt-link to="job-list">
+                  <p class="title">규칙설정 &gt;</p>
+                  <div class="flex">
+                    <div class="list">
+                      <p style="color: #ffffcc">
+                        학생들이 지켜야 할 규칙을 작성해 주세요
+                      </p>
+                    </div>
+                  </div>
+                </nuxt-link>
+              </div>
+              <div
+                v-if="GET_AXIOS_CALLBACK_GETTER.teacher.job_cnt === '0'"
+                class="item"
+              >
+                <nuxt-link to="job-list">
+                  <p class="title">직업설정 &gt;</p>
+                  <div class="flex">
+                    <div class="list">
+                      <p style="color: #ffffcc">
+                        학생들의 직업과 주급을 지정해 주세요
+                      </p>
+                    </div>
+                  </div>
+                </nuxt-link>
+              </div>
+              <div
+                v-if="!GET_AXIOS_CALLBACK_GETTER.teacher.jb_mode"
+                class="item"
+              >
+                <nuxt-link to="teacher-setting">
+                  <p class="title">젤리복권 &gt;</p>
+                  <div class="flex">
+                    <div class="list">
+                      <p style="color: #ffffcc">
+                        젤리복권 사용여부와 판매금액을 설정해 주세요
+                      </p>
+                    </div>
+                  </div>
+                </nuxt-link>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div v-if="GET_AXIOS_CALLBACK_GETTER.attendance" class="student">
           <div class="student__list clb">
             <h3>출결 현황</h3>
