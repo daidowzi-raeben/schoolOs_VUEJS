@@ -158,68 +158,52 @@
       <div class="student"></div>
     </div>
     <b-modal id="teacherPayList" size="lg" hide-footer hide-header>
-      <table class="jelly-table">
-        <thead>
-          <tr>
-            <th>일시</th>
-            <th>구분</th>
-            <th>금액</th>
-            <th>내용</th>
-          </tr>
-        </thead>
-        <tbody v-if="GET_AXIOS_CALLBACK_GETTER.bankTransferList">
-          <tr
-            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.bankTransferList"
-            :key="`table${i}`"
-          >
-            <td>{{ v.datetime }}</td>
-            <td>{{ v.case_result }}</td>
-            <td :class="v.status === '1' ? 'jelly-color--type4' : ''">
-              {{ v.pay | comma }}
-            </td>
-            <td v-if="v.case_result === '출금'" style="color: #111">
-              {{ v.send_sms_name }} 에게 출금
-            </td>
-            <td v-if="v.case_result === '입금'" style="color: #111">
-              {{ v.send_sms_name }} 으로부터 입금
-            </td>
-            <td v-if="v.case_result === '쇼핑'" style="color: #111">
-              {{ v.buy_item_name }} 구입
-            </td>
-            <td v-if="v.case_result === '보상'">
-              {{ v.quest_name }}
-              <span v-if="v.status === '0'">보상</span>
-              <span v-if="v.status === '1'">차감</span>
-            </td>
-            <td v-if="v.case_result === '기타'" style="color: #111">
-              {{ v.etc_memo }}
-            </td>
-            <td v-if="v.case_result === '대출'" style="color: #111"></td>
-            <td v-if="v.case_result === '벌금'" style="color: #111">
-              {{ v.penalty_memo }}
-            </td>
-            <td v-if="v.case_result === '주급'" style="color: #111">
-              주급 지급
-            </td>
-            <td v-if="v.case_result === '현금'" style="color: #111">
-              현금 출금
-            </td>
-            <td v-if="v.case_result === '알림장'" style="color: #111">
-              알림장 읽음 보상
-            </td>
-            <td v-if="v.case_result === '세금'" style="color: #111">
-              {{ v.tax_name }}
-            </td>
-            <td v-if="v.case_result === '알바비지급'" style="color: #111">
-              [{{ v.alba_name }}] {{ v.alba_reg_name }}에게 지급
-            </td>
-            <td v-if="v.case_result === '알바비'" style="color: #111">
-              {{ v.alba_name }}
-            </td>
-            <td v-if="v.case_result === '에러'" style="color: #111"></td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="max-height: 50vh; overflow-y: auto">
+        <table class="jelly-table">
+          <thead>
+            <tr>
+              <th>일시</th>
+              <th>구분</th>
+              <th>금액</th>
+              <th>내용</th>
+            </tr>
+          </thead>
+          <!-- 0:대출,1:주급,2:이자,3:기타,4:상품등록수수료,5:세금,6:정부마켓,7:마켓,8:가입,9:알바 -->
+          <tbody v-if="totalPay.list">
+            <tr v-for="(v, i) in totalPay.list" :key="`table${i}`">
+              <td>{{ v.datetime }}</td>
+              <td v-if="v.status === '0'">대출</td>
+              <td v-if="v.status === '1'">주급</td>
+              <td v-if="v.status === '2'">이자</td>
+              <td v-if="v.status === '3'">기타</td>
+              <td v-if="v.status === '4'">수수료</td>
+              <td v-if="v.status === '5'">세금</td>
+              <td v-if="v.status === '6'">정부마켓</td>
+              <td v-if="v.status === '7'">마켓</td>
+              <td v-if="v.status === '8'">가입</td>
+              <td v-if="v.status === '9'">알바고</td>
+              <td
+                class="text-center"
+                :class="Number(v.pay) < 0 ? 'jelly-color--type4' : ''"
+              >
+                {{ v.pay | comma }}
+              </td>
+              <td v-if="v.status === '0'">{{ v.bank_memo }} 대출</td>
+              <td v-if="v.status === '1'">{{ v.student_memo }} 주급 지급</td>
+              <td v-if="v.status === '2'">{{ v.bank_memo }} 이자</td>
+              <td v-if="v.status === '3'">기타</td>
+              <td v-if="v.status === '4'">{{ v.item_memo }} 상품판매수수료</td>
+              <td v-if="v.status === '5'">{{ v.student_memo }} 세금</td>
+              <td v-if="v.status === '6'">
+                {{ v.bill_memo }}
+              </td>
+              <td v-if="v.status === '7'">{{ v.item_memo }} 판매</td>
+              <td v-if="v.status === '8'">가입</td>
+              <td v-if="v.status === '9'">{{ v.alba_name }} 알바비 지급</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </b-modal>
   </div>
 </template>
@@ -247,6 +231,9 @@ export default {
       ],
       today: '',
       isReadLength: 0,
+      totalPay: {
+        list: {},
+      },
     }
   },
   computed: {
@@ -290,7 +277,23 @@ export default {
     //   })
     // },
     onClickTeacherPayList() {
-      this.$bvModal.show('teacherPayList')
+      const frm = new FormData()
+      frm.append('type', 'teacherPayList')
+      frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res.data)
+          this.totalPay.list = res.data.teacherPayList
+          this.$bvModal.show('teacherPayList')
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
   },
 }

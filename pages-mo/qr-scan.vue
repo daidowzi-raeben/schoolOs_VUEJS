@@ -52,13 +52,8 @@ export default {
     ...mapMutations(['LOADING_TRUE']),
     onDecode(decodedString) {
       console.log(decodedString)
-      this.qrData = decodedString.substr(0, 15)
-      if (this.qrData !== '/member/sign-up') {
-        alert('잘못된 QR CODE 입니다.')
-        this.$router.push(`/`)
-      } else {
-        this.$router.push(decodedString)
-      }
+      this.$router.push(decodedString)
+
       // /member/sign-up
     },
 

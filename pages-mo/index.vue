@@ -314,6 +314,31 @@
           </div>
         </div>
         <div
+          v-if="GET_AXIOS_CALLBACK_GETTER.teacher"
+          class="box account-area m-t-2"
+        >
+          <nuxt-link to="/bank-country-list" class="flex">
+            <h3>
+              국고 통장
+              <b-icon
+                class="m-l-1"
+                icon="chevron-right"
+                style="margin-top: 2px"
+              ></b-icon>
+            </h3>
+            <div class="flex-right">
+              <strong class="font-18 bold"
+                ><em>{{
+                  GET_AXIOS_CALLBACK_GETTER.teacher.total_pay | comma
+                }}</em></strong
+              >
+              <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
+                LOGIN_CONFIG.t_reg_pay_unit
+              }}</span>
+            </div>
+          </nuxt-link>
+        </div>
+        <div
           class="box account-area m-t-3 dotted text-center"
           onclick="alert('아직 준비중이에요')"
         >
