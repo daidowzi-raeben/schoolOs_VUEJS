@@ -16,7 +16,9 @@
         총
         <strong class="font-18"
           ><em>{{
-            GET_AXIOS_CALLBACK_GETTER.totalPay.totalPay | comma
+            GET_AXIOS_CALLBACK_GETTER.totalPay.totalPay
+              ? GET_AXIOS_CALLBACK_GETTER.totalPay.totalPay
+              : 0 | comma
           }}</em></strong
         >
         <span v-if="LOGIN_STUDENT">{{ LOGIN_STUDENT.t_reg_pay_unit }}</span>
