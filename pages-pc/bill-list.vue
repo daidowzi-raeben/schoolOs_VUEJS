@@ -6,6 +6,8 @@
         <h1 v-if="LOGIN_TEACHER" class="">
           세금관리
           <span
+            v-b-tooltip.hover
+            title="학생에게 세금에 필요한 지도를 위해 전기세, 수도세 등 공과금을 납부할 수 있습니다."
             class="spanBox m-l-2"
             style="color: #fff; font-size: 12px"
             @click="onClickBillInsert"

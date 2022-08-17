@@ -75,6 +75,9 @@
     <b-modal id="itemInsert" size="lg" hide-footer hide-header>
       <div class="">
         <p>카테고리</p>
+        <span v-if="!GET_AXIOS_CALLBACK_GETTER.shopCate">
+          <strong><em>카테고리를 먼저 등록해주세요</em></strong>
+        </span>
         <select
           v-if="GET_AXIOS_CALLBACK_GETTER.shopCate"
           v-model="cateIdx"

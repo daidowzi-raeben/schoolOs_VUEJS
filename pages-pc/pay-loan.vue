@@ -35,12 +35,16 @@
                     {{ LOGIN_TEACHER.reg_pay_unit }}
                   </span>
                   <button
+                    v-b-tooltip.hover
+                    title="인플레이션 모드 사용 시 원금을 갚아 물가를 조정할 수 있습니다."
                     class="jelly-btn jelly-btn--blue m-l-5"
                     @click="onSubmit('r')"
                   >
                     갚기
                   </button>
                   <button
+                    v-b-tooltip.hover
+                    title="인플레이션 모드 사용 시 대출 금액이 많아질 수록 물가가 상승합니다."
                     class="jelly-btn jelly-btn--pink m-l-5"
                     @click="onSubmit('l')"
                   >

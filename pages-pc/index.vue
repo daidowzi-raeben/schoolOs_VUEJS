@@ -5,7 +5,12 @@
         <span>{{ today }}</span>
         <h1 v-if="LOGIN_CONFIG && GET_AXIOS_CALLBACK_GETTER.total_pay">
           {{ LOGIN_CONFIG.reg_country }}
-          <span v-b-tooltip.hover title="현재 재산" class="spanBox">
+          <span
+            v-b-tooltip.hover
+            title="현재 재산"
+            class="spanBox"
+            @click="onClickTeacherPayList"
+          >
             {{ GET_AXIOS_CALLBACK_GETTER.total_pay.total_pay | comma }}
             {{ LOGIN_CONFIG.reg_pay_unit }}
           </span>
@@ -59,6 +64,33 @@
                     </div>
                   </div>
                 </nuxt-link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.lotto_list" class="student">
+          <div class="student__list clb">
+            <h3>이번주 젤리복권 구매 현황</h3>
+            <div class="m-t-3">
+              <div
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.lotto_list"
+                :key="i"
+                class="item"
+              >
+                <p class="title">{{ v.reg_name }}</p>
+                <div class="flex">
+                  <div class="list">
+                    <p>{{ v.buy_date }}</p>
+                    <p>
+                      {{ v.status === '1' ? v.cnt + '개 맞음' : '추첨중' }}
+                    </p>
+                    <p>
+                      {{ v.num1 }}, {{ v.num2 }}, {{ v.num3 }}, {{ v.num4 }},
+                      {{ v.num5 }}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -125,7 +157,70 @@
       </div>
       <div class="student"></div>
     </div>
-    <!-- <b-modal id="mainNotice"> 알림장이당아아아아아아아아ㅡ앙 </b-modal> -->
+    <b-modal id="teacherPayList" size="lg" hide-footer hide-header>
+      <table class="jelly-table">
+        <thead>
+          <tr>
+            <th>일시</th>
+            <th>구분</th>
+            <th>금액</th>
+            <th>내용</th>
+          </tr>
+        </thead>
+        <tbody v-if="GET_AXIOS_CALLBACK_GETTER.bankTransferList">
+          <tr
+            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.bankTransferList"
+            :key="`table${i}`"
+          >
+            <td>{{ v.datetime }}</td>
+            <td>{{ v.case_result }}</td>
+            <td :class="v.status === '1' ? 'jelly-color--type4' : ''">
+              {{ v.pay | comma }}
+            </td>
+            <td v-if="v.case_result === '출금'" style="color: #111">
+              {{ v.send_sms_name }} 에게 출금
+            </td>
+            <td v-if="v.case_result === '입금'" style="color: #111">
+              {{ v.send_sms_name }} 으로부터 입금
+            </td>
+            <td v-if="v.case_result === '쇼핑'" style="color: #111">
+              {{ v.buy_item_name }} 구입
+            </td>
+            <td v-if="v.case_result === '보상'">
+              {{ v.quest_name }}
+              <span v-if="v.status === '0'">보상</span>
+              <span v-if="v.status === '1'">차감</span>
+            </td>
+            <td v-if="v.case_result === '기타'" style="color: #111">
+              {{ v.etc_memo }}
+            </td>
+            <td v-if="v.case_result === '대출'" style="color: #111"></td>
+            <td v-if="v.case_result === '벌금'" style="color: #111">
+              {{ v.penalty_memo }}
+            </td>
+            <td v-if="v.case_result === '주급'" style="color: #111">
+              주급 지급
+            </td>
+            <td v-if="v.case_result === '현금'" style="color: #111">
+              현금 출금
+            </td>
+            <td v-if="v.case_result === '알림장'" style="color: #111">
+              알림장 읽음 보상
+            </td>
+            <td v-if="v.case_result === '세금'" style="color: #111">
+              {{ v.tax_name }}
+            </td>
+            <td v-if="v.case_result === '알바비지급'" style="color: #111">
+              [{{ v.alba_name }}] {{ v.alba_reg_name }}에게 지급
+            </td>
+            <td v-if="v.case_result === '알바비'" style="color: #111">
+              {{ v.alba_name }}
+            </td>
+            <td v-if="v.case_result === '에러'" style="color: #111"></td>
+          </tr>
+        </tbody>
+      </table>
+    </b-modal>
   </div>
 </template>
 
@@ -194,6 +289,9 @@ export default {
     //     })
     //   })
     // },
+    onClickTeacherPayList() {
+      this.$bvModal.show('teacherPayList')
+    },
   },
 }
 </script>
