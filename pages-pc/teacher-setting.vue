@@ -16,7 +16,15 @@
                 class="item"
                 style="width: 100%"
               >
-                <p>기본 세금</p>
+                <p>
+                  기본 세금
+                  <span
+                    v-b-tooltip.hover
+                    title="소득세, 원천징수 등 세금을 이름을 설정하여 주급 지급 시 부과할 수 있습니다."
+                  >
+                    <b-icon icon="exclamation-circle"></b-icon>
+                  </span>
+                </p>
                 <div class="d-flex">
                   <input
                     v-model="tax.tax_semen_nm"
@@ -30,7 +38,15 @@
                     %
                   </span>
                 </div>
-                <p class="m-t-5">고정 세금</p>
+                <p class="m-t-5">
+                  고정 세금
+                  <span
+                    v-b-tooltip.hover
+                    title="주급 지급 시 비율이 아닌 고정 금액의 세금을 부과할 수 있습니다."
+                  >
+                    <b-icon icon="exclamation-circle"></b-icon>
+                  </span>
+                </p>
                 <div class="d-flex">
                   <input
                     v-model="tax.tax_dose_nm"
@@ -44,12 +60,20 @@
                     {{ LOGIN_TEACHER.reg_pay_unit }}
                   </span>
                 </div>
-                <p class="m-t-5">젤리복권</p>
+                <p class="m-t-5">
+                  젤리복권
+                  <span
+                    v-b-tooltip.hover
+                    title="매주 월요일 9시부터 금요일 14시까지 판매를 시작하며, 총 구매금액의 60% : 1등, 30%: 2등, 20%: 3등, 구매금액: 4등 으로 추첨합니다. 1,2,3등은 제세공과금 22%가 부과됩니다."
+                  >
+                    <b-icon icon="exclamation-circle"></b-icon>
+                  </span>
+                </p>
                 <div class="d-flex">
                   <select v-model="tax.jb_mode" class="jelly-text">
                     <option :value="null">선택하세요</option>
-                    <option value="Y">Y</option>
-                    <option value="N">N</option>
+                    <option value="Y">사용</option>
+                    <option value="N">미사용</option>
                   </select>
                 </div>
                 <p class="m-t-5">젤리복권 구매가격</p>
