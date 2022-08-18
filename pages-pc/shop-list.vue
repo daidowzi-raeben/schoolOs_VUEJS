@@ -287,19 +287,18 @@ export default {
   watch: {
     '$route.query.cate': {
       handler(value) {
-        if (value) {
-          console.log(value)
-          this.queryCate = value
-          if (this.queryCate) {
-            this.params = this.LOGIN_TEACHER
-            this.params.queryCate = value
-            this.params.type = 'shopList'
-            this.GET_AXIOS(this.params)
-          } else {
-            this.params = this.LOGIN_TEACHER
-            this.params.type = 'shopList'
-            this.GET_AXIOS(this.params)
-          }
+        console.log(value)
+        this.queryCate = value
+        if (this.queryCate) {
+          this.params = this.LOGIN_TEACHER
+          this.params.queryCate = value
+          this.params.type = 'shopList'
+          this.GET_AXIOS(this.params)
+        } else {
+          this.params.queryCate = null
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'shopList'
+          this.GET_AXIOS(this.params)
         }
       },
       immediate: true,
@@ -313,6 +312,7 @@ export default {
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'shopList'
+    this.params.queryCate = null
     this.GET_AXIOS(this.params)
   },
   methods: {

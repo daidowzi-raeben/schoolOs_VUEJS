@@ -1,42 +1,46 @@
 <template>
   <div>
     <div class="">
-      <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER">
-          알림장관리
-
-          <span
-            class="spanBox m-l-2"
-            style="color: #fff; font-size: 12px"
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">알림장관리</h4>
+        <div class="flex-right">
+          <button
+            class="jelly-btn jelly-btn--default"
             @click="onClickItemInsert"
           >
-            +
-          </span>
-        </h1>
-        <div class="m-t-15 m-l-4"></div>
+            알림장 추가
+          </button>
+        </div>
+      </div>
+      <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="student form">
           <div class="student__list">
             <div v-if="GET_AXIOS_CALLBACK_GETTER.noticeList" class="m-t-3">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.noticeList"
-                :key="`noticeList${i}`"
-                class="item"
-                style="width: 32%"
-                @click="onClickItemDetail(v.idx)"
-              >
-                <p class="title">
-                  {{ v.bd_subject }}
-                </p>
-                {{ v.datetime2 }}
-              </div>
+              <table class="jelly-table">
+                <tr>
+                  <th>제목</th>
+                  <th>작성일</th>
+                </tr>
+                <tr
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.noticeList"
+                  :key="`noticeList${i}`"
+                  style="cursor: pointer"
+                  @click="onClickItemDetail(v.idx)"
+                >
+                  <td>{{ v.bd_subject }}</td>
+                  <td>{{ v.datetime2 }}</td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </div>
     <b-modal id="itemInsert" size="lg" hide-footer hide-header>
-      <div v-if="GET_AXIOS_CALLBACK_GETTER.noticeRead" class="m-t-5">
+      <div
+        v-if="GET_AXIOS_CALLBACK_GETTER.noticeRead && noticeIdx"
+        class="m-t-5"
+      >
         <p>읽지않음</p>
         <span
           v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.noticeRead"

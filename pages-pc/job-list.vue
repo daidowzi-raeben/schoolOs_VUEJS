@@ -33,11 +33,7 @@
       <div class="student form">
         <div class="student__list">
           <div class="m-t-3">
-            <table
-              v-if="GET_AXIOS_CALLBACK_GETTER"
-              :key="i"
-              class="jelly-table"
-            >
+            <table v-if="GET_AXIOS_CALLBACK_GETTER" class="jelly-table">
               <tr>
                 <th>직업명</th>
                 <th>주급</th>

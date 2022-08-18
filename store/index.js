@@ -235,7 +235,11 @@ const createStore = () => {
           .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', { params })
           .then((res) => {
             // 메인 데이터 합계
-            if (params.type === 'main' && process.env.DEVICE === 'mo') {
+            if (
+              params &&
+              params.type === 'main' &&
+              process.env.DEVICE === 'mo'
+            ) {
               const total =
                 res.data.status.intellect +
                 res.data.status.effort +
@@ -243,9 +247,9 @@ const createStore = () => {
                 res.data.status.etiquette
               res.data.status.total = total
             }
-            if (params.type === 'billStudentCnt') {
+            if (params && params.type === 'billStudentCnt') {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_BILL', res.data.cnt)
-            } else if (params.type === 'attendance') {
+            } else if (params && params.type === 'attendance') {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_SUB', res.data)
             } else {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)

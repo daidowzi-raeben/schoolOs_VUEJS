@@ -7,13 +7,12 @@
       <div class="">
         <div class="gnb" style="">
           <!-- 36465D -->
-          <h1 @click="onClickLinkTo($event, '')">SCHOOL OS</h1>
+          <h1 style="cursor: pointer" @click="onClickLinkTo($event, '')">
+            SCHOOL OS
+          </h1>
           <ul>
-            <li @click="onClickLinkTo($event, '')">
-              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 처음으로
-            </li>
             <li>
-              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 환경설정
+              <b-icon icon="gear" class="m-r-2"></b-icon> 환경설정
               <div>
                 <ul>
                   <li @click="onClickLinkTo($event, 'job-list')">직업설정</li>
@@ -28,7 +27,7 @@
               </div>
             </li>
             <li>
-              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 학급관리
+              <b-icon icon="house" class="m-r-2"></b-icon> 학급관리
               <div>
                 <ul>
                   <li @click="onClickLinkTo($event, 'pay-loan')">대출관리</li>
@@ -44,7 +43,7 @@
               </div>
             </li>
             <li>
-              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 학생관리
+              <b-icon icon="person" class="m-r-2"></b-icon> 학생관리
               <div>
                 <ul>
                   <li @click="onClickLinkTo($event, 'student-list')">
@@ -55,7 +54,7 @@
               </div>
             </li>
             <li>
-              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 마켓관리
+              <b-icon icon="shop" class="m-r-2"></b-icon> 마켓관리
               <div>
                 <ul>
                   <li @click="onClickLinkTo($event, 'shop-list')">상점관리</li>
@@ -65,12 +64,18 @@
                 </ul>
               </div>
             </li>
-            <li @click="onClickLinkTo($event, 'todo-list')">
-              <b-icon icon="cash-stack" class="m-r-2"></b-icon>
+            <li
+              style="cursor: pointer"
+              @click="onClickLinkTo($event, 'todo-list')"
+            >
+              <b-icon icon="card-list" class="m-r-2"></b-icon>
               {{ LOGIN_CONFIG.todo_name }} 관리
             </li>
-            <li @click="onClickLinkTo($event, 'notice-list')">
-              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 알림장 관리
+            <li
+              style="cursor: pointer"
+              @click="onClickLinkTo($event, 'notice-list')"
+            >
+              <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 알림장 관리
             </li>
 
             <!-- <li @click="onClickLinkTo($event,'member/sign-out')">로그아웃</li> -->

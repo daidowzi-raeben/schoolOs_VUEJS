@@ -5,9 +5,10 @@
       <button @click="onSubmit">빌리기</button>
     </div> -->
     <div class="">
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">환경설정</h4>
+      </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER">환경설정</h1>
         <div class="student form">
           <div class="student__list">
             <div class="flex m-t-3">
@@ -70,7 +71,11 @@
                   </span>
                 </p>
                 <div class="d-flex">
-                  <select v-model="tax.jb_mode" class="jelly-text">
+                  <select
+                    v-model="tax.jb_mode"
+                    class="jelly-text"
+                    style="width: 150px"
+                  >
                     <option :value="null">선택하세요</option>
                     <option value="Y">사용</option>
                     <option value="N">미사용</option>

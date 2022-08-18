@@ -132,7 +132,10 @@ export default {
   layout: 'default-pc',
   data() {
     return {
-      params: {},
+      params: {
+        type: '',
+        queryCate: '',
+      },
       paramsPost: {},
       billStudent: 'all',
       billPay: 0,
@@ -151,17 +154,19 @@ export default {
       handler(value) {
         console.log(value)
         this.queryCate = value
-        this.params.type = 'billListStudent'
-        this.params.queryCate = value
         if (this.queryCate) {
           this.params = this.LOGIN_TEACHER
+          this.params.queryCate = value
+          this.params.type = 'billListStudent'
           this.GET_AXIOS(this.params)
         } else {
+          this.params.queryCate = null
           this.params = this.LOGIN_TEACHER
+          this.params.type = 'billListStudent'
           this.GET_AXIOS(this.params)
         }
       },
-      immediate: true,
+      // immediate: true,
     },
   },
   beforeCreate() {
@@ -169,9 +174,12 @@ export default {
   },
   mounted() {
     //   DATA INIT
+    this.params.queryCate = null
+    this.queryCate = null
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'billListStudent'
+    this.params.queryCate = null
     this.GET_AXIOS(this.params)
     // billCateList
   },

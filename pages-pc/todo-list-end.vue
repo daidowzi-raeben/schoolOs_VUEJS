@@ -2,15 +2,15 @@
   <div>
     <div class="">
       <div class="flex">
-        <h4 v-if="LOGIN_TEACHER" class="is_active">
-          진행중 {{ LOGIN_TEACHER.todo_name }}
-        </h4>
         <h4
           v-if="LOGIN_TEACHER"
-          class="m-l-3"
           style="cursor: pointer"
-          @click="$router.push('/todo-list-end')"
+          class=""
+          @click="$router.push('/todo-list')"
         >
+          진행중 {{ LOGIN_TEACHER.todo_name }}
+        </h4>
+        <h4 v-if="LOGIN_TEACHER" class="m-l-3 is_active">
           완료 {{ LOGIN_TEACHER.todo_name }}
         </h4>
         <div class="flex-right">
@@ -53,7 +53,7 @@
           <div class="student__list">
             <div class="m-t-3">
               <table
-                v-if="GET_AXIOS_CALLBACK_GETTER.questList"
+                v-if="GET_AXIOS_CALLBACK_GETTER.questListEnd"
                 class="jelly-table"
               >
                 <tr>
@@ -67,7 +67,7 @@
                   <th>관리</th>
                 </tr>
                 <tr
-                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.questList"
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.questListEnd"
                   :key="`shopItem${i}`"
                   style="curosr: pointer"
                 >
@@ -512,15 +512,15 @@ export default {
         console.log(value)
         this.queryCate = value
         if (this.queryCate) {
-          this.params.type = 'questList'
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
+          this.params.type = 'questList'
           this.GET_AXIOS(this.params)
         } else {
-          console.log('쿼리 없음')
-          this.params.type = 'questList'
           this.params.queryCate = null
+
           this.params = this.LOGIN_TEACHER
+          this.params.type = 'questList'
           this.GET_AXIOS(this.params)
         }
       },
@@ -580,9 +580,9 @@ export default {
     },
     onClickCategory(e) {
       if (e) {
-        this.$router.push(`/todo-list?cate=${e}`)
+        this.$router.push(`/todo-list-end?cate=${e}`)
       } else {
-        this.$router.push(`/todo-list`)
+        this.$router.push(`/todo-list-end`)
       }
     },
     onSubmitCate() {

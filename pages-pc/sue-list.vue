@@ -136,7 +136,6 @@
 
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
-import { axiosForm } from '~/config/util'
 
 export default {
   layout: 'default-pc',
@@ -187,13 +186,16 @@ export default {
     '$route.query.cate': {
       handler(value) {
         console.log(value)
-        this.queryCate = value
         this.params.type = 'sueList'
-        this.params.queryCate = value
         if (this.queryCate) {
+          this.params.queryCate = value
+          this.queryCate = value
           this.params = this.LOGIN_TEACHER
           this.GET_AXIOS(this.params)
         } else {
+          this.queryCate = value
+          this.params.queryCate = value
+
           this.params = this.LOGIN_TEACHER
           this.GET_AXIOS(this.params)
         }
@@ -209,6 +211,7 @@ export default {
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'sueList'
+    this.params.queryCate = null
     this.GET_AXIOS(this.params)
   },
   methods: {
@@ -230,27 +233,7 @@ export default {
       }, 1000)
       this.$bvModal.hide('itemInsert')
     },
-    onSubmitItem() {
-      //   const itemThumb = document.getElementById('itemThumb')
-      const FORM_DATA = new FormData()
-      Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
-        FORM_DATA.append(v[0], v[1])
-      })
-      FORM_DATA.append('type', 'noticeEdit')
-      FORM_DATA.append('noticeSubject', this.noticeSubject)
-      FORM_DATA.append('noticeContent', this.noticeContent)
-      FORM_DATA.append('noticeIdx', this.noticeIdx)
-      axiosForm(FORM_DATA, '/teacher.php')
-      setTimeout(() => {
-        this.params = this.LOGIN_TEACHER
-        this.params.type = 'questList'
-        this.GET_AXIOS(this.params)
-      }, 1000)
-      this.$bvModal.hide('itemInsert')
-    },
-    isActiveCalendar(e) {
-      this.$refs[e].classList.toggle('is_active')
-    },
+
     onClickCategory(e) {
       if (e) {
         this.$router.push(`/sue-list?cate=${e}`)
@@ -271,75 +254,7 @@ export default {
       //     this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.detil.content
       //   }, 1500)
     },
-    onClickItemDetailConfirm(e) {
-      this.noticeIdx = e
-      this.paramsDetail = this.LOGIN_TEACHER
-      this.paramsDetail.type = 'questList'
-      this.paramsDetail.idx = e
-      console.log(e)
-      this.GET_AXIOS(this.paramsDetail)
-      setTimeout(() => {
-        this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.view.subject
-        this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.view.contents
-        console.log(this.GET_AXIOS_CALLBACK_GETTER.participation)
-      }, 1500)
-      this.$bvModal.show('questConfirm')
-    },
-    onClickItemInsert() {
-      this.noticeIdx = null
-      this.noticeSubject = ''
-      this.noticeContent = ''
-      this.$bvModal.show('itemInsert')
-    },
-    onSubmitConfirm(isStatus, sqIdx, smsIdx) {
-      this.confirm.type = 'questconfirm'
-      this.confirm.sms_idx = smsIdx
-      this.confirm.idx = sqIdx
-      this.confirm.status = isStatus
-      this.POST_AXIOS(this.confirm)
-      this.GET_AXIOS(this.paramsDetail)
-      setTimeout(() => {
-        this.noticeIdx = sqIdx
-        this.paramsDetail = this.LOGIN_TEACHER
-        this.paramsDetail.type = 'questList'
-        this.paramsDetail.idx = sqIdx
-        console.log(sqIdx)
-        this.GET_AXIOS(this.paramsDetail)
-      }, 1500)
-    },
-    onSubmitBill() {
-      // this.noticeIdx
-      if (this.GET_AXIOS_CALLBACK_GETTER.detail) {
-        const FORM_DATA = new FormData()
-        console.log(this.idx)
-        FORM_DATA.append('type', 'billListStudent')
-        FORM_DATA.append('sueIdx', this.idx)
-        FORM_DATA.append(
-          'billStudent',
-          this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx_to
-        )
-        FORM_DATA.append(
-          'smt_idx',
-          this.GET_AXIOS_CALLBACK_GETTER.detail.smt_idx
-        )
-        FORM_DATA.append('billSubject', '규칙위반')
-        FORM_DATA.append(
-          'billContent',
-          this.GET_AXIOS_CALLBACK_GETTER.detail.new_subject
-        )
-        FORM_DATA.append(
-          'billPay',
-          this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
-        )
-        axiosForm(FORM_DATA, '/teacher.php')
 
-        setTimeout(() => {
-          alert('고지서가 발송되었습니다.')
-
-          this.$bvModal.hide('itemInsert')
-        }, 1500)
-      }
-    },
     //
   },
 }

@@ -15,6 +15,27 @@
         </div>
       </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
+        <div>
+          <div class="m-t-5">
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate ? '' : 'is_active'"
+              @click="onClickCategory('')"
+              >전체</span
+            >
+            <span v-if="GET_AXIOS_CALLBACK_GETTER.billCateList">
+              <span
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.billCateList"
+                :key="`cate${i}`"
+                class="spanBox m-r-2"
+                :class="queryCate == v.idx ? 'is_active' : ''"
+                @click="onClickCategory(v.idx)"
+              >
+                {{ v.subject }}
+              </span>
+            </span>
+          </div>
+        </div>
         <div class="student form">
           <div class="student__list">
             <div class="m-t-3">
@@ -118,6 +139,7 @@ export default {
       billCateList: null,
       billPay: 0,
       billSubject: '',
+      queryCate: null,
     }
   },
 
@@ -125,14 +147,44 @@ export default {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
+  watch: {
+    '$route.query.cate': {
+      handler(value) {
+        console.log(value)
+        // this.queryCate = value
+        if (value) {
+          this.params = this.LOGIN_TEACHER
+          this.params.queryCate = value
+          this.params.type = 'billList'
+          this.GET_AXIOS(this.params)
+        } else {
+          this.params.queryCate = null
+          this.queryCate = null
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'billList'
+          this.GET_AXIOS(this.params)
+        }
+      },
+      immediate: false,
+    },
+  },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
   },
   mounted() {
     //   DATA INIT
+    console.log(
+      '----------------------------',
+      this.queryCate,
+      this.params.queryCate
+    )
+    this.queryCate = null
+
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'billList'
+    this.params.queryCate = null
+    console.log('===========================', this.params)
     this.GET_AXIOS(this.params)
     // billCateList
   },
@@ -196,6 +248,14 @@ export default {
     },
     resetInput(e) {
       e.target.value = ''
+    },
+    onClickCategory(e) {
+      if (e) {
+        this.$router.push(`/bill-list?cate=${e}`)
+      } else {
+        this.queryCate = null
+        this.$router.push(`/bill-list`)
+      }
     },
   },
 }

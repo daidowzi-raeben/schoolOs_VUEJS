@@ -5,137 +5,131 @@
       <button @click="onSubmit">빌리기</button>
     </div> -->
     <div class="">
-      <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER">
-          <!-- {{ LOGIN_TEACHER.reg_country }} 규칙관리 -->
-          <!-- <span v-b-tooltip.hover title="현재 재산" class="spanBox">
-            ㅁㄴㅇ
-          </span> -->
-        </h1>
-        <div class="student form">
-          <div class="student__list">
-            <div class="flex m-t-3">
-              <div
-                class="item"
-                style="width: 100%; background: #fff; color: #000"
-              >
-                <table class="jelly-table">
-                  <col style="width: 80px" />
-                  <col style="width: auto" />
-                  <col style="width: 100px" />
-                  <col style="width: auto" />
-                  <col style="width: 170px" />
-                  <tr>
-                    <th>번호</th>
-                    <th>규칙</th>
-                    <th>벌금</th>
-                    <th>벌칙</th>
-                    <th>관리</th>
-                  </tr>
-                  <tr>
-                    <td class="text-center">
-                      <input
-                        v-model="ruleNum[0]"
-                        type="text"
-                        class="jelly-text wd-full"
-                        style="color: #000"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        v-model="ruleSubject[0]"
-                        type="text"
-                        class="jelly-text wd-full"
-                        style="color: #000"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        v-model="rulePay[0]"
-                        type="text"
-                        class="jelly-text wd-full text-right"
-                        style="color: #000"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        v-model="rulePenalty[0]"
-                        type="text"
-                        class="jelly-text wd-full"
-                        style="color: #000"
-                      />
-                    </td>
-                    <td>
-                      <button
-                        class="jelly-btn jelly-btn--pink wd-full"
-                        @click="onSubmit"
-                      >
-                        등록
-                      </button>
-                    </td>
-                  </tr>
-                  <tr
-                    v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rules"
-                    :key="i"
-                  >
-                    <td class="text-center">
-                      <input
-                        :ref="`sort${i + 1}`"
-                        type="text"
-                        class="jelly-text wd-full"
-                        style="color: #000"
-                        :value="v.sort"
-                        @input="inputRuleNum($event, i + 1)"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        :ref="`subject${i + 1}`"
-                        type="text"
-                        class="jelly-text wd-full"
-                        style="color: #000"
-                        :value="v.subject"
-                        @input="inputRuleSubject($event, i + 1)"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        :ref="`penalty${i + 1}`"
-                        type="text"
-                        class="jelly-text wd-full text-right"
-                        style="color: #000"
-                        :value="v.penalty"
-                        @input="inputRulePay($event, i + 1)"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        :ref="`penalty_etc${i + 1}`"
-                        type="text"
-                        class="jelly-text wd-full"
-                        style="color: #000"
-                        :value="v.penalty_etc"
-                        @input="inputRulePenalty($event, i + 1)"
-                      />
-                    </td>
-                    <td>
-                      <button
-                        class="jelly-btn jelly-btn--default"
-                        @click="onSubmitDelete(i + 1, v.idx)"
-                      >
-                        삭제
-                      </button>
-                      <button
-                        class="jelly-btn jelly-btn--default"
-                        @click="onSubmitEdit(i + 1, v.idx)"
-                      >
-                        수정
-                      </button>
-                    </td>
-                  </tr>
-                </table>
-                <!-- <vue-editor v-model="ruleContent"> </vue-editor>
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">규칙관리</h4>
+      </div>
+    </div>
+    <div id="jellyAdminheader" style="padding-top: 0vh">
+      <div class="student form">
+        <div class="student__list">
+          <div class="flex m-t-3">
+            <div
+              class="item"
+              style="width: 100%; background: #fff; color: #000"
+            >
+              <table class="jelly-table">
+                <col style="width: 80px" />
+                <col style="width: auto" />
+                <col style="width: 100px" />
+                <col style="width: auto" />
+                <col style="width: 170px" />
+                <tr>
+                  <th>번호</th>
+                  <th>규칙</th>
+                  <th>벌금</th>
+                  <th>벌칙</th>
+                  <th>관리</th>
+                </tr>
+                <tr>
+                  <td class="text-center">
+                    <input
+                      v-model="ruleNum[0]"
+                      type="text"
+                      class="jelly-text wd-full"
+                      style="color: #000"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      v-model="ruleSubject[0]"
+                      type="text"
+                      class="jelly-text wd-full"
+                      style="color: #000"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      v-model="rulePay[0]"
+                      type="text"
+                      class="jelly-text wd-full text-right"
+                      style="color: #000"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      v-model="rulePenalty[0]"
+                      type="text"
+                      class="jelly-text wd-full"
+                      style="color: #000"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      class="jelly-btn jelly-btn--pink wd-full"
+                      @click="onSubmit"
+                    >
+                      등록
+                    </button>
+                  </td>
+                </tr>
+                <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rules" :key="i">
+                  <td class="text-center">
+                    <input
+                      :ref="`sort${i + 1}`"
+                      type="text"
+                      class="jelly-text wd-full"
+                      style="color: #000"
+                      :value="v.sort"
+                      @input="inputRuleNum($event, i + 1)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      :ref="`subject${i + 1}`"
+                      type="text"
+                      class="jelly-text wd-full"
+                      style="color: #000"
+                      :value="v.subject"
+                      @input="inputRuleSubject($event, i + 1)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      :ref="`penalty${i + 1}`"
+                      type="text"
+                      class="jelly-text wd-full text-right"
+                      style="color: #000"
+                      :value="v.penalty"
+                      @input="inputRulePay($event, i + 1)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      :ref="`penalty_etc${i + 1}`"
+                      type="text"
+                      class="jelly-text wd-full"
+                      style="color: #000"
+                      :value="v.penalty_etc"
+                      @input="inputRulePenalty($event, i + 1)"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      class="jelly-btn jelly-btn--default"
+                      @click="onSubmitDelete(i + 1, v.idx)"
+                    >
+                      삭제
+                    </button>
+                    <button
+                      class="jelly-btn jelly-btn--default"
+                      @click="onSubmitEdit(i + 1, v.idx)"
+                    >
+                      수정
+                    </button>
+                  </td>
+                </tr>
+              </table>
+              <!-- <vue-editor v-model="ruleContent"> </vue-editor>
                 <div class="text-center m-t-5">
                   <button
                     class="jelly-btn jelly-btn--pink lg"
@@ -144,7 +138,6 @@
                     등록하기
                   </button>
                 </div> -->
-              </div>
             </div>
           </div>
         </div>
