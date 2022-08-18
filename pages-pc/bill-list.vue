@@ -1,45 +1,47 @@
 <template>
   <div>
     <div class="">
-      <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER" class="">
-          세금관리
-          <span
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">세금관리</h4>
+        <div class="flex-right">
+          <button
             v-b-tooltip.hover
             title="학생에게 세금에 필요한 지도를 위해 전기세, 수도세 등 공과금을 납부할 수 있습니다."
-            class="spanBox m-l-2"
-            style="color: #fff; font-size: 12px"
+            class="jelly-btn jelly-btn--default"
             @click="onClickBillInsert"
           >
-            +
-          </span>
-        </h1>
+            세금 추가
+          </button>
+        </div>
+      </div>
+      <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="student form">
           <div class="student__list">
-            <div v-if="GET_AXIOS_CALLBACK_GETTER.billList" class="m-t-3">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.billList"
-                :key="i"
-                class="item"
-                style="width: 33%"
+            <div class="m-t-3">
+              <table
+                v-if="GET_AXIOS_CALLBACK_GETTER.billList"
+                class="jelly-table"
               >
-                <div class="">
-                  <span style="font-size: 12px">
-                    [납부완료] {{ v.cate_name }}
-                  </span>
-                  <p class="title">
-                    {{ v.subject }}
-                  </p>
-                </div>
-                <div>{{ v.code }}</div>
-                <div
-                  class="m-t-3 text-right"
-                  style="font-size: 20px; font-weight: bold"
+                <tr>
+                  <th>상태</th>
+                  <th>구분</th>
+                  <th>제목</th>
+                  <th>고지서 번호</th>
+                  <th>금액</th>
+                </tr>
+                <tr
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.billList"
+                  :key="i"
                 >
-                  {{ v.pay | comma }} {{ LOGIN_TEACHER.reg_pay_unit }}
-                </div>
-              </div>
+                  <td>납부완료</td>
+                  <td>{{ v.cate_name }}</td>
+                  <td>{{ v.subject }}</td>
+                  <td>{{ v.code }}</td>
+                  <td class="text-right">
+                    {{ v.pay | comma }} {{ LOGIN_TEACHER.reg_pay_unit }}
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>

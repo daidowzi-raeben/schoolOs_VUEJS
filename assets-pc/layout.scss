@@ -1,12 +1,12 @@
 body {
-  background-color: #000 !important;
-  color: rgba(94, 86, 105, 0.68);
+  // background-color: #000 !important;
+  // color: rgba(94, 86, 105, 0.68);
 }
-* {
-  transition-property: all;
-  transition-duration: 0.7s;
-  transition-delay: 0.5s;
-}
+// * {
+//   transition-property: all;
+//   transition-duration: 0.7s;
+//   transition-delay: 0.5s;
+// }
 .notAnime {
   transition-property: unset;
   transition-duration: unset;
@@ -131,32 +131,7 @@ $green-lighter: #7cd392;
     opacity: 0.5;
     z-index: -1;
   }
-  .adminGnb {
-    width: 40%;
-    height: 100%;
-    position: fixed;
-    right: -50%;
-    top: 0;
-    background: #fff;
-    z-index: 9;
 
-    &.is_active {
-      right: 0;
-    }
-    .gnb {
-      margin-left: 50px;
-      position: absolute;
-      top: 50%;
-      transform: translate(0, -50%);
-      ul {
-        li {
-          font-size: 20px;
-          margin: 20px 0;
-          color: #000;
-        }
-      }
-    }
-  }
   #jellyAdminheader {
     padding-top: 20vh;
     h1 {
@@ -237,7 +212,7 @@ $green-lighter: #7cd392;
   }
   .input-focus {
     font-size: 20px;
-    color: #fff;
+    // color: #fff;
   }
   .spanBox {
     backdrop-filter: blur(3px);
@@ -248,8 +223,8 @@ $green-lighter: #7cd392;
     cursor: pointer;
     padding: 10px 20px;
     &.is_active {
-      color: #000 !important;
-      background-color: #fff;
+      color: #fff !important;
+      background-color: #6830bd;
     }
   }
   .student {
@@ -257,7 +232,7 @@ $green-lighter: #7cd392;
     input,
     select,
     textarea {
-      color: #fff;
+      // color: #fff;
     }
     &__list {
       > div.flex {
@@ -265,14 +240,15 @@ $green-lighter: #7cd392;
         // overflow-x: auto;
       }
       h3 {
-        color: #fff;
+        // color: #fff;
         font-size: 20px;
       }
       .item {
         position: relative;
         backdrop-filter: blur(3px);
         float: left;
-        background-color: rgba(255, 255, 255, 0.1);
+        // background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(#f7f7f7, 0.5);
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 10px;
         margin-right: 10px;
@@ -285,7 +261,7 @@ $green-lighter: #7cd392;
         transition: transform 250ms;
         width: 250px;
         // color: #fff;
-        color: rgba(255, 255, 255, 0.8);
+        // color: rgba(255, 255, 255, 0.8);
         font-size: 14px;
         padding: 20px 20px 13px 20px;
         p.title {
@@ -308,44 +284,45 @@ $green-lighter: #7cd392;
     }
   }
   .jelly-admin {
-    > .gnb {
-      width: 260px;
-      min-height: 100vh;
-      nav {
-        width: 240px;
-        position: relative;
-        > ul {
-          li {
-            margin-top: 10px;
-            font-size: 14px;
-            a {
-              color: rgba(94, 86, 105, 0.68);
-              position: absolute;
-              width: 100%;
-              height: 44px;
-              line-height: 42px;
-              border-radius: 0 40px 40px 0;
-              padding-left: 15px;
-              font-size: 16px;
-              &.is_active {
-                box-shadow: 0 5px 10px -4px rgb(94 86 105 / 42%);
-                transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-                background: linear-gradient(98deg, #c48eff, #9155fd 94%);
-                color: #fff;
+    .gnb {
+      z-index: 2;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      width: 250px;
+      color: #fffffc;
+      background: #2a3f54;
+      padding: 20px;
+      overflow-y: auto;
+      > h1 {
+        border-bottom: 1px solid #455b72;
+        height: 45px;
+        font-size: 20px;
+      }
+      ul {
+        li {
+          padding: 10px;
+          border-radius: 5px;
+          font-size: 16px;
+
+          ul {
+            li {
+              padding-left: 35px;
+              font-size: 14px;
+              padding-top: 8px;
+              padding-bottom: 8px;
+              margin-top: 5px;
+              cursor: pointer;
+              &:hover {
+                background-color: #546985;
               }
-            }
-            height: 44px;
-            line-height: 44px;
-            border-radius: 4px;
-            &.is_active {
-              background-color: $color;
-              font-weight: bold;
             }
           }
         }
       }
     }
     .content {
+      padding-left: 250px;
       min-height: 100vh;
       &__body {
         max-width: 1000px;

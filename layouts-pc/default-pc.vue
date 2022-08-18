@@ -3,14 +3,87 @@
     <div v-if="LOADING" id="LOADING">
       <img src="~/static/img/loading.gif" />
     </div>
-    <div id="jellyAdminheader">
-      <div
-        id="jellyAdminBG"
-        class="jellyAdminBG"
-        :style="`background-image:url(${adminBackgroundImage}); `"
-      ></div>
-      <div class="requestAdmin" @click="onClickRequest">피드백</div>
-      <nav>
+    <div class="jelly-admin">
+      <div class="">
+        <div class="gnb" style="">
+          <!-- 36465D -->
+          <h1 @click="onClickLinkTo($event, '')">SCHOOL OS</h1>
+          <ul>
+            <li @click="onClickLinkTo($event, '')">
+              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 처음으로
+            </li>
+            <li>
+              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 환경설정
+              <div>
+                <ul>
+                  <li @click="onClickLinkTo($event, 'job-list')">직업설정</li>
+                  <li @click="onClickLinkTo($event, 'rule-detail')">
+                    규칙설정
+                  </li>
+                  <li @click="onClickLinkTo($event, 'qr-code')">가입코드</li>
+                  <li @click="onClickLinkTo($event, 'student-apply')">
+                    회원승인
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 학급관리
+              <div>
+                <ul>
+                  <li @click="onClickLinkTo($event, 'pay-loan')">대출관리</li>
+                  <li @click="onClickLinkTo($event, 'bill-list')">SOC 납부</li>
+                  <li @click="onClickLinkTo($event, 'teacher-setting')">
+                    세율설정
+                  </li>
+                  <li @click="onClickLinkTo($event, 'bill-student')">
+                    고지서관리
+                  </li>
+                  <li @click="onClickLinkTo($event, 'pay-list')">세금총액</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 학생관리
+              <div>
+                <ul>
+                  <li @click="onClickLinkTo($event, 'student-list')">
+                    학생관리
+                  </li>
+                  <li @click="onClickLinkTo($event, 'sue-list')">신고관리</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 마켓관리
+              <div>
+                <ul>
+                  <li @click="onClickLinkTo($event, 'shop-list')">상점관리</li>
+                  <li @click="onClickLinkTo($event, 'parttime-list')">
+                    알바관리
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li @click="onClickLinkTo($event, 'todo-list')">
+              <b-icon icon="cash-stack" class="m-r-2"></b-icon>
+              {{ LOGIN_CONFIG.todo_name }} 관리
+            </li>
+            <li @click="onClickLinkTo($event, 'notice-list')">
+              <b-icon icon="cash-stack" class="m-r-2"></b-icon> 알림장 관리
+            </li>
+
+            <!-- <li @click="onClickLinkTo($event,'member/sign-out')">로그아웃</li> -->
+          </ul>
+        </div>
+      </div>
+      <div class="content">
+        <div class="content__body"><Nuxt /></div>
+      </div>
+    </div>
+    <!-- <div id="jellyAdminheader">
+      <div class="requestAdmin" @click="onClickRequest">피드백</div> -->
+    <!-- <nav>
         <div class="menu" @click="menuActiveNav">
           <span id="menu-top" class="menu-global menu-top"></span>
           <span id="menu-middle" class="menu-global menu-middle"></span>
@@ -19,28 +92,28 @@
         <div id="adminGnb" class="adminGnb">
           <div class="gnb">
             <ul>
-              <li @click="onClickLinkTo('')">처음으로</li>
-              <li @click="onClickLinkTo('qr-code')">가입코드</li>
-              <li @click="onClickLinkTo('pay-loan')">대출받기</li>
-              <li @click="onClickLinkTo('job-list')">직업관리</li>
-              <li @click="onClickLinkTo('student-list')">학생관리</li>
-              <li @click="onClickLinkTo('parttime-list')">알바관리</li>
-              <li @click="onClickLinkTo('shop-list')">상점관리</li>
-              <li @click="onClickLinkTo('bill-list')">세금관리</li>
-              <li @click="onClickLinkTo('sue-list')">신고관리</li>
-              <li @click="onClickLinkTo('bill-student')">고지서관리</li>
-              <li @click="onClickLinkTo('todo-list')">
+              <li @click="onClickLinkTo($event,'')">처음으로</li>
+              <li @click="onClickLinkTo($event,'qr-code')">가입코드</li>
+              <li @click="onClickLinkTo($event,'pay-loan')">대출받기</li>
+              <li @click="onClickLinkTo($event,'job-list')">직업관리</li>
+              <li @click="onClickLinkTo($event,'student-list')">학생관리</li>
+              <li @click="onClickLinkTo($event,'parttime-list')">알바관리</li>
+              <li @click="onClickLinkTo($event,'shop-list')">상점관리</li>
+              <li @click="onClickLinkTo($event,'bill-list')">세금관리</li>
+              <li @click="onClickLinkTo($event,'sue-list')">신고관리</li>
+              <li @click="onClickLinkTo($event,'bill-student')">고지서관리</li>
+              <li @click="onClickLinkTo($event,'todo-list')">
                 {{ LOGIN_CONFIG.todo_name }} 관리
               </li>
-              <li @click="onClickLinkTo('notice-list')">알림장 관리</li>
-              <li @click="onClickLinkTo('rule-detail')">규칙관리</li>
-              <li @click="onClickLinkTo('teacher-setting')">환경설정</li>
-              <li @click="onClickLinkTo('member/sign-out')">로그아웃</li>
+              <li @click="onClickLinkTo($event,'notice-list')">알림장 관리</li>
+              <li @click="onClickLinkTo($event,'rule-detail')">규칙관리</li>
+              <li @click="onClickLinkTo($event,'teacher-setting')">환경설정</li>
+              <li @click="onClickLinkTo($event,'member/sign-out')">로그아웃</li>
             </ul>
           </div>
         </div>
-      </nav>
-      <!-- <div class="jelly-admin flex">
+      </nav> -->
+    <!-- <div class="jelly-admin flex">
       <div class="gnb">
         <h1>LOGO</h1>
         <nav class="m-t-5">
@@ -58,11 +131,11 @@
         </nav>
       </div>
       <div class="flex-full m-l-2 content"> -->
-      <div class="content__body"><Nuxt /></div>
-      <!-- </div>
+
+    <!-- </div>
     </div> -->
-      <!-- <div id="liveChat">asd</div> -->
-    </div>
+    <!-- <div id="liveChat">asd</div> -->
+    <!-- </div> -->
     <b-modal id="requestModal" size="lg" hide-footer hide-header>
       <div class="m-t-5">
         <p>제목</p>
@@ -112,13 +185,13 @@ export default {
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   watch: {
-    adminMainBG: {
-      handler(value) {
-        console.log('================>', value)
-        this.adminBackgroundImage = value
-      },
-      immediate: true,
-    },
+    // adminMainBG: {
+    //   handler(value) {
+    //     console.log('================>', value)
+    //     this.adminBackgroundImage = value
+    //   },
+    //   immediate: true,
+    // },
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -139,7 +212,7 @@ export default {
 
     // pixabay api load
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('TEACHER'))
-    this.GET_API_BG_PIXABAY('가을')
+    // this.GET_API_BG_PIXABAY('가을')
     // setTimeout(() => {
     //   console.log('this.adminMainBG', this.adminMainBG)
     // }, 1000)
@@ -148,16 +221,16 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'GET_API_BG_PIXABAY']),
     ...mapMutations(['ADMIN_MAIN_BG_MUTATIONS']),
-    menuActiveNav() {
-      document.getElementById('menu-top').classList.toggle('menu-top-click')
-      document
-        .getElementById('menu-middle')
-        .classList.toggle('menu-middle-click')
-      document
-        .getElementById('menu-bottom')
-        .classList.toggle('menu-bottom-click')
-      document.getElementById('adminGnb').classList.toggle('is_active')
-    },
+    // menuActiveNav() {
+    //   document.getElementById('menu-top').classList.toggle('menu-top-click')
+    //   document
+    //     .getElementById('menu-middle')
+    //     .classList.toggle('menu-middle-click')
+    //   document
+    //     .getElementById('menu-bottom')
+    //     .classList.toggle('menu-bottom-click')
+    //   document.getElementById('adminGnb').classList.toggle('is_active')
+    // },
     onSubmitRequest() {
       this.request.url = this.$router.currentRoute.fullPath
       const frm = new FormData()
@@ -182,9 +255,9 @@ export default {
           console.log('AXIOS FALSE', res)
         })
     },
-    onClickLinkTo(e) {
+    onClickLinkTo(v, e) {
       this.$router.push(`/${e}`)
-      this.menuActiveNav()
+      // this.menuActiveNav()
     },
     onClickRequest(e) {
       // this.noticeIdx = e
@@ -207,8 +280,8 @@ export default {
 
 <style lang="scss">
 body {
-  background-color: #000 !important;
-  color: rgba(94, 86, 105, 0.68);
+  // background-color: #000 !important;
+  // color: rgba(94, 86, 105, 0.68);
 }
 @import '~/assets-pc/var.scss';
 @import '~/assets-pc/style.scss';

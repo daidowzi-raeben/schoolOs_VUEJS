@@ -12,42 +12,45 @@
     </div>
   </div> -->
   <div class="">
-    <div id="jellyAdminheader" style="padding-top: 0vh">
-      <!-- <span>{{ today }}</span> -->
-      <h1 v-if="LOGIN_TEACHER" class="">
-        직업관리
-        <span
-          class="spanBox m-l-2"
-          style="color: #fff; font-size: 12px"
-          @click="onClickJobInsert"
-        >
-          +
-        </span>
-        <span
+    <div class="flex">
+      <h4 v-if="LOGIN_TEACHER">직업관리</h4>
+      <div class="flex-right">
+        <button class="jelly-btn jelly-btn--default" @click="onClickJobInsert">
+          직업 생성
+        </button>
+        <button
           v-if="GET_AXIOS_CALLBACK_GETTER.length === 0"
-          class="spanBox m-l-2"
-          style="color: #fff; font-size: 12px"
+          class="jelly-btn jelly-btn--default m-l-1"
           @click="onClickAutoInsert"
         >
           직업 자동생성
-        </span>
-        <!-- {{ LOGIN_TEACHER.reg_country }} 규칙 -->
-        <!-- <span v-b-tooltip.hover title="현재 재산" class="spanBox">
-            ㅁㄴㅇ
-          </span> -->
-      </h1>
+        </button>
+      </div>
+    </div>
+    <div id="jellyAdminheader" style="padding-top: 0vh">
+      <!-- <span>{{ today }}</span> -->
+
       <div class="student form">
         <div class="student__list">
           <div class="m-t-3">
-            <div
-              v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
+            <table
+              v-if="GET_AXIOS_CALLBACK_GETTER"
               :key="i"
-              class="item"
-              @click="onClickJobDetail(v.idx)"
+              class="jelly-table"
             >
-              <p class="title">{{ v.job_name }}</p>
-              주급 : {{ v.pay | comma }}
-            </div>
+              <tr>
+                <th>직업명</th>
+                <th>주급</th>
+              </tr>
+              <tr
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
+                :key="i"
+                @click="onClickJobDetail(v.idx)"
+              >
+                <td>{{ v.job_name }}</td>
+                <td class="text-right">{{ v.pay | comma }}</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

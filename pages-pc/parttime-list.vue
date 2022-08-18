@@ -1,39 +1,43 @@
 <template>
   <div>
     <div class="">
-      <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER">
-          알바고 관리
-
-          <span
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">알바고 관리</h4>
+        <div class="flex-right">
+          <button
             v-b-modal.itemInsertSubmit
-            class="spanBox m-l-2"
-            style="color: #fff; font-size: 12px"
+            class="jelly-btn jelly-btn--default"
           >
-            +
-          </span>
-        </h1>
-        <div class="m-t-15 m-l-4"></div>
+            알바고 추가
+          </button>
+        </div>
+      </div>
+      <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="student form">
           <div class="student__list">
-            <div v-if="GET_AXIOS_CALLBACK_GETTER.albaList" class="m-t-3">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.albaList"
-                :key="`albaList${i}`"
-                class="item"
-                style="width: 32%"
-                @click="onClickItemDetail(v.idx)"
+            <div class="m-t-3">
+              <table
+                v-if="GET_AXIOS_CALLBACK_GETTER.albaList"
+                class="jelly-table"
               >
-                <p class="title">
-                  {{ v.subject }}
-                </p>
-                {{ v.start_day }} ~ {{ v.end_day }}
-                <p class="m-t-2">
-                  알바비 : {{ v.pay }} / 등록자 :
-                  {{ v.reg_name ? v.reg_name : '선생님' }}
-                </p>
-              </div>
+                <tr>
+                  <th>작성자</th>
+                  <th>알바명</th>
+                  <th>기간</th>
+                  <th>알바비</th>
+                </tr>
+                <tr
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.albaList"
+                  :key="`albaList${i}`"
+                  style="cursor: pointer"
+                  @click="onClickItemDetail(v.idx)"
+                >
+                  <td>{{ v.reg_name ? v.reg_name : '선생님' }}</td>
+                  <td>{{ v.subject }}</td>
+                  <td>{{ v.start_day }} ~ {{ v.end_day }}</td>
+                  <td class="text-right">{{ v.pay }}</td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>

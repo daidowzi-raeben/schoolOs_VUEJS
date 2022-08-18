@@ -5,15 +5,16 @@
       <button @click="onSubmit">빌리기</button>
     </div> -->
     <div class="">
-      <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER.total_pay">
-          대출 받기
-          <span v-b-tooltip.hover title="현재 재산" class="spanBox">
+      <div class="">
+        <h4 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER.total_pay">
+          대출받기
+          <em v-b-tooltip.hover title="현재 재산" class="m-l-2 font-14">
             {{ GET_AXIOS_CALLBACK_GETTER.total_pay.total_pay | comma }}
             {{ LOGIN_TEACHER.reg_pay_unit }}
-          </span>
-        </h1>
+          </em>
+        </h4>
+      </div>
+      <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="student form">
           <div class="student__list">
             <div class="flex m-t-3">
@@ -55,24 +56,26 @@
             </div>
           </div>
         </div>
-        <div v-if="GET_AXIOS_CALLBACK_GETTER.loanList" class="student">
+        <div class="student">
           <div class="student__list">
             <h3>대출 현황</h3>
             <div class="m-t-3">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.loanList"
-                :key="i"
-                class="item"
+              <table
+                v-if="GET_AXIOS_CALLBACK_GETTER.loanList"
+                class="jelly-table"
               >
-                <p class="title">
-                  {{ v.pay | comma }}
-                </p>
-                <div class="flex">
-                  <div class="list">
-                    <p>{{ v.datetime | moment('YYYY-MM-DD') }}</p>
-                  </div>
-                </div>
-              </div>
+                <tr>
+                  <th>일시</th>
+                  <th>대출액</th>
+                </tr>
+                <tr
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.loanList"
+                  :key="i"
+                >
+                  <td>{{ v.datetime | moment('YYYY-MM-DD') }}</td>
+                  <td class="text-right">{{ v.pay | comma }}</td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>

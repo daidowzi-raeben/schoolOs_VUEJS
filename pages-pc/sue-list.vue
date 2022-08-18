@@ -1,84 +1,68 @@
 <template>
   <div>
     <div class="">
+      <h4 v-if="LOGIN_TEACHER">신고관리</h4>
+
       <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER">신고 관리</h1>
-        <div class="m-t-15 m-l-4"></div>
-        <div v-if="GET_AXIOS_CALLBACK_GETTER.sue" class="student form">
-          <div class="student__list">
-            <h3>확인중인 신고</h3>
-            <div class="m-t-3 clb">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.sue"
-                :key="i"
-                class="item"
-                style="width: 32%"
-                @click="onClickItemDetail(v.idx)"
-              >
-                <div class="">
-                  <p class="title">{{ v.new_subject }}</p>
-                  <p>
-                    신고자 : {{ v.sms_name }} / 신고대상 : {{ v.sms_name_to }}
-                  </p>
-                  <span class="font-12" style="color: #888"
-                    >사건 발생일 : {{ v.sue_date }}</span
-                  >
-                </div>
-                <!-- <div class="flex m-t-3">
-                  <button
-                    class="flex-full jelly-btn jelly-btn--default m-r-1"
-                    @click="onClickItemDetailConfirm(v.idx)"
-                  >
-                    검사
-                  </button>
-                  <button
-                    class="flex-full jelly-btn jelly-btn--default m-l-1"
-                    @click="onClickItemDetail(v.idx)"
-                  >
-                    수정
-                  </button>
-                </div> -->
-              </div>
-            </div>
-          </div>
+        <div class="m-t-5">
+          <span
+            class="spanBox m-r-2"
+            :class="queryCate ? '' : 'is_active'"
+            @click="onClickCategory('')"
+            >신고접수</span
+          >
+          <span
+            class="spanBox m-r-2"
+            :class="queryCate === '1' ? 'is_active' : ''"
+            @click="onClickCategory('1')"
+            >고지서 발송</span
+          >
+          <span
+            class="spanBox m-r-2"
+            :class="queryCate === '2' ? 'is_active' : ''"
+            @click="onClickCategory('2')"
+            >벌칙 처리</span
+          >
+          <span
+            class="spanBox m-r-2"
+            :class="queryCate === '3' ? 'is_active' : ''"
+            @click="onClickCategory('3')"
+            >취소</span
+          >
         </div>
-        <div class="m-t-15 m-l-4"></div>
-        <div v-if="GET_AXIOS_CALLBACK_GETTER.sueComplete" class="student form">
+        <div class="student form">
           <div class="student__list">
-            <h3>확인 완료된 신고</h3>
-            <div class="m-t-3 clb">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.sueComplete"
-                :key="i"
-                class="item"
-                style="width: 32%"
-                @click="onClickItemDetail(v.idx)"
-              >
-                <div class="">
-                  <p class="title">{{ v.new_subject }}</p>
-                  <p>
-                    신고자 : {{ v.sms_name }} / 신고대상 : {{ v.sms_name_to }}
-                  </p>
-                  <span class="font-12" style="color: #888"
-                    >사건 발생일 : {{ v.sue_date }}</span
-                  >
-                </div>
-                <!-- <div class="flex m-t-3">
-                  <button
-                    class="flex-full jelly-btn jelly-btn--default m-r-1"
-                    @click="onClickItemDetailConfirm(v.idx)"
-                  >
-                    검사
-                  </button>
-                  <button
-                    class="flex-full jelly-btn jelly-btn--default m-l-1"
-                    @click="onClickItemDetail(v.idx)"
-                  >
-                    수정
-                  </button>
-                </div> -->
-              </div>
+            <div class="m-t-3">
+              <table v-if="GET_AXIOS_CALLBACK_GETTER.sue" class="jelly-table">
+                <col width="80" />
+                <col width="100" />
+                <col width="*" />
+                <col width="110" />
+                <col width="140" />
+                <tr>
+                  <th>신고자</th>
+                  <th>신고대상</th>
+                  <th>제목</th>
+                  <th>사건 발생일</th>
+                  <th>관리 {{ queryCate }}</th>
+                </tr>
+                <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.sue" :key="i">
+                  <td>{{ v.sms_name }}</td>
+                  <td>{{ v.sms_name_to }}</td>
+                  <td>{{ v.new_subject }}</td>
+                  <td class="text-center">
+                    {{ v.sue_date | moment('YY.MM.DD') }}
+                  </td>
+                  <td>
+                    <button
+                      class="jelly-btn jelly-btn--default"
+                      @click="onClickItemDetail(v.idx)"
+                    >
+                      자세히 보기
+                    </button>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
@@ -129,8 +113,11 @@
         >
           닫기
         </button>
-        <button class="jelly-btn jelly-btn--default" @click="onSubmit">
-          완료하기
+        <button class="jelly-btn jelly-btn--default" @click="onSubmit(4)">
+          벌금처리
+        </button>
+        <button class="jelly-btn jelly-btn--default" @click="onSubmit(3)">
+          취소하기
         </button>
         <button
           v-if="
@@ -201,16 +188,15 @@ export default {
       handler(value) {
         console.log(value)
         this.queryCate = value
-        // if (this.queryCate) {
-        //   this.params = this.LOGIN_TEACHER
-        //   //   this.params.queryCate = value
-        //   this.params.type = 'shopList'
-        //   this.GET_AXIOS(this.params)
-        // } else {
-        //   this.params = this.LOGIN_TEACHER
-        //   this.params.type = 'shopList'
-        //   this.GET_AXIOS(this.params)
-        // }
+        this.params.type = 'sueList'
+        this.params.queryCate = value
+        if (this.queryCate) {
+          this.params = this.LOGIN_TEACHER
+          this.GET_AXIOS(this.params)
+        } else {
+          this.params = this.LOGIN_TEACHER
+          this.GET_AXIOS(this.params)
+        }
       },
       immediate: true,
     },
@@ -231,8 +217,9 @@ export default {
     ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
-    onSubmit() {
+    onSubmit(e) {
       this.paramsForm.idx = this.idx
+      this.paramsForm.status = e
       this.paramsForm.type = 'sueList'
       this.POST_AXIOS(this.paramsForm)
       console.log('this.paramsForm', this.paramsForm)
@@ -266,9 +253,10 @@ export default {
     },
     onClickCategory(e) {
       if (e) {
-        this.$router.push(`/shop-list?cate=${e}`)
+        this.$router.push(`/sue-list?cate=${e}`)
       } else {
-        this.$router.push(`/shop-list`)
+        this.queryCate = null
+        this.$router.push(`/sue-list`)
       }
     },
     onClickItemDetail(e) {

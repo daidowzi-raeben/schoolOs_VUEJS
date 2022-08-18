@@ -1,25 +1,29 @@
 <template>
   <div>
     <div class="">
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">상점 관리</h4>
+        <div class="flex-right">
+          <button
+            class="jelly-btn jelly-btn--default"
+            @click="onClickItemInsert"
+          >
+            상품 추가
+          </button>
+          <button
+            v-b-modal.cateInsert
+            class="jelly-btn jelly-btn--default m-l-1"
+          >
+            카테고리 추가
+          </button>
+        </div>
+      </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER">상점 관리</h1>
-        <div class="m-t-15 m-l-4">
-          <h3 class="flex" style="color: #fff">
-            카테고리 관리
-            <span
-              v-b-modal.cateInsert
-              class="spanBox m-l-2"
-              style="color: #fff; font-size: 12px"
-            >
-              +
-            </span>
-          </h3>
-          <div class="m-t-10">
+        <div>
+          <div class="m-t-5">
             <span
               class="spanBox m-r-2"
               :class="queryCate ? '' : 'is_active'"
-              style="color: #fff"
               @click="onClickCategory('')"
               >전체</span
             >
@@ -28,7 +32,6 @@
                 v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.shopCate"
                 :key="`cate${i}`"
                 class="spanBox m-r-2"
-                style="color: #fff"
                 :class="queryCate == v.idx ? 'is_active' : ''"
                 @click="onClickCategory(v.idx)"
               >
@@ -37,36 +40,32 @@
             </span>
           </div>
         </div>
-        <div class="m-t-15 m-l-4">
-          <h3 class="flex" style="color: #fff">
-            상품 관리
-            <span
-              class="spanBox m-l-2"
-              style="color: #fff; font-size: 12px"
-              @click="onClickItemInsert"
-            >
-              +
-            </span>
-          </h3>
-        </div>
         <div class="student form">
           <div class="student__list">
-            <div v-if="GET_AXIOS_CALLBACK_GETTER.shopItem" class="m-t-3">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.shopItem"
-                :key="`shopItem${i}`"
-                class="item"
-                @click="onClickItemDetail(v.idx)"
-              >
-                <!-- {{ process.env.VUE_APP_API }} -->
-                <img
-                  :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
-                  width="200"
-                  height="200"
-                />
-                {{ v.item_name }}
-                <p>{{ v.item_price | comma }}</p>
-              </div>
+            <div class="m-t-3">
+              <table class="jelly-table">
+                <tr>
+                  <th>상품이미지</th>
+                  <th>상품명</th>
+                  <th>가격</th>
+                </tr>
+                <tr
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.shopItem"
+                  :key="`shopItem${i}`"
+                  style="curosr: pointer"
+                  @click="onClickItemDetail(v.idx)"
+                >
+                  <td>
+                    <img
+                      :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
+                      width="100"
+                      height="100"
+                    />
+                  </td>
+                  <td>{{ v.item_name }}</td>
+                  <td class="text-right">{{ v.item_price | comma }}</td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>

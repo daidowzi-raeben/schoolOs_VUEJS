@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="">
-      <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER" class="">
-          학생관리
-          <span
-            class="spanBox m-l-2"
-            style="color: #fff; font-size: 12px"
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">학생관리</h4>
+        <div class="flex-right">
+          <button v-b-modal.studentInsert class="jelly-btn jelly-btn--default">
+            학생 추가
+          </button>
+          <button
+            class="jelly-btn jelly-btn--default m-l-1"
             @click="onClickWeeklyPay"
           >
             주급지급하기 (최근 지급일 :
@@ -17,26 +18,34 @@
             >
               {{ GET_AXIOS_CALLBACK_GETTER.lastWeek.lastWeek }} </span
             >)
-          </span>
-          <span
-            v-b-modal.studentInsert
-            class="spanBox m-l-2"
-            style="color: #fff; font-size: 12px"
-          >
-            +
-          </span>
-        </h1>
+          </button>
+        </div>
+      </div>
+      <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="student form">
           <div class="student__list">
-            <div v-if="GET_AXIOS_CALLBACK_GETTER.studentList" class="m-t-3">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
-                :key="i"
-                class="item"
+            <div class="m-t-3">
+              <table
+                v-if="GET_AXIOS_CALLBACK_GETTER.studentList"
+                class="jelly-table"
               >
-                <div class="flex">
-                  <p class="title">
-                    {{ v.reg_name }} [LV.{{
+                <tr>
+                  <th>이름</th>
+                  <th>레벨</th>
+                  <th>지능</th>
+                  <th>노력</th>
+                  <th>건강</th>
+                  <th>예절</th>
+                  <th>자산</th>
+                  <th>관리</th>
+                </tr>
+                <tr
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
+                  :key="i"
+                >
+                  <td>{{ v.reg_name }}</td>
+                  <td>
+                    LV.{{
                       Math.floor(
                         (Number(v.effort) +
                           Number(v.health) +
@@ -44,39 +53,41 @@
                           Number(v.intellect)) /
                           4
                       )
-                    }}]
-                  </p>
-                  <div class="plant-area">
-                    <div class="plant flex-right">
-                      <div class="plant__leaves"></div>
+                    }}
+                  </td>
+                  <td class="text-right">{{ v.intellect }}</td>
+                  <td class="text-right">{{ v.effort }}</td>
+                  <td class="text-right">{{ v.health }}</td>
+                  <td class="text-right">{{ v.etiquette }}</td>
+                  <td class="text-right">
+                    {{
+                      (Number(v.PtotalAccount) - Number(v.MtotalAccount))
+                        | comma
+                    }}
+                    {{ LOGIN_TEACHER.reg_pay_unit }}
+                  </td>
+                  <td>
+                    <div class="flex">
+                      <button
+                        class="flex-full jelly-btn jelly-btn--default m-r-1"
+                        @click="onClickAttendanceDetail(v.sms_idx)"
+                      >
+                        출결관리
+                      </button>
+                      <button
+                        class="flex-full jelly-btn jelly-btn--default m-l-1"
+                        @click="onClickStudentDetail(v.sms_idx)"
+                      >
+                        정보확인
+                      </button>
                     </div>
-                  </div>
+                  </td>
+                </tr>
+              </table>
+              <div v-else class="m-t-3">
+                <div class="item text-center wd-full" style="width: 100%">
+                  등록된 학생이 없습니다.
                 </div>
-                <div>
-                  {{
-                    (Number(v.PtotalAccount) - Number(v.MtotalAccount)) | comma
-                  }}
-                  {{ LOGIN_TEACHER.reg_pay_unit }}
-                </div>
-                <div class="flex m-t-3">
-                  <button
-                    class="flex-full jelly-btn jelly-btn--default m-r-1"
-                    @click="onClickAttendanceDetail(v.sms_idx)"
-                  >
-                    출결관리
-                  </button>
-                  <button
-                    class="flex-full jelly-btn jelly-btn--default m-l-1"
-                    @click="onClickStudentDetail(v.sms_idx)"
-                  >
-                    정보확인
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div v-else class="m-t-3">
-              <div class="item text-center wd-full" style="width: 100%">
-                등록된 학생이 없습니다.
               </div>
             </div>
           </div>

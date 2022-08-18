@@ -1,53 +1,63 @@
 <template>
   <div>
     <div class="">
-      <div id="jellyAdminheader" style="padding-top: 0vh">
-        <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER" class="">
-          고지서 관리
-          <span
-            class="spanBox m-l-2"
-            style="color: #fff; font-size: 12px"
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER">고지서 관리</h4>
+        <div class="flex-right">
+          <button
+            class="jelly-btn jelly-btn--default"
             @click="onClickBillInsert"
           >
-            +
-          </span>
-        </h1>
+            고지서 추가
+          </button>
+        </div>
+      </div>
+      <div id="jellyAdminheader" style="padding-top: 0vh">
+        <div>
+          <div class="m-t-5">
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate ? '' : 'is_active'"
+              @click="onClickCategory('')"
+              >전체</span
+            >
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate === '1' ? 'is_active' : ''"
+              @click="onClickCategory('1')"
+              >미납</span
+            >
+          </div>
+        </div>
         <div class="student form">
           <div class="student__list">
             <div v-if="GET_AXIOS_CALLBACK_GETTER.billList" class="m-t-3">
-              <div
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.billList"
-                :key="i"
-                class="item"
-                style="width: 33%"
-              >
-                <div class="">
-                  <span style="font-size: 12px">
+              <table class="jelly-table">
+                <tr>
+                  <th>상태</th>
+                  <th>이름</th>
+                  <th>고지서 번호</th>
+                  <th>금액</th>
+                  <th>제목</th>
+                  <th>내용</th>
+                </tr>
+                <tr
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.billList"
+                  :key="i"
+                >
+                  <td>
                     <span v-if="v.status === '0'">[납부전]</span>
                     <span v-if="v.status === '1'" class="jelly-color--type4"
                       >[납부완료]</span
                     >
-                    {{ v.cate_name }}
-                  </span>
-                  <p class="title">
-                    {{ v.reg_name }}
-                  </p>
-                  <p class="title">
-                    {{ v.subject }}
-                  </p>
-                  <div style="font-size: 12px" class="m-t-2 m-b-2">
-                    {{ v.content }}
-                  </div>
-                </div>
-                <div>{{ v.code }}</div>
-                <div
-                  class="m-t-3 text-right"
-                  style="font-size: 20px; font-weight: bold"
-                >
-                  {{ v.pay | comma }} {{ LOGIN_TEACHER.reg_pay_unit }}
-                </div>
-              </div>
+                  </td>
+                  <td>{{ v.reg_name }}</td>
+                  <td>{{ v.code }}</td>
+                  <td>{{ v.pay | comma }} {{ LOGIN_TEACHER.reg_pay_unit }}</td>
+                  <td>{{ v.subject }}</td>
+                  <td style="background: #ffffcc">{{ v.content }}</td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
@@ -128,12 +138,31 @@ export default {
       billPay: 0,
       billSubject: '',
       billContent: '',
+      queryCate: null,
     }
   },
 
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+  },
+  watch: {
+    '$route.query.cate': {
+      handler(value) {
+        console.log(value)
+        this.queryCate = value
+        this.params.type = 'billListStudent'
+        this.params.queryCate = value
+        if (this.queryCate) {
+          this.params = this.LOGIN_TEACHER
+          this.GET_AXIOS(this.params)
+        } else {
+          this.params = this.LOGIN_TEACHER
+          this.GET_AXIOS(this.params)
+        }
+      },
+      immediate: true,
+    },
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -173,6 +202,14 @@ export default {
         this.GET_AXIOS(this.params)
         this.$bvModal.hide('billInsert')
       }, 1500)
+    },
+    onClickCategory(e) {
+      if (e) {
+        this.$router.push(`/bill-student?cate=${e}`)
+      } else {
+        this.queryCate = null
+        this.$router.push(`/bill-student`)
+      }
     },
   },
 }
