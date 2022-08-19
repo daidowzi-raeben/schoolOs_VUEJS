@@ -187,7 +187,8 @@ export default {
       handler(value) {
         console.log(value)
         this.params.type = 'sueList'
-        if (this.queryCate) {
+        if (value) {
+          console.log('=====================')
           this.params.queryCate = value
           this.queryCate = value
           this.params = this.LOGIN_TEACHER
@@ -195,7 +196,7 @@ export default {
         } else {
           this.queryCate = value
           this.params.queryCate = value
-
+          console.log('++++++++++++++++++++')
           this.params = this.LOGIN_TEACHER
           this.GET_AXIOS(this.params)
         }
@@ -213,6 +214,7 @@ export default {
     this.params.type = 'sueList'
     this.params.queryCate = null
     this.GET_AXIOS(this.params)
+    this.params.type = ''
   },
   methods: {
     // init

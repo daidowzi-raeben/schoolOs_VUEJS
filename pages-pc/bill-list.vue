@@ -151,8 +151,8 @@ export default {
     '$route.query.cate': {
       handler(value) {
         console.log(value)
-        // this.queryCate = value
         if (value) {
+          this.queryCate = value
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
           this.params.type = 'billList'
@@ -178,7 +178,7 @@ export default {
       this.queryCate,
       this.params.queryCate
     )
-    this.queryCate = null
+    // this.queryCate = null
 
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER

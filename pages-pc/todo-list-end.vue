@@ -510,8 +510,8 @@ export default {
     '$route.query.cate': {
       handler(value) {
         console.log(value)
-        this.queryCate = value
-        if (this.queryCate) {
+        if (value) {
+          this.queryCate = value
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
           this.params.type = 'questList'

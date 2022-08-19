@@ -288,8 +288,8 @@ export default {
     '$route.query.cate': {
       handler(value) {
         console.log(value)
-        this.queryCate = value
-        if (this.queryCate) {
+        if (value) {
+          this.queryCate = value
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
           this.params.type = 'shopList'
@@ -314,6 +314,7 @@ export default {
     this.params.type = 'shopList'
     this.params.queryCate = null
     this.GET_AXIOS(this.params)
+    this.params.type = ''
   },
   methods: {
     // init

@@ -17,7 +17,7 @@
           <button
             v-if="LOGIN_TEACHER"
             class="jelly-btn jelly-btn--default"
-            @click="onClickItemInsert"
+            @click="onClickitemInsertTodo"
           >
             {{ LOGIN_TEACHER.todo_name }} 추가
           </button>
@@ -106,7 +106,7 @@
         <div class="m-t-15 m-l-4"></div>
       </div>
     </div>
-    <b-modal id="itemInsert" size="lg" hide-footer hide-header>
+    <b-modal id="itemInsertTodo" size="lg" hide-footer hide-header>
       <div class="m-t-5 flex">
         <div class="flex-full m-r-1">
           <p>카테고리</p>
@@ -254,7 +254,7 @@
       <div class="m-t-5 text-center">
         <button
           class="jelly-btn jelly-btn--default"
-          @click="$bvModal.hide('itemInsert')"
+          @click="$bvModal.hide('itemInsertTodo')"
         >
           닫기
         </button>
@@ -436,7 +436,9 @@ export default {
           prevEl: '.swiper-button-prev',
         },
       },
-      params: {},
+      params: {
+        type: '',
+      },
       paramsForm: {},
       paramsDetail: {},
       noticeSubject: '',
@@ -510,8 +512,8 @@ export default {
     '$route.query.cate': {
       handler(value) {
         console.log(value)
-        this.queryCate = value
-        if (this.queryCate) {
+        if (value) {
+          this.queryCate = value
           this.params.type = 'questList'
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
@@ -537,6 +539,7 @@ export default {
     this.params.type = 'questList'
     this.params.queryCate = null
     this.GET_AXIOS(this.params)
+    this.params.type = ''
   },
   methods: {
     // init
@@ -555,7 +558,7 @@ export default {
         this.params.type = 'questList'
         this.GET_AXIOS(this.params)
       }, 1000)
-      this.$bvModal.hide('itemInsert')
+      this.$bvModal.hide('itemInsertTodo')
     },
     onSubmitItem() {
       //   const itemThumb = document.getElementById('itemThumb')
@@ -573,7 +576,7 @@ export default {
         this.params.type = 'questList'
         this.GET_AXIOS(this.params)
       }, 1500)
-      this.$bvModal.hide('itemInsert')
+      this.$bvModal.hide('itemInsertTodo')
     },
     isActiveCalendar(e) {
       this.$refs[e].classList.toggle('is_active')
@@ -609,7 +612,7 @@ export default {
         this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.view.subject
         this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.view.contents
         this.quest = this.GET_AXIOS_CALLBACK_GETTER.view
-        this.$bvModal.show('itemInsert')
+        this.$bvModal.show('itemInsertTodo')
       }, 1500)
     },
     onClickItemDetailConfirm(e) {
@@ -628,11 +631,11 @@ export default {
       }, 1500)
       this.$bvModal.show('questConfirm')
     },
-    onClickItemInsert() {
+    onClickitemInsertTodo() {
       this.noticeIdx = null
       this.noticeSubject = ''
       this.noticeContent = ''
-      this.$bvModal.show('itemInsert')
+      this.$bvModal.show('itemInsertTodo')
     },
     onSubmitConfirm(isStatus, sqIdx, smsIdx, mode) {
       this.confirm.type = 'questconfirm'
