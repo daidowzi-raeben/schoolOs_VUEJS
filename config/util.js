@@ -18,3 +18,11 @@ export const axiosForm = function (frm, url) {
       console.log('AXIOS FALSE', res)
     })
 }
+
+export const copyToClipBoard = function (id) {
+  const content = document.getElementById(id)
+  content.select()
+  document.execCommand('copy')
+
+  alert('Copied!')
+}

@@ -34,17 +34,29 @@
         <div class="student__list">
           <div class="m-t-3">
             <table v-if="GET_AXIOS_CALLBACK_GETTER" class="jelly-table">
+              <colgroup>
+                <col style="width: auto" />
+                <col style="width: 100px" />
+                <col style="width: 100px" />
+              </colgroup>
               <tr>
                 <th>직업명</th>
                 <th>주급</th>
+                <th>관리</th>
               </tr>
-              <tr
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
-                :key="i"
-                @click="onClickJobDetail(v.idx)"
-              >
-                <td>{{ v.job_name }}</td>
-                <td class="text-right">{{ v.pay | comma }}</td>
+              <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER" :key="i">
+                <td @click="onClickJobDetail(v.idx)">{{ v.job_name }}</td>
+                <td class="text-right" @click="onClickJobDetail(v.idx)">
+                  {{ v.pay | comma }}
+                </td>
+                <td>
+                  <button
+                    class="jelly-btn jelly-btn--default"
+                    @click="onClickDelete(v.idx)"
+                  >
+                    삭제
+                  </button>
+                </td>
               </tr>
             </table>
           </div>
@@ -87,6 +99,7 @@ export default {
       paramsPost: {},
       pay: 0,
       job_name: '',
+      paramsPostDel: {},
     }
   },
 
@@ -148,6 +161,21 @@ export default {
       this.job_name = ''
       this.pay = ''
       this.$bvModal.show('jobInsert')
+    },
+    onClickDelete(e) {
+      if (confirm('삭제 후에는 복구가 불가능 합니다. 삭제하시겠습니까?')) {
+        this.paramsPostDel.table = 'sos_member_student_job'
+        this.paramsPostDel.del_idx = e
+        this.paramsPostDel.type = 'contentDel'
+        this.POST_AXIOS(this.paramsPostDel)
+      } else {
+        return
+      }
+      setTimeout(() => {
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'joblistTable'
+        this.GET_AXIOS(this.params)
+      }, 1500)
     },
   },
 }

@@ -23,6 +23,19 @@
                     GET_AXIOS_CALLBACK_GETTER.subtitle
                   }}
                 </div>
+                <textarea id="visitCodeUrk">
+https://app.school-os.net/member/sign-up?reg_code={{
+                    GET_AXIOS_CALLBACK_GETTER.subtitle
+                  }}</textarea
+                >
+                <div class="text-center m-t-4">
+                  <button
+                    class="jelly-btn jelly-btn--pink"
+                    @click="onClickCopyText('visitCodeUrk')"
+                  >
+                    가입 주소 복사하기
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -70,8 +83,20 @@ export default {
       axiosForm(FORM_DATA, '/teacher.php')
       axiosForm()
     },
+    onClickCopyText(id) {
+      const content = document.getElementById(id)
+      content.select()
+      document.execCommand('copy')
+
+      alert('Copied!')
+    },
   },
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+#visitCodeUrk {
+  position: absolute;
+  top: -500%;
+}
+</style>
