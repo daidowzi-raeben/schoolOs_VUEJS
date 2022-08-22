@@ -24,6 +24,15 @@
               건
             </div>
           </div>
+          <div class="item">
+            <p class="title" style="color: #111">현재자산</p>
+            <div class="text-right">
+              <strong class="font-20">
+                <em>123,123</em>
+              </strong>
+              루피
+            </div>
+          </div>
         </div>
       </div>
     </div>

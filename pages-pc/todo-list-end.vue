@@ -436,7 +436,7 @@ export default {
           prevEl: '.swiper-button-prev',
         },
       },
-      params: {},
+      params: { type: '' },
       paramsForm: {},
       paramsDetail: {},
       noticeSubject: '',

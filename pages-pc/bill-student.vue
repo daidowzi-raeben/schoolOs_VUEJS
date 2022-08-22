@@ -69,7 +69,7 @@
           <div class="flex">
             <div class="flex-full m-r-1">
               <p>학생선택</p>
-              <select
+              <!-- <select
                 v-if="GET_AXIOS_CALLBACK_GETTER.studentList"
                 v-model="billStudent"
                 class="jelly-text wd-full"
@@ -82,19 +82,75 @@
                 >
                   {{ v.reg_name }}
                 </option>
-              </select>
+              </select> -->
+              <div class="studentScrollArea">
+                <div>
+                  <div class="flex">
+                    <label class="m-l-2 m-t-2">
+                      <input v-model="selectAll" type="checkbox" />
+                      전체발송
+                    </label>
+                  </div>
+                </div>
+                <div
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
+                  :key="i"
+                >
+                  <div class="flex">
+                    <b-avatar
+                      variant="success"
+                      icon="people-fill"
+                      :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                    ></b-avatar>
+                    <label class="m-l-2 m-t-2">
+                      <input
+                        :id="`checked${v.idx}`"
+                        :key="i"
+                        v-model="checked"
+                        type="checkbox"
+                        :value="v.idx"
+                      />
+                      {{ v.reg_name }}
+                      ({{ v.reg_id }})
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="flex-full m-r-1">
-              <p>제목</p>
-              <input
-                v-model="billSubject"
-                type="text"
-                class="jelly-text wd-full"
-              />
-            </div>
-            <div class="flex-full m-r-1">
-              <p>금액</p>
-              <input v-model="billPay" type="text" class="jelly-text wd-full" />
+            <div class="flex-full">
+              <div class="flex-full m-r-1">
+                <p>제목</p>
+
+                <select
+                  v-model="billSubject"
+                  class="jelly-text wd-full"
+                  @change="onSelectETC($event)"
+                >
+                  <option :value="null">선택하세요</option>
+                  <option
+                    v-for="v in GET_AXIOS_CALLBACK_GETTER.billListSubject"
+                    :key="v.subject"
+                    :value="v.subject"
+                  >
+                    {{ v.subject }}
+                  </option>
+                  <option value="etc">직접입력</option>
+                </select>
+                <input
+                  v-if="etcInput"
+                  type="text"
+                  class="jelly-text wd-full m-t-1"
+                  @input="onInputETC($event)"
+                />
+              </div>
+              <div class="flex-full m-r-1 m-t-3">
+                <p>금액</p>
+                <input
+                  v-model="billPay"
+                  type="text"
+                  class="jelly-text wd-full text-right"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -109,6 +165,7 @@
             ></textarea>
           </div>
         </div>
+
         <div class="m-t-5 text-center">
           <button
             class="jelly-btn jelly-btn--default"
@@ -137,17 +194,41 @@ export default {
         queryCate: '',
       },
       paramsPost: {},
-      billStudent: 'all',
+      billStudent: [],
       billPay: 0,
-      billSubject: '',
+      billSubject: null,
       billContent: '',
       queryCate: null,
+      checked: [],
+      etcInput: false,
     }
   },
 
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    selectAll: {
+      get() {
+        return this.GET_AXIOS_CALLBACK_GETTER.studentList
+          ? this.checked
+            ? this.checked.length ===
+              this.GET_AXIOS_CALLBACK_GETTER.studentList.length
+            : false
+          : false
+      },
+      set(value) {
+        const selected = []
+
+        if (value) {
+          this.GET_AXIOS_CALLBACK_GETTER.studentList.forEach((com) => {
+            selected.push(com.idx)
+          })
+        }
+
+        this.checked = selected
+        this.billStudent = this.checked
+      },
+    },
   },
   watch: {
     '$route.query.cate': {
@@ -219,8 +300,31 @@ export default {
         this.$router.push(`/bill-student`)
       }
     },
+    onSelectETC(e) {
+      if (e.target.value === 'etc') {
+        this.etcInput = true
+      } else {
+        this.etcInput = false
+        this.billSubject = e.target.value
+      }
+    },
+    onInputETC(e) {
+      this.billSubject = e.target.value
+    },
   },
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.studentScrollArea {
+  padding: 10px;
+  height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow-y: auto;
+  > div {
+    border-bottom: 1px solid #ddd;
+    padding: 7px 0;
+  }
+}
+</style>

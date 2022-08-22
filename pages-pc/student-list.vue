@@ -43,7 +43,21 @@
                   v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
                   :key="i"
                 >
-                  <td>{{ v.reg_name }}</td>
+                  <td>
+                    <div class="flex">
+                      <b-avatar
+                        variant="success"
+                        class="m-r-2"
+                        icon="people-fill"
+                        :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                      ></b-avatar>
+                      <div>
+                        {{ v.reg_name }}
+                        <br />
+                        {{ v.reg_id }}
+                      </div>
+                    </div>
+                  </td>
                   <td>
                     LV.{{
                       Math.floor(

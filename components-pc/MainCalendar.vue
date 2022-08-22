@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="calendarList" class="m-t-3" style="width: 700px">
+    <div id="calendarList" class="m-t-3">
       <div v-if="calendar.calendar" class="text-center" style="padding: 8px">
         {{ calendar.calendar[0].year }}년 {{ calendar.calendar[0].month }}월
       </div>
@@ -38,11 +38,11 @@
         </li>
       </ul>
     </div>
-    <div id="studentList" style="width: 700px">
+    <div id="studentList">
       <table class="jelly-table font-14">
         <colgroup>
           <col style="width: 100px" />
-          <col style="width: auto" />
+          <col style="width: 420px" />
           <col style="width: auto" />
         </colgroup>
         <tr>
@@ -53,30 +53,104 @@
         <tr v-for="(v, i) in student.student" :key="i">
           <td>{{ v.list.reg_name }}</td>
           <td>
-            <div v-if="v.attendance">
-              <div
-                v-for="(e, k) in v.attendance"
-                :key="`attendance${k}`"
-                class="attendance"
+            <div>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type === '0'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickAttendeance(v.list.idx, 0)"
               >
-                {{ e.subject }}
-              </div>
+                결석
+              </button>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type === '1'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickAttendeance(v.list.idx, 1)"
+              >
+                지각
+              </button>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type === '2'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickAttendeance(v.list.idx, 2)"
+              >
+                조퇴
+              </button>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type === '3'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickAttendeance(v.list.idx, 3)"
+              >
+                결과
+              </button>
             </div>
           </td>
           <td>
-            <div v-if="v.attendance">
-              <div
-                v-for="(e, k) in v.attendance"
-                :key="`attendance${k}`"
-                class="attendance"
-              >
-                {{ e.content }}
+            <div v-if="v.attendance && v.attendance[0]" class="flex">
+              <div class="attendance flex-full">
+                {{ v.attendance[0].content }}
               </div>
+              <b-icon
+                v-if="v.attendance && v.attendance[0]"
+                icon="pencil-square"
+                class="flex-right"
+                @click="onClickEtcWrite(v.attendance[0].idx, v.list.idx)"
+              ></b-icon>
+            </div>
+            <div v-else class="flex">
+              <div class="attendance flex-full"></div>
+              <b-icon
+                icon="pencil-square"
+                class="flex-right"
+                @click="onClickEtcWrite(null, v.list.idx)"
+              ></b-icon>
             </div>
           </td>
         </tr>
       </table>
     </div>
+    <b-modal
+      id="studentContent"
+      ref="ref-cateInsert"
+      size="lg"
+      hide-footer
+      hide-header
+    >
+      <div class="">
+        <input
+          v-model="studentContent"
+          type="text"
+          class="jelly-text wd-full"
+          placeholder="내용을 입력해 주세요"
+        />
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('studentContent')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onSubmitContent">
+          저장
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -91,6 +165,10 @@ export default {
       calendar: {},
       student: {},
       isChecked: 0,
+      studentContent: '',
+      studentContentData: {},
+      nowDate: null,
+      nowIdx: '',
     }
   },
   computed: {
@@ -119,7 +197,8 @@ export default {
       .then((res) => {
         console.log(res.data)
         this.calendar = res.data
-        this.onLoadStudent()
+        this.nowDate = `${res.data.today.year}-${res.data.today.month}-${res.data.today.day}`
+        this.onLoadStudent(this.nowDate)
       })
       .catch((res) => {
         console.log('AXIOS FALSE', res)
@@ -166,6 +245,7 @@ export default {
         .then((res) => {
           console.log(res.data)
           this.calendar = res.data
+          this.nowDate = `${postYear}-${postMonth}-01`
           this.onLoadStudent(`${postYear}-${postMonth}-01`)
           document.querySelector('.daysRadio').checked = true
           // console.log($('.days'))
@@ -176,7 +256,98 @@ export default {
     },
     onClickDays(e) {
       console.log(e.target.value)
+      this.nowDate = e.target.value
       this.onLoadStudent(e.target.value)
+    },
+    // 출결버튼
+    onClickAttendeance(e, type) {
+      //   e.target.classList.toggle = 'jelly-btn--default'
+      //   e.target.classList.toggle = 'jelly-btn--pink'
+      console.log(this.nowDate, e, type)
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('type', 'attendanceBtn')
+      frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+      frm.append('sms_idx', e)
+      frm.append('typeStat', type)
+      frm.append('ymd', this.nowDate)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log('==========>>>>>>>>>>', res.data)
+          this.student = res.data
+          // this.LOADING_INIT()
+          this.onLoadStudent(this.nowDate)
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
+    },
+    //   특이사항
+    onClickEtcWrite(v, e) {
+      this.studentContent = ''
+      // attendanceContent
+      this.nowSmsIdx = e
+      if (v === null) {
+        console.log(null)
+        this.nowIdx = null
+        this.$bvModal.show('studentContent')
+      } else {
+        this.nowIdx = v
+        this.LOADING_TRUE()
+        const frm = new FormData()
+        frm.append('type', 'attendanceContent')
+        frm.append('idx', v)
+        frm.append('sms_idx', e)
+        frm.append('ymd', this.nowDate)
+        this.$axios
+          .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            console.log('==========', res.data)
+            this.studentContent = res.data.content
+            this.$bvModal.show('studentContent')
+            this.LOADING_INIT()
+          })
+          .catch((res) => {
+            console.log('AXIOS FALSE', res)
+          })
+      }
+    },
+    onSubmitContent() {
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      console.log(this.nowIdx)
+      frm.append('type', 'attendanceContentSubmit')
+      if (this.nowIdx) {
+        frm.append('idx', this.nowIdx)
+      }
+      frm.append('sms_idx', this.nowSmsIdx)
+      frm.append('content', this.studentContent)
+      frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+      frm.append('ymd', this.nowDate)
+      console.log(frm)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log('==========', res.data)
+          this.$bvModal.hide('studentContent')
+          this.onLoadStudent(this.nowDate)
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
     onLoadStudent(e) {
       this.LOADING_TRUE()
@@ -207,7 +378,7 @@ export default {
 #studentList {
   .attendance {
     padding: 10px;
-    background: #f6f6f6;
+    // background: #f6f6f6;
     margin-bottom: 10px;
     &:last-child {
       margin-bottom: 0;

@@ -258,7 +258,7 @@ export default {
   layout: 'default-pc',
   data() {
     return {
-      params: {},
+      params: { type: '' },
       paramsForm: {},
       calendarSales: null,
       calendarDiscountSales: null,

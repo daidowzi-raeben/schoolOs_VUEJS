@@ -509,6 +509,17 @@ export default {
     },
   },
   watch: {
+    'params.type': {
+      handler(value) {
+        if (value === 'shopList') {
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'questList'
+          this.params.queryCate = null
+          this.GET_AXIOS(this.params)
+          this.params.type = ''
+        }
+      },
+    },
     '$route.query.cate': {
       handler(value) {
         console.log(value)
