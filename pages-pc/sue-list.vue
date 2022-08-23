@@ -114,7 +114,7 @@
           닫기
         </button>
         <button class="jelly-btn jelly-btn--default" @click="onSubmit(4)">
-          벌금처리
+          벌칙처리
         </button>
         <button class="jelly-btn jelly-btn--default" @click="onSubmit(3)">
           취소하기
@@ -223,17 +223,29 @@ export default {
 
     // EVENT
     onSubmit(e) {
-      this.paramsForm.idx = this.idx
-      this.paramsForm.status = e
-      this.paramsForm.type = 'sueList'
-      this.POST_AXIOS(this.paramsForm)
-      console.log('this.paramsForm', this.paramsForm)
-      setTimeout(() => {
-        this.params = this.LOGIN_TEACHER
-        this.params.type = 'sueList'
-        this.GET_AXIOS(this.params)
-      }, 1000)
-      this.$bvModal.hide('itemInsert')
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('type', 'sueList')
+      frm.append('idx', this.idx)
+      frm.append('status', e)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          setTimeout(() => {
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'sueList'
+            this.GET_AXIOS(this.params)
+            this.$bvModal.hide('itemInsert')
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
 
     onClickCategory(e) {
