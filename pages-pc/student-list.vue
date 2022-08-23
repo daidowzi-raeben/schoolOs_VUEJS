@@ -86,7 +86,7 @@
                         class="flex-full jelly-btn jelly-btn--default m-r-1"
                         @click="onClickAttendanceDetail(v.sms_idx)"
                       >
-                        출결관리
+                        벌칙관리
                       </button>
                       <button
                         class="flex-full jelly-btn jelly-btn--default m-l-1"
