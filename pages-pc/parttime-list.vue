@@ -265,6 +265,16 @@ export default {
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   watch: {
+    'params.type': {
+      handler(value) {
+        if (value === 'shopList') {
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'albaList'
+          this.GET_AXIOS(this.params)
+          this.params.type = ''
+        }
+      },
+    },
     '$route.query.cate': {
       handler(value) {
         console.log(value)

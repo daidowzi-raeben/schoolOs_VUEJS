@@ -52,7 +52,7 @@
                 <tr
                   v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.shopItem"
                   :key="`shopItem${i}`"
-                  style="curosr: pointer"
+                  style="cursor: pointer"
                   @click="onClickItemDetail(v.idx)"
                 >
                   <td>
@@ -105,6 +105,32 @@
         <p>재고</p>
         <input v-model="itemInt" type="text" class="jelly-text jelly-text--h" />
       </div>
+      <div class="flex m-t-5">
+        <div class="flex-full">
+          <p>소비자가</p>
+          <input
+            v-model="price2"
+            type="text"
+            class="jelly-text jelly-text--h wd-full text-right m-r-1"
+            @click="resetInput($event)"
+            @input="priceKrw($event)"
+          />
+        </div>
+        <span v-if="LOGIN_TEACHER" class="m-t-9 m-l-1 m-r-1"> 원 </span>
+        <div class="flex-full">
+          <p>상품가격</p>
+          <input
+            v-model="itemPrice"
+            type="text"
+            class="jelly-text jelly-text--h wd-full text-right m-r-1 m-l-1"
+            @click="resetInput($event)"
+            @input="priceCustom($event)"
+          />
+        </div>
+        <span v-if="LOGIN_TEACHER" class="m-t-9 m-l-1 flex-0">
+          {{ LOGIN_TEACHER.reg_pay_unit }}
+        </span>
+      </div>
       <div class="m-t-5">
         <div class="flex">
           <div class="flex-full m-r-1 relative">
@@ -133,16 +159,13 @@
             </v-date-picker> -->
           </div>
           <div class="flex-full m-l-1">
-            <p>상품가격</p>
+            <!-- <p>상품가격</p>
             <input
               v-model="itemPrice"
               type="text"
               class="jelly-text jelly-text--h wd-full text-right"
-            />
+            /> -->
           </div>
-          <span v-if="LOGIN_TEACHER" class="m-t-9">
-            {{ LOGIN_TEACHER.reg_pay_unit }}
-          </span>
         </div>
       </div>
       <div class="m-t-5">
@@ -178,6 +201,8 @@
               v-model="itemPriceDiscount"
               type="text"
               class="jelly-text jelly-text--h wd-full text-right"
+              @input="payComma($event)"
+              @click="resetInput($event)"
             />
           </div>
           <span v-if="LOGIN_TEACHER" class="m-t-9">
@@ -204,14 +229,14 @@
           닫기
         </button>
         <button
-          v-if="!params.detailIdx"
+          v-if="params && !params.detailIdx"
           class="jelly-btn jelly-btn--pink"
           @click="onSubmitItem"
         >
           등록하기
         </button>
         <button
-          v-if="params.detailIdx"
+          v-if="params && params.detailIdx"
           class="jelly-btn jelly-btn--pink"
           @click="onSubmitItemEdit"
         >
@@ -258,8 +283,10 @@ export default {
   layout: 'default-pc',
   data() {
     return {
+      price: 0,
+      price2: 0,
       params: { type: '' },
-      paramsForm: {},
+      paramsForm: { type: '' },
       calendarSales: null,
       calendarDiscountSales: null,
       calendarSalesDate: null,
@@ -288,16 +315,15 @@ export default {
     '$route.query.cate': {
       handler(value) {
         console.log(value)
+        this.params.type = 'shopList'
         if (value) {
           this.queryCate = value
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
-          this.params.type = 'shopList'
           this.GET_AXIOS(this.params)
         } else {
           this.params.queryCate = null
           this.params = this.LOGIN_TEACHER
-          this.params.type = 'shopList'
           this.GET_AXIOS(this.params)
         }
       },
@@ -348,11 +374,14 @@ export default {
       )
       FORM_DATA.append('itemInt', this.itemInt)
       FORM_DATA.append('cateIdx', this.cateIdx)
-      FORM_DATA.append('itemPrice', this.itemPrice)
+      FORM_DATA.append('itemPrice', this.uncomma(this.itemPrice))
       FORM_DATA.append('itemContent', this.itemContent)
       FORM_DATA.append('itemName', this.itemName)
       FORM_DATA.append('itemThumb', itemThumb.files[0])
-      FORM_DATA.append('itemPriceDiscount', this.itemPriceDiscount)
+      FORM_DATA.append(
+        'itemPriceDiscount',
+        this.uncomma(this.itemPriceDiscount)
+      )
       axiosForm(FORM_DATA, '/teacher.php')
 
       //   this.paramsForm = this.LOGIN_TEACHER
@@ -387,11 +416,14 @@ export default {
       FORM_DATA.append('itemInt', this.itemInt)
       FORM_DATA.append('cateIdx', this.cateIdx)
       FORM_DATA.append('idx', this.params.detailIdx)
-      FORM_DATA.append('itemPrice', this.itemPrice)
+      FORM_DATA.append('itemPrice', this.uncomma(this.itemPrice))
       FORM_DATA.append('itemContent', this.itemContent)
       FORM_DATA.append('itemName', this.itemName)
       FORM_DATA.append('itemThumb', itemThumb.files[0])
-      FORM_DATA.append('itemPriceDiscount', this.itemPriceDiscount)
+      FORM_DATA.append(
+        'itemPriceDiscount',
+        this.uncomma(this.itemPriceDiscount)
+      )
       axiosForm(FORM_DATA, '/teacher.php')
 
       //   this.paramsForm = this.LOGIN_TEACHER
@@ -436,17 +468,26 @@ export default {
       console.log(e)
       this.GET_AXIOS(this.params)
       setTimeout(() => {
+        const rate = 200 / this.LOGIN_TEACHER.reg_pay_rate
+        this.price2 = this.comma(
+          this.uncomma(
+            this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_price * rate
+          )
+        )
         this.calendarSales = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.end_day
         this.calendarDiscountSales =
           this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_dis_date
         this.cateIdx = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.ssc_idx
-        this.itemPrice = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_price
+        this.itemPrice = this.comma(
+          this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_price
+        )
         this.itemContent =
           this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_content
         this.itemName = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_name
         this.itemInt = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_int
-        this.itemPriceDiscount =
+        this.itemPriceDiscount = this.comma(
           this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_dis_price
+        )
       }, 3000)
       this.$bvModal.show('itemInsert')
     },
@@ -454,11 +495,36 @@ export default {
       this.calendarSales = ''
       this.calendarDiscountSales = ''
       this.cateIdx = ''
-      this.itemPrice = ''
+      this.itemPrice = 0
+      this.price2 = 0
       this.itemContent = ''
       this.itemName = ''
-      this.itemPriceDiscount = ''
+      this.itemPriceDiscount = 0
       this.$bvModal.show('itemInsert')
+    },
+    priceCustom(e) {
+      const rate = 200 / this.LOGIN_TEACHER.reg_pay_rate
+      this.price2 = this.comma(this.uncomma(Math.round(e.target.value * rate)))
+    },
+    priceKrw(e) {
+      const rate = this.LOGIN_TEACHER.reg_pay_rate / 200
+      this.itemPrice = this.comma(
+        this.uncomma(Math.round(e.target.value * rate))
+      )
+    },
+    payComma(e) {
+      this.itemPriceDiscount = this.comma(this.uncomma(e.target.value))
+    },
+    comma(str) {
+      str = String(str)
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+    },
+    uncomma(str) {
+      str = String(str)
+      return str.replace(/[^\d]+/g, '')
+    },
+    resetInput(e) {
+      e.target.value = ''
     },
     //
   },

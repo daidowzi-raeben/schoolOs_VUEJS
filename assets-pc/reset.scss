@@ -272,6 +272,9 @@ html {
   &-shrink {
     flex-shrink: 1;
   }
+  &-0 {
+    flex-shrink: 0;
+  }
 }
 a {
   //   color: #111 !important;
