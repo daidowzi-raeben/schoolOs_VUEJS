@@ -378,15 +378,28 @@ export default {
     },
     onSubmitDelete() {
       if (confirm('삭제하시겠습니까?')) {
-        this.paramsForm.idx = this.noticeIdx
-        this.paramsForm.type = 'albadel'
-        this.POST_AXIOS(this.paramsForm)
-        setTimeout(() => {
-          this.params = this.LOGIN_TEACHER
-          this.params.type = 'albaList'
-          this.GET_AXIOS(this.params)
-        }, 1000)
-        this.$bvModal.hide('itemInsert')
+        this.LOADING_TRUE()
+        const frm = new FormData()
+        frm.append('type', 'albadel')
+        frm.append('idx', this.noticeIdx)
+        this.$axios
+          .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            setTimeout(() => {
+              this.params = this.LOGIN_TEACHER
+              this.params.type = 'albaList'
+              this.GET_AXIOS(this.params)
+              this.$bvModal.hide('itemInsert')
+            })
+          })
+          .catch((res) => {
+            console.log('AXIOS FALSE', res)
+          })
       }
     },
     payComma(e) {

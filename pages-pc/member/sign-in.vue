@@ -1,37 +1,42 @@
 <template>
   <div class="sos-login">
-    <div class="header">WELCOME</div>
-    <div class="sos-login__content">
-      <form @submit.prevent="onClickLogin">
-        <div>
-          <input
-            type="text"
-            class="jelly-text wd-full"
-            placeholder="아이디"
-            @input="loginID($event)"
-          />
-        </div>
-        <div class="m-t-2">
-          <input
-            type="password"
-            class="jelly-text wd-full"
-            placeholder="패스워드"
-            @input="loginPW($event)"
-          />
-        </div>
-        <div class="m-t-4">
-          <button
-            type="submit"
-            class="jelly-btn jelly-btn--pink wd-full md"
-            :disabled="disabled === true"
-          >
-            로그인
-          </button>
-        </div>
-        <div class="m-t-4 text-center">
-          <Nuxt-link to="/member/sign-up"> 아직 회원이 아닌가요? </Nuxt-link>
-        </div>
-      </form>
+    <div>
+      <div class="header">School OS</div>
+      <div class="sos-login__content">
+        <form @submit.prevent="onClickLogin">
+          <div>
+            <input
+              type="text"
+              class="jelly-text wd-full jelly-text--h"
+              placeholder="아이디"
+              @input="loginID($event)"
+            />
+          </div>
+          <div class="m-t-2">
+            <input
+              type="password"
+              class="jelly-text wd-full jelly-text--h"
+              placeholder="패스워드"
+              @input="loginPW($event)"
+            />
+          </div>
+          <div class="m-t-4">
+            <button
+              type="submit"
+              class="jelly-btn jelly-btn--pink jelly-text--h wd-full"
+              :disabled="disabled === true"
+            >
+              로그인
+            </button>
+          </div>
+          <!-- <div class="m-t-4 text-center">
+            <Nuxt-link to="/member/sign-up"> 아직 회원이 아닌가요? </Nuxt-link>
+          </div> -->
+        </form>
+      </div>
+    </div>
+    <div class="m-t-3 text-center">
+      <Nuxt-link to="/member/sign-up"> 아직 회원이 아닌가요? </Nuxt-link>
     </div>
   </div>
 </template>
@@ -88,7 +93,5 @@ export default {
 <style lang="scss">
 @import '~/assets-pc/common.scss';
 .sos-login {
-  min-height: 100vh;
-  background: #fff;
 }
 </style>

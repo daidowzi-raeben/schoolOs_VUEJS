@@ -38,7 +38,7 @@
         </li>
       </ul>
     </div>
-    <div id="studentList">
+    <div id="studentList" class="m-t-3">
       <table class="jelly-table font-14">
         <colgroup>
           <col style="width: 100px" />
@@ -61,9 +61,9 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickAttendeance(v.list.idx, 0)"
+                @click="onClickPrivat(v.list.idx, 0)"
               >
-                결석
+                질병♡
               </button>
               <button
                 class="jelly-btn"
@@ -72,9 +72,9 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickAttendeance(v.list.idx, 1)"
+                @click="onClickPrivat(v.list.idx, 1)"
               >
-                지각
+                미인정♥︎
               </button>
               <button
                 class="jelly-btn"
@@ -83,9 +83,9 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickAttendeance(v.list.idx, 2)"
+                @click="onClickPrivat(v.list.idx, 2)"
               >
-                조퇴
+                기타▲
               </button>
               <button
                 class="jelly-btn"
@@ -94,31 +94,65 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickAttendeance(v.list.idx, 3)"
+                @click="onClickPrivat(v.list.idx, 3)"
               >
-                결과
+                출석인정△
               </button>
+            </div>
+            <div v-if="v.attendance && v.attendance[0].type_etc" class="m-t-2">
+              {{ v.attendance[0].type_etc }}
             </div>
           </td>
           <td>
-            <div v-if="v.attendance && v.attendance[0]" class="flex">
-              <div class="attendance flex-full">
-                {{ v.attendance[0].content }}
-              </div>
-              <b-icon
-                v-if="v.attendance && v.attendance[0]"
-                icon="pencil-square"
-                class="flex-right"
-                @click="onClickEtcWrite(v.attendance[0].idx, v.list.idx)"
-              ></b-icon>
+            <!-- ㅍ지각 조퇴 결과 -->
+            <div>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type2 === '0'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickPrivatEtc(v.list.idx, 0)"
+              >
+                지각
+              </button>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type2 === '1'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickPrivatEtc(v.list.idx, 1)"
+              >
+                조퇴
+              </button>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type2 === '2'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickPrivatEtc(v.list.idx, 2)"
+              >
+                결과
+              </button>
+              <button
+                class="jelly-btn"
+                :class="
+                  v.attendance && v.attendance[0].type2 === '3'
+                    ? 'jelly-btn--pink'
+                    : 'jelly-btn--default'
+                "
+                @click="onClickPrivatEtc(v.list.idx, 3)"
+              >
+                기타
+              </button>
             </div>
-            <div v-else class="flex">
-              <div class="attendance flex-full"></div>
-              <b-icon
-                icon="pencil-square"
-                class="flex-right"
-                @click="onClickEtcWrite(null, v.list.idx)"
-              ></b-icon>
+            <div v-if="v.attendance && v.attendance[0].type_etc2" class="m-t-2">
+              {{ v.attendance[0].type_etc2 }}
             </div>
           </td>
         </tr>
@@ -136,7 +170,7 @@
           v-model="studentContent"
           type="text"
           class="jelly-text wd-full"
-          placeholder="내용을 입력해 주세요"
+          placeholder="사유를 작성해 주세요"
         />
       </div>
       <div class="m-t-5 text-center">
@@ -147,6 +181,52 @@
           닫기
         </button>
         <button class="jelly-btn jelly-btn--pink" @click="onSubmitContent">
+          저장
+        </button>
+      </div>
+    </b-modal>
+
+    <!-- 출결 type_etc -->
+    <b-modal id="studentContentTypeEtc" size="lg" hide-footer hide-header>
+      <div class="">
+        <input
+          v-model="btnData.type_etc"
+          type="text"
+          class="jelly-text wd-full"
+          placeholder="사유를 작성해 주세요"
+        />
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('studentContentTypeEtc')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onClickAttendeance">
+          저장
+        </button>
+      </div>
+    </b-modal>
+
+    <!-- 출결 type_etc2 -->
+    <b-modal id="studentContentTypeEtc2" size="lg" hide-footer hide-header>
+      <div class="">
+        <input
+          v-model="btnData.type_etc2"
+          type="text"
+          class="jelly-text wd-full"
+          placeholder="사유를 작성해 주세요"
+        />
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('studentContentTypeEtc2')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onClickAttendeance2">
           저장
         </button>
       </div>
@@ -169,6 +249,9 @@ export default {
       studentContentData: {},
       nowDate: null,
       nowIdx: '',
+      btnData: {
+        type_etc: null,
+      },
     }
   },
   computed: {
@@ -259,7 +342,22 @@ export default {
       this.nowDate = e.target.value
       this.onLoadStudent(e.target.value)
     },
+
     // 출결버튼
+    onClickPrivat(e, type) {
+      this.btnData.e = e
+      this.btnData.type = type
+      this.$bvModal.show('studentContentTypeEtc')
+    },
+
+    // 출결버튼
+    onClickPrivatEtc(e, type) {
+      this.btnData.e = e
+      this.btnData.type = type
+      this.$bvModal.show('studentContentTypeEtc2')
+    },
+
+    // 출결전송
     onClickAttendeance(e, type) {
       //   e.target.classList.toggle = 'jelly-btn--default'
       //   e.target.classList.toggle = 'jelly-btn--pink'
@@ -268,8 +366,9 @@ export default {
       const frm = new FormData()
       frm.append('type', 'attendanceBtn')
       frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
-      frm.append('sms_idx', e)
-      frm.append('typeStat', type)
+      frm.append('sms_idx', this.btnData.e)
+      frm.append('typeStat', this.btnData.type)
+      frm.append('type_etc', this.btnData.type_etc)
       frm.append('ymd', this.nowDate)
       this.$axios
         .post(process.env.VUE_APP_API + '/teacher.php', frm, {
@@ -281,7 +380,42 @@ export default {
           console.log('==========>>>>>>>>>>', res.data)
           this.student = res.data
           // this.LOADING_INIT()
+          this.$bvModal.hide('studentContentTypeEtc')
           this.onLoadStudent(this.nowDate)
+          this.btnData.e = null
+          this.btnData.type = null
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
+    },
+    // 특이사항
+    onClickAttendeance2(e, type) {
+      //   e.target.classList.toggle = 'jelly-btn--default'
+      //   e.target.classList.toggle = 'jelly-btn--pink'
+      console.log(this.nowDate, e, type)
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('type', 'attendanceBtn')
+      frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+      frm.append('sms_idx', this.btnData.e)
+      frm.append('typeStat2', this.btnData.type)
+      frm.append('type_etc2', this.btnData.type_etc2)
+      frm.append('ymd', this.nowDate)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log('==========>>>>>>>>>>', res.data)
+          this.student = res.data
+          // this.LOADING_INIT()
+          this.$bvModal.hide('studentContentTypeEtc2')
+          this.onLoadStudent(this.nowDate)
+          this.btnData.e = null
+          this.btnData.type = null
         })
         .catch((res) => {
           console.log('AXIOS FALSE', res)

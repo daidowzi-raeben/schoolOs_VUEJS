@@ -559,17 +559,45 @@ export default {
 
     // EVENT
     onSubmit() {
-      this.quest.smt_idx = this.LOGIN_TEACHER.smt_idx
-      this.quest.type = 'questWrite'
-      this.paramsForm = this.quest
-      this.POST_AXIOS(this.paramsForm)
-      console.log('this.paramsForm', this.paramsForm)
-      setTimeout(() => {
-        this.params = this.LOGIN_TEACHER
-        this.params.type = 'questList'
-        this.GET_AXIOS(this.params)
-      }, 1000)
-      this.$bvModal.hide('itemInsertTodo')
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('type', 'questWrite')
+      frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      frm.append('subject', this.quest.subject)
+      frm.append('contents', this.quest.contents)
+      frm.append('cate', this.quest.cate)
+      frm.append('price', this.quest.price)
+      frm.append('intellect', this.quest.intellect)
+      frm.append('effort', this.quest.effort)
+      frm.append('health', this.quest.health)
+      frm.append('etiquette', this.quest.etiquette)
+      frm.append('m_price', this.quest.m_price)
+      frm.append('m_intellect', this.quest.m_intellect)
+      frm.append('m_effort', this.quest.m_effort)
+      frm.append('m_health', this.quest.m_health)
+      frm.append('m_etiquette', this.quest.m_etiquette)
+      frm.append('start_day', this.quest.start_day)
+      frm.append('end_day', this.quest.end_day)
+      console.log(frm)
+      // axiosForm(frm, '/student.php')
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          setTimeout(() => {
+            //   this.$bvModal.hide('itemInsert')
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'questList'
+            this.GET_AXIOS(this.params)
+            this.$bvModal.hide('itemInsertTodo')
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
     onSubmitItem() {
       //   const itemThumb = document.getElementById('itemThumb')

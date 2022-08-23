@@ -277,20 +277,33 @@ export default {
       this.$bvModal.show('billInsert')
     },
     onSubmit() {
-      this.paramsPost = this.LOGIN_TEACHER
-      this.paramsPost.type = 'billListStudent'
-      this.paramsPost.billStudent = this.billStudent
-      this.paramsPost.billPay = this.billPay
-      this.paramsPost.billSubject = this.billSubject
-      this.paramsPost.billContent = this.billContent
-      this.POST_AXIOS(this.paramsPost)
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      frm.append('type', 'billListStudent')
+      frm.append('billStudent', this.billStudent)
+      frm.append('billPay', this.billPay)
+      frm.append('billSubject', this.billSubject)
+      frm.append('billContent', this.billContent)
 
-      setTimeout(() => {
-        this.params = this.LOGIN_TEACHER
-        this.params.type = 'billListStudent'
-        this.GET_AXIOS(this.params)
-        this.$bvModal.hide('billInsert')
-      }, 1500)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          setTimeout(() => {
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'billListStudent'
+            this.GET_AXIOS(this.params)
+            this.$bvModal.hide('billInsert')
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
     onClickCategory(e) {
       if (e) {
