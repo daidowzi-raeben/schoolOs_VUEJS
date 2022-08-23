@@ -31,10 +31,10 @@
               <div>
                 <ul>
                   <li @click="onClickLinkTo($event, 'pay-loan')">대출관리</li>
-                  <li @click="onClickLinkTo($event, 'bill-list')">SOC 납부</li>
                   <li @click="onClickLinkTo($event, 'teacher-setting')">
                     세율설정
                   </li>
+                  <li @click="onClickLinkTo($event, 'bill-list')">SOC 납부</li>
                   <li @click="onClickLinkTo($event, 'bill-student')">
                     고지서관리
                   </li>
@@ -76,6 +76,18 @@
               @click="onClickLinkTo($event, 'notice-list')"
             >
               <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 알림장 관리
+            </li>
+            <li
+              style="cursor: pointer"
+              onclick="window.open('https://open.kakao.com/o/sf8I8jxe')"
+            >
+              <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 카카오 문의
+            </li>
+            <li
+              style="cursor: pointer"
+              @click="onClickLinkTo($event, 'member/sign-out')"
+            >
+              <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 로그아웃
             </li>
 
             <!-- <li @click="onClickLinkTo($event,'member/sign-out')">로그아웃</li> -->

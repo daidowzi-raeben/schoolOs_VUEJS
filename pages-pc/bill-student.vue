@@ -140,7 +140,6 @@
                   v-if="etcInput"
                   type="text"
                   class="jelly-text wd-full m-t-1"
-                  @input="onInputETC($event)"
                 />
               </div>
               <div class="flex-full m-r-1 m-t-3">
@@ -281,7 +280,11 @@ export default {
       const frm = new FormData()
       frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
       frm.append('type', 'billListStudent')
-      frm.append('billStudent', this.billStudent)
+      if (this.billStudent === 'etc') {
+        frm.append('billStudent', this.etcInput)
+      } else {
+        frm.append('billStudent', this.billStudent)
+      }
       frm.append('billPay', this.billPay)
       frm.append('billSubject', this.billSubject)
       frm.append('billContent', this.billContent)

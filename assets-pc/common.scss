@@ -11,8 +11,22 @@
     }
   }
 }
-
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+.dancing {
+  font-family: 'Dancing Script', cursive;
+}
+.registor {
+  width: 900px;
+  margin: 50px auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+  padding: 30px;
+}
+.discription {
+  padding-bottom: 5px;
+  color: $color;
+}
 .sos-login {
   width: 100%;
   height: 100vh;

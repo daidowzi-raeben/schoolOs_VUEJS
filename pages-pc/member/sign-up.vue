@@ -1,31 +1,65 @@
 <template>
   <div>
-    <div
-      id="jellyAdminBG"
-      class="jellyAdminBG"
-      :style="`background-image:url(${adminBackgroundImage});position:fixed;width:100%;height:100%;background-size:100% 100%; top:0; left:0; opacity:.5`"
-    ></div>
-    <div style="width: 1200px; margin: 50px auto" class="text-white">
+    <div id="jellyAdminBG"></div>
+    <div style="" class="registor">
       <div v-if="!queryStep">
-        <h1 class="text-white" style="font-size: 50px">Hello, Jelly Word</h1>
-        <div class="font-20 m-t-10 text-white" style="line-height: 30px">
+        <h1 class="dancing" style="font-size: 80px">Hello, Jelly World</h1>
+        <div class="font-16 m-t-10" style="line-height: 30px">
           스쿨오에스 젤리는 학급의 사회 문화와 경제학에 도움을 주며 무료로
           사용할 수 있습니다.
           <br />
           주 거래 은행을 통해 대출을 받아 이자를 상환하고, 학생들에게 직업을
           부여하며 주급을 지급할 수 있습니다.
-          <br />
-          우리 학급의 이름을 알려주세요.
         </div>
         <div class="m-t-10">
+          <p class="discription">우리 학급의 이름을 알려주세요.</p>
           <input
             v-model="reg_country"
             type="text"
             class="jelly-text"
-            style="background: #fff; color: #000; height: 50px; width: 300px"
+            style="height: 50px; width: 300px"
             placeholder="학급 이름"
             @keyup.enter="onClickNextStep"
           />
+        </div>
+        <div class="m-t-5">
+          <p class="discription">학생들이 수행할 일의 명칭을 알려주세요.</p>
+          <input
+            v-model="todo_name"
+            type="text"
+            class="jelly-text"
+            style="height: 50px; width: 300px"
+            placeholder="TODO LIST 이름 ex)퀘스트, 할일 등"
+            @keyup.enter="onClickNextStep(2)"
+          />
+        </div>
+        <div class="m-t-5">
+          <p class="discription">사용할 화폐의 이름은 무엇인가요?</p>
+          <input
+            v-model="reg_pay_unit"
+            type="text"
+            class="jelly-text"
+            style="height: 50px; width: 300px"
+            placeholder="화폐이름"
+          />
+        </div>
+        <div class="m-t-5">
+          <p v-if="!reg_pay_unit" class="discription">
+            이 화폐로 츄파츕스는 얼마인가요?
+          </p>
+          <p v-if="reg_pay_unit" class="discription">
+            츄파츕스는 몇 {{ reg_pay_unit }}인가요? <br />입력한 금액에 따라
+            학생들의 급식비(3500원/1일) 기준으로 환율이 결정되며, 급식비 5일치가
+            주급으로 자동 환산 됩니다. <br />이는 언제든 수정할 수 있습니다.
+          </p>
+          <input
+            v-model="reg_pay_rate"
+            type="text"
+            class="jelly-text text-right"
+            style="height: 50px; width: 300px"
+            placeholder="츄파츕스 가격"
+          />
+          {{ reg_pay_unit }}
         </div>
         <div>
           <button
@@ -37,10 +71,8 @@
         </div>
       </div>
       <div v-if="queryStep == '1'">
-        <h1 class="text-white" style="font-size: 50px">
-          회원가입을 시작합니다
-        </h1>
-        <div class="font-20 m-t-10 text-white" style="line-height: 30px">
+        <h1 class="" style="font-size: 50px">회원가입을 시작합니다</h1>
+        <div class="font-20 m-t-10" style="line-height: 30px">
           기본정보를 입력해 주세요
         </div>
         <div class="m-t-10">
@@ -49,7 +81,7 @@
               v-model="reg_id"
               type="text"
               class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
+              style="height: 50px; width: 300px"
               placeholder="아이디"
             />
           </div>
@@ -58,7 +90,7 @@
               v-model="reg_pw"
               type="password"
               class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
+              style="height: 50px; width: 300px"
               placeholder="패스워드"
             />
           </div>
@@ -67,7 +99,7 @@
               v-model="reg_pw2"
               type="password"
               class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
+              style="height: 50px; width: 300px"
               placeholder="패스워드"
             />
           </div>
@@ -76,7 +108,7 @@
               v-model="reg_name"
               type="text"
               class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
+              style="height: 50px; width: 300px"
               placeholder="이름"
             />
           </div>
@@ -85,7 +117,7 @@
               v-model="reg_email"
               type="text"
               class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
+              style="height: 50px; width: 300px"
               placeholder="이메일"
             />
           </div>
@@ -94,29 +126,11 @@
               v-model="reg_phone"
               type="text"
               class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
+              style="height: 50px; width: 300px"
               placeholder="연락처"
             />
           </div>
-          <div class="m-t-5">
-            <input
-              v-model="reg_pay_unit"
-              type="text"
-              class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
-              placeholder="화폐이름"
-            />
-          </div>
-          <div class="m-t-5">
-            <input
-              v-model="todo_name"
-              type="text"
-              class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
-              placeholder="TODO LIST 이름 ex)퀘스트, 할일 등"
-              @keyup.enter="onClickNextStep(2)"
-            />
-          </div>
+
           <div>
             <!-- <input id="reg_photo" type="file" /> -->
           </div>
@@ -131,60 +145,59 @@
         </div>
       </div>
       <div v-if="queryStep == '2'">
-        <h1 class="text-white" style="font-size: 50px">학교를 검색하세요</h1>
-        <div>
-          <div>
+        <h1 class="" style="font-size: 50px">근무중인 학교를 검색하세요</h1>
+        <div class="m-t-10">
+          <div class="flex">
             <input
               v-model="searchSchool"
               class="jelly-text"
-              style="background: #fff; color: #000; height: 50px; width: 300px"
+              style="height: 50px; width: 300px"
               type="text"
               @keyup.enter="onClickSchoolSearch"
             />
             <button
-              class="jelly-btn jelly-btn--default m-t-10"
+              class="jelly-btn jelly-btn--default m-l-2"
               style="height: 50px"
               @click="onClickSchoolSearch"
             >
               검색
             </button>
-            <div>
-              <!-- 학교리스트 -->
-              <div v-if="GET_AXIOS_CALLBACK_GETTER.schoolList" class="m-t-5">
-                <div
-                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.schoolList"
-                  :key="i"
-                  style="
-                    border-bottom: 1px solid #ddd;
-                    margin: 10px 0;
-                    padding: 10px;
-                  "
-                  @click="onClickSchoolSelect(v.idx)"
-                >
-                  {{ v.school }}
-                  {{ v.addr }}
-                </div>
+          </div>
+          <div>
+            <!-- 학교리스트 -->
+            <div v-if="GET_AXIOS_CALLBACK_GETTER.schoolList" class="m-t-5">
+              <div
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.schoolList"
+                :key="i"
+                style="
+                  border-bottom: 1px solid #ddd;
+                  margin: 10px 0;
+                  padding: 10px;
+                  cursor: pointer;
+                "
+                @click="onClickSchoolSelect(v.idx)"
+              >
+                {{ v.school }}
+                {{ v.addr }}
               </div>
             </div>
           </div>
         </div>
       </div>
       <div v-if="queryStep == '3'">
-        <h1 class="text-white" style="font-size: 50px">
-          학년과 학급을 알려주세요
-        </h1>
+        <h1 class="" style="font-size: 50px">학년과 학급을 알려주세요</h1>
         <div class="m-t-10">
           <input
             v-model="reg_level"
             type="text"
             class="jelly-text"
-            style="background: #fff; color: #000; height: 50px; width: 300px"
+            style="height: 50px; width: 300px"
           />학년
           <input
             v-model="reg_class"
             type="text"
             class="jelly-text m-l-3"
-            style="background: #fff; color: #000; height: 50px; width: 300px"
+            style="height: 50px; width: 300px"
             @keyup.enter="onClickNextStep(4)"
           />반
         </div>
@@ -198,10 +211,8 @@
         </div>
       </div>
       <div v-if="queryStep == '4'">
-        <h1 class="text-white" style="font-size: 50px">
-          주 거래 은행을 선택합니다.
-        </h1>
-        <div class="m-t-10 text-white" style="line-height: 30px">
+        <h1 class="" style="font-size: 50px">주 거래 은행을 선택합니다.</h1>
+        <div class="m-t-10" style="line-height: 30px">
           주 거래 은행에 따라 금리가 다르며, 변동금리는 이용자 및 대출 금액에
           따라 금리변동 폭이 클수도 적을수도 있습니다.<br />
           주 거래 은행은 변경할 수 없으니 신중히 선택해 주시기 바랍니다.
@@ -210,7 +221,12 @@
           <div
             v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.bankList"
             :key="`bank${i}`"
-            style="border-bottom: 1px solid #ddd; margin: 10px 0; padding: 10px"
+            style="
+              border-bottom: 1px solid #ddd;
+              margin: 10px 0;
+              padding: 10px;
+              cursor: pointer;
+            "
             @click="onClickSchoolBank(v.idx)"
           >
             {{ v.sb_name }}
@@ -221,10 +237,10 @@
         </div>
       </div>
       <div v-if="queryStep == '5'">
-        <h1 class="text-white" style="font-size: 50px">
+        <h1 class="" style="font-size: 50px">
           인플레이션 모드를 사용하시겠습니까?
         </h1>
-        <div class="m-t-10 text-white" style="line-height: 30px">
+        <div class="m-t-10" style="line-height: 30px">
           인플레이션 모드는 학급이 주 거래 은행을 통해 대출을 받을때마다 화폐의
           가치가 떨어지며, 상점에서 구입 가능한 상품들에 인플레이션이
           적용됩니다.
@@ -235,7 +251,7 @@
         <select
           v-model="inflation"
           class="jelly-text m-t-10"
-          style="background: #fff; color: #000; height: 50px; width: 300px"
+          style="height: 50px; width: 300px"
         >
           <option :value="null">선택</option>
           <option value="Y">사용</option>
@@ -275,6 +291,7 @@ export default {
       searchSchool: '',
       reg_level: '',
       reg_class: '',
+      reg_pay_rate: '',
       reg_country: '',
       inflation: 'Y',
       adminBackgroundImage: '/pc/img/bg/london-bridge-by-sunny.jpg',
@@ -323,16 +340,61 @@ export default {
     },
     onClickNextStep(e) {
       if (!this.queryStep) {
+        if (
+          !this.reg_country ||
+          !this.reg_pay_unit ||
+          !this.todo_name ||
+          !this.reg_pay_rate
+        ) {
+          return alert('모든 정보를 입력해 주세요')
+        }
         sessionStorage.setItem('reg_country', this.reg_country)
+        sessionStorage.setItem('reg_pay_unit', this.reg_pay_unit)
+        sessionStorage.setItem('reg_pay_rate', this.reg_pay_rate)
+        sessionStorage.setItem('todo_name', this.todo_name)
       }
       if (this.queryStep === '1') {
+        if (this.reg_pw !== this.reg_pw2) {
+          return alert('패스워드가 일치하지 않습니다')
+        }
+        if (
+          !this.reg_id ||
+          !this.reg_pw ||
+          !this.reg_name ||
+          !this.reg_email ||
+          !this.reg_phone
+        ) {
+          return alert('모든 정보를 입력해 주세요')
+        }
+
+        if (this.reg_id) {
+          const frm = new FormData()
+          frm.append('type', 'teacherId_chk')
+          frm.append('reg_id', this.reg_id)
+          this.$axios
+            .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+              header: {
+                'Context-Type': 'multipart/form-data',
+              },
+            })
+            .then((res) => {
+              console.log(res.data)
+              if (res.data != '0') {
+                return alert('이미 사용중인 아이디 입니다.')
+              } else {
+                this.$router.push('/member/sign-up?step=' + e)
+              }
+            })
+            .catch((res) => {
+              console.log('AXIOS FALSE', res)
+            })
+        }
         sessionStorage.setItem('reg_id', this.reg_id)
         sessionStorage.setItem('reg_pw', this.reg_pw)
         sessionStorage.setItem('reg_name', this.reg_name)
         sessionStorage.setItem('reg_email', this.reg_email)
         sessionStorage.setItem('reg_phone', this.reg_phone)
-        sessionStorage.setItem('reg_pay_unit', this.reg_pay_unit)
-        sessionStorage.setItem('todo_name', this.todo_name)
+
         console.log('=======================')
       }
       if (this.queryStep === '3') {
@@ -352,7 +414,7 @@ export default {
           FORM_DATA.append(v[0], v[1])
         })
         axiosForm(FORM_DATA, '/teacher.php')
-        alert('가입완료')
+        alert('가입완료 되었습니다. 로그인 후 이용가능 합니다.')
         sessionStorage.clear()
         this.$router.push('/member/sign-in')
         return false
@@ -361,7 +423,10 @@ export default {
       if (!this.queryStep) {
         this.$router.push('/member/sign-up?step=1')
       } else {
-        this.$router.push('/member/sign-up?step=' + e)
+        console.log('0')
+        if (this.queryStep !== '1') {
+          this.$router.push('/member/sign-up?step=' + e)
+        }
       }
     },
     onClickSchoolSearch() {
@@ -382,10 +447,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~/assets-pc/common.scss';
+
 // * {
-//   color: #fff;
+//   color: #111;
 // }
 body {
-  background-color: #fff;
+  background-color: #f1f1f1;
 }
 </style>
