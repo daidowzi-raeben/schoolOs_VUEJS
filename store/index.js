@@ -215,6 +215,7 @@ const createStore = () => {
             commit('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             console.log('POST_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             commit('LOADING_INIT')
+            params = ''
           })
           .catch((res) => {
             if (params.type === 'login') {
@@ -226,7 +227,7 @@ const createStore = () => {
       },
       GET_AXIOS({ commit }, params) {
         commit('LOADING_TRUE')
-
+        console.log('params', params)
         let URL_TYPE = ''
         process.env.DEVICE === 'mo'
           ? (URL_TYPE = 'student')
@@ -238,7 +239,8 @@ const createStore = () => {
             if (
               params &&
               params.type === 'main' &&
-              process.env.DEVICE === 'mo'
+              process.env.DEVICE === 'mo' &&
+              res.data.status
             ) {
               const total =
                 res.data.status.intellect +
@@ -254,8 +256,9 @@ const createStore = () => {
             } else {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             }
-            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS', res)
+            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LOG', res)
             commit('LOADING_INIT')
+            params = ''
           })
           .catch((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)

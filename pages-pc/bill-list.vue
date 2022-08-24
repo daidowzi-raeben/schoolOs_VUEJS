@@ -151,6 +151,7 @@ export default {
     '$route.query.cate': {
       handler(value) {
         console.log(value)
+        this.params.type = 'billList'
         if (value) {
           this.queryCate = value
           this.params = this.LOGIN_TEACHER

@@ -106,7 +106,7 @@
                       <input
                         :id="`checked${v.idx}`"
                         :key="i"
-                        v-model="checked"
+                        v-model="billStudent"
                         type="checkbox"
                         :value="v.idx"
                       />
@@ -148,6 +148,8 @@
                   v-model="billPay"
                   type="text"
                   class="jelly-text wd-full text-right"
+                  @click="resetInput($event)"
+                  @input="payComma($event)"
                 />
               </div>
             </div>
@@ -209,8 +211,8 @@ export default {
     selectAll: {
       get() {
         return this.GET_AXIOS_CALLBACK_GETTER.studentList
-          ? this.checked
-            ? this.checked.length ===
+          ? this.billStudent
+            ? this.billStudent.length ===
               this.GET_AXIOS_CALLBACK_GETTER.studentList.length
             : false
           : false
@@ -224,8 +226,7 @@ export default {
           })
         }
 
-        this.checked = selected
-        this.billStudent = this.checked
+        this.billStudent = selected
       },
     },
   },
@@ -276,17 +277,20 @@ export default {
       this.$bvModal.show('billInsert')
     },
     onSubmit() {
+      if (this.billStudent.length === 0) {
+        return alert('학생을 선택해 주세요')
+      }
       this.LOADING_TRUE()
       const frm = new FormData()
       frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
       frm.append('type', 'billListStudent')
-      if (this.billStudent === 'etc') {
+      if (this.billSubject === 'etc') {
         frm.append('billStudent', this.etcInput)
       } else {
-        frm.append('billStudent', this.billStudent)
+        frm.append('billSubject', this.billSubject)
       }
-      frm.append('billPay', this.billPay)
-      frm.append('billSubject', this.billSubject)
+      frm.append('billStudent', this.billStudent)
+      frm.append('billPay', this.uncomma(this.billPay))
       frm.append('billContent', this.billContent)
 
       this.$axios
@@ -326,6 +330,20 @@ export default {
     },
     onInputETC(e) {
       this.billSubject = e.target.value
+    },
+    payComma(e) {
+      this.billPay = this.comma(this.uncomma(e.target.value))
+    },
+    comma(str) {
+      str = String(str)
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+    },
+    uncomma(str) {
+      str = String(str)
+      return str.replace(/[^\d]+/g, '')
+    },
+    resetInput(e) {
+      e.target.value = ''
     },
   },
 }

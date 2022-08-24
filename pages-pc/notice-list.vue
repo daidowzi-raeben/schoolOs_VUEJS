@@ -27,7 +27,20 @@
                   style="cursor: pointer"
                   @click="onClickItemDetail(v.idx)"
                 >
-                  <td>{{ v.bd_subject }}</td>
+                  <td class="relative">
+                    <div
+                      class="progressRead"
+                      style="
+                        background: #007bff;
+                        top: 0;
+                        left: 0;
+                        height: 2px;
+                        position: absolute;
+                      "
+                      :style="`width:${v.progress}%`"
+                    ></div>
+                    {{ v.bd_subject }}
+                  </td>
                   <td>{{ v.datetime2 }}</td>
                 </tr>
               </table>

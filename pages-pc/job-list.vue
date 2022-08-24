@@ -44,7 +44,11 @@
                 <th>주급</th>
                 <th>관리</th>
               </tr>
-              <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER" :key="i">
+              <tr
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
+                :key="i"
+                style="cursor: pointer"
+              >
                 <td @click="onClickJobDetail(v.idx)">{{ v.job_name }}</td>
                 <td class="text-right" @click="onClickJobDetail(v.idx)">
                   {{ v.pay | comma }}

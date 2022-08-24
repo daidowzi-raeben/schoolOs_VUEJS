@@ -6,7 +6,7 @@
     </div> -->
     <div class="">
       <div class="flex">
-        <h4 v-if="LOGIN_TEACHER">환경설정</h4>
+        <h4 v-if="LOGIN_TEACHER">세율설정</h4>
       </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="student form">

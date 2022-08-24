@@ -204,6 +204,9 @@ export default {
         // autoplay: true,
         path: '/img/congratulations_3.json', // the path to the animation json
       })
+      setTimeout(() => {
+        this.$refs.animationElement.style.display = 'none'
+      }, 1000)
     },
   },
 }

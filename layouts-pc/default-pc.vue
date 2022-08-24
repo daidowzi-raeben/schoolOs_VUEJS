@@ -38,7 +38,16 @@
                   <li @click="onClickLinkTo($event, 'bill-student')">
                     고지서관리
                   </li>
-                  <li @click="onClickLinkTo($event, 'pay-list')">세금총액</li>
+                  <li
+                    v-if="LOGIN_CONFIG"
+                    @click="onClickLinkTo($event, 'pay-list')"
+                  >
+                    {{ LOGIN_CONFIG.reg_country }}
+                    통장
+                  </li>
+                  <li @click="onClickLinkTo($event, 'lottery-list')">
+                    복권구매내역
+                  </li>
                 </ul>
               </div>
             </li>

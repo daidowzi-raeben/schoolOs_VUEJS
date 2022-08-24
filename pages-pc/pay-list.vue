@@ -7,14 +7,58 @@
     <div class="">
       <div class="">
         <h4 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER.teacherPayList">
-          세금총액
-          <em v-b-tooltip.hover title="현재 재산" class="m-l-2 font-14">
-            {{ GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay | comma }}
-            {{ LOGIN_TEACHER.reg_pay_unit }}
-          </em>
+          {{ LOGIN_TEACHER.reg_country }}
+          통장
         </h4>
       </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.teacherPayList">
+          <div v-if="LOGIN_TEACHER" class="m-t-5">
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate === '' ? 'is_active' : ''"
+              @click="onClickCategory('')"
+              >전체
+              {{
+                GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay | comma
+              }}
+              {{ LOGIN_TEACHER.reg_pay_unit }}</span
+            >
+            <span>
+              <span
+                class="spanBox m-r-2"
+                :class="queryCate === '1' ? 'is_active' : ''"
+                @click="onClickCategory('1')"
+              >
+                입금
+                {{
+                  (Number(
+                    GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                  ) -
+                    Number(
+                      GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
+                    ))
+                    | comma
+                }}
+                {{ LOGIN_TEACHER.reg_pay_unit }}</span
+              >
+            </span>
+            <span>
+              <span
+                class="spanBox m-r-2"
+                :class="queryCate === '2' ? 'is_active' : ''"
+                @click="onClickCategory('2')"
+              >
+                출금
+                {{
+                  GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
+                    | comma
+                }}
+                {{ LOGIN_TEACHER.reg_pay_unit }}</span
+              >
+            </span>
+          </div>
+        </div>
         <div class="m-t-3">
           <div class="student">
             <div class="student__list">
@@ -91,12 +135,34 @@ export default {
       paramsForm: {},
       pay: 0,
       payWon: '',
+      queryCate: '',
     }
   },
 
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+  },
+  watch: {
+    '$route.query.cate': {
+      handler(value) {
+        console.log(value)
+        this.params.type = 'teacherPayList'
+        if (value) {
+          this.params.type = 'teacherPayList'
+          this.queryCate = value
+          this.params = this.LOGIN_TEACHER
+          this.params.queryCate = value
+          this.GET_AXIOS(this.params)
+        } else {
+          this.params.type = 'teacherPayList'
+          this.params.queryCate = null
+          this.params = this.LOGIN_TEACHER
+          this.GET_AXIOS(this.params)
+        }
+      },
+      immediate: true,
+    },
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -127,6 +193,14 @@ export default {
     },
     resetInput(e) {
       e.target.value = ''
+    },
+    onClickCategory(e) {
+      if (e) {
+        this.$router.push(`/pay-list?cate=${e}`)
+      } else {
+        this.queryCate = ''
+        this.$router.push(`/pay-list`)
+      }
     },
   },
 }

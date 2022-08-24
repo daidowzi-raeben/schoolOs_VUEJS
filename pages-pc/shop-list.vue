@@ -5,6 +5,13 @@
         <h4 v-if="LOGIN_TEACHER">상점 관리</h4>
         <div class="flex-right">
           <button
+            v-if="!GET_AXIOS_CALLBACK_GETTER.shopCate"
+            class="jelly-btn jelly-btn--default"
+            @click="onClickAutoCate"
+          >
+            카테고리 자동생성
+          </button>
+          <button
             class="jelly-btn jelly-btn--default"
             @click="onClickItemInsert"
           >
@@ -242,6 +249,27 @@
         >
           수정하기
         </button>
+        <div>
+          <div v-if="GET_AXIOS_CALLBACK_GETTER.buyStudent" class="m-t-3">
+            <table class="jelly-table">
+              <tr>
+                <th>구매자</th>
+                <th>금액</th>
+                <th>구매일</th>
+                <th>사용여부</th>
+              </tr>
+              <tr
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.buyStudent"
+                :key="i"
+              >
+                <td>{{ v.reg_name }}({{ v.reg_id }})</td>
+                <td>{{ v.price | comma }}</td>
+                <td>{{ v.datetime | moment('YY.MM.DD') }}</td>
+                <td>{{ v.use_yn === '0' ? '미사용' : '사용' }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </b-modal>
     <b-modal
@@ -490,6 +518,31 @@ export default {
         )
       }, 3000)
       this.$bvModal.show('itemInsert')
+    },
+    onClickAutoCate() {
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      frm.append('type', 'shopAuto')
+
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          setTimeout(() => {
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'shopList'
+            this.params.queryCate = null
+            this.GET_AXIOS(this.params)
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
     onClickItemInsert() {
       this.calendarSales = ''
