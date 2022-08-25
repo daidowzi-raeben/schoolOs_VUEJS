@@ -5,7 +5,6 @@
         <h4
           v-if="LOGIN_TEACHER"
           style="cursor: pointer"
-          class=""
           @click="$router.push('/todo-list')"
         >
           진행중 {{ LOGIN_TEACHER.todo_name }}
@@ -17,7 +16,7 @@
           <button
             v-if="LOGIN_TEACHER"
             class="jelly-btn jelly-btn--default"
-            @click="onClickItemInsert"
+            @click="onClickitemInsertTodo"
           >
             {{ LOGIN_TEACHER.todo_name }} 추가
           </button>
@@ -106,7 +105,7 @@
         <div class="m-t-15 m-l-4"></div>
       </div>
     </div>
-    <b-modal id="itemInsert" size="lg" hide-footer hide-header>
+    <b-modal id="itemInsertTodo" size="lg" hide-footer hide-header>
       <div class="m-t-5 flex">
         <div class="flex-full m-r-1">
           <p>카테고리</p>
@@ -254,7 +253,7 @@
       <div class="m-t-5 text-center">
         <button
           class="jelly-btn jelly-btn--default"
-          @click="$bvModal.hide('itemInsert')"
+          @click="$bvModal.hide('itemInsertTodo')"
         >
           닫기
         </button>
@@ -436,7 +435,9 @@ export default {
           prevEl: '.swiper-button-prev',
         },
       },
-      params: { type: '' },
+      params: {
+        type: '',
+      },
       paramsForm: {},
       paramsDetail: {},
       noticeSubject: '',
@@ -507,20 +508,31 @@ export default {
     },
   },
   watch: {
+    'params.type': {
+      handler(value) {
+        if (value === 'shopList') {
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'questList'
+          this.params.queryCate = null
+          this.GET_AXIOS(this.params)
+          this.params.type = ''
+        }
+      },
+    },
     '$route.query.cate': {
       handler(value) {
         console.log(value)
         if (value) {
           this.queryCate = value
+          this.params.type = 'questList'
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
-          this.params.type = 'questList'
           this.GET_AXIOS(this.params)
         } else {
-          this.params.queryCate = null
-
-          this.params = this.LOGIN_TEACHER
+          console.log('쿼리 없음')
           this.params.type = 'questList'
+          this.params.queryCate = null
+          this.params = this.LOGIN_TEACHER
           this.GET_AXIOS(this.params)
         }
       },
@@ -537,6 +549,7 @@ export default {
     this.params.type = 'questList'
     this.params.queryCate = null
     this.GET_AXIOS(this.params)
+    this.params.type = ''
   },
   methods: {
     // init
@@ -545,17 +558,45 @@ export default {
 
     // EVENT
     onSubmit() {
-      this.quest.smt_idx = this.LOGIN_TEACHER.smt_idx
-      this.quest.type = 'questWrite'
-      this.paramsForm = this.quest
-      this.POST_AXIOS(this.paramsForm)
-      console.log('this.paramsForm', this.paramsForm)
-      setTimeout(() => {
-        this.params = this.LOGIN_TEACHER
-        this.params.type = 'questList'
-        this.GET_AXIOS(this.params)
-      }, 1000)
-      this.$bvModal.hide('itemInsert')
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('type', 'questWrite')
+      frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      frm.append('subject', this.quest.subject)
+      frm.append('contents', this.quest.contents)
+      frm.append('cate', this.quest.cate)
+      frm.append('price', this.quest.price)
+      frm.append('intellect', this.quest.intellect)
+      frm.append('effort', this.quest.effort)
+      frm.append('health', this.quest.health)
+      frm.append('etiquette', this.quest.etiquette)
+      frm.append('m_price', this.quest.m_price)
+      frm.append('m_intellect', this.quest.m_intellect)
+      frm.append('m_effort', this.quest.m_effort)
+      frm.append('m_health', this.quest.m_health)
+      frm.append('m_etiquette', this.quest.m_etiquette)
+      frm.append('start_day', this.quest.start_day)
+      frm.append('end_day', this.quest.end_day)
+      console.log(frm)
+      // axiosForm(frm, '/student.php')
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          setTimeout(() => {
+            //   this.$bvModal.hide('itemInsert')
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'questList'
+            this.GET_AXIOS(this.params)
+            this.$bvModal.hide('itemInsertTodo')
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
     onSubmitItem() {
       //   const itemThumb = document.getElementById('itemThumb')
@@ -573,7 +614,7 @@ export default {
         this.params.type = 'questList'
         this.GET_AXIOS(this.params)
       }, 1500)
-      this.$bvModal.hide('itemInsert')
+      this.$bvModal.hide('itemInsertTodo')
     },
     isActiveCalendar(e) {
       this.$refs[e].classList.toggle('is_active')
@@ -609,7 +650,7 @@ export default {
         this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.view.subject
         this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.view.contents
         this.quest = this.GET_AXIOS_CALLBACK_GETTER.view
-        this.$bvModal.show('itemInsert')
+        this.$bvModal.show('itemInsertTodo')
       }, 1500)
     },
     onClickItemDetailConfirm(e) {
@@ -628,11 +669,11 @@ export default {
       }, 1500)
       this.$bvModal.show('questConfirm')
     },
-    onClickItemInsert() {
+    onClickitemInsertTodo() {
       this.noticeIdx = null
       this.noticeSubject = ''
       this.noticeContent = ''
-      this.$bvModal.show('itemInsert')
+      this.$bvModal.show('itemInsertTodo')
     },
     onSubmitConfirm(isStatus, sqIdx, smsIdx, mode) {
       this.confirm.type = 'questconfirm'
