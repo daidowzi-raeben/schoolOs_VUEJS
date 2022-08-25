@@ -39,8 +39,10 @@
         </div>
         <div class="text-center font-14 m-t-1">축하합니다.</div>
         <div class="text-center m-t-3">
-          <span class="font-14">당첨금 : </span>
-          <strong style="font-size: 30px"><em>123,123</em></strong>
+          <span class="font-14 m-r-2">당첨금 </span>
+          <strong style="font-size: 30px"
+            ><em> {{ myNum.myPay | comma }} </em></strong
+          >
         </div>
       </div>
       <div v-if="myNum">
@@ -176,7 +178,12 @@ export default {
         //   this.winningTitle()
         //   this.winningStudent()
         // }
-        if (this.myNum && this.myNum.cnt > 2 && this.lotto.list) {
+        if (
+          this.myNum &&
+          this.myNum.cnt > 2 &&
+          this.lotto.list &&
+          this.lotto.lotto.status === '1'
+        ) {
           this.$nextTick(() => {
             this.winningTitle()
             this.winningStudent()

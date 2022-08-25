@@ -14,6 +14,7 @@
           totalPay &&
           totalPay.list &&
           totalPay.list.length > 0 &&
+          totalPay.teacher &&
           totalPay.teacher.inflation === 'Y'
         "
         class="text-center flex-full p-r-6 m-t-2 font-12"
