@@ -13,7 +13,7 @@
             class="jelly-btn jelly-btn--default"
             @click="onClickAutoRule"
           >
-            벌칙 자동 생성
+            규칙 자동 생성
           </button>
           <button class="jelly-btn jelly-btn--default">카테고리 추가</button>
         </div>
@@ -46,12 +46,14 @@
           <div class="flex m-t-3">
             <table class="jelly-table">
               <col style="width: 80px" />
+              <col style="width: 150px" />
               <col style="width: auto" />
               <col style="width: 80px" />
               <col style="width: 200px" />
               <col style="width: 170px" />
               <tr>
                 <th>번호</th>
+                <th>구분</th>
                 <th>규칙</th>
                 <th>벌금</th>
                 <th>벌칙</th>
@@ -65,6 +67,27 @@
                     class="jelly-text wd-full"
                     style="color: #000"
                   />
+                </td>
+                <td class="text-center">
+                  <!-- <input
+                    v-model="ruleCate[0]"
+                    type="text"
+                    class="jelly-text wd-full"
+                    style="color: #000"
+                  /> -->
+                  <select
+                    v-if="GET_AXIOS_CALLBACK_GETTER.rulesCate"
+                    ref="ruleCate"
+                    class="jelly-text wd-full"
+                  >
+                    <option
+                      v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rulesCate"
+                      :key="i"
+                      :value="v.idx"
+                    >
+                      {{ v.content }}
+                    </option>
+                  </select>
                 </td>
                 <td>
                   <input
@@ -100,7 +123,7 @@
                 </td>
               </tr>
               <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rules" :key="i">
-                <td class="text-center" style="display: none">
+                <td class="text-center">
                   <input
                     :ref="`sort${i + 1}`"
                     type="text"
@@ -110,7 +133,29 @@
                     @input="inputRuleNum($event, i + 1)"
                   />
                 </td>
-                <td colspan="2">
+                <td class="text-center">
+                  <!-- <input
+                    v-model="ruleCate[0]"
+                    type="text"
+                    class="jelly-text wd-full"
+                    style="color: #000"
+                  /> -->
+                  <select
+                    v-if="GET_AXIOS_CALLBACK_GETTER.rulesCate"
+                    :ref="`cate${i + 1}`"
+                    class="jelly-text wd-full"
+                  >
+                    <option
+                      v-for="z in GET_AXIOS_CALLBACK_GETTER.rulesCate"
+                      :key="z.idx"
+                      :value="z.idx"
+                      :selected="v.src_idx == z.idx"
+                    >
+                      {{ z.content }}
+                    </option>
+                  </select>
+                </td>
+                <td>
                   <input
                     :ref="`subject${i + 1}`"
                     type="text"
@@ -181,9 +226,14 @@ export default {
     return {
       ruleContent: '',
       params: {},
-      paramsPost: {},
+      paramsPost: {
+        penalty_etc: '',
+        penalty: 0,
+        sort: 1,
+      },
       ruleLength: 1,
       ruleNum: [],
+      ruleCate: [],
       ruleSubject: [],
       rulePay: [],
       rulePenalty: [],
@@ -223,9 +273,8 @@ export default {
   mounted() {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
-    this.params = this.LOGIN_TEACHER
-    this.params.type = 'rule'
-    this.GET_AXIOS(this.params)
+    // this.ruleCate[0] = 7
+    this.initAxios()
     // setTimeout(() => {
     //   this.ruleContent = this.GET_AXIOS_CALLBACK_GETTER.content
     // }, 1000)
@@ -238,11 +287,28 @@ export default {
     // event
     onSubmit() {
       this.paramsPost = this.LOGIN_TEACHER
+      this.ruleCate[0] = this.$refs.ruleCate.value
       this.paramsPost.type = 'rule'
       this.paramsPost.subject = this.ruleSubject[0]
-      this.paramsPost.penalty = this.rulePay[0]
-      this.paramsPost.penalty_etc = this.rulePenalty[0]
-      this.paramsPost.sort = this.ruleNum[0]
+      if (this.rulePay[0]) {
+        this.paramsPost.penalty = this.rulePay[0]
+      } else {
+        // return alert('벌금을 입력하세요')
+        this.paramsPost.penalty = 0
+      }
+      if (this.rulePenalty[0]) {
+        this.paramsPost.penalty_etc = this.rulePenalty[0]
+      } else {
+        this.paramsPost.penalty_etc = ''
+      }
+      if (this.ruleNum[0]) {
+        this.paramsPost.sort = this.ruleNum[0]
+      } else {
+        // return alert('번호를 입력하세요')
+        this.paramsPost.sort = 1
+      }
+      this.paramsPost.ruleCate = this.ruleCate[0]
+      console.log('::::::::', this.paramsPost)
       this.POST_AXIOS(this.paramsPost)
       setTimeout(() => {
         alert('저장되었습니다.')
@@ -291,6 +357,8 @@ export default {
         this.paramsPost.penalty = this.$refs[`penalty${i}`][0].value
         this.paramsPost.penalty_etc = this.$refs[`penalty_etc${i}`][0].value
         this.paramsPost.sort = this.$refs[`sort${i}`][0].value
+        this.paramsPost.cate = this.$refs[`cate${i}`][0].value
+        console.log(';;;;;;;', this.paramsPost)
         this.POST_AXIOS(this.paramsPost)
         setTimeout(() => {
           alert('수정되었습니다.')
@@ -333,6 +401,11 @@ export default {
         this.queryCate = null
         this.$router.push(`/rule-detail`)
       }
+    },
+    async initAxios() {
+      this.params = this.LOGIN_TEACHER
+      this.params.type = 'rule'
+      await this.GET_AXIOS(this.params)
     },
   },
 }

@@ -60,6 +60,56 @@
           </div>
         </div>
         <div class="m-t-3">
+          <div class="flex" style="padding: 20px">
+            <div class="m-r-1">
+              <select
+                v-if="GET_AXIOS_CALLBACK_GETTER.studentList"
+                ref="inputStudent"
+                class="jelly-text"
+                style="width: 150px"
+                required
+              >
+                <option
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
+                  :key="v.idx"
+                  :value="v.idx"
+                  :selected="i === 0"
+                >
+                  {{ v.reg_name }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <input
+                ref="inputPay"
+                class="jelly-text text-right"
+                required
+                style="width: 80px"
+                @input="payComma"
+              />
+            </div>
+            <div v-if="LOGIN_TEACHER" class="m-l-1 m-t-2">
+              {{ LOGIN_TEACHER.reg_pay_unit }}
+            </div>
+            <div class="flex-full m-r-2 m-l-3">
+              <input
+                ref="inputMemo"
+                class="jelly-text wd-full"
+                required
+                placeholder="메모를 입력하세요"
+              />
+            </div>
+            <div>
+              <button
+                class="jelly-btn jelly-btn--default"
+                @click="onSubmitInputStudent"
+              >
+                지급하기
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="m-t-3">
           <div class="student">
             <div class="student__list">
               <table class="jelly-table">
@@ -99,7 +149,9 @@
                       {{ v.student_memo }} 주급 지급
                     </td>
                     <td v-if="v.status === '2'">{{ v.bank_memo }} 이자</td>
-                    <td v-if="v.status === '3'">기타</td>
+                    <td v-if="v.status === '3'">
+                      {{ v.student_memo }} 에게 입금 <br />{{ v.etc_memo }}
+                    </td>
                     <td v-if="v.status === '4'">
                       {{ v.item_memo }} 상품판매수수료
                     </td>
@@ -131,7 +183,9 @@ export default {
   layout: 'default-pc',
   data() {
     return {
-      params: {},
+      params: {
+        queryCate: null,
+      },
       paramsForm: {},
       pay: 0,
       payWon: '',
@@ -180,8 +234,8 @@ export default {
     ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
-    payComma(e) {
-      this.pay = this.comma(this.uncomma(e.target.value))
+    payComma({ target }) {
+      this.$refs.inputPay.value = this.comma(this.uncomma(target.value))
     },
     comma(str) {
       str = String(str)
@@ -201,6 +255,34 @@ export default {
         this.queryCate = ''
         this.$router.push(`/pay-list`)
       }
+    },
+    onSubmitInputStudent() {
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      frm.append('sms_idx', this.$refs.inputStudent.value)
+      frm.append('pay', this.uncomma(this.$refs.inputPay.value))
+      frm.append('memo', this.$refs.inputMemo.value)
+      frm.append('type', 'pay_etc_insert')
+
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          this.LOADING_TRUE()
+          console.log(res.data)
+          setTimeout(() => {
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'teacherPayList'
+            this.GET_AXIOS(this.params)
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
   },
 }

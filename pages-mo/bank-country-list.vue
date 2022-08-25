@@ -93,7 +93,11 @@
                         >{{ v.student_memo }} 주급 지급</em
                       >
                       <em v-if="v.status === '2'">{{ v.bank_memo }} 이자</em>
-                      <em v-if="v.status === '3'">기타</em>
+                      <em v-if="v.status === '3'">
+                        {{ v.student_memo }} 에게 입금 <br />{{
+                          v.etc_memo
+                        }}</em
+                      >
                       <em v-if="v.status === '4'"
                         >{{ v.item_memo }} 상품판매수수료</em
                       >
