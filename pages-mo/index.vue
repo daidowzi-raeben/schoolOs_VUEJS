@@ -4,27 +4,36 @@
       <div class="content__top">
         <div v-b-modal.ModalNotice class="content__top--notice flex">
           <p
-            v-if="GET_AXIOS_CALLBACK_GETTER.rule && LOGIN_CONFIG.t_reg_country"
+            v-if="GET_AXIOS_CALLBACK_GETTER.rules && LOGIN_CONFIG.t_reg_country"
           >
             {{ LOGIN_CONFIG.t_reg_country }} 규칙 확인하기
             <b-modal id="ModalNotice" hide-footer>
               <div class="img-full">
                 <ul>
                   <li
-                    v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rule"
+                    v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rules"
                     :key="i"
                     class="m-b-2 p-b-2"
                     style="border-bottom: 1px solid #eee"
                   >
-                    <div class="font-14">{{ v.subject }}</div>
+                    <div class="font-16 bold">
+                      {{ i + 1 }}조. {{ v.content }}
+                    </div>
                     <div
-                      v-if="LOGIN_CONFIG"
-                      class="m-t-1 jelly-color--888 font-12"
+                      v-for="(k, e) in v.ruleContent"
+                      :key="k.idx"
+                      style="padding: 10px"
                     >
-                      {{ v.penalty + LOGIN_CONFIG.t_reg_pay_unit }}
-                      {{
-                        v.penalty_etc ? ' / ' + v.penalty_etc : v.penalty_etc
-                      }}
+                      <div class="font-14">{{ e + 1 }}항. {{ k.subject }}</div>
+                      <div
+                        v-if="LOGIN_CONFIG"
+                        class="m-t-1 jelly-color--888 font-12"
+                      >
+                        {{ k.penalty + LOGIN_CONFIG.t_reg_pay_unit }}
+                        {{
+                          k.penalty_etc ? ' / ' + k.penalty_etc : k.penalty_etc
+                        }}
+                      </div>
                     </div>
                   </li>
                 </ul>

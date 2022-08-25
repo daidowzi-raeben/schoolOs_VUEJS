@@ -7,6 +7,11 @@
         color="primary"
       ></v-progress-circular>
     </v-overlay> -->
+    <div
+      ref="animationElement"
+      style="position: absolute; width: 100%; margin-top: 10%; z-index: 99"
+      class="text-center"
+    ></div>
     <header>
       <div class="flex">
         <h1 @click="onClickEasterEgg">JELLY</h1>
@@ -90,8 +95,21 @@ export default {
       this.egg++
       console.log(this.egg)
       if (this.egg === 10) {
-        alert('그만눌러')
+        // alert('그만눌러')
+        this.logoClick()
       }
+    },
+    logoClick() {
+      this.$lottie.loadAnimation({
+        container: this.$refs.animationElement, // the dom element that will contain the animation
+        loop: true,
+        autoplay: true,
+        // autoplay: true,
+        path: '/img/logo.json', // the path to the animation json
+      })
+      setTimeout(() => {
+        this.$refs.animationElement.style.display = 'none'
+      }, 5000)
     },
   },
 }

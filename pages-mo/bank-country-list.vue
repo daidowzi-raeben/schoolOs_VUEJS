@@ -164,14 +164,15 @@ export default {
     frm.append('type', 'teacherPayList')
     frm.append('smt_idx', this.LOGIN_STUDENT.smt_idx)
     this.$axios
-      .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+      .post(process.env.VUE_APP_API + '/student.php', frm, {
         header: {
           'Context-Type': 'multipart/form-data',
         },
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res)
         this.totalPay.list = res.data.teacherPayList
+        this.totalPay.teacher = res.data.teacher
         this.$bvModal.show('teacherPayList')
       })
       .catch((res) => {
