@@ -10,7 +10,12 @@
         <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
       </div>
       <div
-        v-if="totalPay.list.length > 0"
+        v-if="
+          totalPay &&
+          totalPay.list &&
+          totalPay.list.length > 0 &&
+          totalPay.teacher.inflation === 'Y'
+        "
         class="text-center flex-full p-r-6 m-t-2 font-12"
       >
         총
@@ -21,6 +26,7 @@
         >
         <span v-if="LOGIN_STUDENT">{{ LOGIN_STUDENT.t_reg_pay_unit }}</span>
       </div>
+      <div v-else class="text-center flex-full p-r-6 m-t-2 font-12"></div>
     </div>
     <!-- 
     <div v-if="GET_AXIOS_CALLBACK_GETTER.monthDate" class="content p-l-3 p-r-3">
@@ -115,6 +121,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div v-else class="quest__content m-t-3 text-center p-5">
+          아직 내역이 없어요
         </div>
       </div>
     </div>

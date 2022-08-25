@@ -326,7 +326,10 @@
                 style="margin-top: 2px"
               ></b-icon>
             </h3>
-            <div class="flex-right">
+            <div
+              v-if="GET_AXIOS_CALLBACK_GETTER.teacher.inflation === 'Y'"
+              class="flex-right"
+            >
               <strong class="font-18 bold"
                 ><em>{{
                   GET_AXIOS_CALLBACK_GETTER.teacher.total_pay | comma

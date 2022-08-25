@@ -14,7 +14,7 @@
           class="jelly-point jelly-background--type4 font-12 m-r-3"
           style="padding: 6px 8px"
         >
-          당첨자 발표
+          당첨 내역
         </span>
       </nuxt-link>
     </div>

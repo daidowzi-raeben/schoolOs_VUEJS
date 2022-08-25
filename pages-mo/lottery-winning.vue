@@ -43,12 +43,12 @@
           <strong style="font-size: 30px"><em>123,123</em></strong>
         </div>
       </div>
-      <div v-else>
+      <div v-if="myNum">
         <div class="text-center font-14 m-t-1">
-          {{ lotto.query }}회차 젤리복권
+          {{ lotto.query }}회차 젤리복권 나의 번호
         </div>
       </div>
-      <div class="flex flex-center m-t-3">
+      <div v-if="myNum" class="flex flex-center m-t-3">
         <span
           class="lottoNumber"
           :class="
@@ -117,7 +117,10 @@
               v.num5
             }}</span>
             <div class="flex-right font-12" style="line-height: 24px">
-              총 <em class="font-16 bold">{{ v.total_pay | comma }}</em>
+              총
+              <em class="font-16 bold">{{
+                (Number(v.total_pay) + Number(v.total_pay_before)) | comma
+              }}</em>
               <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
                 LOGIN_CONFIG.t_reg_pay_unit
               }}</span>
