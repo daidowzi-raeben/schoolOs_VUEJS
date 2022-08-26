@@ -12,6 +12,34 @@
       style="position: absolute; width: 100%; margin-top: 10%; z-index: 99"
       class="text-center"
     ></div>
+    <div v-if="student && student.apply === '0'">
+      <div
+        style="
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          background: #fff;
+          top: 0;
+          left: 0;
+          z-index: 99;
+          opacity: 0.8;
+        "
+      ></div>
+      <div
+        style="
+          position: absolute;
+          color: #000;
+          z-index: 100;
+          width: 100%;
+          padding-top: 45%;
+          height: 100%;
+        "
+        class="text-center"
+      >
+        아직 승인되지 않은 아이디에요.<br />
+        선생님께 승인을 요청해 보세요.
+      </div>
+    </div>
     <header>
       <div class="flex">
         <h1 @click="onClickEasterEgg">JELLY</h1>
@@ -70,6 +98,7 @@ export default {
       egg: 0,
       LOGIN_CONFIG: {},
       teacher: {},
+      student: {},
     }
   },
   computed: {},
@@ -79,11 +108,13 @@ export default {
     const frm = new FormData()
     frm.append('type', 'teacher_chk')
     frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+    frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
     this.$axios
       .post(process.env.VUE_APP_API + '/student.php', frm)
       .then((res) => {
         console.log('================', res.data)
-        this.teacher = res.data
+        this.teacher = res.data.teacher
+        this.student = res.data.student
       })
       .catch((res) => {
         console.log('AXIOS FALSE', res)
