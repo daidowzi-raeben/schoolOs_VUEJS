@@ -17,6 +17,7 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_SUB: [],
       LOGIN: [],
       GET_AXIOS_CALLBACK_DATA_BILL: [],
+      GET_AXIOS_CALLBACK_DATA_LAYOUT: [],
       studentIdMSG: '',
 
       //  ---------------------------------[admin]
@@ -39,6 +40,12 @@ const createStore = () => {
         state.LOADING = false
         return state.GET_AXIOS_CALLBACK_DATA
           ? state.GET_AXIOS_CALLBACK_DATA
+          : ''
+      },
+      GET_AXIOS_CALLBACK_GETTER_LAYOUT(state) {
+        state.LOADING = false
+        return state.GET_AXIOS_CALLBACK_DATA_LAYOUT
+          ? state.GET_AXIOS_CALLBACK_DATA_LAYOUT
           : ''
       },
       LOGIN_STUDENT(state) {
@@ -74,6 +81,10 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_SUCCESS(state, payload) {
         // state.LOADING = true
         state.GET_AXIOS_CALLBACK_DATA = payload
+      },
+      GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT(state, payload) {
+        // state.LOADING = true
+        state.GET_AXIOS_CALLBACK_DATA_LAYOUT = payload
       },
       GET_AXIOS_CALLBACK_DATA_SUCCESS_BILL(state, payload) {
         // state.LOADING = true
@@ -251,7 +262,7 @@ const createStore = () => {
             }
             if (params && params.type === 'billStudentCnt') {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_BILL', res.data.cnt)
-            } else if (params && params.type === 'attendance') {
+            } else if (params && params.type === 'ruleStudent') {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_SUB', res.data)
             } else {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
@@ -263,6 +274,18 @@ const createStore = () => {
           .catch((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
             console.log('URL_TYPE', URL_TYPE)
+          })
+      },
+      GET_AXIOS_LAYOUT({ commit }, params) {
+        console.log('LAYOUT params', params)
+        axios
+          .get(process.env.VUE_APP_API + '/teacher.php', { params })
+          .then((res) => {
+            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT', res)
+            commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT', res.data)
+          })
+          .catch((res) => {
+            console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
           })
       },
       GET_API_BG_PIXABAY({ commit }, params) {

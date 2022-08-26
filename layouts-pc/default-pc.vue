@@ -15,13 +15,37 @@
               <b-icon icon="gear" class="m-r-2"></b-icon> 환경설정
               <div>
                 <ul>
-                  <li @click="onClickLinkTo($event, 'job-list')">직업설정</li>
+                  <li @click="onClickLinkTo($event, 'job-list')">
+                    직업설정
+                    <b-badge
+                      v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.jobCnt === '0'"
+                      variant="warning"
+                      class="m-l-1"
+                      >설정 전</b-badge
+                    >
+                  </li>
                   <li @click="onClickLinkTo($event, 'rule-detail')">
                     규칙설정
+                    <b-badge
+                      v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.ruleCnt === '0'"
+                      variant="warning"
+                      class="m-l-1"
+                      >설정 전</b-badge
+                    >
                   </li>
                   <li @click="onClickLinkTo($event, 'qr-code')">가입코드</li>
                   <li @click="onClickLinkTo($event, 'student-apply')">
                     회원승인
+                    <b-badge
+                      v-if="
+                        GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt !== '0'
+                      "
+                      variant="warning"
+                      class="m-l-1"
+                      >{{
+                        GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt
+                      }}</b-badge
+                    >
                   </li>
                 </ul>
               </div>
@@ -30,7 +54,15 @@
               <b-icon icon="house" class="m-r-2"></b-icon> 학급관리
               <div>
                 <ul>
-                  <li @click="onClickLinkTo($event, 'pay-loan')">대출관리</li>
+                  <li @click="onClickLinkTo($event, 'pay-loan')">
+                    대출관리
+                    <b-badge
+                      v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.loanCnt === '0'"
+                      variant="warning"
+                      class="m-l-1"
+                      >첫 대출받기</b-badge
+                    >
+                  </li>
                   <li @click="onClickLinkTo($event, 'teacher-setting')">
                     세율설정
                   </li>
@@ -58,7 +90,15 @@
                   <li @click="onClickLinkTo($event, 'student-list')">
                     학생관리
                   </li>
-                  <li @click="onClickLinkTo($event, 'sue-list')">신고관리</li>
+                  <li @click="onClickLinkTo($event, 'sue-list')">
+                    신고관리
+                    <b-badge
+                      v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.sueCnt !== '0'"
+                      variant="warning"
+                      class="m-l-1"
+                      >{{ GET_AXIOS_CALLBACK_GETTER_LAYOUT.sueCnt }}</b-badge
+                    >
+                  </li>
                 </ul>
               </div>
             </li>
@@ -73,30 +113,43 @@
                 </ul>
               </div>
             </li>
+
             <li
               style="cursor: pointer"
               @click="onClickLinkTo($event, 'todo-list')"
             >
               <b-icon icon="card-list" class="m-r-2"></b-icon>
               {{ LOGIN_CONFIG.todo_name }} 관리
+              <b-badge
+                v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.questCnt !== 0"
+                variant="warning"
+                class="m-l-1"
+                >{{ GET_AXIOS_CALLBACK_GETTER_LAYOUT.questCnt }}</b-badge
+              >
             </li>
             <li
               style="cursor: pointer"
               @click="onClickLinkTo($event, 'notice-list')"
             >
               <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 알림장 관리
+              <b-badge
+                v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.todayNotice === '0'"
+                variant="warning"
+                class="m-l-1"
+                >오늘 미등록</b-badge
+              >
             </li>
             <li
               style="cursor: pointer"
               onclick="window.open('https://open.kakao.com/o/sf8I8jxe')"
             >
-              <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 카카오 문의
+              <b-icon icon="question-square" class="m-r-2"></b-icon> 카카오 문의
             </li>
             <li
               style="cursor: pointer"
               @click="onClickLinkTo($event, 'member/sign-out')"
             >
-              <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 로그아웃
+              <b-icon icon="door-open" class="m-r-2"></b-icon> 로그아웃
             </li>
 
             <!-- <li @click="onClickLinkTo($event,'member/sign-out')">로그아웃</li> -->
@@ -204,25 +257,38 @@ export default {
         content: null,
         url: '',
       },
+      gnbNew: {},
+      frmLayout: {
+        type: 'layoutNew',
+      },
     }
   },
   computed: {
     ...mapState(['LOGIN', 'adminMainBG', 'LOADING']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    ...mapGetters([
+      'GET_AXIOS_CALLBACK_GETTER',
+      'LOGIN_TEACHER',
+      'GET_AXIOS_CALLBACK_GETTER_LAYOUT',
+    ]),
   },
   watch: {
-    // adminMainBG: {
-    //   handler(value) {
-    //     console.log('================>', value)
-    //     this.adminBackgroundImage = value
-    //   },
-    //   immediate: true,
-    // },
+    '$route.path': {
+      handler(value) {
+        this.$nextTick(() => {
+          console.log('================>', value, this.LOGIN_CONFIG.smt_idx)
+          this.frmLayout.smt_idx = this.LOGIN_CONFIG.smt_idx
+          this.GET_AXIOS_LAYOUT(this.frmLayout)
+          console.log('this.frmLayout', this.frmLayout)
+        })
+      },
+      immediate: true,
+    },
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
   },
   mounted() {
+    console.log('$router.', this.$router, this.$route.path)
     console.log(
       '========= router =========',
       this.$router.currentRoute.fullPath
@@ -245,7 +311,12 @@ export default {
   },
   methods: {
     // init
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'GET_API_BG_PIXABAY']),
+    ...mapActions([
+      'POST_AXIOS',
+      'GET_AXIOS',
+      'GET_API_BG_PIXABAY',
+      'GET_AXIOS_LAYOUT',
+    ]),
     ...mapMutations(['ADMIN_MAIN_BG_MUTATIONS']),
     // menuActiveNav() {
     //   document.getElementById('menu-top').classList.toggle('menu-top-click')

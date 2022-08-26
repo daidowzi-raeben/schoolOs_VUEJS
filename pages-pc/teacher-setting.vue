@@ -70,7 +70,7 @@
                     <b-icon icon="exclamation-circle"></b-icon>
                   </span>
                 </p>
-                <div class="d-flex">
+                <div class="d-flex m-t-3">
                   <select
                     v-model="tax.jb_mode"
                     class="jelly-text"
@@ -91,9 +91,19 @@
                     {{ LOGIN_TEACHER.reg_pay_unit }}
                   </span>
                 </div>
+                <p class="m-t-5">알림장 읽음 보상</p>
+                <div class="d-flex">
+                  <input
+                    v-model="tax.notice_pay"
+                    class="jelly-text jelly-text--under text-right m-l-2"
+                  />
+                  <span v-if="LOGIN_TEACHER" class="input-focus m-t-1 m-l-2">
+                    {{ LOGIN_TEACHER.reg_pay_unit }}
+                  </span>
+                </div>
                 <div class="m-t-5 text-center">
                   <button class="jelly-btn jelly-btn--blue" @click="onSubmit">
-                    수정
+                    저장
                   </button>
                 </div>
               </div>
@@ -126,6 +136,7 @@ export default {
         type: 'teacherTax',
         jb_mode: null,
         jb_pay: 0,
+        notice_pay: '',
       },
     }
   },
@@ -153,6 +164,7 @@ export default {
       this.tax.tax_semen_nm = this.GET_AXIOS_CALLBACK_GETTER.tax_semen_nm
       this.tax.jb_mode = this.GET_AXIOS_CALLBACK_GETTER.teacher.jb_mode
       this.tax.jb_pay = this.GET_AXIOS_CALLBACK_GETTER.teacher.jb_pay
+      this.tax.notice_pay = this.GET_AXIOS_CALLBACK_GETTER.teacher.notice_pay
     }, 1500)
 
     console.log(
@@ -169,6 +181,7 @@ export default {
     onSubmit() {
       this.tax.smt_idx = this.LOGIN_TEACHER.smt_idx
       this.POST_AXIOS(this.tax)
+      alert('저장되었습니다.')
     },
     payComma(e) {
       this.pay = this.comma(this.uncomma(e.target.value))

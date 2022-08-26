@@ -1,9 +1,18 @@
 <template>
   <div>
     <div class="">
+      <div class="flex">
+        <h4 v-if="LOGIN_TEACHER" class="is_active">가입코드</h4>
+        <button
+          class="jelly-btn jelly-btn--default flex-right"
+          onclick="window.open('/pc/school_os_qr.png')"
+        >
+          접속 QRCODE
+        </button>
+      </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <!-- <span>{{ today }}</span> -->
-        <h1 v-if="LOGIN_TEACHER" class="">가입코드</h1>
+        <!-- <h1 v-if="LOGIN_TEACHER" class="">가입코드</h1> -->
         <div class="student form">
           <div class="student__list">
             <div class="m-t-3">

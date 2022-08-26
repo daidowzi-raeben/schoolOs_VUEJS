@@ -60,7 +60,16 @@ export default {
     ...mapState(['POST_AXIOS_CALLBACK_DATA']),
     ...mapGetters(['POST_AXIOS_CALLBACK_GETTER', 'LOGIN_LOCALSTORAGE']),
   },
-  watch: {},
+  watch: {
+    'POST_AXIOS_CALLBACK_GETTER.idx': {
+      handler(value) {
+        if (value) {
+          console.log('LOGIGN SUCCESS')
+          this.$router.push('/')
+        }
+      },
+    },
+  },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
   },
@@ -82,9 +91,11 @@ export default {
         ? (this.disabled = false)
         : (this.disabled = true)
     },
-    onClickLogin() {
-      this.POST_AXIOS(this.params)
-      this.$router.push('/')
+    async onClickLogin() {
+      await this.POST_AXIOS(this.params)
+      this.$nextTick(() => {
+        this.$router.push('/')
+      })
     },
   },
 }

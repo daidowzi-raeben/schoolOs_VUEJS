@@ -6,7 +6,7 @@
     </div> -->
     <div class="">
       <div class="">
-        <h4 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER.teacherPayList">
+        <h4 v-if="LOGIN_TEACHER">
           {{ LOGIN_TEACHER.reg_country }}
           통장
         </h4>
@@ -20,7 +20,9 @@
               @click="onClickCategory('')"
               >전체
               {{
-                GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay | comma
+                GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                  ? GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                  : '0' | comma
               }}
               {{ LOGIN_TEACHER.reg_pay_unit }}</span
             >
@@ -32,13 +34,14 @@
               >
                 입금
                 {{
-                  (Number(
-                    GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
-                  ) -
-                    Number(
-                      GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
-                    ))
-                    | comma
+                  GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                    ? Number(
+                        GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                      ) -
+                      Number(
+                        GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
+                      )
+                    : '0' | comma
                 }}
                 {{ LOGIN_TEACHER.reg_pay_unit }}</span
               >
@@ -52,7 +55,8 @@
                 출금
                 {{
                   GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
-                    | comma
+                    ? GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
+                    : '0' | comma
                 }}
                 {{ LOGIN_TEACHER.reg_pay_unit }}</span
               >

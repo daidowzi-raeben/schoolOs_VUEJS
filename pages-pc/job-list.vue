@@ -13,13 +13,13 @@
   </div> -->
   <div class="">
     <div class="flex">
-      <h4 v-if="LOGIN_TEACHER">직업관리</h4>
+      <h4 v-if="LOGIN_TEACHER">직업설정</h4>
       <div class="flex-right">
         <button class="jelly-btn jelly-btn--default" @click="onClickJobInsert">
           직업 생성
         </button>
         <button
-          v-if="GET_AXIOS_CALLBACK_GETTER.length === 0"
+          v-if="!GET_AXIOS_CALLBACK_GETTER.list"
           class="jelly-btn jelly-btn--default m-l-1"
           @click="onClickAutoInsert"
         >
@@ -33,22 +33,25 @@
       <div class="student form">
         <div class="student__list">
           <div class="m-t-3">
-            <table v-if="GET_AXIOS_CALLBACK_GETTER" class="jelly-table">
+            <table v-if="GET_AXIOS_CALLBACK_GETTER.list" class="jelly-table">
               <colgroup>
+                <col style="width: 80px" />
                 <col style="width: auto" />
                 <col style="width: 100px" />
                 <col style="width: 100px" />
               </colgroup>
               <tr>
+                <th>번호</th>
                 <th>직업명</th>
                 <th>주급</th>
                 <th>관리</th>
               </tr>
               <tr
-                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER"
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.list"
                 :key="i"
                 style="cursor: pointer"
               >
+                <td>{{ GET_AXIOS_CALLBACK_GETTER.total - i }}</td>
                 <td @click="onClickJobDetail(v.idx)">{{ v.job_name }}</td>
                 <td class="text-right" @click="onClickJobDetail(v.idx)">
                   {{ v.pay | comma }}

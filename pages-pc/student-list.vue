@@ -311,64 +311,46 @@
     <b-modal id="studentAttendance" size="xl" hide-footer hide-header>
       <div>
         <div class="">
-          <div class="flex">
-            <div class="flex-full">
-              <p>출결날짜</p>
-              <b-form-datepicker
-                v-model="attendanceInsert.smsa_date"
-                type="date"
-                class="jelly-text jelly-text--h wd-full"
-              ></b-form-datepicker>
-            </div>
-            <div class="flex-full m-l-2 m-r-2">
-              <p>구분</p>
-              <input
-                v-model="attendanceInsert.subject"
-                type="text"
-                class="jelly-text wd-full"
-                placeholder="미인정 출석"
-              />
-            </div>
-            <div class="flex-full">
-              <p>사유</p>
-              <input
-                v-model="attendanceInsert.content"
-                type="text"
-                class="jelly-text wd-full"
-                placeholder=""
-              />
-            </div>
-          </div>
-          <div class="m-t-3 text-center">
-            <button
-              class="jelly-btn jelly-btn--default"
-              @click="$bvModal.hide('studentAttendance')"
-            >
-              닫기
-            </button>
-            <button
-              class="jelly-btn jelly-btn--default"
-              @click="onSubmitAttendanceDetail"
-            >
-              저장
-            </button>
-          </div>
+          <h3 v-if="GET_AXIOS_CALLBACK_DATA_SUB.total">
+            벌칙 관리
+            <em class="font-14">{{ GET_AXIOS_CALLBACK_DATA_SUB.total }}건</em>
+          </h3>
+          <h3 v-else>신고내역이 없습니다.</h3>
           <div class="m-t-5">
-            <table v-if="GET_AXIOS_CALLBACK_DATA_SUB" class="jelly-table">
+            <table
+              v-if="GET_AXIOS_CALLBACK_DATA_SUB.rulesCate"
+              class="jelly-table"
+            >
               <tr>
                 <th>날짜</th>
-                <th>구분</th>
-                <th>사유</th>
+                <th>신고자</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>벌금</th>
+                <th>결과</th>
               </tr>
-              <tr v-for="(v, i) in GET_AXIOS_CALLBACK_DATA_SUB" :key="i">
+              <tr
+                v-for="(v, i) in GET_AXIOS_CALLBACK_DATA_SUB.rulesCate"
+                :key="i"
+              >
                 <td>
-                  {{ v.smsa_date }}
+                  {{ v.sue_date }}
                 </td>
+                <td>{{ v.reg_name_to }} ({{ v.reg_id_to }})</td>
                 <td>
-                  {{ v.subject }}
+                  {{ v.rule ? v.rule : v.subject }}
                 </td>
                 <td>
                   {{ v.content }}
+                </td>
+                <td>
+                  {{ v.status_bill === '0' ? '' : '벌금부과' }}
+                </td>
+                <td>
+                  <span v-if="v.status === '1'">신고접수</span>
+                  <span v-if="v.status === '2'">신고확인</span>
+                  <span v-if="v.status === '3'">신고취소</span>
+                  <span v-if="v.status === '4'">벌칙처리</span>
                 </td>
               </tr>
             </table>
@@ -525,7 +507,7 @@ export default {
     // EVENT
     onClickAttendanceDetail(idx) {
       this.paramsAttendance = this.attendance
-      this.paramsAttendance.type = 'attendance'
+      this.paramsAttendance.type = 'ruleStudent'
       this.paramsAttendance.sms_idx = idx
       console.log(this.paramsAttendance)
       this.GET_AXIOS(this.paramsAttendance)

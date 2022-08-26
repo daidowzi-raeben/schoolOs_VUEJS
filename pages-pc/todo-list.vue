@@ -671,6 +671,14 @@ export default {
       this.$bvModal.show('questConfirm')
     },
     onClickitemInsertTodo() {
+      const today = new Date()
+
+      const year = today.getFullYear()
+      const month = ('0' + (today.getMonth() + 1)).slice(-2)
+      const day = ('0' + today.getDate()).slice(-2)
+      const dateString = year + '-' + month + '-' + day
+
+      this.quest.start_day = dateString
       this.noticeIdx = null
       this.noticeSubject = ''
       this.noticeContent = ''
