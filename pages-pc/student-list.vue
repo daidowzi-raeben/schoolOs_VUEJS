@@ -229,6 +229,9 @@
           </div>
         </div>
         <div class="m-t-5 text-center">
+          <button class="jelly-btn jelly-btn--gray m-r-8" @click="onSubmitDel">
+            삭제하기
+          </button>
           <button
             class="jelly-btn jelly-btn--default"
             @click="$bvModal.hide('studentDetail')"
@@ -608,6 +611,35 @@ export default {
         .catch((res) => {
           console.log('AXIOS FALSE', res)
         })
+    },
+    onSubmitDel() {
+      console.log('this.student.sms_idx', this.student.sms_idx)
+      if (confirm('학생을 삭제하시겠습니까?')) {
+        this.LOADING_TRUE()
+        const frm = new FormData()
+        frm.append('sms_idx', this.student.sms_idx)
+        frm.append('type', 'studentDel')
+        this.$axios
+          .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            this.LOADING_TRUE()
+            console.log(res.data)
+            alert('학생이 삭제되었습니다.')
+            this.$bvModal.hide('studentDetail')
+            setTimeout(() => {
+              this.params = this.LOGIN_TEACHER
+              this.params.type = 'studentList'
+              this.GET_AXIOS(this.params)
+            })
+          })
+          .catch((res) => {
+            console.log('AXIOS FALSE', res)
+          })
+      }
     },
   },
 }

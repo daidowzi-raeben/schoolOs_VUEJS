@@ -191,7 +191,7 @@ export default {
   data() {
     return {
       params: {
-        type: '',
+        type: 'billListStudent',
         queryCate: '',
       },
       paramsPost: {},
@@ -263,6 +263,7 @@ export default {
     this.params.queryCate = null
     this.GET_AXIOS(this.params)
     // billCateList
+    this.params.type = ''
   },
   methods: {
     // init

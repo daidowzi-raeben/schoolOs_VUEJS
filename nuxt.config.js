@@ -30,10 +30,10 @@ console.log('[ENV >>>>> ]', process.env)
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - schoolos',
-    title: 'schoolos',
+    titleTemplate: '%s - JELLY',
+    title: 'JELLY',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ko',
     },
     meta: [
       { charset: 'utf-8' },

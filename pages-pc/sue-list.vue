@@ -137,7 +137,9 @@ export default {
   layout: 'default-pc',
   data() {
     return {
-      params: {},
+      params: {
+        type: 'sueList',
+      },
       paramsForm: {},
       paramsDetail: {},
       noticeSubject: '',
@@ -179,17 +181,6 @@ export default {
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   watch: {
-    'params.type': {
-      handler(value) {
-        if (value === 'studentList') {
-          this.params = this.LOGIN_TEACHER
-          this.params.type = 'sueList'
-          this.params.queryCate = null
-          this.GET_AXIOS(this.params)
-          this.params.type = ''
-        }
-      },
-    },
     '$route.query.cate': {
       handler(value) {
         console.log(value)

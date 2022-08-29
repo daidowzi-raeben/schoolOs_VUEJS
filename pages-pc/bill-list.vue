@@ -134,7 +134,7 @@ export default {
   layout: 'default-pc',
   data() {
     return {
-      params: {},
+      params: { type: 'billList' },
       paramsPost: {},
       billCateList: null,
       billPay: 0,
@@ -188,6 +188,7 @@ export default {
     console.log('===========================', this.params)
     this.GET_AXIOS(this.params)
     // billCateList
+    this.params.type = ''
   },
   methods: {
     // init

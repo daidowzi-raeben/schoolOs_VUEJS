@@ -189,6 +189,7 @@ export default {
     return {
       params: {
         queryCate: null,
+        type: 'teacherPayList',
       },
       paramsForm: {},
       pay: 0,

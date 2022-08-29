@@ -22,7 +22,7 @@
           top: 0;
           left: 0;
           z-index: 99;
-          opacity: 0.8;
+          opacity: 0.9;
         "
       ></div>
       <div
@@ -37,7 +37,8 @@
         class="text-center"
       >
         아직 승인되지 않은 아이디에요.<br />
-        선생님께 승인을 요청해 보세요.
+        선생님께 승인을 요청해 보세요.<br />
+        <em>선생님이 승인해야 사용할 수 있어요</em>
       </div>
     </div>
     <header>

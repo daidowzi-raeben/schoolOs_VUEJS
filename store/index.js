@@ -267,7 +267,7 @@ const createStore = () => {
             } else {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             }
-            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LOG', res)
+            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LOG', res, params)
             commit('LOADING_INIT')
             params = ''
           })
