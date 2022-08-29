@@ -272,7 +272,7 @@ const createStore = () => {
             params = ''
           })
           .catch((res) => {
-            console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
+            console.error('GET_AXIOS_CALLBACK_DATA_FALIE', res)
             console.log('URL_TYPE', URL_TYPE)
           })
       },
@@ -285,7 +285,7 @@ const createStore = () => {
             commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT', res.data)
           })
           .catch((res) => {
-            console.log('GET_AXIOS_CALLBACK_DATA_FALIE', res)
+            console.error('GET_AXIOS_CALLBACK_DATA_FALIE', res)
           })
       },
       GET_API_BG_PIXABAY({ commit }, params) {
@@ -327,7 +327,7 @@ const createStore = () => {
             console.log('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
           })
           .catch((res) => {
-            console.log('GET_API_MY_SCHOOL_FALSE', res)
+            console.error('GET_API_MY_SCHOOL_FALSE', res)
           })
       },
       GET_STUDENT_ID({ commit }, params) {
@@ -340,7 +340,7 @@ const createStore = () => {
             console.log('GET_STUDENT_ID_SUCCESS', res)
           })
           .catch((res) => {
-            console.log('GET_API_MY_SCHOOL_FALSE', res)
+            console.error('GET_API_MY_SCHOOL_FALSE', res)
           })
       },
     },

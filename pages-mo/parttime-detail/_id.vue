@@ -419,7 +419,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false
@@ -455,7 +455,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false
@@ -487,7 +487,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false
@@ -523,7 +523,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false
@@ -590,7 +590,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false

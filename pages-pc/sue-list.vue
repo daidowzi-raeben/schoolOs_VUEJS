@@ -187,7 +187,7 @@ export default {
       handler(value) {
         if (value === 'studendList') {
           this.params = this.LOGIN_TEACHER
-          this.params.type = 'questList'
+          this.params.type = 'sueList'
           this.params.queryCate = null
           this.GET_AXIOS(this.params)
           this.params.type = ''

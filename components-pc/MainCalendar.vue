@@ -451,7 +451,7 @@ export default {
             this.LOADING_INIT()
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       }
     },

@@ -199,7 +199,7 @@ export default {
             console.log(res.data)
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false

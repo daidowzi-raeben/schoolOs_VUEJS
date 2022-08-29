@@ -336,7 +336,7 @@ export default {
             this.GET_AXIOS(this.params)
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false
@@ -408,7 +408,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       }
     },
@@ -452,7 +452,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false
@@ -489,7 +489,7 @@ export default {
             })
           })
           .catch((res) => {
-            console.log('AXIOS FALSE', res)
+            console.error('AXIOS FALSE', res)
           })
       } else {
         return false

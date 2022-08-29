@@ -100,8 +100,8 @@
                         v-if="v.case_result === '대출'"
                         style="color: #111"
                       ></em>
-                      <em v-if="v.case_result === '벌금'" style="color: #111"
-                        >[벌금] {{ v.penalty_memo }}</em
+                      <em v-if="v.case_result === '벌금'" style="color: #111">
+                        {{ v.penalty_memo }}</em
                       >
                       <em v-if="v.case_result === '주급'" style="color: #111"
                         >주급 지급</em

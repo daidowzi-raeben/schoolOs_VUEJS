@@ -40,6 +40,29 @@ export default {
     if (!localStorage.getItem('STUDENT')) {
       // return this.$router.push('/member/sign-in')
     }
+
+    // 캐시 지우기용
+    const logChk = JSON.parse(this.loginCheck)
+    const frm = new FormData()
+    frm.append('type', 'logout')
+    frm.append('sms_idx', logChk.sms_idx)
+    this.$axios
+      .post(process.env.VUE_APP_API + '/student.php', frm, {
+        header: {
+          'Context-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        console.log('[LOGOUT]', res.data)
+        setTimeout(() => {
+          if (res.data != '1') {
+            this.$router.push(`/member/sign-out?sms_idx=${logChk.sms_idx}`)
+          }
+        })
+      })
+      .catch((res) => {
+        console.log('AXIOS FALSE', res)
+      })
   },
   methods: {
     ...mapMutations(['LOADING_INIT']),
