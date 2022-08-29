@@ -37,7 +37,7 @@
       <div v-if="!GET_AXIOS_CALLBACK_GETTER.item">
         <div class="p-5 text-center font-14">아직 구매한 상품이 없어요.</div>
       </div>
-      <ul v-if="GET_AXIOS_CALLBACK_GETTER.item">
+      <ul v-if="GET_AXIOS_CALLBACK_GETTER.item" class="m-t-5">
         <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.item" :key="i">
           <nuxt-link :to="'/item-detail/' + v.idx">
             <div class="image">
@@ -62,7 +62,7 @@
       class="matketItem m-l-3 m-r-3"
     >
       <h3>사용완료 상품</h3>
-      <ul v-if="GET_AXIOS_CALLBACK_GETTER.itemUse">
+      <ul v-if="GET_AXIOS_CALLBACK_GETTER.itemUse" class="m-t-5">
         <li v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.itemUse" :key="i">
           <nuxt-link :to="'/item-detail/' + v.idx">
             <div class="image">

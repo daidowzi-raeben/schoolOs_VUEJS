@@ -87,7 +87,7 @@
                       <span v-if="v.status === '7'">마켓</span>
                       <span v-if="v.status === '8'">가입</span>
                       <span v-if="v.status === '9'">알바고</span>
-
+                      <br />
                       <em v-if="v.status === '0'">{{ v.bank_memo }} 대출</em>
                       <em v-if="v.status === '1'"
                         >{{ v.student_memo }} 주급 지급</em
@@ -103,7 +103,7 @@
                       >
                       <em v-if="v.status === '5'">{{ v.student_memo }} 세금</em>
                       <em v-if="v.status === '6'">
-                        {{ v.bill_memo }}
+                        {{ v.bill_memo }} {{ v.bill_memo2 }}
                       </em>
                       <em v-if="v.status === '7'">{{ v.item_memo }} 판매</em>
                       <em v-if="v.status === '8'">가입</em>
@@ -112,10 +112,10 @@
                       >
                     </p>
                     <div
-                      class="flex-right text-right flex-shrink m-t-1"
+                      class="flex-right text-right flex-shrink m-t-5"
                       :class="v.status === '1' ? 'jelly-color--type4' : ''"
                     >
-                      <span v-if="v.status === '1'">-</span>
+                      <!-- <span v-if="v.status === '1'">-</span> -->
                       {{ v.pay | comma }}
                     </div>
                   </div>

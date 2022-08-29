@@ -59,14 +59,17 @@
             required
           />
         </div>
-        <div class="m-t-4">
-          <p>출석번호</p>
-          <input
-            v-model="params.class_number"
-            type="text"
-            class="jelly-text jelly-text--h wd-full m-t-2"
-            required
-          />
+        <div class="m-t-4 flex">
+          <div class="flex-full">
+            <p>출석번호</p>
+            <input
+              v-model="params.class_number"
+              type="tel"
+              class="jelly-text jelly-text--h wd-full m-t-2 m-r-2 text-right"
+              required
+            />
+          </div>
+          <div class="m-l-2 m-t-8">번</div>
         </div>
         <button
           type="submit"

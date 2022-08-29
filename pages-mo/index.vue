@@ -2,6 +2,7 @@
   <div v-if="LOGIN_CONFIG && GET_AXIOS_CALLBACK_GETTER" id="school-content">
     <div class="content">
       <div class="content__top">
+        <!-- <div>용신 초등학교 6학년 5반</div> -->
         <div v-b-modal.ModalNotice class="content__top--notice flex">
           <p
             v-if="GET_AXIOS_CALLBACK_GETTER.rules && LOGIN_CONFIG.t_reg_country"
@@ -51,19 +52,20 @@
           <p v-else>아직 규칙이 정해지지 않았어요</p>
           <b-icon icon="chevron-right" class="flex-right"></b-icon>
         </div>
-        <div class="content__top--level flex">
-          <div class="profile">
-            <div class="profile__avatar flex">
-              <div v-if="LOGIN_CONFIG" v-b-modal.profileImage class="photo">
-                <img
-                  v-if="!LOGIN_CONFIG.reg_photo"
-                  src="http://api.school-os.net/data/student/profile/default.png"
-                />
-                <img
-                  v-if="LOGIN_CONFIG.reg_photo"
-                  :src="`http://api.school-os.net/data/student/profile/thumb/${LOGIN_CONFIG.reg_photo}`"
-                />
-                <!-- <img
+        <div class="content__top--level">
+          <div class="flex m-t-3">
+            <div class="profile">
+              <div class="profile__avatar flex">
+                <div v-if="LOGIN_CONFIG" v-b-modal.profileImage class="photo">
+                  <img
+                    v-if="!LOGIN_CONFIG.reg_photo"
+                    src="http://api.school-os.net/data/student/profile/default.png"
+                  />
+                  <img
+                    v-if="LOGIN_CONFIG.reg_photo"
+                    :src="`http://api.school-os.net/data/student/profile/thumb/${LOGIN_CONFIG.reg_photo}`"
+                  />
+                  <!-- <img
                   v-if="
                     Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 19
                   "
@@ -99,79 +101,82 @@
                   "
                   src="~/static/mo/plant/level_5.jpg"
                 /> -->
-              </div>
-              <div class="name">
-                <strong>
-                  {{ LOGIN_CONFIG.reg_name }}
-                </strong>
-                <p>
-                  LV
-                  <em v-if="GET_AXIOS_CALLBACK_GETTER.status" class="bold">
-                    {{ Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) }}
-                  </em>
-                </p>
+                </div>
+                <div class="name">
+                  <strong>
+                    {{ LOGIN_CONFIG.reg_name }}
+                  </strong>
+                  <p>
+                    LV
+                    <em v-if="GET_AXIOS_CALLBACK_GETTER.status" class="bold">
+                      {{
+                        Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4)
+                      }}
+                    </em>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="status flex-right">
-            <ul v-if="GET_AXIOS_CALLBACK_GETTER.status" class="flex">
-              <li class="">
-                <div
-                  class="stat"
-                  :style="
-                    'height: calc(' +
-                    (GET_AXIOS_CALLBACK_GETTER.status.intellect /
-                      GET_AXIOS_CALLBACK_GETTER.status.total) *
-                      100 +
-                    '% - 0px)'
-                  "
-                ></div>
-                <p class="bold">지능</p>
-                <span>{{ GET_AXIOS_CALLBACK_GETTER.status.intellect }}</span>
-              </li>
-              <li>
-                <div
-                  class="stat"
-                  :style="
-                    'height: calc(' +
-                    (GET_AXIOS_CALLBACK_GETTER.status.effort /
-                      GET_AXIOS_CALLBACK_GETTER.status.total) *
-                      100 +
-                    '% - 0px)'
-                  "
-                ></div>
-                <p class="bold">노력</p>
-                <span>{{ GET_AXIOS_CALLBACK_GETTER.status.effort }}</span>
-              </li>
-              <li>
-                <div
-                  class="stat"
-                  :style="
-                    'height: calc(' +
-                    (GET_AXIOS_CALLBACK_GETTER.status.health /
-                      GET_AXIOS_CALLBACK_GETTER.status.total) *
-                      100 +
-                    '% - 0px)'
-                  "
-                ></div>
-                <p class="bold">건강</p>
-                <span>{{ GET_AXIOS_CALLBACK_GETTER.status.health }}</span>
-              </li>
-              <li>
-                <div
-                  class="stat"
-                  :style="
-                    'height: calc(' +
-                    (GET_AXIOS_CALLBACK_GETTER.status.etiquette /
-                      GET_AXIOS_CALLBACK_GETTER.status.total) *
-                      100 +
-                    '% - 0px)'
-                  "
-                ></div>
-                <p class="bold">예절</p>
-                <span>{{ GET_AXIOS_CALLBACK_GETTER.status.etiquette }}</span>
-              </li>
-            </ul>
+            <div class="status flex-right">
+              <ul v-if="GET_AXIOS_CALLBACK_GETTER.status" class="flex">
+                <li class="">
+                  <div
+                    class="stat"
+                    :style="
+                      'height: calc(' +
+                      (GET_AXIOS_CALLBACK_GETTER.status.intellect /
+                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                        100 +
+                      '% - 0px)'
+                    "
+                  ></div>
+                  <p class="bold">지능</p>
+                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.intellect }}</span>
+                </li>
+                <li>
+                  <div
+                    class="stat"
+                    :style="
+                      'height: calc(' +
+                      (GET_AXIOS_CALLBACK_GETTER.status.effort /
+                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                        100 +
+                      '% - 0px)'
+                    "
+                  ></div>
+                  <p class="bold">노력</p>
+                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.effort }}</span>
+                </li>
+                <li>
+                  <div
+                    class="stat"
+                    :style="
+                      'height: calc(' +
+                      (GET_AXIOS_CALLBACK_GETTER.status.health /
+                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                        100 +
+                      '% - 0px)'
+                    "
+                  ></div>
+                  <p class="bold">건강</p>
+                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.health }}</span>
+                </li>
+                <li>
+                  <div
+                    class="stat"
+                    :style="
+                      'height: calc(' +
+                      (GET_AXIOS_CALLBACK_GETTER.status.etiquette /
+                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                        100 +
+                      '% - 0px)'
+                    "
+                  ></div>
+                  <p class="bold">예절</p>
+                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.etiquette }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

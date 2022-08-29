@@ -372,7 +372,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'POST_AXIOS_FORM']),
-    ...mapMutations(['LOADING_TRUE']),
+    ...mapMutations(['LOADING_INIT', 'LOADING_TRUE']),
 
     // 퀘스트 수락
     onSubmitApply() {
@@ -435,6 +435,7 @@ export default {
         const frm = new FormData()
         frm.append('type', 'albaApprovalPay')
         frm.append('idx', idx)
+        frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
         console.log(frm)
         // axiosForm(frm, '/student.php')
         this.$axios
@@ -445,6 +446,10 @@ export default {
           })
           .then((res) => {
             console.log(res.data)
+            if (res.data === 'FALSE') {
+              this.LOADING_INIT()
+              return alert('금액이 부족해요.')
+            }
             alert('알바비가 지급되었어요')
             this.$bvModal.hide('applyAlbago')
             setTimeout(() => {

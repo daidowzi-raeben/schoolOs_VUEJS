@@ -68,67 +68,63 @@
         </div>
       </div>
     </div>
-    <b-modal
-      v-if="GET_AXIOS_CALLBACK_GETTER.detail"
-      id="itemInsert"
-      size="lg"
-      hide-footer
-      hide-header
-    >
-      <div class="m-t-5 flex">
-        <div class="flex-full m-r-1">
-          <p>신고자</p>
-          {{ GET_AXIOS_CALLBACK_GETTER.detail.sms_name }}
+    <b-modal id="itemInsert" size="lg" hide-footer hide-header>
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.detail">
+        <div class="m-t-5 flex">
+          <div class="flex-full m-r-1">
+            <p>신고자</p>
+            {{ GET_AXIOS_CALLBACK_GETTER.detail.sms_name }}
+          </div>
+          <div class="flex-full m-l-1">
+            <p>신고 대상</p>
+            {{ GET_AXIOS_CALLBACK_GETTER.detail.sms_name_to }}
+          </div>
+          <div class="flex-full m-l-1">
+            <p>사건 발생일</p>
+            {{ GET_AXIOS_CALLBACK_GETTER.detail.sue_date }}
+          </div>
+          <div
+            v-if="Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0"
+            class="flex-full m-l-1"
+          >
+            <p>벌금</p>
+            {{ Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) | comma }}
+          </div>
         </div>
-        <div class="flex-full m-l-1">
-          <p>신고 대상</p>
-          {{ GET_AXIOS_CALLBACK_GETTER.detail.sms_name_to }}
+        <div class="m-t-5 flex">
+          <div class="flex-full m-r-1">
+            {{ GET_AXIOS_CALLBACK_GETTER.detail.new_subject }}
+          </div>
         </div>
-        <div class="flex-full m-l-1">
-          <p>사건 발생일</p>
-          {{ GET_AXIOS_CALLBACK_GETTER.detail.sue_date }}
+        <div class="m-t-5 flex">
+          <div class="flex-full m-r-1">
+            {{ GET_AXIOS_CALLBACK_GETTER.detail.content }}
+          </div>
         </div>
-        <div
-          v-if="Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0"
-          class="flex-full m-l-1"
-        >
-          <p>벌금</p>
-          {{ Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) | comma }}
+        <div class="m-t-5 text-center">
+          <button
+            class="jelly-btn jelly-btn--default"
+            @click="$bvModal.hide('itemInsert')"
+          >
+            닫기
+          </button>
+          <button class="jelly-btn jelly-btn--default" @click="onSubmit(4)">
+            벌칙처리
+          </button>
+          <button class="jelly-btn jelly-btn--default" @click="onSubmit(3)">
+            취소하기
+          </button>
+          <button
+            v-if="
+              Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0 &&
+              GET_AXIOS_CALLBACK_GETTER.detail.status_bill === '0'
+            "
+            class="jelly-btn jelly-btn--pink"
+            @click="onSubmitBill"
+          >
+            고지서 발송
+          </button>
         </div>
-      </div>
-      <div class="m-t-5 flex">
-        <div class="flex-full m-r-1">
-          {{ GET_AXIOS_CALLBACK_GETTER.detail.new_subject }}
-        </div>
-      </div>
-      <div class="m-t-5 flex">
-        <div class="flex-full m-r-1">
-          {{ GET_AXIOS_CALLBACK_GETTER.detail.content }}
-        </div>
-      </div>
-      <div class="m-t-5 text-center">
-        <button
-          class="jelly-btn jelly-btn--default"
-          @click="$bvModal.hide('itemInsert')"
-        >
-          닫기
-        </button>
-        <button class="jelly-btn jelly-btn--default" @click="onSubmit(4)">
-          벌칙처리
-        </button>
-        <button class="jelly-btn jelly-btn--default" @click="onSubmit(3)">
-          취소하기
-        </button>
-        <button
-          v-if="
-            Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0 &&
-            GET_AXIOS_CALLBACK_GETTER.detail.status_bill === '0'
-          "
-          class="jelly-btn jelly-btn--pink"
-          @click="onSubmitBill"
-        >
-          고지서 발송
-        </button>
       </div>
     </b-modal>
   </div>
@@ -185,7 +181,7 @@ export default {
   watch: {
     'params.type': {
       handler(value) {
-        if (value === 'studendList') {
+        if (value === 'studentList') {
           this.params = this.LOGIN_TEACHER
           this.params.type = 'sueList'
           this.params.queryCate = null
@@ -230,7 +226,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations(['LOADING_TRUE']),
+    ...mapMutations(['LOADING_INIT', 'LOADING_TRUE']),
 
     // EVENT
     onSubmit(e) {
@@ -252,6 +248,53 @@ export default {
             this.params.type = 'sueList'
             this.GET_AXIOS(this.params)
             this.$bvModal.hide('itemInsert')
+            this.LOADING_INIT()
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
+    },
+
+    onSubmitBill() {
+      this.LOADING_TRUE()
+
+      const FORM_DATA = new FormData()
+      console.log(this.idx)
+      FORM_DATA.append('type', 'billListStudentSue')
+      FORM_DATA.append('sueIdx', this.idx)
+      FORM_DATA.append(
+        'billStudent',
+        this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
+      )
+      FORM_DATA.append(
+        'sms_idx',
+        this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx_to
+      )
+      FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      FORM_DATA.append('billSubject', '규칙위반')
+      FORM_DATA.append(
+        'billContent',
+        this.GET_AXIOS_CALLBACK_GETTER.detail.new_subject
+      )
+      FORM_DATA.append(
+        'billPay',
+        this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
+      )
+      console.log('FORM_DATA', FORM_DATA)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', FORM_DATA, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          setTimeout(() => {
+            alert('고지서가 발송되었습니다.')
+
+            this.$bvModal.hide('itemInsert')
+            this.LOADING_INIT()
           })
         })
         .catch((res) => {
@@ -268,12 +311,14 @@ export default {
       }
     },
     onClickItemDetail(e) {
-      this.$bvModal.show('itemInsert')
       this.idx = e
       this.params.idx = e
       this.params = this.LOGIN_TEACHER
       this.params.type = 'sueList'
       this.GET_AXIOS(this.params)
+      setTimeout(() => {
+        this.$bvModal.show('itemInsert')
+      })
       //   setTimeout(() => {
       //     this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.detil.subject
       //     this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.detil.content

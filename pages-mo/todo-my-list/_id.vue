@@ -11,7 +11,7 @@
       </ul>
     </div>
     <div v-if="GET_AXIOS_CALLBACK_GETTER.questCate" class="p-l-3 p-r-3 p-b-3">
-      <nuxt-link to="/todo-list/0">
+      <nuxt-link to="/todo-my-list/0">
         <span
           :class="
             idx == 0
