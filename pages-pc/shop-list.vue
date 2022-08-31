@@ -108,35 +108,63 @@
           class="jelly-text jelly-text--h wd-full"
         />
       </div>
-      <div class="m-t-5">
-        <p>재고</p>
-        <input v-model="itemInt" type="text" class="jelly-text jelly-text--h" />
+      <div class="m-t-5 flex">
+        <div class="flex-full">
+          <p>재고</p>
+          <div class="flex">
+            <input
+              v-model="itemInt"
+              type="text"
+              class="jelly-text jelly-text--h wd-full text-right m-r-1"
+            />
+            <span v-if="LOGIN_TEACHER" class="m-t-2 m-l-1 m-r-1"> 개 </span>
+          </div>
+        </div>
+        <div class="flex-full">
+          <p>물가상승금액</p>
+          <div class="flex">
+            <input
+              v-model="item_price_inp"
+              readonly
+              type="text"
+              style="background: #eee"
+              class="jelly-text jelly-text--h wd-full text-right m-r-1 m-l-1"
+            />
+            <span v-if="LOGIN_TEACHER" class="m-t-2 m-l-1 flex-0">
+              {{ LOGIN_TEACHER.reg_pay_unit }}
+            </span>
+          </div>
+        </div>
       </div>
       <div class="flex m-t-5">
         <div class="flex-full">
           <p>소비자가</p>
-          <input
-            v-model="price2"
-            type="text"
-            class="jelly-text jelly-text--h wd-full text-right m-r-1"
-            @click="resetInput($event)"
-            @input="priceKrw($event)"
-          />
+          <div class="flex">
+            <input
+              v-model="price2"
+              type="text"
+              class="jelly-text jelly-text--h wd-full text-right m-r-1"
+              @click="resetInput($event)"
+              @input="priceKrw($event)"
+            />
+            <span v-if="LOGIN_TEACHER" class="m-t-2 m-l-1 m-r-1"> 원 </span>
+          </div>
         </div>
-        <span v-if="LOGIN_TEACHER" class="m-t-9 m-l-1 m-r-1"> 원 </span>
         <div class="flex-full">
           <p>상품가격</p>
-          <input
-            v-model="itemPrice"
-            type="text"
-            class="jelly-text jelly-text--h wd-full text-right m-r-1 m-l-1"
-            @click="resetInput($event)"
-            @input="priceCustom($event)"
-          />
+          <div class="flex">
+            <input
+              v-model="itemPrice"
+              type="text"
+              class="jelly-text jelly-text--h wd-full text-right m-r-1 m-l-1"
+              @click="resetInput($event)"
+              @input="priceCustom($event)"
+            />
+            <span v-if="LOGIN_TEACHER" class="m-t-2 m-l-1 flex-0">
+              {{ LOGIN_TEACHER.reg_pay_unit }}
+            </span>
+          </div>
         </div>
-        <span v-if="LOGIN_TEACHER" class="m-t-9 m-l-1 flex-0">
-          {{ LOGIN_TEACHER.reg_pay_unit }}
-        </span>
       </div>
       <div class="m-t-5">
         <div class="flex">
@@ -323,6 +351,7 @@ export default {
       context: null,
       cateIdx: '',
       itemPrice: 0,
+      item_price_inp: 0,
       itemPriceDiscount: 0,
       itemContent: '',
       itemInt: '',
@@ -515,6 +544,9 @@ export default {
         this.itemInt = this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_int
         this.itemPriceDiscount = this.comma(
           this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_dis_price
+        )
+        this.item_price_inp = this.comma(
+          this.GET_AXIOS_CALLBACK_GETTER.shopDetail.item_price_inp
         )
       }, 3000)
       this.$bvModal.show('itemInsert')

@@ -33,6 +33,7 @@
                   : ''
               "
             >
+              <!-- <b-badge variant="danger" class="b-badge--footer">2</b-badge> -->
               <nuxt-link to="/parttime-list/0">
                 <!-- <b-icon icon="bag"></b-icon> -->
                 <b-icon icon="phone-vibrate"></b-icon>
@@ -74,6 +75,37 @@
         </nav>
       </div>
     </footer>
+    <div v-if="GET_AXIOS_CALLBACK_GETTER_PW">
+      <div v-if="GET_AXIOS_CALLBACK_GETTER_PW.chk === 'C'" class="pwChk">
+        <div class="pwChk-warp">
+          <h6>비밀번호를 변경 후 <br />이용할 수 있습니다.</h6>
+          <div class="input m-t-3">
+            <input
+              v-model="pw"
+              type="password"
+              class="jelly-text jelly-text--h wd-full"
+              placeholder="비밀번호를 입력하세요"
+            />
+          </div>
+          <div class="input m-t-3">
+            <input
+              v-model="pw2"
+              type="password"
+              class="jelly-text jelly-text--h wd-full"
+              placeholder="비밀번호를 다시 입력하세요"
+            />
+          </div>
+          <div class="input m-t-3">
+            <button
+              class="jelly-btn jelly-btn--pink jelly-text--h wd-full"
+              @click="onSubmitPw"
+            >
+              변경하기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,20 +118,70 @@ export default {
     return {
       paramsBill: {},
       LOGIN_CONFIG: {},
+      pw: '',
+      pw2: '',
+      params: {
+        type: 'pwChk',
+      },
     }
   },
   computed: {
     ...mapState(['LOGIN', 'GET_AXIOS_CALLBACK_DATA_BILL']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
+    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER_PW', 'LOGIN_STUDENT']),
   },
   mounted() {
     console.log('FOOTER', this.$nuxt._route.name)
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
     console.log('FOOTER==========', this.LOGIN_CONFIG)
+
+    this.params = this.LOGIN_CONFIG
+    this.params.type = 'pwChk'
+    this.GET_AXIOS_PW(this.params)
   },
   methods: {
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
+    ...mapActions(['POST_AXIOS', 'GET_AXIOS_PW']),
     ...mapMutations(['LOADING_TRUE']),
+
+    onSubmitPw() {
+      if (!this.pw) {
+        return alert('비밀번호를 입력하세요')
+      }
+      if (!this.pw2) {
+        return alert('비밀번호를 입력하세요')
+      }
+      if (this.pw !== this.pw2) {
+        return alert('비밀번호가 다르게 입력되었어요')
+      }
+
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
+      frm.append('pw', this.pw)
+      frm.append('type', 'pwChk')
+
+      this.$axios
+        .post(process.env.VUE_APP_API + '/student.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          if (res.data === true) {
+            setTimeout(() => {
+              alert('비밀번호가 변경되었어요.')
+              this.params = this.LOGIN_CONFIG
+              this.params.type = 'pwChk'
+              this.GET_AXIOS_PW(this.params)
+            })
+          } else {
+            alert('오류가 발생했습니다. 다시 시도해주세요')
+          }
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
+    },
   },
 }
 </script>

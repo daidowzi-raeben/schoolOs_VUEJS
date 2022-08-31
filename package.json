@@ -33,6 +33,7 @@
     "lottie-web-vue": "^1.2.1",
     "nuxt": "^2.15.8",
     "nuxt-socket-io": "^2.0.3",
+    "read-excel-file": "^5.4.7",
     "socket.io": "^4.5.1",
     "swiper": "^4.4.1",
     "v-calendar": "^2.4.1",
@@ -45,9 +46,11 @@
     "vue-qrcode-reader": "^3.1.0",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
+    "vue-xlsx": "^0.2.1",
     "vue2-editor": "^2.10.3",
     "vuetify": "^2.6.1",
-    "webpack": "^4.46.0"
+    "webpack": "^4.46.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",

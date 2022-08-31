@@ -58,6 +58,7 @@ export default {
     { src: '~plugins/QrCode.js', ssr: false, mode: 'client' },
     { src: '~plugins/LottieWebVue.js', ssr: false, mode: 'client' },
     { src: '~plugins/ApexCart.js', ssr: false, mode: 'client' },
+    // { src: '~plugins/Xlsx.js', ssr: false, mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

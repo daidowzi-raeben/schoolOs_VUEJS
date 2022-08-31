@@ -13,6 +13,12 @@
           >
           <span
             class="spanBox m-r-2"
+            :class="queryCate === '5' ? 'is_active' : ''"
+            @click="onClickCategory('5')"
+            >완료 처리</span
+          >
+          <span
+            class="spanBox m-r-2"
             :class="queryCate === '1' ? 'is_active' : ''"
             @click="onClickCategory('1')"
             >고지서 발송</span
@@ -23,6 +29,7 @@
             @click="onClickCategory('2')"
             >벌칙 처리</span
           >
+
           <span
             class="spanBox m-r-2"
             :class="queryCate === '3' ? 'is_active' : ''"
@@ -44,7 +51,7 @@
                   <th>신고대상</th>
                   <th>제목</th>
                   <th>사건 발생일</th>
-                  <th>관리 {{ queryCate }}</th>
+                  <th>관리</th>
                 </tr>
                 <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.sue" :key="i">
                   <td>{{ v.sms_name }}</td>
@@ -110,6 +117,9 @@
           </button>
           <button class="jelly-btn jelly-btn--default" @click="onSubmit(4)">
             벌칙처리
+          </button>
+          <button class="jelly-btn jelly-btn--default" @click="onSubmit(5)">
+            완료처리
           </button>
           <button class="jelly-btn jelly-btn--default" @click="onSubmit(3)">
             취소하기

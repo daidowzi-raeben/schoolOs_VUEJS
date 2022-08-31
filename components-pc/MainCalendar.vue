@@ -171,6 +171,7 @@
           type="text"
           class="jelly-text wd-full"
           placeholder="사유를 작성해 주세요"
+          @keyup.enter="onSubmitContent"
         />
       </div>
       <div class="m-t-5 text-center">
@@ -194,6 +195,7 @@
           type="text"
           class="jelly-text wd-full"
           placeholder="사유를 작성해 주세요"
+          @keyup.enter="onClickAttendeance"
         />
       </div>
       <div class="m-t-5 text-center">

@@ -315,7 +315,7 @@
         </swiper>
       </div>
     </b-modal>
-    <b-modal id="questConfirm" size="lg" hide-footer hide-header>
+    <b-modal id="questConfirm" size="xl" hide-footer hide-header>
       <div class="">
         <!-- <p>검사</p> -->
       </div>
@@ -671,6 +671,9 @@ export default {
       this.$bvModal.show('questConfirm')
     },
     onClickitemInsertTodo() {
+      if (!this.GET_AXIOS_CALLBACK_GETTER.questCate) {
+        return alert('카테고리를 먼저 추가해 주세요')
+      }
       const today = new Date()
 
       const year = today.getFullYear()

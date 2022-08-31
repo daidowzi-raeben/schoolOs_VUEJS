@@ -110,7 +110,11 @@
                     LV
                     <em v-if="GET_AXIOS_CALLBACK_GETTER.status" class="bold">
                       {{
-                        Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4)
+                        GET_AXIOS_CALLBACK_GETTER.status.total
+                          ? Math.floor(
+                              GET_AXIOS_CALLBACK_GETTER.status.total / 4
+                            )
+                          : 0
                       }}
                     </em>
                   </p>
@@ -305,9 +309,11 @@
               <div class="flex-right">
                 <strong class="font-18 bold"
                   ><em>{{
-                    (GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
-                      GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
-                      | comma
+                    (GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount ||
+                    GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
+                      ? GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
+                        GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
+                      : 0) | comma
                   }}</em></strong
                 >
                 <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{

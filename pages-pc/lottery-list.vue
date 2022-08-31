@@ -20,9 +20,19 @@
                     </th>
                     <th>
                       <span v-if="v.status === '1'">
-                        {{ v.num1 }} / {{ v.num2 }} / {{ v.num3 }} /
-                        {{ v.num4 }} /
-                        {{ v.num5 }}
+                        <b-badge pill variant="primary" class="m-r-2">{{
+                          v.num1
+                        }}</b-badge>
+                        <b-badge pill variant="success" class="m-r-2">{{
+                          v.num2
+                        }}</b-badge>
+                        <b-badge pill variant="danger" class="m-r-2">{{
+                          v.num3
+                        }}</b-badge>
+                        <b-badge pill variant="warning" class="m-r-2">{{
+                          v.num4
+                        }}</b-badge>
+                        <b-badge pill variant="info">{{ v.num5 }}</b-badge>
                       </span>
                       <span v-else> {{ v.end_day }} 14시 발표 예정 </span>
                     </th>
@@ -36,9 +46,19 @@
                   >
                     <td>{{ item.reg_name }} ({{ item.reg_id }})</td>
                     <td class="text-center">
-                      {{ item.num1 }} / {{ item.num2 }} / {{ item.num3 }} /
-                      {{ item.num4 }} /
-                      {{ item.num5 }}
+                      <b-badge pill variant="primary" class="m-r-2">{{
+                        item.num1
+                      }}</b-badge>
+                      <b-badge pill variant="success" class="m-r-2">{{
+                        item.num2
+                      }}</b-badge>
+                      <b-badge pill variant="danger" class="m-r-2">{{
+                        item.num3
+                      }}</b-badge>
+                      <b-badge pill variant="warning" class="m-r-2">{{
+                        item.num4
+                      }}</b-badge>
+                      <b-badge pill variant="info">{{ item.num5 }}</b-badge>
                     </td>
                     <td>{{ item.datetime | moment('YY.MM.DD') }} 구입</td>
                     <td>

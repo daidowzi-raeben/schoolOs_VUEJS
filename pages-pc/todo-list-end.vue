@@ -670,6 +670,9 @@ export default {
       this.$bvModal.show('questConfirm')
     },
     onClickitemInsertTodo() {
+      if (!this.GET_AXIOS_CALLBACK_GETTER.questCate) {
+        return alert('카테고리를 먼저 추가해 주세요')
+      }
       this.noticeIdx = null
       this.noticeSubject = ''
       this.noticeContent = ''

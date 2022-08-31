@@ -34,6 +34,9 @@
                     >
                   </li>
                   <li @click="onClickLinkTo($event, 'qr-code')">가입코드</li>
+                  <li @click="onClickLinkTo($event, 'student-insert')">
+                    학생등록
+                  </li>
                   <li @click="onClickLinkTo($event, 'student-apply')">
                     회원승인
                     <b-badge

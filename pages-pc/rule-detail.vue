@@ -9,6 +9,12 @@
         <h4 v-if="LOGIN_TEACHER">규칙설정</h4>
         <div class="flex-right">
           <button
+            class="jelly-btn jelly-btn--default"
+            @click="$bvModal.show('ModalNotice')"
+          >
+            규칙 전체 보기
+          </button>
+          <button
             v-if="!GET_AXIOS_CALLBACK_GETTER.rules"
             class="jelly-btn jelly-btn--default"
             @click="onClickAutoRule"
@@ -214,6 +220,39 @@
         </div>
       </div>
     </div>
+    <b-modal id="ModalNotice" size="lg" hide-footer hide-header>
+      <div class="img-full">
+        <ul>
+          <li
+            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rulesAll"
+            :key="i"
+            class="m-b-2 p-b-2"
+            style="border-bottom: 1px solid #eee"
+          >
+            <div class="font-16 bold">{{ i + 1 }}조. {{ v.content }}</div>
+            <div
+              v-for="(k, e) in v.ruleContentAll"
+              :key="k.idx"
+              style="padding: 10px"
+            >
+              <div class="font-14">{{ e + 1 }}항. {{ k.subject }}</div>
+              <div v-if="LOGIN_CONFIG" class="m-t-1 jelly-color--888 font-12">
+                {{ k.penalty + LOGIN_CONFIG.t_reg_pay_unit }}
+                {{ k.penalty_etc ? ' / ' + k.penalty_etc : k.penalty_etc }}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="m-t-3">
+        <button
+          class="jelly-btn jelly-btn--default wd-full"
+          @click="$bvModal.hide('ModalNotice')"
+        >
+          닫기
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
