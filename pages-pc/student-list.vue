@@ -238,6 +238,9 @@
           >
             닫기
           </button>
+          <button class="jelly-btn jelly-btn--default" @click="loginStudent">
+            학생로그인
+          </button>
           <button class="jelly-btn jelly-btn--pink" @click="onSubmit">
             수정하기
           </button>
@@ -640,6 +643,10 @@ export default {
             console.log('AXIOS FALSE', res)
           })
       }
+    },
+    loginStudent() {
+      const url = 'https://app.school-os.net/member/master-login?sms_idx='
+      window.open(url + this.student.sms_idx)
     },
   },
 }

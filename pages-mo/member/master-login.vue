@@ -41,8 +41,8 @@ export default {
         console.log('[MASTER LOGIN]', res.data)
         localStorage.setItem('STUDENT', JSON.stringify(res.data))
         setTimeout(() => {
-          //   this.$router.push(`/`)
-        })
+          this.$router.push(`/`)
+        }, 1500)
       })
       .catch((res) => {
         console.log('AXIOS FALSE', res)
