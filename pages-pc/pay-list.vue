@@ -66,7 +66,7 @@
         <div class="m-t-3">
           <div class="flex" style="padding: 20px">
             <div class="m-r-1">
-              <select
+              <!-- <select
                 v-if="GET_AXIOS_CALLBACK_GETTER.studentList"
                 ref="inputStudent"
                 class="jelly-text"
@@ -81,35 +81,73 @@
                 >
                   {{ v.reg_name }}
                 </option>
-              </select>
+              </select> -->
+              <div class="studentScrollArea" style="width: 300px">
+                <label class="m-l-2 m-t-2">
+                  <input v-model="selectAll" type="checkbox" />
+                  전체발송
+                </label>
+                <div
+                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
+                  :key="i"
+                >
+                  <div class="flex">
+                    <b-avatar
+                      variant="success"
+                      icon="people-fill"
+                      :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                    ></b-avatar>
+                    <label class="m-l-2 m-t-2">
+                      <input
+                        :id="`checked${v.idx}`"
+                        :key="i"
+                        v-model="inputStudent"
+                        type="checkbox"
+                        :value="v.idx"
+                      />
+                      {{ v.reg_name }} ({{ v.reg_id }})
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <input
-                ref="inputPay"
-                class="jelly-text text-right"
-                required
-                style="width: 80px"
-                @input="payComma"
-              />
-            </div>
-            <div v-if="LOGIN_TEACHER" class="m-l-1 m-t-2">
-              {{ LOGIN_TEACHER.reg_pay_unit }}
-            </div>
-            <div class="flex-full m-r-2 m-l-3">
-              <input
-                ref="inputMemo"
-                class="jelly-text wd-full"
-                required
-                placeholder="메모를 입력하세요"
-              />
-            </div>
-            <div>
-              <button
-                class="jelly-btn jelly-btn--default"
-                @click="onSubmitInputStudent"
-              >
-                지급하기
-              </button>
+            <div class="flex-full m-l-2">
+              <div>
+                <p style="line-height: 25px">
+                  학생에게 입금할 수 있습니다. 출금을 원하실 경우
+                  <em class="bold">고지서</em>를 이용해 주세요.<br />
+                  <em class="bold">출금 메모는 학생 통장에 기록</em>됩니다.
+                </p>
+              </div>
+              <div class="flex">
+                <div class="flex-full">
+                  <input
+                    ref="inputPay"
+                    class="jelly-text text-right wd-full"
+                    required
+                    @input="payComma"
+                  />
+                </div>
+                <div v-if="LOGIN_TEACHER" class="m-l-2 m-t-2">
+                  {{ LOGIN_TEACHER.reg_pay_unit }}
+                </div>
+                <div class="m-l-3">
+                  <button
+                    class="jelly-btn jelly-btn--pink"
+                    @click="onSubmitInputStudent"
+                  >
+                    지급하기
+                  </button>
+                </div>
+              </div>
+              <div class="flex-full m-t-3">
+                <input
+                  ref="inputMemo"
+                  class="jelly-text wd-full"
+                  required
+                  placeholder="메모를 입력하세요"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -195,12 +233,34 @@ export default {
       pay: 0,
       payWon: '',
       queryCate: '',
+      inputStudent: [],
     }
   },
 
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    selectAll: {
+      get() {
+        return this.GET_AXIOS_CALLBACK_GETTER.studentList
+          ? this.inputStudent
+            ? this.inputStudent.length ===
+              this.GET_AXIOS_CALLBACK_GETTER.studentList.length
+            : false
+          : false
+      },
+      set(value) {
+        const selected = []
+
+        if (value) {
+          this.GET_AXIOS_CALLBACK_GETTER.studentList.forEach((com) => {
+            selected.push(com.idx)
+          })
+        }
+
+        this.inputStudent = selected
+      },
+    },
   },
   watch: {
     '$route.query.cate': {
@@ -265,7 +325,7 @@ export default {
       this.LOADING_TRUE()
       const frm = new FormData()
       frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
-      frm.append('sms_idx', this.$refs.inputStudent.value)
+      frm.append('sms_idx', this.inputStudent)
       frm.append('pay', this.uncomma(this.$refs.inputPay.value))
       frm.append('memo', this.$refs.inputMemo.value)
       frm.append('type', 'pay_etc_insert')
@@ -293,4 +353,16 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.studentScrollArea {
+  padding: 10px;
+  height: 250px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow-y: auto;
+  > div {
+    border-bottom: 1px solid #ddd;
+    padding: 7px 0;
+  }
+}
+</style>
