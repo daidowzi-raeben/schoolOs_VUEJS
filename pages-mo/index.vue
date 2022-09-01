@@ -134,7 +134,7 @@
                       '% - 0px)'
                     "
                   ></div>
-                  <p class="bold">지능</p>
+                  <p class="bold">지혜</p>
                   <span>{{ GET_AXIOS_CALLBACK_GETTER.status.intellect }}</span>
                 </li>
                 <li>

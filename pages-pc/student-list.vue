@@ -32,7 +32,7 @@
                 <tr>
                   <th>이름</th>
                   <th>레벨</th>
-                  <th>지능</th>
+                  <th>지혜</th>
                   <th>노력</th>
                   <th>건강</th>
                   <th>예절</th>
@@ -187,7 +187,7 @@
         <div class="m-t-5">
           <div class="flex">
             <div class="flex-full">
-              <p>지능</p>
+              <p>지혜</p>
               <input
                 v-model="student.intellect"
                 type="text"

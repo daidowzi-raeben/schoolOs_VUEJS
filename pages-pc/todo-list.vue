@@ -58,11 +58,9 @@
               >
                 <tr>
                   <th>제목</th>
-                  <th>보상</th>
-                  <th>지능</th>
-                  <th>노력</th>
-                  <th>건강</th>
-                  <th>예절</th>
+                  <th>읽음</th>
+                  <th>수락</th>
+                  <th>검사요청</th>
                   <th>기간</th>
                   <th>관리</th>
                 </tr>
@@ -73,14 +71,17 @@
                 >
                   <td @click="onClickItemDetail(v.idx)">{{ v.subject }}</td>
                   <td @click="onClickItemDetail(v.idx)">
-                    {{ v.price | comma }}
+                    {{ v.is_read ? v.is_read : 0 }}
                   </td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.intellect }}</td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.effort }}</td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.health }}</td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.etiquette }}</td>
                   <td @click="onClickItemDetail(v.idx)">
-                    {{ v.start_day }} ~ {{ v.end_day }}
+                    {{ v.is_read ? v.is_status : 0 }}
+                  </td>
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.is_read ? v.is_confirm : 0 }}
+                  </td>
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.start_day | moment('YY.MM.DD') }} ~
+                    {{ v.end_day | moment('YY.MM.DD') }}
                   </td>
                   <td>
                     <div class="flex">
@@ -164,7 +165,7 @@
           />
         </div>
         <div class="flex-full">
-          <p>지능</p>
+          <p>지혜</p>
           <input
             v-model="quest.intellect"
             type="text"
@@ -208,7 +209,7 @@
           />
         </div>
         <div class="flex-full">
-          <p>지능</p>
+          <p>지혜</p>
           <input
             v-model="quest.m_intellect"
             type="text"

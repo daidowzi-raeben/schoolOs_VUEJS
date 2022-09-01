@@ -57,11 +57,9 @@
               >
                 <tr>
                   <th>제목</th>
-                  <th>보상</th>
-                  <th>지능</th>
-                  <th>노력</th>
-                  <th>건강</th>
-                  <th>예절</th>
+                  <th>읽음</th>
+                  <th>수락</th>
+                  <th>검사요청</th>
                   <th>기간</th>
                   <th>관리</th>
                 </tr>
@@ -72,14 +70,17 @@
                 >
                   <td @click="onClickItemDetail(v.idx)">{{ v.subject }}</td>
                   <td @click="onClickItemDetail(v.idx)">
-                    {{ v.price | comma }}
+                    {{ v.is_read ? v.is_read : 0 }}
                   </td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.intellect }}</td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.effort }}</td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.health }}</td>
-                  <td @click="onClickItemDetail(v.idx)">{{ v.etiquette }}</td>
                   <td @click="onClickItemDetail(v.idx)">
-                    {{ v.start_day }} ~ {{ v.end_day }}
+                    {{ v.is_read ? v.is_status : 0 }}
+                  </td>
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.is_read ? v.is_confirm : 0 }}
+                  </td>
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.start_day | moment('YY.MM.DD') }} ~
+                    {{ v.end_day | moment('YY.MM.DD') }}
                   </td>
                   <td>
                     <div class="flex">
@@ -163,7 +164,7 @@
           />
         </div>
         <div class="flex-full">
-          <p>지능</p>
+          <p>지혜</p>
           <input
             v-model="quest.intellect"
             type="text"
@@ -207,7 +208,7 @@
           />
         </div>
         <div class="flex-full">
-          <p>지능</p>
+          <p>지혜</p>
           <input
             v-model="quest.m_intellect"
             type="text"
@@ -314,7 +315,7 @@
         </swiper>
       </div>
     </b-modal>
-    <b-modal id="questConfirm" size="lg" hide-footer hide-header>
+    <b-modal id="questConfirm" size="xl" hide-footer hide-header>
       <div class="">
         <!-- <p>검사</p> -->
       </div>
@@ -673,6 +674,14 @@ export default {
       if (!this.GET_AXIOS_CALLBACK_GETTER.questCate) {
         return alert('카테고리를 먼저 추가해 주세요')
       }
+      const today = new Date()
+
+      const year = today.getFullYear()
+      const month = ('0' + (today.getMonth() + 1)).slice(-2)
+      const day = ('0' + today.getDate()).slice(-2)
+      const dateString = year + '-' + month + '-' + day
+
+      this.quest.start_day = dateString
       this.noticeIdx = null
       this.noticeSubject = ''
       this.noticeContent = ''
