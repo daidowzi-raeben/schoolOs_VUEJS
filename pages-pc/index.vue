@@ -23,10 +23,23 @@
           class="m-b-3"
         ></div> -->
       </div>
-      <div class="m-t-3">
-        <h4>신규 소식</h4>
+      <div class="m-t-3 flex">
+        <h4 class="is_active">신규 소식</h4>
+        <button
+          class="jelly-btn flex-right"
+          :class="
+            GET_AXIOS_CALLBACK_GETTER.emergency > 0
+              ? 'jelly-btn--default'
+              : 'jelly-btn--pink'
+          "
+          @click="onClickEmergency"
+        >
+          {{
+            GET_AXIOS_CALLBACK_GETTER.emergency > 0 ? '입출금복구' : 'Emergency'
+          }}
+        </button>
       </div>
-      <div class="flex">
+      <div class="flex m-t-3">
         <div class="student__list flex">
           <div class="item" style="width: 200px">
             <p class="title" style="color: #111">미 검사</p>
@@ -77,13 +90,13 @@
             <p class="title" style="color: #111">환율</p>
             <div class="text-right" style="color: #111">
               <strong v-if="GET_AXIOS_CALLBACK_GETTER.teacher" class="font-20">
-                1<span class="font-12">(KRW)</span> :
+                1,000<span class="font-12">(KRW)</span> =
                 <em>
                   {{
                     Math.round(
                       (GET_AXIOS_CALLBACK_GETTER.teacher.reg_pay_rate / 200) *
-                        100
-                    ) / 100
+                        1000
+                    )
                   }}</em
                 >
                 <span v-if="LOGIN_TEACHER" class="font-12">
@@ -174,6 +187,33 @@ export default {
     // ...mapMutations(),
     onClickToggleArrow() {
       this.isShow === true ? (this.isShow = false) : (this.isShow = true)
+    },
+    onClickEmergency() {
+      const frm = new FormData()
+      frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
+      frm.append('type', 'emergency')
+      if (this.GET_AXIOS_CALLBACK_GETTER.emergency > 0) {
+        frm.append('mode', '1')
+      } else {
+        frm.append('mode', '0')
+      }
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          setTimeout(() => {
+            this.params = this.LOGIN_CONFIG
+            this.params.type = 'main'
+            this.GET_AXIOS(this.params)
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
   },
 }

@@ -322,7 +322,13 @@
               </div>
             </div>
           </nuxt-link>
-          <div class="flex m-t-3">
+          <div
+            v-if="
+              GET_AXIOS_CALLBACK_GETTER.student &&
+              GET_AXIOS_CALLBACK_GETTER.student.deposit !== '1'
+            "
+            class="flex m-t-3"
+          >
             <nuxt-link to="/bank-transfer" class="wd-full">
               <button class="jelly-btn jelly-btn--gray wd-full">이체</button>
             </nuxt-link>
