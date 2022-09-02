@@ -340,7 +340,10 @@
           </div>
         </div>
         <div
-          v-if="GET_AXIOS_CALLBACK_GETTER.teacher"
+          v-if="
+            GET_AXIOS_CALLBACK_GETTER.teacher &&
+            GET_AXIOS_CALLBACK_GETTER.teacher.inflation === 'Y'
+          "
           class="box account-area m-t-2"
         >
           <nuxt-link to="/bank-country-list" class="flex">
