@@ -3,7 +3,16 @@
     <div class="historyBack m-l-3 m-b-5">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
     </div>
-    <div class="content">
+    <div
+      v-if="
+        GET_AXIOS_CALLBACK_GETTER.student &&
+        GET_AXIOS_CALLBACK_GETTER.student.deposit === '1'
+      "
+      class="text-center"
+    >
+      <h5>지금은 이용할 수 없어요</h5>
+    </div>
+    <div v-else class="content">
       <div class="m-t-1 h60">
         <div class="account">
           <div

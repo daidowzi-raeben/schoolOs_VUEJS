@@ -6,7 +6,16 @@
     <div class="historyBack m-l-3 m-b-5">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
     </div>
-    <div class="content">
+    <div
+      v-if="
+        GET_AXIOS_CALLBACK_GETTER.student &&
+        GET_AXIOS_CALLBACK_GETTER.student.deposit === '1'
+      "
+      class="text-center"
+    >
+      <h5>지금은 이용할 수 없어요</h5>
+    </div>
+    <div v-else class="content">
       <div class="m-t-1 h60">
         <div class="account">
           <div
@@ -158,106 +167,114 @@
         </div>
       </div>
     </div>
-    <div v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail && LOGIN_STUDENT">
-      <div
-        v-if="
-          GET_AXIOS_CALLBACK_GETTER.albaDetail.sms_idx != LOGIN_STUDENT.sms_idx
-        "
-      >
+    <div
+      v-if="
+        GET_AXIOS_CALLBACK_GETTER.student &&
+        GET_AXIOS_CALLBACK_GETTER.student.deposit !== '1'
+      "
+    >
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail && LOGIN_STUDENT">
         <div
-          v-if="GET_AXIOS_CALLBACK_GETTER.is_end === 'END'"
-          class="quest-fixed"
+          v-if="
+            GET_AXIOS_CALLBACK_GETTER.albaDetail.sms_idx !=
+            LOGIN_STUDENT.sms_idx
+          "
         >
-          <button class="jelly-btn jelly-btn--gray">
-            기간이 종료되었습니다.
+          <div
+            v-if="GET_AXIOS_CALLBACK_GETTER.is_end === 'END'"
+            class="quest-fixed"
+          >
+            <button class="jelly-btn jelly-btn--gray">
+              기간이 종료되었습니다.
+            </button>
+          </div>
+          <div
+            v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail"
+            class="quest-fixed flex"
+          >
+            <!-- 0:신청,1:수락,2:취소,3:완료 -->
+            <!-- 0:공고중,1:모집완료,2:지급완료,3:모집취소 -->
+            <button
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
+                !GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status
+              "
+              class="jelly-btn jelly-btn--pink"
+              @click="$bvModal.show('applyAlbago')"
+            >
+              신청하기
+            </button>
+            <button
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '0'
+              "
+              class="jelly-btn jelly-btn--default"
+              @click="onSubmitCancel"
+            >
+              취소하기
+            </button>
+            <button
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '1'
+              "
+              class="jelly-btn jelly-btn--pink"
+            >
+              채용되었어요! <br />알바 완료 후 고용주에게 요청하세요.
+            </button>
+            <button
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '2'
+              "
+              class="jelly-btn jelly-btn--gray"
+            >
+              취소된 알바 입니다.
+            </button>
+            <button
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '3'
+              "
+              class="jelly-btn jelly-btn--gray"
+            >
+              알바비가 지급되었어요
+            </button>
+            <button
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '1' ||
+                GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '2'
+              "
+              class="jelly-btn jelly-btn--default"
+            >
+              모집이 완료되었어요.
+            </button>
+            <button
+              v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '3'"
+              class="jelly-btn jelly-btn--pink"
+              @click="$bvModal.show('completeFile')"
+            >
+              취소된 공고입니다.
+            </button>
+          </div>
+        </div>
+        <div v-else class="quest-fixed">
+          <button
+            v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0'"
+            class="jelly-btn jelly-btn--default"
+            @click="onSubmitCEOCancel"
+          >
+            모집 마감하기
+          </button>
+          <button
+            v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '1'"
+            class="jelly-btn jelly-btn--gray"
+            @click="onSubmitCEOCancel"
+          >
+            마감되었어요
           </button>
         </div>
-        <div
-          v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail"
-          class="quest-fixed flex"
-        >
-          <!-- 0:신청,1:수락,2:취소,3:완료 -->
-          <!-- 0:공고중,1:모집완료,2:지급완료,3:모집취소 -->
-          <button
-            v-if="
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
-              !GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status
-            "
-            class="jelly-btn jelly-btn--pink"
-            @click="$bvModal.show('applyAlbago')"
-          >
-            신청하기
-          </button>
-          <button
-            v-if="
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '0'
-            "
-            class="jelly-btn jelly-btn--default"
-            @click="onSubmitCancel"
-          >
-            취소하기
-          </button>
-          <button
-            v-if="
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '1'
-            "
-            class="jelly-btn jelly-btn--pink"
-          >
-            채용되었어요! <br />알바 완료 후 고용주에게 요청하세요.
-          </button>
-          <button
-            v-if="
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '2'
-            "
-            class="jelly-btn jelly-btn--gray"
-          >
-            취소된 알바 입니다.
-          </button>
-          <button
-            v-if="
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0' &&
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.my_status === '3'
-            "
-            class="jelly-btn jelly-btn--gray"
-          >
-            알바비가 지급되었어요
-          </button>
-          <button
-            v-if="
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '1' ||
-              GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '2'
-            "
-            class="jelly-btn jelly-btn--default"
-          >
-            모집이 완료되었어요.
-          </button>
-          <button
-            v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '3'"
-            class="jelly-btn jelly-btn--pink"
-            @click="$bvModal.show('completeFile')"
-          >
-            취소된 공고입니다.
-          </button>
-        </div>
-      </div>
-      <div v-else class="quest-fixed">
-        <button
-          v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '0'"
-          class="jelly-btn jelly-btn--default"
-          @click="onSubmitCEOCancel"
-        >
-          모집 마감하기
-        </button>
-        <button
-          v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail.status === '1'"
-          class="jelly-btn jelly-btn--gray"
-          @click="onSubmitCEOCancel"
-        >
-          마감되었어요
-        </button>
       </div>
     </div>
     <b-modal id="applyAlbago" size="lg" hide-footer hide-header>

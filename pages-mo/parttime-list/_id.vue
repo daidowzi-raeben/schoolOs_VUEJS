@@ -40,7 +40,15 @@
           <h3 class="m-t-2">진행중인 알바</h3>
           <div class="flex-right">
             <nuxt-link to="/parttime-write">
-              <button class="jelly-btn jelly-btn--default">공고등록</button>
+              <button
+                v-if="
+                  GET_AXIOS_CALLBACK_GETTER.student &&
+                  GET_AXIOS_CALLBACK_GETTER.student.deposit !== '1'
+                "
+                class="jelly-btn jelly-btn--default"
+              >
+                공고등록
+              </button>
             </nuxt-link>
           </div>
         </div>
