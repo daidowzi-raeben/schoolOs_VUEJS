@@ -175,6 +175,14 @@ export default {
     },
     onSubmit() {
       // alert('send_sms_idx')
+      if (
+        Number(
+          this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
+            this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
+        ) < this.uncomma(this.accountPrice)
+      ) {
+        return alert('잔액이 부족해요')
+      }
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.type = 'bankTransfer'
       this.paramsPost.send_sms_idx = this.$refs.sendStudent.value

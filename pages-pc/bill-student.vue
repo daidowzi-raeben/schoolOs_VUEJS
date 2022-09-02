@@ -152,9 +152,27 @@
                   @input="payComma($event)"
                 />
               </div>
+              <div class="flex-full m-r-1 m-t-3">
+                <p>미납 연체 수수료</p>
+                <input
+                  v-model="billPayAdd"
+                  type="text"
+                  class="jelly-text wd-full text-right"
+                  @click="resetInput($event)"
+                  @input="payComma2($event)"
+                />
+              </div>
+              <div class="flex-full m-r-1 m-t-3">
+                <p>납부 기한</p>
+                <b-form-datepicker
+                  v-model="end_day"
+                  class="jelly-text jelly-text--h wd-full"
+                ></b-form-datepicker>
+              </div>
             </div>
           </div>
         </div>
+        <div>미납 연체 수수료</div>
         <div class="m-t-5">
           <div class="flex-full m-l-1">
             <p>내용</p>
@@ -197,11 +215,13 @@ export default {
       paramsPost: {},
       billStudent: [],
       billPay: 0,
+      billPayAdd: 0,
       billSubject: null,
       billContent: '',
       queryCate: null,
       checked: [],
       etcInput: false,
+      end_day: '',
     }
   },
 
@@ -231,6 +251,7 @@ export default {
     },
   },
   watch: {
+    end_day: {},
     '$route.query.cate': {
       handler(value) {
         console.log(value)
@@ -292,6 +313,8 @@ export default {
       }
       frm.append('billStudent', this.billStudent)
       frm.append('billPay', this.uncomma(this.billPay))
+      frm.append('billPayAdd', this.uncomma(this.billPayAdd))
+      frm.append('end_day', this.end_day)
       frm.append('billContent', this.billContent)
 
       this.$axios
@@ -335,6 +358,9 @@ export default {
     payComma(e) {
       this.billPay = this.comma(this.uncomma(e.target.value))
     },
+    payComma2(e) {
+      this.billPayAdd = this.comma(this.uncomma(e.target.value))
+    },
     comma(str) {
       str = String(str)
       return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
@@ -345,6 +371,18 @@ export default {
     },
     resetInput(e) {
       e.target.value = ''
+    },
+    onChangeEndDate(e) {
+      const masTime = new Date(e)
+      const todayTime = new Date()
+      const diff = masTime - todayTime
+
+      const diffDay = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const diffHour = Math.floor((diff / (1000 * 60 * 60)) % 24)
+      const diffMin = Math.floor((diff / (1000 * 60)) % 60)
+      const diffSec = Math.floor((diff / 1000) % 60)
+
+      console.log(`${diffDay}일 ${diffHour}시간 ${diffMin}분 ${diffSec}초`)
     },
   },
 }

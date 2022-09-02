@@ -143,8 +143,7 @@ export default {
         this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
           this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
       )
-
-      if (this.accountPrice <= 0) {
+      if (this.uncomma(this.accountPrice) <= 0) {
         alert('금액을 다시 입력해주세요')
         return false
       }
@@ -152,7 +151,7 @@ export default {
         alert('잔액이 부족해요')
         return false
       }
-      if (this.accountPrice > myPrice) {
+      if (this.uncomma(this.accountPrice) > myPrice) {
         alert('잔액이 부족해요')
         return false
       } else {
