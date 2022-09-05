@@ -188,7 +188,13 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivatEtc(v.list.idx, 3)"
+                @click="
+                  onClickPrivatEtc(
+                    v.list.idx,
+                    3,
+                    v.attendance2 ? v.attendance2[0].idx : null
+                  )
+                "
               >
                 기타
               </button>
