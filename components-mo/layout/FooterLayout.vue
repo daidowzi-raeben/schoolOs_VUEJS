@@ -49,6 +49,12 @@
                   : ''
               "
             >
+              <b-badge
+                v-if="GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT"
+                variant="danger"
+                class="b-badge--footer"
+                >{{ GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT.noticeCnt }}</b-badge
+              >
               <nuxt-link to="/notice-list/1">
                 <b-icon icon="alarm"></b-icon>
                 <p>알림장</p>
@@ -123,11 +129,40 @@ export default {
       params: {
         type: 'pwChk',
       },
+      frmLayout: {
+        type: 'newLatest',
+      },
     }
   },
   computed: {
-    ...mapState(['LOGIN', 'GET_AXIOS_CALLBACK_DATA_BILL']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER_PW', 'LOGIN_STUDENT']),
+    ...mapState([
+      'LOGIN',
+      'GET_AXIOS_CALLBACK_DATA_BILL',
+      'GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT',
+    ]),
+    ...mapGetters([
+      'GET_AXIOS_CALLBACK_GETTER_PW',
+      'LOGIN_STUDENT',
+      'GET_AXIOS_CALLBACK_GETTER_LAYOUT_STUDENT',
+    ]),
+  },
+  watch: {
+    '$route.path': {
+      handler(value) {
+        this.$nextTick(() => {
+          console.log(
+            '+++++++++++++++++++++++++',
+            value,
+            this.LOGIN_CONFIG.sms_idx
+          )
+          this.frmLayout.sms_idx = this.LOGIN_CONFIG.sms_idx
+          this.frmLayout.smt_idx = this.LOGIN_CONFIG.smt_idx
+          this.GET_AXIOS_LAYOUT_STUDENT(this.frmLayout)
+          console.log('this.frmLayout', this.frmLayout)
+        })
+      },
+      immediate: true,
+    },
   },
   mounted() {
     console.log('FOOTER', this.$nuxt._route.name)
@@ -139,7 +174,7 @@ export default {
     this.GET_AXIOS_PW(this.params)
   },
   methods: {
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS_PW']),
+    ...mapActions(['POST_AXIOS', 'GET_AXIOS_PW', 'GET_AXIOS_LAYOUT_STUDENT']),
     ...mapMutations(['LOADING_TRUE']),
 
     onSubmitPw() {

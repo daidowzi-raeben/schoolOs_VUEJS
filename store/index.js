@@ -18,6 +18,7 @@ const createStore = () => {
       LOGIN: [],
       GET_AXIOS_CALLBACK_DATA_BILL: [],
       GET_AXIOS_CALLBACK_DATA_LAYOUT: [],
+      GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT: [],
       GET_AXIOS_CALLBACK_DATA_PW: [],
       studentIdMSG: '',
 
@@ -47,6 +48,12 @@ const createStore = () => {
         state.LOADING = false
         return state.GET_AXIOS_CALLBACK_DATA_LAYOUT
           ? state.GET_AXIOS_CALLBACK_DATA_LAYOUT
+          : ''
+      },
+      GET_AXIOS_CALLBACK_GETTER_LAYOUT_STUDENT(state) {
+        state.LOADING = false
+        return state.GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT
+          ? state.GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT
           : ''
       },
       GET_AXIOS_CALLBACK_GETTER_PW(state) {
@@ -92,6 +99,10 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT(state, payload) {
         // state.LOADING = true
         state.GET_AXIOS_CALLBACK_DATA_LAYOUT = payload
+      },
+      GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT_STUDENT(state, payload) {
+        // state.LOADING = true
+        state.GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT = payload
       },
       GET_AXIOS_CALLBACK_DATA_SUCCESS_PW(state, payload) {
         // state.LOADING = true
@@ -297,6 +308,18 @@ const createStore = () => {
           })
           .catch((res) => {
             console.error('GET_AXIOS_CALLBACK_DATA_FALIE', res)
+          })
+      },
+      GET_AXIOS_LAYOUT_STUDENT({ commit }, params) {
+        console.log('LAYOUT params', params)
+        axios
+          .get(process.env.VUE_APP_API + '/student.php', { params })
+          .then((res) => {
+            console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT_STUDENT', res)
+            commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT_STUDENT', res.data)
+          })
+          .catch((res) => {
+            console.error('GET_AXIOS_CALLBACK_DATA_FALIE_STUDENT', res)
           })
       },
       GET_AXIOS_PW({ commit }, params) {
