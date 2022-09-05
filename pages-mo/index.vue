@@ -206,7 +206,7 @@
               v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.billNon"
               :key="index"
               class="m-t-3"
-              @click="onClickBillDetail(v.idx, v.pay)"
+              @click="onClickBillDetail(v.idx, v.over_day ? v.over_day : v.pay)"
             >
               <div class="flex">
                 <div class="txt m-l-2">
@@ -216,13 +216,26 @@
                 <div class="pay text-right flex-right">
                   <p>
                     <em class="bold">
-                      {{ v.pay | comma }}
+                      {{ v.over_day ? v.over_day : v.pay | comma }}
                     </em>
                     <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
                       LOGIN_CONFIG.t_reg_pay_unit
                     }}</span>
                   </p>
                 </div>
+              </div>
+              <div
+                v-if="v.end_day && v.add_pay"
+                class="font-12 text-center m-t-1"
+              >
+                <em>
+                  {{ v.end_day | moment('YY.MM.DD') }} 까지 미납 시
+                  {{ v.add_pay
+                  }}<span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
+                    LOGIN_CONFIG.t_reg_pay_unit
+                  }}</span
+                  >씩 미납 연체금 추가
+                </em>
               </div>
               <div
                 class="m-t-2 font-12"

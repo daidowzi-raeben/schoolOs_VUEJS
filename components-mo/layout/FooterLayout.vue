@@ -50,7 +50,10 @@
               "
             >
               <b-badge
-                v-if="GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT"
+                v-if="
+                  GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT &&
+                  Number(GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT.noticeCnt) > 0
+                "
                 variant="danger"
                 class="b-badge--footer"
                 >{{ GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT.noticeCnt }}</b-badge

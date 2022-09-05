@@ -36,8 +36,8 @@
                 <tr>
                   <th>상태</th>
                   <th>이름</th>
-                  <th>고지서 번호</th>
                   <th>금액</th>
+                  <th>납부기한</th>
                   <th>제목</th>
                   <th>내용</th>
                 </tr>
@@ -52,9 +52,17 @@
                     >
                   </td>
                   <td>{{ v.reg_name }}</td>
-                  <td>{{ v.code }}</td>
-                  <td>{{ v.pay | comma }} {{ LOGIN_TEACHER.reg_pay_unit }}</td>
-                  <td>{{ v.subject }}</td>
+                  <td>
+                    {{ v.pay | comma }} {{ LOGIN_TEACHER.reg_pay_unit }}
+                    <br />{{ v.add_pay ? `(미납 시 +${v.add_pay})` : '' }}
+                  </td>
+                  <td>
+                    {{ v.end_day | moment('YY.MM.DD') }}
+                  </td>
+                  <td>
+                    <p class="font-12 color-888">{{ v.code }}</p>
+                    {{ v.subject }}
+                  </td>
                   <td style="background: #ffffcc">{{ v.content }}</td>
                 </tr>
               </table>
@@ -251,7 +259,7 @@ export default {
     },
   },
   watch: {
-    end_day: {},
+    // end_day: {},
     '$route.query.cate': {
       handler(value) {
         console.log(value)
