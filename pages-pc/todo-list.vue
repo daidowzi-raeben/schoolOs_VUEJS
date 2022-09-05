@@ -438,7 +438,7 @@ export default {
         },
       },
       params: {
-        type: '',
+        type: 'questList',
       },
       paramsForm: {},
       paramsDetail: {},
@@ -603,13 +603,27 @@ export default {
     onSubmitItem() {
       //   const itemThumb = document.getElementById('itemThumb')
       const FORM_DATA = new FormData()
-      Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
-        FORM_DATA.append(v[0], v[1])
-      })
-      FORM_DATA.append('type', 'noticeEdit')
-      FORM_DATA.append('noticeSubject', this.noticeSubject)
-      FORM_DATA.append('noticeContent', this.noticeContent)
-      FORM_DATA.append('noticeIdx', this.noticeIdx)
+      // Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
+      //   FORM_DATA.append(v[0], v[1])
+      // })
+      FORM_DATA.append('type', 'questEdit')
+      FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      FORM_DATA.append('subject', this.quest.subject)
+      FORM_DATA.append('contents', this.quest.contents)
+      FORM_DATA.append('cate', this.quest.cate)
+      FORM_DATA.append('price', this.quest.price)
+      FORM_DATA.append('intellect', this.quest.intellect)
+      FORM_DATA.append('effort', this.quest.effort)
+      FORM_DATA.append('health', this.quest.health)
+      FORM_DATA.append('etiquette', this.quest.etiquette)
+      FORM_DATA.append('m_price', this.quest.m_price)
+      FORM_DATA.append('m_intellect', this.quest.m_intellect)
+      FORM_DATA.append('m_effort', this.quest.m_effort)
+      FORM_DATA.append('m_health', this.quest.m_health)
+      FORM_DATA.append('m_etiquette', this.quest.m_etiquette)
+      FORM_DATA.append('start_day', this.quest.start_day)
+      FORM_DATA.append('end_day', this.quest.end_day)
+      FORM_DATA.append('idx', this.noticeIdx)
       axiosForm(FORM_DATA, '/teacher.php')
       setTimeout(() => {
         this.params = this.LOGIN_TEACHER
