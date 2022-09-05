@@ -32,6 +32,11 @@
           <nuxt-link to="../qr-scan" class="m-r-3"> QR코드 가입 </nuxt-link>
           <nuxt-link to="./sign-teacher"> 선생님 찾기 </nuxt-link>
         </div>
+        <div class="m-t-4 text-center">
+          <nuxt-link to="/member/sign-out" class="m-r-3">
+            로그인 초기화
+          </nuxt-link>
+        </div>
       </form>
     </div>
   </div>
