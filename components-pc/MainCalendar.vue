@@ -423,7 +423,7 @@ export default {
       frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
       frm.append('sms_idx', this.btnData.e)
       if (this.btnData.idx) frm.append('idx', this.btnData.idx)
-      if (this.btnData.type) frm.append('typeStat', this.btnData.type)
+      frm.append('typeStat', this.btnData.type)
       if (this.btnData.type_etc) frm.append('type_etc', this.btnData.type_etc)
       frm.append('ymd', this.nowDate)
       console.log(this.btnData.type, this.btnData.type, this.btnData.type)
