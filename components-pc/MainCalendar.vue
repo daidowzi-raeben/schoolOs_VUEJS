@@ -61,7 +61,13 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivat(v.list.idx, 0)"
+                @click="
+                  onClickPrivat(
+                    v.list.idx,
+                    0,
+                    v.attendance ? v.attendance[0].idx : null
+                  )
+                "
               >
                 질병♡
               </button>
@@ -72,7 +78,13 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivat(v.list.idx, 1)"
+                @click="
+                  onClickPrivat(
+                    v.list.idx,
+                    1,
+                    v.attendance ? v.attendance[0].idx : null
+                  )
+                "
               >
                 미인정♥︎
               </button>
@@ -83,7 +95,13 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivat(v.list.idx, 2)"
+                @click="
+                  onClickPrivat(
+                    v.list.idx,
+                    2,
+                    v.attendance ? v.attendance[0].idx : null
+                  )
+                "
               >
                 기타▲
               </button>
@@ -94,7 +112,13 @@
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivat(v.list.idx, 3)"
+                @click="
+                  onClickPrivat(
+                    v.list.idx,
+                    3,
+                    v.attendance ? v.attendance[0].idx : null
+                  )
+                "
               >
                 출석인정△
               </button>
@@ -109,40 +133,58 @@
               <button
                 class="jelly-btn"
                 :class="
-                  v.attendance && v.attendance[0].type2 === '0'
+                  v.attendance2 && v.attendance2[0].type2 === '0'
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivatEtc(v.list.idx, 0)"
+                @click="
+                  onClickPrivatEtc(
+                    v.list.idx,
+                    0,
+                    v.attendance2 ? v.attendance2[0].idx : null
+                  )
+                "
               >
                 지각
               </button>
               <button
                 class="jelly-btn"
                 :class="
-                  v.attendance && v.attendance[0].type2 === '1'
+                  v.attendance2 && v.attendance2[0].type2 === '1'
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivatEtc(v.list.idx, 1)"
+                @click="
+                  onClickPrivatEtc(
+                    v.list.idx,
+                    1,
+                    v.attendance2 ? v.attendance2[0].idx : null
+                  )
+                "
               >
                 조퇴
               </button>
               <button
                 class="jelly-btn"
                 :class="
-                  v.attendance && v.attendance[0].type2 === '2'
+                  v.attendance2 && v.attendance2[0].type2 === '2'
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
-                @click="onClickPrivatEtc(v.list.idx, 2)"
+                @click="
+                  onClickPrivatEtc(
+                    v.list.idx,
+                    2,
+                    v.attendance2 ? v.attendance2[0].idx : null
+                  )
+                "
               >
                 결과
               </button>
               <button
                 class="jelly-btn"
                 :class="
-                  v.attendance && v.attendance[0].type2 === '3'
+                  v.attendance2 && v.attendance2[0].type2 === '3'
                     ? 'jelly-btn--pink'
                     : 'jelly-btn--default'
                 "
@@ -151,8 +193,11 @@
                 기타
               </button>
             </div>
-            <div v-if="v.attendance && v.attendance[0].type_etc2" class="m-t-2">
-              {{ v.attendance[0].type_etc2 }}
+            <div
+              v-if="v.attendance2 && v.attendance2[0].type_etc2"
+              class="m-t-2"
+            >
+              {{ v.attendance2[0].type_etc2 }}
             </div>
           </td>
         </tr>
@@ -215,7 +260,7 @@
     <b-modal id="studentContentTypeEtc2" size="lg" hide-footer hide-header>
       <div class="">
         <input
-          v-model="btnData.type_etc2"
+          v-model="btnData2.type_etc2"
           type="text"
           class="jelly-text wd-full"
           placeholder="사유를 작성해 주세요"
@@ -253,6 +298,9 @@ export default {
       nowIdx: '',
       btnData: {
         type_etc: null,
+      },
+      btnData2: {
+        type_etc2: null,
       },
     }
   },
@@ -346,16 +394,20 @@ export default {
     },
 
     // 출결버튼
-    onClickPrivat(e, type) {
+    onClickPrivat(e, type, idx) {
+      this.btnData.type_etc = ''
       this.btnData.e = e
       this.btnData.type = type
+      this.btnData.idx = idx
       this.$bvModal.show('studentContentTypeEtc')
     },
 
     // 출결버튼
-    onClickPrivatEtc(e, type) {
-      this.btnData.e = e
-      this.btnData.type = type
+    onClickPrivatEtc(e, type, idx) {
+      this.btnData2.type_etc2 = ''
+      this.btnData2.e = e
+      this.btnData2.idx = idx
+      this.btnData2.type = type
       this.$bvModal.show('studentContentTypeEtc2')
     },
 
@@ -364,14 +416,17 @@ export default {
       //   e.target.classList.toggle = 'jelly-btn--default'
       //   e.target.classList.toggle = 'jelly-btn--pink'
       console.log(this.nowDate, e, type)
+      console.log(this.btnData.idx, this.btnData.idx, this.btnData.idx)
       this.LOADING_TRUE()
       const frm = new FormData()
       frm.append('type', 'attendanceBtn')
       frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
       frm.append('sms_idx', this.btnData.e)
-      frm.append('typeStat', this.btnData.type)
-      frm.append('type_etc', this.btnData.type_etc)
+      if (this.btnData.idx) frm.append('idx', this.btnData.idx)
+      if (this.btnData.type) frm.append('typeStat', this.btnData.type)
+      if (this.btnData.type_etc) frm.append('type_etc', this.btnData.type_etc)
       frm.append('ymd', this.nowDate)
+      console.log(this.btnData.type, this.btnData.type, this.btnData.type)
       this.$axios
         .post(process.env.VUE_APP_API + '/teacher.php', frm, {
           header: {
@@ -400,9 +455,11 @@ export default {
       const frm = new FormData()
       frm.append('type', 'attendanceBtn')
       frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
-      frm.append('sms_idx', this.btnData.e)
-      frm.append('typeStat2', this.btnData.type)
-      frm.append('type_etc2', this.btnData.type_etc2)
+      frm.append('sms_idx', this.btnData2.e)
+      if (this.btnData2.idx) frm.append('idx', this.btnData2.idx)
+      frm.append('typeStat2', this.btnData2.type)
+      if (this.btnData2.type_etc2)
+        frm.append('type_etc2', this.btnData2.type_etc2)
       frm.append('ymd', this.nowDate)
       this.$axios
         .post(process.env.VUE_APP_API + '/teacher.php', frm, {
