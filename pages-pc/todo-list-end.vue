@@ -361,6 +361,7 @@
               <td v-if="!v.is_confirm">미제출</td>
               <td v-if="v.is_confirm === 'Y'">완료</td>
               <td v-if="v.is_confirm === 'F'">실패</td>
+              <td v-if="v.is_confirm === 'C'">취소</td>
               <td>
                 <button
                   class="jelly-btn jelly-btn--default"
@@ -390,6 +391,13 @@
                   @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
                 >
                   성공
+                </button>
+                <button
+                  v-if="v.is_confirm === 'Y'"
+                  class="jelly-btn jelly-btn--gray"
+                  @click="onSubmitConfirm('C', v.sq_idx, v.idx, '')"
+                >
+                  취소
                 </button>
               </td>
             </tr>

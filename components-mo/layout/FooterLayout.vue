@@ -18,6 +18,15 @@
                   : ''
               "
             >
+              <b-badge
+                v-if="
+                  GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT &&
+                  Number(GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT.questCnt) > 0
+                "
+                variant="danger"
+                class="b-badge--footer"
+                >{{ GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT.questCnt }}</b-badge
+              >
               <nuxt-link to="/todo-list/0">
                 <b-icon icon="controller"></b-icon>
                 <p v-if="LOGIN_CONFIG">
