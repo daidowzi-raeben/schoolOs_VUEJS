@@ -209,6 +209,14 @@
     </div>
     <b-modal id="completeFile" size="lg" hide-footer hide-header>
       <div>
+        <p>선생님께 남길 말이 있나요?</p>
+        <textarea
+          v-model="completeContent"
+          class="jelly-text wd-full"
+          style="height: 200px; padding: 10px"
+        ></textarea>
+      </div>
+      <div class="m-t-5">
         <p>인증샷을 등록해 주세요!</p>
         <input
           id="photo"
@@ -222,8 +230,9 @@
         <button
           class="jelly-btn jelly-btn--default"
           style="width: 30%; border-radius: 0"
-          @click="$bvModal.hide('completeFile')"
+          @click="onClickCompleteModal"
         >
+          <!-- $bvModal.hide('completeFile') -->
           취소하기
         </button>
         <button
@@ -298,6 +307,7 @@ export default {
       paramsPost: {},
       paramsPostApply: {},
       a: 100000000,
+      completeContent: '',
     }
   },
   computed: {
@@ -338,6 +348,10 @@ export default {
         this.GET_AXIOS(this.params)
       }, 1000)
     },
+    onClickCompleteModal() {
+      this.completeContent = ''
+      this.$bvModal.hide('completeFile')
+    },
     onSubmitComplete() {
       this.LOADING_TRUE()
       const frm = new FormData()
@@ -349,6 +363,9 @@ export default {
       }
       frm.append('type', 'questCopleteOn')
       frm.append('idx', this.params.idx)
+      if (this.completeContent) {
+        frm.append('content', this.completeContent)
+      }
       frm.append('sms_idx', this.params.sms_idx)
       frm.append('smt_idx', this.LOGIN_STUDENT.smt_idx)
       console.log(frm)
@@ -360,7 +377,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data)
+          console.log('[onSubmitComplete]', res.data)
           this.$bvModal.hide('completeFile')
           setTimeout(() => {
             this.params = this.LOGIN_STUDENT

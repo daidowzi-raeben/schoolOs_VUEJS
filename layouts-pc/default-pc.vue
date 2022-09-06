@@ -12,45 +12,60 @@
           </h1>
           <ul>
             <li>
-              <b-icon icon="gear" class="m-r-2"></b-icon> 환경설정
+              <div v-b-toggle.gnbSetupToggle class="flex">
+                <b-icon icon="gear" class="m-r-2"></b-icon> 환경설정
+                <b-icon icon="chevron-down" class="flex-right"></b-icon>
+              </div>
               <div>
-                <ul>
-                  <li @click="onClickLinkTo($event, 'job-list')">
-                    직업설정
-                    <b-badge
-                      v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.jobCnt === '0'"
-                      variant="warning"
-                      class="m-l-1"
-                      >설정 전</b-badge
-                    >
-                  </li>
-                  <li @click="onClickLinkTo($event, 'rule-detail')">
-                    규칙설정
-                    <b-badge
-                      v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.ruleCnt === '0'"
-                      variant="warning"
-                      class="m-l-1"
-                      >설정 전</b-badge
-                    >
-                  </li>
-                  <li @click="onClickLinkTo($event, 'qr-code')">가입코드</li>
-                  <li @click="onClickLinkTo($event, 'student-insert')">
-                    학생등록
-                  </li>
-                  <li @click="onClickLinkTo($event, 'student-apply')">
-                    회원승인
-                    <b-badge
-                      v-if="
-                        GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt !== '0'
-                      "
-                      variant="warning"
-                      class="m-l-1"
-                      >{{
-                        GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt
-                      }}</b-badge
-                    >
-                  </li>
-                </ul>
+                <b-collapse
+                  id="gnbSetupToggle"
+                  :visible="
+                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.jobCnt !== '0' &&
+                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.ruleCnt !== '0' &&
+                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt !== '0'
+                      ? true
+                      : false
+                  "
+                >
+                  <ul>
+                    <li @click="onClickLinkTo($event, 'job-list')">
+                      직업설정
+                      <b-badge
+                        v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.jobCnt === '0'"
+                        variant="warning"
+                        class="m-l-1"
+                        >설정 전</b-badge
+                      >
+                    </li>
+                    <li @click="onClickLinkTo($event, 'rule-detail')">
+                      규칙설정
+                      <b-badge
+                        v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.ruleCnt === '0'"
+                        variant="warning"
+                        class="m-l-1"
+                        >설정 전</b-badge
+                      >
+                    </li>
+                    <li @click="onClickLinkTo($event, 'qr-code')">가입코드</li>
+                    <li @click="onClickLinkTo($event, 'student-insert')">
+                      학생등록
+                    </li>
+                    <li @click="onClickLinkTo($event, 'student-apply')">
+                      회원승인
+                      <b-badge
+                        v-if="
+                          GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt !==
+                          '0'
+                        "
+                        variant="warning"
+                        class="m-l-1"
+                        >{{
+                          GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt
+                        }}</b-badge
+                      >
+                    </li>
+                  </ul>
+                </b-collapse>
               </div>
             </li>
             <li>

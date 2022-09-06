@@ -336,64 +336,70 @@
               <th>관리</th>
             </tr>
           </thead>
-          <tr
-            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.participation"
-            :key="i"
-            class="text-center"
-            :class="v.is_confirm === 'Y' ? 'is_active' : ''"
-          >
-            <th>
-              <input
-                v-if="v.is_read === 'Y' && v.is_confirm !== 'Y'"
-                :id="`checked${v.sq_idx}`"
-                :key="i"
-                v-model="checked"
-                type="checkbox"
-                :value="v.sqm_idx"
-              />
-            </th>
-            <td>{{ v.reg_name }}</td>
-            <td>{{ v.is_read === 'Y' ? '읽음' : '안읽음' }}</td>
-            <td>{{ v.is_status === 'Y' ? '수락' : '미수락' }}</td>
-            <td v-if="v.is_confirm === 'N'">
-              {{ v.is_complete === 'Y' ? '제출' : '미제출' }}
-            </td>
-            <td v-if="v.is_confirm === 'R'">다시 제출</td>
-            <td v-if="!v.is_confirm">미제출</td>
-            <td v-if="v.is_confirm === 'Y'">완료</td>
-            <td v-if="v.is_confirm === 'F'">실패</td>
-            <td>
-              <button
-                class="jelly-btn jelly-btn--default"
-                @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
-              >
-                확인하기
-              </button>
-            </td>
-            <td class="text-left">
-              <button
-                v-if="v.is_confirm !== 'F'"
-                class="jelly-btn jelly-btn--default"
-                @click="onSubmitConfirm('F', v.sq_idx, v.idx, '')"
-              >
-                실패
-              </button>
-              <button
-                v-if="v.is_complete && v.is_confirm !== 'R'"
-                class="jelly-btn jelly-btn--default"
-                @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
-              >
-                다시 제출
-              </button>
-              <button
-                v-if="v.is_complete && v.is_confirm !== 'Y'"
-                class="jelly-btn jelly-btn--pink"
-                @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
-              >
-                성공
-              </button>
-            </td>
-          </tr>
+          <template v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.participation">
+            <tr
+              :key="i"
+              class="text-center"
+              :class="v.is_confirm === 'Y' ? 'is_active' : ''"
+            >
+              <th>
+                <input
+                  v-if="v.is_read === 'Y' && v.is_confirm !== 'Y'"
+                  :id="`checked${v.sq_idx}`"
+                  :key="i"
+                  v-model="checked"
+                  type="checkbox"
+                  :value="v.sqm_idx"
+                />
+              </th>
+              <td>{{ v.reg_name }}</td>
+              <td>{{ v.is_read === 'Y' ? '읽음' : '안읽음' }}</td>
+              <td>{{ v.is_status === 'Y' ? '수락' : '미수락' }}</td>
+              <td v-if="v.is_confirm === 'N'">
+                {{ v.is_complete === 'Y' ? '제출' : '미제출' }}
+              </td>
+              <td v-if="v.is_confirm === 'R'">다시 제출</td>
+              <td v-if="!v.is_confirm">미제출</td>
+              <td v-if="v.is_confirm === 'Y'">완료</td>
+              <td v-if="v.is_confirm === 'F'">실패</td>
+              <td>
+                <button
+                  class="jelly-btn jelly-btn--default"
+                  @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
+                >
+                  확인하기
+                </button>
+              </td>
+              <td class="text-left">
+                <button
+                  v-if="v.is_confirm !== 'F'"
+                  class="jelly-btn jelly-btn--default"
+                  @click="onSubmitConfirm('F', v.sq_idx, v.idx, '')"
+                >
+                  실패
+                </button>
+                <button
+                  v-if="v.is_complete && v.is_confirm !== 'R'"
+                  class="jelly-btn jelly-btn--default"
+                  @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
+                >
+                  다시 제출
+                </button>
+                <button
+                  v-if="v.is_complete && v.is_confirm !== 'Y'"
+                  class="jelly-btn jelly-btn--pink"
+                  @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
+                >
+                  성공
+                </button>
+              </td>
+            </tr>
+            <tr v-if="v.content">
+              <td colspan="7" style="white-space: pre">
+                {{ v.content }}
+              </td>
+            </tr>
+          </template>
         </table>
       </div>
       <div class="m-t-5 text-center">
