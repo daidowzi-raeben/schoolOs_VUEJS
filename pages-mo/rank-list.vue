@@ -44,6 +44,7 @@
               <div class="flex-full m-l-2">
                 <div class="flex m-t-0">
                   <div class="txt m-t-1">
+                    <em v-if="v.albaCnt === v.albaStudentCnt"> 초급 공무원 </em>
                     <p class="bold">{{ v.reg_name }}</p>
                     <p class="m-t-2">LV.{{ Number(v.reg_level) }}</p>
                     <span>
