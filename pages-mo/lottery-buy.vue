@@ -47,7 +47,7 @@
       </div>
       <div
         ref="animationElementJelly"
-        style="position: absolute; z-index: 1; width: 100%"
+        style="position: absolute; z-index: 1; width: 130%; left: 0"
       ></div>
       <div id="lotto" class="clb p-3">
         <div v-for="item in 30" :key="item" class="number">
@@ -111,11 +111,13 @@ export default {
       nextDate: '',
       firstLotto: false,
       eventCnt: 0,
+      randNum: 0,
     }
   },
   mounted() {
     this.LOADING_TRUE()
     this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
+    this.randNum = Math.floor(Math.random() * 30)
     this.nextDate = ''
     console.log(this.$nuxt, this.$config, this.LOGIN_CONFIG)
     this.params = this.LOGIN_CONFIG
@@ -190,7 +192,8 @@ export default {
   methods: {
     ...mapMutations(['LOADING_INIT', 'LOADING_TRUE']),
     onClickToggleClass(e, number) {
-      if (number === 1) {
+      console.log(this.randNum)
+      if (number === this.randNum) {
         // console.log('BOM')
         this.eventCnt++
         if (this.eventCnt === 1) {
@@ -260,14 +263,14 @@ export default {
     jellyAnimation() {
       this.$lottie.loadAnimation({
         container: this.$refs.animationElementJelly, // the dom element that will contain the animation
-        loop: true,
+        loop: false,
         autoplay: true,
         // autoplay: true,
         path: '/img/jelly.json', // the path to the animation json
       })
       setTimeout(() => {
         this.$refs.animationElementJelly.style.display = 'none'
-      }, 1000)
+      }, 2000)
     },
     onSubmit() {
       if (this.lottoNumber.length === 5 && this.cnt === 5) {
