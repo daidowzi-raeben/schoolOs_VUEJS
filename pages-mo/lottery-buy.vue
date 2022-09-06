@@ -45,6 +45,10 @@
           <div>다음 구매 가능 일 {{ nextDate }}</div>
         </div>
       </div>
+      <div
+        ref="animationElementJelly"
+        style="position: absolute; z-index: 1; width: 100%"
+      ></div>
       <div id="lotto" class="clb p-3">
         <div v-for="item in 30" :key="item" class="number">
           <input
@@ -106,6 +110,7 @@ export default {
       isBuy: false,
       nextDate: '',
       firstLotto: false,
+      eventCnt: 0,
     }
   },
   mounted() {
@@ -185,6 +190,16 @@ export default {
   methods: {
     ...mapMutations(['LOADING_INIT', 'LOADING_TRUE']),
     onClickToggleClass(e, number) {
+      if (number === 1) {
+        // console.log('BOM')
+        this.eventCnt++
+        if (this.eventCnt === 1) {
+          console.log('BOM')
+          this.jellyAnimation()
+        }
+      }
+
+      console.log(this.eventCnt)
       if (e.target.checked === true && this.cnt >= 5) {
         e.target.checked = false
         return alert('stop')
@@ -241,6 +256,18 @@ export default {
           console.log('AXIOS FALSE', res)
           this.LOADING = false
         })
+    },
+    jellyAnimation() {
+      this.$lottie.loadAnimation({
+        container: this.$refs.animationElementJelly, // the dom element that will contain the animation
+        loop: true,
+        autoplay: true,
+        // autoplay: true,
+        path: '/img/jelly.json', // the path to the animation json
+      })
+      setTimeout(() => {
+        this.$refs.animationElementJelly.style.display = 'none'
+      }, 1000)
     },
     onSubmit() {
       if (this.lottoNumber.length === 5 && this.cnt === 5) {
