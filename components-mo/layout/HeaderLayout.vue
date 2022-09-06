@@ -43,7 +43,11 @@
     </div>
     <header>
       <div class="flex">
-        <h1 @click="onClickEasterEgg">JELLY</h1>
+        <h1 class="relative" @click="onClickEasterEgg">
+          JELLY
+          <div ref="animationElementMoon" class="logoBack"></div>
+        </h1>
+
         <div class="flex-right notification">
           <div class="flex">
             <!-- <nuxt-link
@@ -116,6 +120,7 @@ export default {
         console.log('================', res.data)
         this.teacher = res.data.teacher
         this.student = res.data.student
+        this.chuseok()
       })
       .catch((res) => {
         console.log('AXIOS FALSE', res)
@@ -143,8 +148,24 @@ export default {
         this.$refs.animationElement.style.display = 'none'
       }, 5000)
     },
+    chuseok() {
+      this.$lottie.loadAnimation({
+        container: this.$refs.animationElementMoon, // the dom element that will contain the animation
+        loop: true,
+        autoplay: true,
+        // autoplay: true,
+        path: '/img/moon.json', // the path to the animation json
+      })
+    },
   },
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.logoBack {
+  position: absolute;
+  top: -16px;
+  margin-left: 43px;
+  width: 100px;
+}
+</style>
