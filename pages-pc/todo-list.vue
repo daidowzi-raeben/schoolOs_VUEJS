@@ -645,6 +645,7 @@ export default {
       if (e) {
         this.$router.push(`/todo-list?cate=${e}`)
       } else {
+        this.queryCate = ''
         this.$router.push(`/todo-list`)
       }
     },

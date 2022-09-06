@@ -335,64 +335,70 @@
               <th>관리</th>
             </tr>
           </thead>
-          <tr
-            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.participation"
-            :key="i"
-            class="text-center"
-            :class="v.is_confirm === 'Y' ? 'is_active' : ''"
-          >
-            <th>
-              <input
-                v-if="v.is_read === 'Y' && v.is_confirm !== 'Y'"
-                :id="`checked${v.sq_idx}`"
-                :key="i"
-                v-model="checked"
-                type="checkbox"
-                :value="v.sqm_idx"
-              />
-            </th>
-            <td>{{ v.reg_name }}</td>
-            <td>{{ v.is_read === 'Y' ? '읽음' : '안읽음' }}</td>
-            <td>{{ v.is_status === 'Y' ? '수락' : '미수락' }}</td>
-            <td v-if="v.is_confirm === 'N'">
-              {{ v.is_complete === 'Y' ? '제출' : '미제출' }}
-            </td>
-            <td v-if="v.is_confirm === 'R'">다시 제출</td>
-            <td v-if="!v.is_confirm">미제출</td>
-            <td v-if="v.is_confirm === 'Y'">완료</td>
-            <td v-if="v.is_confirm === 'F'">실패</td>
-            <td>
-              <button
-                class="jelly-btn jelly-btn--default"
-                @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
-              >
-                확인하기
-              </button>
-            </td>
-            <td class="text-left">
-              <button
-                v-if="v.is_confirm !== 'F'"
-                class="jelly-btn jelly-btn--default"
-                @click="onSubmitConfirm('F', v.sq_idx, v.idx, '')"
-              >
-                실패
-              </button>
-              <button
-                v-if="v.is_complete && v.is_confirm !== 'R'"
-                class="jelly-btn jelly-btn--default"
-                @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
-              >
-                다시 제출
-              </button>
-              <button
-                v-if="v.is_complete && v.is_confirm !== 'Y'"
-                class="jelly-btn jelly-btn--pink"
-                @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
-              >
-                성공
-              </button>
-            </td>
-          </tr>
+          <template v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.participation">
+            <tr
+              :key="i"
+              class="text-center"
+              :class="v.is_confirm === 'Y' ? 'is_active' : ''"
+            >
+              <th>
+                <input
+                  v-if="v.is_read === 'Y' && v.is_confirm !== 'Y'"
+                  :id="`checked${v.sq_idx}`"
+                  :key="i"
+                  v-model="checked"
+                  type="checkbox"
+                  :value="v.sqm_idx"
+                />
+              </th>
+              <td>{{ v.reg_name }}</td>
+              <td>{{ v.is_read === 'Y' ? '읽음' : '안읽음' }}</td>
+              <td>{{ v.is_status === 'Y' ? '수락' : '미수락' }}</td>
+              <td v-if="v.is_confirm === 'N'">
+                {{ v.is_complete === 'Y' ? '제출' : '미제출' }}
+              </td>
+              <td v-if="v.is_confirm === 'R'">다시 제출</td>
+              <td v-if="!v.is_confirm">미제출</td>
+              <td v-if="v.is_confirm === 'Y'">완료</td>
+              <td v-if="v.is_confirm === 'F'">실패</td>
+              <td>
+                <button
+                  class="jelly-btn jelly-btn--default"
+                  @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
+                >
+                  확인하기
+                </button>
+              </td>
+              <td class="text-left">
+                <button
+                  v-if="v.is_confirm !== 'F'"
+                  class="jelly-btn jelly-btn--default"
+                  @click="onSubmitConfirm('F', v.sq_idx, v.idx, '')"
+                >
+                  실패
+                </button>
+                <button
+                  v-if="v.is_complete && v.is_confirm !== 'R'"
+                  class="jelly-btn jelly-btn--default"
+                  @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
+                >
+                  다시 제출
+                </button>
+                <button
+                  v-if="v.is_complete && v.is_confirm !== 'Y'"
+                  class="jelly-btn jelly-btn--pink"
+                  @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
+                >
+                  성공
+                </button>
+              </td>
+            </tr>
+            <tr v-if="v.content">
+              <td colspan="7" style="white-space: pre">
+                {{ v.content }}
+              </td>
+            </tr>
+          </template>
         </table>
       </div>
       <div class="m-t-5 text-center">
@@ -437,7 +443,7 @@ export default {
         },
       },
       params: {
-        type: '',
+        type: 'questList',
       },
       paramsForm: {},
       paramsDetail: {},
@@ -602,13 +608,27 @@ export default {
     onSubmitItem() {
       //   const itemThumb = document.getElementById('itemThumb')
       const FORM_DATA = new FormData()
-      Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
-        FORM_DATA.append(v[0], v[1])
-      })
-      FORM_DATA.append('type', 'noticeEdit')
-      FORM_DATA.append('noticeSubject', this.noticeSubject)
-      FORM_DATA.append('noticeContent', this.noticeContent)
-      FORM_DATA.append('noticeIdx', this.noticeIdx)
+      // Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
+      //   FORM_DATA.append(v[0], v[1])
+      // })
+      FORM_DATA.append('type', 'questEdit')
+      FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      FORM_DATA.append('subject', this.quest.subject)
+      FORM_DATA.append('contents', this.quest.contents)
+      FORM_DATA.append('cate', this.quest.cate)
+      FORM_DATA.append('price', this.quest.price)
+      FORM_DATA.append('intellect', this.quest.intellect)
+      FORM_DATA.append('effort', this.quest.effort)
+      FORM_DATA.append('health', this.quest.health)
+      FORM_DATA.append('etiquette', this.quest.etiquette)
+      FORM_DATA.append('m_price', this.quest.m_price)
+      FORM_DATA.append('m_intellect', this.quest.m_intellect)
+      FORM_DATA.append('m_effort', this.quest.m_effort)
+      FORM_DATA.append('m_health', this.quest.m_health)
+      FORM_DATA.append('m_etiquette', this.quest.m_etiquette)
+      FORM_DATA.append('start_day', this.quest.start_day)
+      FORM_DATA.append('end_day', this.quest.end_day)
+      FORM_DATA.append('idx', this.noticeIdx)
       axiosForm(FORM_DATA, '/teacher.php')
       setTimeout(() => {
         this.params = this.LOGIN_TEACHER
@@ -624,6 +644,7 @@ export default {
       if (e) {
         this.$router.push(`/todo-list-end?cate=${e}`)
       } else {
+        this.queryCate = ''
         this.$router.push(`/todo-list-end`)
       }
     },
