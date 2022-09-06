@@ -1,18 +1,23 @@
 <template>
-  <div v-if="LOGIN_CONFIG && GET_AXIOS_CALLBACK_GETTER" id="school-content">
+  <div
+    v-if="LOGIN_CONFIG && GET_AXIOS_CALLBACK_GETTER_MAIN"
+    id="school-content"
+  >
     <div class="content">
       <div class="content__top">
         <!-- <div>용신 초등학교 6학년 5반</div> -->
         <div v-b-modal.ModalNotice class="content__top--notice flex">
           <p
-            v-if="GET_AXIOS_CALLBACK_GETTER.rules && LOGIN_CONFIG.t_reg_country"
+            v-if="
+              GET_AXIOS_CALLBACK_DATA_MAIN.rules && LOGIN_CONFIG.t_reg_country
+            "
           >
             {{ LOGIN_CONFIG.t_reg_country }} 규칙 확인하기
             <b-modal id="ModalNotice" hide-footer>
               <div class="img-full">
                 <ul>
                   <li
-                    v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.rules"
+                    v-for="(v, i) in GET_AXIOS_CALLBACK_DATA_MAIN.rules"
                     :key="i"
                     class="m-b-2 p-b-2"
                     style="border-bottom: 1px solid #eee"
@@ -67,37 +72,37 @@
                   />
                   <!-- <img
                   v-if="
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 19
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) < 19
                   "
                   src="~/static/mo/plant/level_1.jpg"
                 />
                 <img
                   v-if="
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) >
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) >
                       19 &&
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 29
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) < 29
                   "
                   src="~/static/mo/plant/level_2.jpg"
                 />
                 <img
                   v-if="
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) >
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) >
                       29 &&
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 39
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) < 39
                   "
                   src="~/static/mo/plant/level_3.jpg"
                 />
                 <img
                   v-if="
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) >
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) >
                       39 &&
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) < 49
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) < 49
                   "
                   src="~/static/mo/plant/level_4.jpg"
                 />
                 <img
                   v-if="
-                    Math.floor(GET_AXIOS_CALLBACK_GETTER.status.total / 4) > 49
+                    Math.floor(GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4) > 49
                   "
                   src="~/static/mo/plant/level_5.jpg"
                 /> -->
@@ -108,11 +113,11 @@
                   </strong>
                   <p>
                     LV
-                    <em v-if="GET_AXIOS_CALLBACK_GETTER.status" class="bold">
+                    <em v-if="GET_AXIOS_CALLBACK_DATA_MAIN.status" class="bold">
                       {{
-                        GET_AXIOS_CALLBACK_GETTER.status.total
+                        GET_AXIOS_CALLBACK_DATA_MAIN.status.total
                           ? Math.floor(
-                              GET_AXIOS_CALLBACK_GETTER.status.total / 4
+                              GET_AXIOS_CALLBACK_DATA_MAIN.status.total / 4
                             )
                           : 0
                       }}
@@ -122,62 +127,66 @@
               </div>
             </div>
             <div class="status flex-right">
-              <ul v-if="GET_AXIOS_CALLBACK_GETTER.status" class="flex">
+              <ul v-if="GET_AXIOS_CALLBACK_DATA_MAIN.status" class="flex">
                 <li class="">
                   <div
                     class="stat"
                     :style="
                       'height: calc(' +
-                      (GET_AXIOS_CALLBACK_GETTER.status.intellect /
-                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                      (GET_AXIOS_CALLBACK_DATA_MAIN.status.intellect /
+                        GET_AXIOS_CALLBACK_DATA_MAIN.status.total) *
                         100 +
                       '% - 0px)'
                     "
                   ></div>
                   <p class="bold">지혜</p>
-                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.intellect }}</span>
+                  <span>{{
+                    GET_AXIOS_CALLBACK_DATA_MAIN.status.intellect
+                  }}</span>
                 </li>
                 <li>
                   <div
                     class="stat"
                     :style="
                       'height: calc(' +
-                      (GET_AXIOS_CALLBACK_GETTER.status.effort /
-                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                      (GET_AXIOS_CALLBACK_DATA_MAIN.status.effort /
+                        GET_AXIOS_CALLBACK_DATA_MAIN.status.total) *
                         100 +
                       '% - 0px)'
                     "
                   ></div>
                   <p class="bold">노력</p>
-                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.effort }}</span>
+                  <span>{{ GET_AXIOS_CALLBACK_DATA_MAIN.status.effort }}</span>
                 </li>
                 <li>
                   <div
                     class="stat"
                     :style="
                       'height: calc(' +
-                      (GET_AXIOS_CALLBACK_GETTER.status.health /
-                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                      (GET_AXIOS_CALLBACK_DATA_MAIN.status.health /
+                        GET_AXIOS_CALLBACK_DATA_MAIN.status.total) *
                         100 +
                       '% - 0px)'
                     "
                   ></div>
                   <p class="bold">건강</p>
-                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.health }}</span>
+                  <span>{{ GET_AXIOS_CALLBACK_DATA_MAIN.status.health }}</span>
                 </li>
                 <li>
                   <div
                     class="stat"
                     :style="
                       'height: calc(' +
-                      (GET_AXIOS_CALLBACK_GETTER.status.etiquette /
-                        GET_AXIOS_CALLBACK_GETTER.status.total) *
+                      (GET_AXIOS_CALLBACK_DATA_MAIN.status.etiquette /
+                        GET_AXIOS_CALLBACK_DATA_MAIN.status.total) *
                         100 +
                       '% - 0px)'
                     "
                   ></div>
                   <p class="bold">예절</p>
-                  <span>{{ GET_AXIOS_CALLBACK_GETTER.status.etiquette }}</span>
+                  <span>{{
+                    GET_AXIOS_CALLBACK_DATA_MAIN.status.etiquette
+                  }}</span>
                 </li>
               </ul>
             </div>
@@ -187,8 +196,8 @@
       <div class="content__body">
         <div
           v-if="
-            GET_AXIOS_CALLBACK_GETTER.billNon &&
-            GET_AXIOS_CALLBACK_GETTER.billNon.length > 0
+            GET_AXIOS_CALLBACK_DATA_MAIN.billNon &&
+            GET_AXIOS_CALLBACK_DATA_MAIN.billNon.length > 0
           "
           class="box quest m-b-5"
         >
@@ -201,9 +210,12 @@
               style="margin-top: 2px"
             ></b-icon> -->
           </div>
-          <div v-if="GET_AXIOS_CALLBACK_GETTER.billNon" class="quest__content">
+          <div
+            v-if="GET_AXIOS_CALLBACK_DATA_MAIN.billNon"
+            class="quest__content"
+          >
             <div
-              v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.billNon"
+              v-for="(v, index) in GET_AXIOS_CALLBACK_DATA_MAIN.billNon"
               :key="index"
               class="m-t-3"
               @click="onClickBillDetail(v.idx, v.over_day ? v.over_day : v.pay)"
@@ -259,9 +271,9 @@
               style="margin-top: 2px"
             ></b-icon>
           </div>
-          <div v-if="GET_AXIOS_CALLBACK_GETTER.quest" class="quest__content">
+          <div v-if="GET_AXIOS_CALLBACK_DATA_MAIN.quest" class="quest__content">
             <div
-              v-if="GET_AXIOS_CALLBACK_GETTER.quest.length === 0"
+              v-if="GET_AXIOS_CALLBACK_DATA_MAIN.quest.length === 0"
               class="p-3 text-center font-14"
             >
               <nuxt-link to="/todo-list/0">
@@ -272,7 +284,7 @@
               >
             </div>
             <div
-              v-for="(v, index) in GET_AXIOS_CALLBACK_GETTER.quest"
+              v-for="(v, index) in GET_AXIOS_CALLBACK_DATA_MAIN.quest"
               :key="index"
               class="flex m-t-3"
               @click="onClickTodoDetail(v.idx)"
@@ -298,7 +310,7 @@
         </div>
         <div class="account m-t-4"></div>
         <div
-          v-if="GET_AXIOS_CALLBACK_GETTER.account"
+          v-if="GET_AXIOS_CALLBACK_DATA_MAIN.account"
           class="box account-area m-t-2"
         >
           <nuxt-link to="/bank-transfer-list">
@@ -314,18 +326,20 @@
           <nuxt-link to="/bank-transfer-list" class="wd-full">
             <div class="flex m-t-2">
               <div>
-                <p>{{ GET_AXIOS_CALLBACK_GETTER.account.account_number }}</p>
+                <p>
+                  {{ GET_AXIOS_CALLBACK_DATA_MAIN.account.account_number }}
+                </p>
                 <span class="jelly-color--gray font-12">{{
-                  GET_AXIOS_CALLBACK_GETTER.account.nick_name
+                  GET_AXIOS_CALLBACK_DATA_MAIN.account.nick_name
                 }}</span>
               </div>
               <div class="flex-right">
                 <strong class="font-18 bold"
                   ><em>{{
-                    (GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount ||
-                    GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
-                      ? GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount -
-                        GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount
+                    (GET_AXIOS_CALLBACK_DATA_MAIN.account.PtotalAccount ||
+                    GET_AXIOS_CALLBACK_DATA_MAIN.account.MtotalAccount
+                      ? GET_AXIOS_CALLBACK_DATA_MAIN.account.PtotalAccount -
+                        GET_AXIOS_CALLBACK_DATA_MAIN.account.MtotalAccount
                       : 0) | comma
                   }}</em></strong
                 >
@@ -337,8 +351,8 @@
           </nuxt-link>
           <div
             v-if="
-              GET_AXIOS_CALLBACK_GETTER.student &&
-              GET_AXIOS_CALLBACK_GETTER.student.deposit !== '1'
+              GET_AXIOS_CALLBACK_DATA_MAIN.student &&
+              GET_AXIOS_CALLBACK_DATA_MAIN.student.deposit !== '1'
             "
             class="flex m-t-3"
           >
@@ -354,8 +368,8 @@
         </div>
         <div
           v-if="
-            GET_AXIOS_CALLBACK_GETTER.teacher &&
-            GET_AXIOS_CALLBACK_GETTER.teacher.inflation === 'Y'
+            GET_AXIOS_CALLBACK_DATA_MAIN.teacher &&
+            GET_AXIOS_CALLBACK_DATA_MAIN.teacher.inflation === 'Y'
           "
           class="box account-area m-t-2"
         >
@@ -369,12 +383,12 @@
               ></b-icon>
             </h3>
             <div
-              v-if="GET_AXIOS_CALLBACK_GETTER.teacher.inflation === 'Y'"
+              v-if="GET_AXIOS_CALLBACK_DATA_MAIN.teacher.inflation === 'Y'"
               class="flex-right"
             >
               <strong class="font-18 bold"
                 ><em>{{
-                  GET_AXIOS_CALLBACK_GETTER.teacher.total_pay | comma
+                  GET_AXIOS_CALLBACK_DATA_MAIN.teacher.total_pay | comma
                 }}</em></strong
               >
               <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
@@ -453,6 +467,7 @@
 // import NuxtLogo from '~/components-pc/NuxtLogo'
 // import VuetifyLogo from '~/components-mo/modal/'
 import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+// import { STUDENT_MAIN } from '~/js/storeName'
 export default {
   name: 'IndexPage',
   components: {},
@@ -479,10 +494,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['LOGIN']),
+    ...mapState(['LOGIN', 'GET_AXIOS_CALLBACK_DATA_MAIN']),
     ...mapGetters([
       'POST_AXIOS_CALLBACK_GETTER',
-      'GET_AXIOS_CALLBACK_GETTER',
+      'GET_AXIOS_CALLBACK_GETTER_MAIN',
       'LOGIN_STUDENT',
     ]),
   },
@@ -505,7 +520,7 @@ export default {
     })
 
     // EVENT
-    // console.log('GET', this.GET_AXIOS_CALLBACK_GETTER)
+    // console.log('GET', this.GET_AXIOS_CALLBACK_GETTER_MAIN)
     this.$nextTick(function () {})
   },
   methods: {
@@ -521,8 +536,8 @@ export default {
       this.detailIdx = idx
       this.detailPay = pay
       const totalPay =
-        Number(this.GET_AXIOS_CALLBACK_GETTER.account.PtotalAccount) -
-        Number(this.GET_AXIOS_CALLBACK_GETTER.account.MtotalAccount)
+        Number(this.GET_AXIOS_CALLBACK_DATA_MAIN.account.PtotalAccount) -
+        Number(this.GET_AXIOS_CALLBACK_DATA_MAIN.account.MtotalAccount)
       if (this.detailPay > totalPay) {
         alert('납부할 수 있는 금액이 부족해요')
       } else {

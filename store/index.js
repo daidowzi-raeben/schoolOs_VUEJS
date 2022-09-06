@@ -14,6 +14,7 @@ const createStore = () => {
       GET_MAIN_STATE: [],
       POST_AXIOS_CALLBACK_DATA: [],
       GET_AXIOS_CALLBACK_DATA: [],
+      GET_AXIOS_CALLBACK_DATA_MAIN: [],
       GET_AXIOS_CALLBACK_DATA_SUB: [],
       LOGIN: [],
       GET_AXIOS_CALLBACK_DATA_BILL: [],
@@ -42,6 +43,12 @@ const createStore = () => {
         state.LOADING = false
         return state.GET_AXIOS_CALLBACK_DATA
           ? state.GET_AXIOS_CALLBACK_DATA
+          : ''
+      },
+      GET_AXIOS_CALLBACK_GETTER_MAIN(state) {
+        state.LOADING = false
+        return state.GET_AXIOS_CALLBACK_DATA_MAIN
+          ? state.GET_AXIOS_CALLBACK_DATA_MAIN
           : ''
       },
       GET_AXIOS_CALLBACK_GETTER_LAYOUT(state) {
@@ -95,6 +102,10 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_SUCCESS(state, payload) {
         // state.LOADING = true
         state.GET_AXIOS_CALLBACK_DATA = payload
+      },
+      GET_AXIOS_CALLBACK_DATA_SUCCESS_MAIN(state, payload) {
+        // state.LOADING = true
+        state.GET_AXIOS_CALLBACK_DATA_MAIN = payload
       },
       GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT(state, payload) {
         // state.LOADING = true
@@ -286,6 +297,8 @@ const createStore = () => {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_BILL', res.data.cnt)
             } else if (params && params.type === 'ruleStudent') {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_SUB', res.data)
+            } else if (params && params.type === 'main') {
+              commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_MAIN', res.data)
             } else {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             }

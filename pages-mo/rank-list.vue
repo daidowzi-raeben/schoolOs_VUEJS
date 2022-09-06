@@ -100,7 +100,7 @@ import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      params: {},
+      params: { type: 'studentRank' },
       paramsPost: {},
       start_day: '',
       end_day: '',

@@ -2,9 +2,9 @@
   <div>
     <div>
       <div class="">
-        <!-- <div v-if="GET_AXIOS_CALLBACK_GETTER.meal">
+        <!-- <div v-if="GET_AXIOS_CALLBACK_DATA_MAIN.meal">
           <span
-            v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.meal"
+            v-for="(v, i) in GET_AXIOS_CALLBACK_DATA_MAIN.meal"
             :key="i"
             class="mealSpan"
           >
@@ -28,14 +28,16 @@
         <button
           class="jelly-btn flex-right"
           :class="
-            GET_AXIOS_CALLBACK_GETTER.emergency > 0
+            GET_AXIOS_CALLBACK_DATA_MAIN.emergency > 0
               ? 'jelly-btn--default'
               : 'jelly-btn--pink'
           "
           @click="onClickEmergency"
         >
           {{
-            GET_AXIOS_CALLBACK_GETTER.emergency > 0 ? '입출금복구' : 'Emergency'
+            GET_AXIOS_CALLBACK_DATA_MAIN.emergency > 0
+              ? '입출금복구'
+              : 'Emergency'
           }}
         </button>
       </div>
@@ -45,10 +47,10 @@
             <p class="title" style="color: #111">미 검사</p>
             <div class="text-right" style="color: #111">
               <strong
-                v-if="GET_AXIOS_CALLBACK_GETTER.questConfirmCNT"
+                v-if="GET_AXIOS_CALLBACK_DATA_MAIN.questConfirmCNT"
                 class="font-20"
               >
-                <em>{{ GET_AXIOS_CALLBACK_GETTER.questConfirmCNT }}</em>
+                <em>{{ GET_AXIOS_CALLBACK_DATA_MAIN.questConfirmCNT }}</em>
               </strong>
               <strong v-else class="font-20">
                 <em>0</em>
@@ -61,10 +63,10 @@
               <p class="title" style="color: #111">신고접수</p>
               <div class="text-right" style="color: #111">
                 <strong
-                  v-if="GET_AXIOS_CALLBACK_GETTER.sueListCNT"
+                  v-if="GET_AXIOS_CALLBACK_DATA_MAIN.sueListCNT"
                   class="font-20"
                 >
-                  <em>{{ GET_AXIOS_CALLBACK_GETTER.sueListCNT }}</em>
+                  <em>{{ GET_AXIOS_CALLBACK_DATA_MAIN.sueListCNT }}</em>
                 </strong>
                 건
               </div>
@@ -74,11 +76,11 @@
             <p class="title" style="color: #111">현재자산</p>
             <div class="text-right" style="color: #111">
               <strong
-                v-if="GET_AXIOS_CALLBACK_GETTER.total_pay"
+                v-if="GET_AXIOS_CALLBACK_DATA_MAIN.total_pay"
                 class="font-20"
               >
                 <em>{{
-                  GET_AXIOS_CALLBACK_GETTER.total_pay.total_pay | comma
+                  GET_AXIOS_CALLBACK_DATA_MAIN.total_pay.total_pay | comma
                 }}</em>
               </strong>
               <span v-if="LOGIN_TEACHER">
@@ -89,12 +91,16 @@
           <div class="item" style="width: 200px">
             <p class="title" style="color: #111">환율</p>
             <div class="text-right" style="color: #111">
-              <strong v-if="GET_AXIOS_CALLBACK_GETTER.teacher" class="font-20">
+              <strong
+                v-if="GET_AXIOS_CALLBACK_DATA_MAIN.teacher"
+                class="font-20"
+              >
                 1,000<span class="font-12">(KRW)</span> =
                 <em>
                   {{
                     Math.round(
-                      (GET_AXIOS_CALLBACK_GETTER.teacher.reg_pay_rate / 200) *
+                      (GET_AXIOS_CALLBACK_DATA_MAIN.teacher.reg_pay_rate /
+                        200) *
                         1000
                     )
                   }}</em
@@ -164,7 +170,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['LOGIN']),
+    ...mapState(['LOGIN', 'GET_AXIOS_CALLBACK_DATA_MAIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   beforeCreate() {
@@ -192,7 +198,7 @@ export default {
       const frm = new FormData()
       frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
       frm.append('type', 'emergency')
-      if (this.GET_AXIOS_CALLBACK_GETTER.emergency > 0) {
+      if (this.GET_AXIOS_CALLBACK_DATA_MAIN.emergency > 0) {
         frm.append('mode', '1')
       } else {
         frm.append('mode', '0')

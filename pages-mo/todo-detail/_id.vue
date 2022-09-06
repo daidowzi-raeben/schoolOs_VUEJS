@@ -162,6 +162,7 @@
           !GET_AXIOS_CALLBACK_GETTER.is_confirm
         "
         class="jelly-btn jelly-btn--pink"
+        :disabled="btn.onSubmitApply"
         @click="onSubmitApply"
       >
         수락하기
@@ -308,6 +309,10 @@ export default {
       paramsPostApply: {},
       a: 100000000,
       completeContent: '',
+      btn: {
+        onSubmitApply: false,
+        onSubmitComplete: false,
+      },
     }
   },
   computed: {
@@ -335,24 +340,32 @@ export default {
 
     // 퀘스트 수락
     onSubmitApply() {
+      this.btn.onSubmitApply = true
       this.LOADING_TRUE()
-      this.paramsPostApply.type = 'questApply'
-      this.paramsPostApply.idx = this.idx
-      this.paramsPostApply.sms_idx = this.LOGIN_STUDENT.sms_idx
-      this.POST_AXIOS(this.paramsPostApply)
-
-      setTimeout(() => {
-        this.params = this.LOGIN_STUDENT
-        this.params.type = 'questView'
-        this.params.idx = this.idx
-        this.GET_AXIOS(this.params)
-      }, 1000)
+      const frm = new FormData()
+      frm.append('type', 'questApply')
+      frm.append('idx', this.idx)
+      frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/student.php', frm)
+        .then((res) => {
+          this.params = this.LOGIN_STUDENT
+          this.params.type = 'questView'
+          this.params.idx = this.idx
+          this.GET_AXIOS(this.params)
+          this.btn.onSubmitApply = false
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+          this.LOADING = false
+        })
     },
     onClickCompleteModal() {
       this.completeContent = ''
       this.$bvModal.hide('completeFile')
     },
     onSubmitComplete() {
+      this.btn.onSubmitComplete = true
       this.LOADING_TRUE()
       const frm = new FormData()
       const photoFile = document.getElementById('photo')
@@ -384,6 +397,7 @@ export default {
             this.params.type = 'questView'
             this.params.idx = this.idx
             this.GET_AXIOS(this.params)
+            this.btn.onSubmitComplete = false
           })
         })
         .catch((res) => {
