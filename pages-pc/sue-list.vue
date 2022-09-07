@@ -40,7 +40,10 @@
         <div class="student form">
           <div class="student__list">
             <div class="m-t-3">
-              <table v-if="GET_AXIOS_CALLBACK_GETTER.sue" class="jelly-table">
+              <table
+                v-if="STATE_TEACHER_SUE && STATE_TEACHER_SUE.sue"
+                class="jelly-table"
+              >
                 <col width="80" />
                 <col width="100" />
                 <col width="*" />
@@ -53,7 +56,7 @@
                   <th>사건 발생일</th>
                   <th>관리</th>
                 </tr>
-                <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.sue" :key="i">
+                <tr v-for="(v, i) in STATE_TEACHER_SUE.sue" :key="i">
                   <td>{{ v.sms_name }}</td>
                   <td>{{ v.sms_name_to }}</td>
                   <td>{{ v.new_subject }}</td>
@@ -76,36 +79,36 @@
       </div>
     </div>
     <b-modal id="itemInsert" size="lg" hide-footer hide-header>
-      <div v-if="GET_AXIOS_CALLBACK_GETTER.detail">
+      <div v-if="STATE_TEACHER_SUE.detail">
         <div class="m-t-5 flex">
           <div class="flex-full m-r-1">
             <p>신고자</p>
-            {{ GET_AXIOS_CALLBACK_GETTER.detail.sms_name }}
+            {{ STATE_TEACHER_SUE.detail.sms_name }}
           </div>
           <div class="flex-full m-l-1">
             <p>신고 대상</p>
-            {{ GET_AXIOS_CALLBACK_GETTER.detail.sms_name_to }}
+            {{ STATE_TEACHER_SUE.detail.sms_name_to }}
           </div>
           <div class="flex-full m-l-1">
             <p>사건 발생일</p>
-            {{ GET_AXIOS_CALLBACK_GETTER.detail.sue_date }}
+            {{ STATE_TEACHER_SUE.detail.sue_date }}
           </div>
           <div
-            v-if="Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0"
+            v-if="Number(STATE_TEACHER_SUE.detail.rule_pay) > 0"
             class="flex-full m-l-1"
           >
             <p>벌금</p>
-            {{ Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) | comma }}
+            {{ Number(STATE_TEACHER_SUE.detail.rule_pay) | comma }}
           </div>
         </div>
         <div class="m-t-5 flex">
           <div class="flex-full m-r-1">
-            {{ GET_AXIOS_CALLBACK_GETTER.detail.new_subject }}
+            {{ STATE_TEACHER_SUE.detail.new_subject }}
           </div>
         </div>
         <div class="m-t-5 flex">
           <div class="flex-full m-r-1">
-            {{ GET_AXIOS_CALLBACK_GETTER.detail.content }}
+            {{ STATE_TEACHER_SUE.detail.content }}
           </div>
         </div>
         <div class="m-t-5 text-center">
@@ -126,8 +129,8 @@
           </button>
           <button
             v-if="
-              Number(GET_AXIOS_CALLBACK_GETTER.detail.rule_pay) > 0 &&
-              GET_AXIOS_CALLBACK_GETTER.detail.status_bill === '0'
+              Number(STATE_TEACHER_SUE.detail.rule_pay) > 0 &&
+              STATE_TEACHER_SUE.detail.status_bill === '0'
             "
             class="jelly-btn jelly-btn--pink"
             @click="onSubmitBill"
@@ -187,8 +190,8 @@ export default {
   },
 
   computed: {
-    ...mapState(['LOGIN']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    ...mapState(['LOGIN', 'STATE_TEACHER_SUE']),
+    ...mapGetters(['LOGIN_TEACHER']),
   },
   watch: {
     '$route.query.cate': {
@@ -197,16 +200,12 @@ export default {
         this.params.type = 'sueList'
         if (value) {
           console.log('=====================')
+          this.params.type = 'sueList'
+
           this.params.queryCate = value
           this.queryCate = value
           this.params = this.LOGIN_TEACHER
-          this.GET_AXIOS(this.params)
-        } else {
-          this.queryCate = value
-          this.params.queryCate = value
-          console.log('++++++++++++++++++++')
-          this.params = this.LOGIN_TEACHER
-          this.GET_AXIOS(this.params)
+          this.ACTIONS_TEACHER(this.params)
         }
       },
       immediate: true,
@@ -219,14 +218,18 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
-    this.params.type = 'sueList'
-    this.params.queryCate = null
-    this.GET_AXIOS(this.params)
-    this.params.type = ''
+    this.$nextTick(() => {
+      this.params.type = 'sueList'
+      this.params.queryCate = null
+      this.ACTIONS_TEACHER(this.params)
+    })
+  },
+  beforeDestroy() {
+    console.log(this.params.type)
   },
   methods: {
     // init
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
+    ...mapActions(['POST_AXIOS', 'ACTIONS_TEACHER']),
     ...mapMutations(['LOADING_INIT', 'LOADING_TRUE']),
 
     // EVENT
@@ -247,7 +250,7 @@ export default {
           setTimeout(() => {
             this.params = this.LOGIN_TEACHER
             this.params.type = 'sueList'
-            this.GET_AXIOS(this.params)
+            this.ACTIONS_TEACHER(this.params)
             this.$bvModal.hide('itemInsert')
             this.LOADING_INIT()
           })
@@ -266,21 +269,21 @@ export default {
       FORM_DATA.append('sueIdx', this.idx)
       FORM_DATA.append(
         'billStudent',
-        this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
+        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.rule_pay
       )
       FORM_DATA.append(
         'sms_idx',
-        this.GET_AXIOS_CALLBACK_GETTER.detail.sms_idx_to
+        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.sms_idx_to
       )
       FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
       FORM_DATA.append('billSubject', '규칙위반')
       FORM_DATA.append(
         'billContent',
-        this.GET_AXIOS_CALLBACK_GETTER.detail.new_subject
+        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.new_subject
       )
       FORM_DATA.append(
         'billPay',
-        this.GET_AXIOS_CALLBACK_GETTER.detail.rule_pay
+        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.rule_pay
       )
       console.log('FORM_DATA', FORM_DATA)
       this.$axios
@@ -309,6 +312,11 @@ export default {
       } else {
         this.queryCate = null
         this.$router.push(`/sue-list`)
+        this.$nextTick(() => {
+          this.params.type = 'sueList'
+          this.params.queryCate = null
+          this.ACTIONS_TEACHER(this.params)
+        })
       }
     },
     onClickItemDetail(e) {
@@ -316,13 +324,13 @@ export default {
       this.params.idx = e
       this.params = this.LOGIN_TEACHER
       this.params.type = 'sueList'
-      this.GET_AXIOS(this.params)
+      this.ACTIONS_TEACHER(this.params)
       setTimeout(() => {
         this.$bvModal.show('itemInsert')
       })
       //   setTimeout(() => {
-      //     this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.detil.subject
-      //     this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.detil.content
+      //     this.noticeSubject = this.ACTIONS_TEACHER_CALLBACK_GETTER.detil.subject
+      //     this.noticeContent = this.ACTIONS_TEACHER_CALLBACK_GETTER.detil.content
       //   }, 1500)
     },
 

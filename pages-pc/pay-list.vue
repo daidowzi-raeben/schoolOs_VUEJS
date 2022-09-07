@@ -273,11 +273,6 @@ export default {
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
           this.GET_AXIOS(this.params)
-        } else {
-          this.params.type = 'teacherPayList'
-          this.params.queryCate = null
-          this.params = this.LOGIN_TEACHER
-          this.GET_AXIOS(this.params)
         }
       },
       immediate: true,
@@ -317,8 +312,11 @@ export default {
       if (e) {
         this.$router.push(`/pay-list?cate=${e}`)
       } else {
-        this.queryCate = ''
         this.$router.push(`/pay-list`)
+        this.params.type = 'teacherPayList'
+        this.params.queryCate = null
+        this.params = this.LOGIN_TEACHER
+        this.GET_AXIOS(this.params)
       }
     },
     onSubmitInputStudent() {

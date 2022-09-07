@@ -6,10 +6,10 @@
     </div> -->
     <div class="">
       <div class="">
-        <h4 v-if="LOGIN_TEACHER && GET_AXIOS_CALLBACK_GETTER.total_pay">
-          대출받기
+        <h4 v-if="LOGIN_TEACHER && STATE_TEACHER_PAY_LOAN.total_pay">
+          대출관리
           <em v-b-tooltip.hover title="현재 재산" class="m-l-2 font-14">
-            {{ GET_AXIOS_CALLBACK_GETTER.total_pay.total_pay | comma }}
+            {{ STATE_TEACHER_PAY_LOAN.total_pay.total_pay | comma }}
             {{ LOGIN_TEACHER.reg_pay_unit }}
           </em>
         </h4>
@@ -21,8 +21,8 @@
               <div class="item" style="width: 100%">
                 <p>
                   필요한 액수를 입력하세요 (현재 금리
-                  <span v-if="GET_AXIOS_CALLBACK_GETTER.total_pay"
-                    >{{ GET_AXIOS_CALLBACK_GETTER.total_pay.interest }}%</span
+                  <span v-if="STATE_TEACHER_PAY_LOAN.total_pay"
+                    >{{ STATE_TEACHER_PAY_LOAN.total_pay.interest }}%</span
                   >)
                 </p>
                 <div class="d-flex">
@@ -60,18 +60,12 @@
           <div class="student__list">
             <h3>대출 현황</h3>
             <div class="m-t-3">
-              <table
-                v-if="GET_AXIOS_CALLBACK_GETTER.loanList"
-                class="jelly-table"
-              >
+              <table v-if="STATE_TEACHER_PAY_LOAN.loanList" class="jelly-table">
                 <tr>
                   <th>일시</th>
                   <th>대출액</th>
                 </tr>
-                <tr
-                  v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.loanList"
-                  :key="i"
-                >
+                <tr v-for="(v, i) in STATE_TEACHER_PAY_LOAN.loanList" :key="i">
                   <td>{{ v.datetime | moment('YYYY-MM-DD') }}</td>
                   <td class="text-right">{{ v.pay | comma }}</td>
                 </tr>
@@ -100,8 +94,8 @@ export default {
   },
 
   computed: {
-    ...mapState(['LOGIN']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    ...mapState(['LOGIN', 'STATE_TEACHER_PAY_LOAN']),
+    ...mapGetters(['ACTIONS_TEACHER_CALLBACK_GETTER', 'LOGIN_TEACHER']),
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -111,12 +105,12 @@ export default {
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'loanList'
-    this.GET_AXIOS(this.params)
+    this.ACTIONS_TEACHER(this.params)
   },
   methods: {
     // init
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations(['LOADING_TRUE']),
+    ...mapActions(['POST_AXIOS', 'ACTIONS_TEACHER']),
+    ...mapMutations(['LOADING_TRUE', 'MUTATIONS_TEACHER_PAY_LOAN']),
 
     // EVENT
     onSubmit(m) {
@@ -128,7 +122,7 @@ export default {
       setTimeout(() => {
         this.params = this.LOGIN_TEACHER
         this.params.type = 'loanList'
-        this.GET_AXIOS(this.params)
+        this.ACTIONS_TEACHER(this.params)
       }, 1000)
     },
     payComma(e) {

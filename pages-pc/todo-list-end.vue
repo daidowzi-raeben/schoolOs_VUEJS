@@ -66,7 +66,7 @@
                 <tr
                   v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.questListEnd"
                   :key="`shopItem${i}`"
-                  style="curosr: pointer"
+                  style="cursor: pointer"
                 >
                   <td @click="onClickItemDetail(v.idx)">{{ v.subject }}</td>
                   <td @click="onClickItemDetail(v.idx)">

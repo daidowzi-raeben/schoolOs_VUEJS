@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <div>
-      <input v-model="pay" class="jelly-text" />
+      <input ref="pay" class="jelly-text" />
       <button @click="onSubmit">빌리기</button>
     </div> -->
     <div class="">
@@ -13,7 +13,7 @@
           <div class="student__list">
             <div class="flex m-t-3">
               <div
-                v-if="GET_AXIOS_CALLBACK_GETTER.tax_semen"
+                v-if="STATE_TEACHER_SETTING && STATE_TEACHER_SETTING.teacher"
                 class="item"
                 style="width: 100%"
               >
@@ -28,12 +28,14 @@
                 </p>
                 <div class="d-flex">
                   <input
-                    v-model="tax.tax_semen_nm"
+                    ref="tax_semen_nm"
                     class="jelly-text jelly-text--under"
+                    :value="STATE_TEACHER_SETTING.tax_semen_nm"
                   />
                   <input
-                    v-model="tax.tax_semen"
+                    ref="tax_semen"
                     class="jelly-text jelly-text--under text-right m-l-2"
+                    :value="STATE_TEACHER_SETTING.tax_semen"
                   />
                   <span v-if="LOGIN_TEACHER" class="input-focus m-t-1 m-l-2">
                     %
@@ -50,12 +52,14 @@
                 </p>
                 <div class="d-flex">
                   <input
-                    v-model="tax.tax_dose_nm"
+                    ref="tax_dose_nm"
                     class="jelly-text jelly-text--under"
+                    :value="STATE_TEACHER_SETTING.tax_dose_nm"
                   />
                   <input
-                    v-model="tax.tax_dose"
+                    ref="tax_dose"
                     class="jelly-text jelly-text--under text-right m-l-2"
+                    :value="STATE_TEACHER_SETTING.tax_dose"
                   />
                   <span v-if="LOGIN_TEACHER" class="input-focus m-t-1 m-l-2">
                     {{ LOGIN_TEACHER.reg_pay_unit }}
@@ -72,9 +76,10 @@
                 </p>
                 <div class="d-flex m-t-3">
                   <select
-                    v-model="tax.jb_mode"
+                    ref="jb_mode"
                     class="jelly-text"
                     style="width: 150px"
+                    :value="STATE_TEACHER_SETTING.teacher.jb_mode"
                   >
                     <option :value="null">선택하세요</option>
                     <option value="Y">사용</option>
@@ -84,8 +89,9 @@
                 <p class="m-t-5">젤리복권 구매가격</p>
                 <div class="d-flex">
                   <input
-                    v-model="tax.jb_pay"
+                    ref="jb_pay"
                     class="jelly-text jelly-text--under text-right m-l-2"
+                    :value="STATE_TEACHER_SETTING.teacher.jb_pay"
                   />
                   <span v-if="LOGIN_TEACHER" class="input-focus m-t-1 m-l-2">
                     {{ LOGIN_TEACHER.reg_pay_unit }}
@@ -94,8 +100,9 @@
                 <p class="m-t-5">알림장 읽음 보상</p>
                 <div class="d-flex">
                   <input
-                    v-model="tax.notice_pay"
+                    ref="notice_pay"
                     class="jelly-text jelly-text--under text-right m-l-2"
+                    :value="STATE_TEACHER_SETTING.teacher.notice_pay"
                   />
                   <span v-if="LOGIN_TEACHER" class="input-focus m-t-1 m-l-2">
                     {{ LOGIN_TEACHER.reg_pay_unit }}
@@ -142,8 +149,8 @@ export default {
   },
 
   computed: {
-    ...mapState(['LOGIN']),
-    ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_TEACHER']),
+    ...mapState(['LOGIN', 'STATE_TEACHER_SETTING']),
+    ...mapGetters(['', 'LOGIN_TEACHER']),
   },
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
@@ -153,32 +160,32 @@ export default {
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'teacherTax'
-    this.GET_AXIOS(this.params)
-    if (this.GET_AXIOS_CALLBACK_GETTER.tax_dose) {
-      console.log('=========', this.GET_AXIOS_CALLBACK_GETTER)
+    this.ACTIONS_TEACHER(this.params)
+    if (this.STATE_TEACHER_SETTING.tax_dose) {
+      console.log('=========')
     }
-    setTimeout(() => {
-      this.tax.tax_dose = this.GET_AXIOS_CALLBACK_GETTER.tax_dose
-      this.tax.tax_dose_nm = this.GET_AXIOS_CALLBACK_GETTER.tax_dose_nm
-      this.tax.tax_semen = this.GET_AXIOS_CALLBACK_GETTER.tax_semen
-      this.tax.tax_semen_nm = this.GET_AXIOS_CALLBACK_GETTER.tax_semen_nm
-      this.tax.jb_mode = this.GET_AXIOS_CALLBACK_GETTER.teacher.jb_mode
-      this.tax.jb_pay = this.GET_AXIOS_CALLBACK_GETTER.teacher.jb_pay
-      this.tax.notice_pay = this.GET_AXIOS_CALLBACK_GETTER.teacher.notice_pay
-    }, 1500)
-
-    console.log(
-      'this.GET_AXIOS_CALLBACK_GETTER',
-      this.GET_AXIOS_CALLBACK_GETTER
-    )
+    // this.tax.tax_dose = this.STATE_TEACHER_SETTING.tax_dose
+    // this.tax.tax_dose_nm = this.STATE_TEACHER_SETTING.tax_dose_nm
+    // this.tax.tax_semen = this.STATE_TEACHER_SETTING.tax_semen
+    // this.tax.tax_semen_nm = this.STATE_TEACHER_SETTING.tax_semen_nm
+    // this.tax.jb_mode = this.STATE_TEACHER_SETTING.teacher.jb_mode
+    // this.tax.jb_pay = this.STATE_TEACHER_SETTING.teacher.jb_pay
+    // this.tax.notice_pay = this.STATE_TEACHER_SETTING.teacher.notice_pay
   },
   methods: {
     // init
-    ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
+    ...mapActions(['POST_AXIOS', 'ACTIONS_TEACHER']),
     ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
     onSubmit() {
+      this.tax.tax_dose = this.$refs.tax_dose.value
+      this.tax.tax_dose_nm = this.$refs.tax_dose_nm.value
+      this.tax.tax_semen = this.$refs.tax_semen.value
+      this.tax.tax_semen_nm = this.$refs.tax_semen_nm.value
+      this.tax.jb_mode = this.$refs.jb_mode.value
+      this.tax.jb_pay = this.$refs.jb_pay.value
+      this.tax.notice_pay = this.$refs.notice_pay.value
       this.tax.smt_idx = this.LOGIN_TEACHER.smt_idx
       this.POST_AXIOS(this.tax)
       alert('저장되었습니다.')

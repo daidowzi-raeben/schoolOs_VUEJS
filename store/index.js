@@ -22,7 +22,26 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT: [],
       GET_AXIOS_CALLBACK_DATA_PW: [],
       studentIdMSG: '',
+      // STUDENT
       STATE_STUDENT_ALBA: [],
+      // TEACHER
+      STATE_TEACHER_PAY_LOAN: [], // 대출관리
+      STATE_TEACHER_BILL: [],
+      STATE_TEACHER_BILL_STUDENT: [],
+      STATE_TEACHER_INDEX: [],
+      STATE_TEACHER_JOB: [],
+      STATE_TEACHER_LOTTERY: [],
+      STATE_TEACHER_NOTICE: [],
+      STATE_TEACHER_PARTTIME: [],
+      STATE_TEACHER_PAY_LIST: [],
+      STATE_TEACHER_RULE: [],
+      STATE_TEACHER_SHOP: [],
+      STATE_TEACHER_APPLY: [],
+      STATE_TEACHER_STUDENT: [],
+      STATE_TEACHER_SUE: [],
+      STATE_TEACHER_SETTING: [],
+      STATE_TEACHER_TODO: [],
+      STATE_TEACHER_TODO_END: [],
 
       //  ---------------------------------[admin]
 
@@ -34,6 +53,11 @@ const createStore = () => {
       mySchoolInformation: [],
     },
     getters: {
+      // 대출관리
+      // GETTER_TEACHER_ALBA(state) {
+      //   state.LOADING = false
+      //   return state.STATE_TEACHER_PAY_LOAN ? state.STATE_TEACHER_PAY_LOAN : ''
+      // },
       GETTER_STUDENT_ALBA(state) {
         state.LOADING = false
         return state.STATE_STUDENT_ALBA ? state.STATE_STUDENT_ALBA : ''
@@ -45,7 +69,7 @@ const createStore = () => {
           : ''
       },
       GET_AXIOS_CALLBACK_GETTER(state) {
-        state.LOADING = false
+        // state.LOADING = false
         return state.GET_AXIOS_CALLBACK_DATA
           ? state.GET_AXIOS_CALLBACK_DATA
           : ''
@@ -57,7 +81,7 @@ const createStore = () => {
           : ''
       },
       GET_AXIOS_CALLBACK_GETTER_LAYOUT(state) {
-        state.LOADING = false
+        // state.LOADING = false
         return state.GET_AXIOS_CALLBACK_DATA_LAYOUT
           ? state.GET_AXIOS_CALLBACK_DATA_LAYOUT
           : ''
@@ -93,9 +117,102 @@ const createStore = () => {
       },
     },
     mutations: {
+      // // 초기화
+      // MUTATIONS_TEACHER_INIT(state, payload) {
+      //   state.STATE_TEACHER_PAY_LOAN = payload
+      //   console.log('PAYLOAD', state.STATE_TEACHER_PAY_LOAN)
+      // },
+      // 대출관리
+      MUTATIONS_TEACHER_PAY_LOAN(state, payload) {
+        state.STATE_TEACHER_PAY_LOAN = payload
+        console.log('MUTATIONS_TEACHER_PAY_LOAN', state.STATE_TEACHER_PAY_LOAN)
+      },
+      // SOC
+      MUTATIONS_TEACHER_BILL(state, payload) {
+        state.STATE_TEACHER_BILL = payload
+        console.log('MUTATIONS_TEACHER_BILL', state.STATE_TEACHER_BILL)
+      },
+      // 고지서
+      MUTATIONS_TEACHER_BILL_STUDENT(state, payload) {
+        state.STATE_TEACHER_BILL_STUDENT = payload
+        console.log(
+          'MUTATIONS_TEACHER_BILL_STUDENT',
+          state.STATE_TEACHER_BILL_STUDENT
+        )
+      },
+      // 메인
+      MUTATIONS_TEACHER_INDEX(state, payload) {
+        state.STATE_TEACHER_INDEX = payload
+        console.log('MUTATIONS_TEACHER_INDEX', state.STATE_TEACHER_INDEX)
+      },
+      // 직업관리
+      MUTATIONS_TEACHER_JOB(state, payload) {
+        state.STATE_TEACHER_JOB = payload
+        console.log('MUTATIONS_TEACHER_JOB', state.STATE_TEACHER_JOB)
+      },
+      // 로또
+      MUTATIONS_TEACHER_LOTTERY(state, payload) {
+        state.STATE_TEACHER_LOTTERY = payload
+        console.log('MUTATIONS_TEACHER_LOTTERY', state.STATE_TEACHER_LOTTERY)
+      },
+      // 알림장
+      MUTATIONS_TEACHER_NOTICE(state, payload) {
+        state.STATE_TEACHER_NOTICE = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_NOTICE)
+      },
+      // 알바
+      MUTATIONS_TEACHER_PARTTIME(state, payload) {
+        state.STATE_TEACHER_PARTTIME = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_PARTTIME)
+      },
+      // 국고통장
+      MUTATIONS_TEACHER_PAY_LIST(state, payload) {
+        state.STATE_TEACHER_PAY_LIST = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_PAY_LIST)
+      },
+      // 규칙관리
+      MUTATIONS_TEACHER_RULE(state, payload) {
+        state.STATE_TEACHER_RULE = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_RULE)
+      },
+      // 상점관리
+      MUTATIONS_TEACHER_SHOP(state, payload) {
+        state.STATE_TEACHER_SHOP = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_SHOP)
+      },
+      // 회원신청
+      MUTATIONS_TEACHER_APPLY(state, payload) {
+        state.STATE_TEACHER_APPLY = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_APPLY)
+      },
+      // 학생관리
+      MUTATIONS_TEACHER_STUDENT(state, payload) {
+        state.STATE_TEACHER_STUDENT = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_STUDENT)
+      },
+      // 신고관리
+      MUTATIONS_TEACHER_SUE(state, payload) {
+        state.STATE_TEACHER_SUE = payload
+        console.log('STATE_TEACHER_SUE', state.STATE_TEACHER_SUE)
+      },
+      // 환경설정
+      MUTATIONS_TEACHER_SETTING(state, payload) {
+        state.STATE_TEACHER_SETTING = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_SETTING)
+      },
+      // TODO
+      MUTATIONS_TEACHER_TODO(state, payload) {
+        state.STATE_TEACHER_TODO = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_TODO)
+      },
+      // TODO_END
+      MUTATIONS_TEACHER_TODO_END(state, payload) {
+        state.STATE_TEACHER = payload
+        console.log('PAYLOAD', state.STATE_TEACHER)
+      },
       MUTATIONS_STUDENT_ALBA(state, payload) {
-        state.STATE_STUDENT_ALBA = payload
-        console.log('PAYLOAD', state.STATE_STUDENT_ALBA)
+        state.STATE_TEACHER_TODO_END = payload
+        console.log('PAYLOAD', state.STATE_TEACHER_TODO_END)
       },
       getMainSuccess(state, payload) {
         state.GET_MAIN_STATE = payload
@@ -179,6 +296,83 @@ const createStore = () => {
       },
     },
     actions: {
+      // -------------------교사 통합
+      ACTIONS_TEACHER({ commit }, params) {
+        commit('LOADING_TRUE')
+        console.log('ACTIONS_TEACHER_PARAMS', params)
+        axios
+          .get(process.env.VUE_APP_API + '/teacher.php', { params })
+          .then((res) => {
+            // // 고지서
+            // commit('MUTATIONS_TEACHER_BILL_STUDENT', res.data)
+            // // 메인
+            // commit('MUTATIONS_TEACHER_INDEX', res.data)
+            // // 직업관리
+            // commit('MUTATIONS_TEACHER_JOB', res.data)
+            // // 로또
+            // commit('MUTATIONS_TEACHER_LOTTERY', res.data)
+            // // 알림장
+            // commit('MUTATIONS_TEACHER_NOTICE', res.data)
+            // // 알바
+            // commit('MUTATIONS_TEACHER_PARTTIME', res.data)
+            // // 국고통장
+            // commit('MUTATIONS_TEACHER_PAY_LIST', res.data)
+            // // 규칙관리
+            // commit('MUTATIONS_TEACHER_RULE', res.data)
+            // // 상점관리
+            // commit('MUTATIONS_TEACHER_SHOP', res.data)
+            // // 회원신청
+            // commit('MUTATIONS_TEACHER_APPLY', res.data)
+            // // 학생관리
+            // commit('MUTATIONS_TEACHER_STUDENT', res.data)
+
+            // // TODO
+            // commit('MUTATIONS_TEACHER_TODO', res.data)
+            // // TODO_END
+            // commit('MUTATIONS_TEACHER_TODO_END', res.data)
+            console.log('ACTIONS_TEACHER', res, params)
+            switch (params && params.type) {
+              case 'loanList':
+                commit('MUTATIONS_TEACHER_PAY_LOAN', res.data)
+                break
+              case 'teacherTax':
+                commit('MUTATIONS_TEACHER_SETTING', res.data)
+                break
+              case 'billList':
+                // SOC
+                commit('MUTATIONS_TEACHER_BILL', res.data)
+                break
+              case 'sueList':
+                // 신고관리
+                commit('MUTATIONS_TEACHER_SUE', res.data)
+                break
+              default:
+                console.error('ERROR', res)
+                break
+            }
+            // commit('MUTATIONS_TEACHER_PAY_LOAN', res.data)
+            commit('LOADING_INIT')
+          })
+          .catch((res) => {
+            console.error('ACTIONS_TEACHER_FALSE', res)
+          })
+      },
+      ACTIONS_TEACHER_SUE({ commit }, params) {
+        commit('LOADING_TRUE')
+        console.log('ACTIONS_TEACHER_SUE_PARAMS', params)
+        axios
+          .get(process.env.VUE_APP_API + '/teacher.php', { params })
+          .then((res) => {
+            console.log('ACTIONS_TEACHER_SUE', res, params)
+
+            commit('MUTATIONS_TEACHER_SUE', res.data)
+
+            commit('LOADING_INIT')
+          })
+          .catch((res) => {
+            console.error('ACTIONS_TEACHER_FALSE', res)
+          })
+      },
       // -------------------알바
       ACTIONS_STUDENT_ALBA({ commit }, params) {
         commit('LOADING_TRUE')
@@ -347,7 +541,9 @@ const createStore = () => {
               commit('GET_AXIOS_CALLBACK_DATA_SUCCESS', res.data)
             }
             console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LOG', res, params)
-            commit('LOADING_INIT')
+            setTimeout(() => {
+              commit('LOADING_INIT')
+            }, 1000)
             params = ''
           })
           .catch((res) => {

@@ -505,6 +505,10 @@ export default {
     this.params.type = 'studentList'
     this.GET_AXIOS(this.params)
   },
+  beforeDestroy() {
+    this.params = []
+    console.log('beforeCreate', this.params)
+  },
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
