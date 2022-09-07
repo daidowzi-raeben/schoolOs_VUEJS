@@ -22,6 +22,7 @@ const createStore = () => {
       GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT: [],
       GET_AXIOS_CALLBACK_DATA_PW: [],
       studentIdMSG: '',
+      STATE_STUDENT_ALBA: [],
 
       //  ---------------------------------[admin]
 
@@ -33,6 +34,10 @@ const createStore = () => {
       mySchoolInformation: [],
     },
     getters: {
+      GETTER_STUDENT_ALBA(state) {
+        state.LOADING = false
+        return state.STATE_STUDENT_ALBA ? state.STATE_STUDENT_ALBA : ''
+      },
       POST_AXIOS_CALLBACK_GETTER(state) {
         state.LOADING = false
         return state.POST_AXIOS_CALLBACK_DATA
@@ -88,6 +93,10 @@ const createStore = () => {
       },
     },
     mutations: {
+      MUTATIONS_STUDENT_ALBA(state, payload) {
+        state.STATE_STUDENT_ALBA = payload
+        console.log('PAYLOAD', state.STATE_STUDENT_ALBA)
+      },
       getMainSuccess(state, payload) {
         state.GET_MAIN_STATE = payload
         console.log('PAYLOAD', state.GET_MAIN_STATE)
@@ -170,6 +179,41 @@ const createStore = () => {
       },
     },
     actions: {
+      // -------------------알바
+      ACTIONS_STUDENT_ALBA({ commit }, params) {
+        commit('LOADING_TRUE')
+        console.log('params', params)
+        let URL_TYPE = ''
+        process.env.DEVICE === 'mo'
+          ? (URL_TYPE = 'student')
+          : (URL_TYPE = 'teacher')
+        axios
+          .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', { params })
+          .then((res) => {
+            // 메인 데이터 합계
+            if (
+              params &&
+              params.type === 'main' &&
+              process.env.DEVICE === 'mo' &&
+              res.data.status
+            ) {
+              const total =
+                res.data.status.intellect +
+                res.data.status.effort +
+                res.data.status.health +
+                res.data.status.etiquette
+              res.data.status.total = total
+            }
+            console.log('ACTIONS_STUDENT_ALBA', res, params)
+            commit('MUTATIONS_STUDENT_ALBA', res.data)
+            commit('LOADING_INIT')
+            params = ''
+          })
+          .catch((res) => {
+            console.error('GET_AXIOS_CALLBACK_DATA_FALIE', res)
+            console.log('URL_TYPE', URL_TYPE)
+          })
+      },
       // -------------------메인 컨텐츠
       getMain({ commit }, params) {
         let URL_TYPE = ''

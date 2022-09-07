@@ -103,7 +103,7 @@
                   )
                 "
               >
-                기타▲
+                결석▲
               </button>
               <button
                 class="jelly-btn"
