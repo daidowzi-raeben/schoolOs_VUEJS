@@ -103,7 +103,7 @@
                   )
                 "
               >
-                결석▲
+                기타▲
               </button>
               <button
                 class="jelly-btn"
@@ -196,7 +196,7 @@
                   )
                 "
               >
-                기타
+                결석
               </button>
             </div>
             <div
