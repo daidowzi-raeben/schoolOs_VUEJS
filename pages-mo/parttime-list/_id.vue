@@ -297,9 +297,9 @@
           </div>
         </div>
 
-        <div v-if="STATE_STUDENT_ALBA.albaList" class="quest__content m-t-3">
+        <div v-if="STATE_STUDENT_ALBA.myAlbaList" class="quest__content m-t-3">
           <div
-            v-for="(v, index) in STATE_STUDENT_ALBA.albaList"
+            v-for="(v, index) in STATE_STUDENT_ALBA.myAlbaList"
             :key="index"
             class="box quest m-b-3"
             @click="onClickTodoDetail(v.idx)"
