@@ -475,12 +475,12 @@ export default {
         subject: '',
         contents: '',
         cate: '',
-        price: '',
-        intellect: '',
+        price: '0',
+        intellect: '0',
         smt_idx: '',
-        effort: '',
-        health: '',
-        etiquette: '',
+        effort: '0',
+        health: '0',
+        etiquette: '0',
         m_price: '0',
         m_intellect: '0',
         m_effort: '0',
@@ -574,6 +574,36 @@ export default {
 
     // EVENT
     onSubmit() {
+      if (this.quest.subject === '') {
+        return alert('제목을 입력하세요')
+      }
+      if (this.quest.contents === '') {
+        return alert('내용을 입력하세요')
+      }
+      if (this.quest.cate === '') {
+        return alert('카테고리를 선택하세요')
+      }
+      if (this.quest.price === '') {
+        return alert('보상 금액을 입력하세요')
+      }
+      if (this.quest.start_day === '') {
+        return alert('시작일을 입력하세요')
+      }
+      if (this.quest.end_day === '') {
+        return alert('종료일을 입력하세요')
+      }
+      if (this.quest.intellect === '') {
+        return alert('보상이 모두 입력되어야 합니다')
+      }
+      if (this.quest.effort === '') {
+        return alert('보상이 모두 입력되어야 합니다')
+      }
+      if (this.quest.health === '') {
+        return alert('보상이 모두 입력되어야 합니다')
+      }
+      if (this.quest.etiquette === '') {
+        return alert('보상이 모두 입력되어야 합니다')
+      }
       this.LOADING_TRUE()
       const frm = new FormData()
       frm.append('type', 'questWrite')

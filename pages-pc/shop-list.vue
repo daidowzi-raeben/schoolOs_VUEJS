@@ -193,7 +193,7 @@
               </template>
             </v-date-picker> -->
           </div>
-          <div class="flex-full m-l-1">
+          <div class="flex-full m-l-1 wd-full">
             <!-- <p>상품가격</p>
             <input
               v-model="itemPrice"

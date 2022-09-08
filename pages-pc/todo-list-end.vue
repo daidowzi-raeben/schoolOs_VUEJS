@@ -12,7 +12,7 @@
         <h4 v-if="LOGIN_TEACHER" class="m-l-3 is_active">
           완료 {{ LOGIN_TEACHER.todo_name }}
         </h4>
-        <div class="flex-right">
+        <!-- <div class="flex-right">
           <button
             v-if="LOGIN_TEACHER"
             class="jelly-btn jelly-btn--default"
@@ -26,7 +26,7 @@
           >
             카테고리 추가
           </button>
-        </div>
+        </div> -->
       </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="m-t-5">
