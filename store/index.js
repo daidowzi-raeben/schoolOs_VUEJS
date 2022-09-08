@@ -207,12 +207,13 @@ const createStore = () => {
       },
       // TODO_END
       MUTATIONS_TEACHER_TODO_END(state, payload) {
-        state.STATE_TEACHER = payload
-        console.log('PAYLOAD', state.STATE_TEACHER)
-      },
-      MUTATIONS_STUDENT_ALBA(state, payload) {
         state.STATE_TEACHER_TODO_END = payload
         console.log('PAYLOAD', state.STATE_TEACHER_TODO_END)
+      },
+      // 학생알바
+      MUTATIONS_STUDENT_ALBA(state, payload) {
+        state.STATE_STUDENT_ALBA = payload
+        console.log('PAYLOAD', state.STATE_STUDENT_ALBA)
       },
       getMainSuccess(state, payload) {
         state.GET_MAIN_STATE = payload
@@ -384,20 +385,6 @@ const createStore = () => {
         axios
           .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', { params })
           .then((res) => {
-            // 메인 데이터 합계
-            if (
-              params &&
-              params.type === 'main' &&
-              process.env.DEVICE === 'mo' &&
-              res.data.status
-            ) {
-              const total =
-                res.data.status.intellect +
-                res.data.status.effort +
-                res.data.status.health +
-                res.data.status.etiquette
-              res.data.status.total = total
-            }
             console.log('ACTIONS_STUDENT_ALBA', res, params)
             commit('MUTATIONS_STUDENT_ALBA', res.data)
             commit('LOADING_INIT')
