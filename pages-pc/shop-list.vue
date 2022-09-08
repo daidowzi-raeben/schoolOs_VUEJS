@@ -360,6 +360,11 @@ export default {
       },
       itemName: '',
       queryCate: null,
+      test: {
+        a: 0,
+        b: 1,
+        c: 3,
+      },
       // inputValue: new Date(),
     }
   },
@@ -419,6 +424,37 @@ export default {
     },
     onSubmitItem() {
       const itemThumb = document.getElementById('itemThumb')
+
+      if (!this.cateIdx) {
+        return alert('카테고리를 입력하세요')
+      }
+      if (!this.itemName) {
+        return alert('상품명을 입력하세요')
+      }
+      if (!this.itemInt) {
+        return alert('재고를 입력하세요')
+      }
+      if (!this.itemPrice) {
+        return alert('상품가격을 입력하세요')
+      }
+      if (!this.calendarSales) {
+        return alert('판매종료일을 입력하세요')
+      }
+      if (!this.calendarDiscountSales) {
+        return alert(
+          '할인종료일을 입력하세요\n할인을 하지 않을 경우 어제 날짜로 설정해 주세요'
+        )
+      }
+      if (!this.itemPriceDiscount) {
+        return alert('할인가격을 입력하세요')
+      }
+      if (!itemThumb.files[0]) {
+        return alert('상품 이미지를 업로드 해주세요')
+      }
+      if (!this.itemContent) {
+        return alert('내용을 입력하세요')
+      }
+      this.LOADING_TRUE()
       const FORM_DATA = new FormData()
       Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
         FORM_DATA.append(v[0], v[1])
@@ -611,6 +647,7 @@ export default {
     resetInput(e) {
       e.target.value = ''
     },
+
     //
   },
 }

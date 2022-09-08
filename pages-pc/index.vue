@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="GET_AXIOS_CALLBACK_DATA_MAIN.emergency > 0" class="Emergency">
+      Emergency 모드가 활성화되어 입출금 및 알바고 기능이 중지됩니다.
+    </div>
     <div>
       <div class="">
         <!-- <div v-if="GET_AXIOS_CALLBACK_DATA_MAIN.meal">
@@ -233,5 +236,19 @@ export default {
   background-color: #f1f1f1;
   border: 1px solid #ddd;
   border-radius: 50px;
+}
+.Emergency {
+  position: fixed;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background: red;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 </style>
