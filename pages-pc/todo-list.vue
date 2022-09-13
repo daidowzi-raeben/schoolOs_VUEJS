@@ -365,6 +365,7 @@
               <td v-if="v.is_confirm === 'C'">취소</td>
               <td>
                 <button
+                  v-if="v.is_confirm"
                   class="jelly-btn jelly-btn--default"
                   @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
                 >

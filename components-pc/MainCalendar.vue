@@ -28,8 +28,10 @@
               "
               @click="onClickDays($event)"
             />
-            <hr />
-            {{ v.day }}
+            <!-- <hr /> -->
+            <span>
+              {{ v.day }}
+            </span>
             <span v-if="v.row.data.idx" class="dot"></span>
           </div>
         </li>
@@ -597,8 +599,8 @@ export default {
       position: relative;
       .dot {
         position: absolute;
-        right: -7px;
-        top: 0;
+        right: -2px;
+        top: 6px;
         background: #ce0707;
         width: 5px;
         height: 5px;
@@ -615,7 +617,23 @@ export default {
         cursor: pointer;
         opacity: 0;
         z-index: 9;
+        & + span {
+          margin-top: 3px;
+          min-width: 20px;
+          text-align: center;
+          // background: #6830bd;
+          // color: #fff;
+          display: inline-block;
+          padding: 3px;
+          border-radius: 2px;
+        }
         &:checked {
+          & + span {
+            background: #6830bd;
+            color: #fff;
+            // padding:  2px;
+            // border-radius: 2px;
+          }
           & + hr {
             height: 2px;
             width: 100%;
