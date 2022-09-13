@@ -109,30 +109,45 @@
                 </div>
                 <div class="name">
                   <div class="flex">
-                    <!-- <nuxt-link to="/name-style"> -->
-                    <!-- <em
+                    <nuxt-link to="/name-style">
+                      <em
                         v-if="GET_AXIOS_CALLBACK_DATA_MAIN.student"
                         class="font-12"
                         style="line-height: 15px"
                       >
-                        {{
-                          GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style.split(
-                            '|'
-                          )[0]
-                        }}
-                        <br />
-                        {{
-                          GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style.split(
-                            '|'
-                          )[1]
-                        }}
-                      </em> -->
-                    <!-- <b-icon
+                        <p
+                          v-if="GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style"
+                        >
+                          {{
+                            GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style.split(
+                              '|'
+                            )[0]
+                          }}
+                        </p>
+                        <p
+                          v-if="GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style"
+                        >
+                          {{
+                            GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style.split(
+                              '|'
+                            )[1]
+                          }}
+                        </p>
+                        <em
+                          v-if="
+                            !GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style
+                          "
+                          class="font-12"
+                        >
+                          칭호 설정하기
+                        </em>
+                      </em>
+                      <!-- <b-icon
                         class="m-l-1"
                         icon="chevron-right"
                         style="margin-top: 2px"
                       ></b-icon> -->
-                    <!-- </nuxt-link> -->
+                    </nuxt-link>
                   </div>
                   <strong>
                     {{ LOGIN_CONFIG.reg_name }}

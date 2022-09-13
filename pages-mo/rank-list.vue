@@ -44,14 +44,36 @@
               <div class="flex-full m-l-2">
                 <div class="flex m-t-0">
                   <div class="txt m-t-1">
-                    <em
-                      v-if="
-                        v.albaCnt === v.albaStudentCnt && Number(v.albaCnt) > 0
-                      "
-                    >
-                      초급 공무원
-                    </em>
-                    <p class="bold">{{ v.reg_name }}</p>
+                    <p style="position: absolute; margin-top: -15px">
+                      <em
+                        v-if="
+                          v.albaCnt === v.albaStudentCnt &&
+                          Number(v.albaCnt) > 0
+                        "
+                      >
+                        <b-icon
+                          icon="star-fill"
+                          animation="fade"
+                          font-scale="1"
+                          variant="warning"
+                        ></b-icon>
+                      </em>
+                    </p>
+                    <p class="m-t-1">
+                      <em
+                        v-if="v.name_style"
+                        class="font-12"
+                        style="line-height: 15px"
+                      >
+                        <p>
+                          {{ v.name_style.split('|')[0] }}
+                        </p>
+                        <p style="margin-top: 5px">
+                          {{ v.name_style.split('|')[1] }}
+                        </p>
+                      </em>
+                    </p>
+                    <p class="bold m-t-2">{{ v.reg_name }}</p>
                     <p class="m-t-2">LV.{{ Number(v.reg_level) }}</p>
                     <span>
                       {{ v.job_name }}
