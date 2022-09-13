@@ -13,6 +13,25 @@
         </div>
       </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
+        <div>
+          <div class="m-t-5">
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate ? '' : 'is_active'"
+              @click="onClickCategory('')"
+              >전체</span
+            >
+            <span>
+              <span
+                class="spanBox m-r-2"
+                :class="queryCate === '1' ? 'is_active' : ''"
+                @click="onClickCategory(1)"
+              >
+                선생님 알바고
+              </span>
+            </span>
+          </div>
+        </div>
         <div class="student form">
           <div class="student__list">
             <div class="m-t-3">
@@ -271,7 +290,6 @@ export default {
           this.params = this.LOGIN_TEACHER
           this.params.type = 'albaList'
           this.GET_AXIOS(this.params)
-          this.params.type = ''
         }
       },
     },
@@ -365,10 +383,21 @@ export default {
       this.$refs[e].classList.toggle('is_active')
     },
     onClickCategory(e) {
+      console.log('this.params.cate', this.params.cate)
       if (e) {
-        this.$router.push(`/shop-list?cate=${e}`)
+        this.$router.push(`/parttime-list?cate=${e}`)
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'albaList'
+        this.params.cate = e
+        this.GET_AXIOS(this.params)
       } else {
-        this.$router.push(`/shop-list`)
+        this.$router.push(`/parttime-list`)
+        this.$nextTick(() => {
+          this.params = this.LOGIN_TEACHER
+          this.params.cate = ''
+          this.params.type = 'albaList'
+          this.GET_AXIOS(this.params)
+        })
       }
     },
     onClickItemDetail(e) {

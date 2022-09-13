@@ -383,10 +383,6 @@ export default {
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
           this.GET_AXIOS(this.params)
-        } else {
-          this.params.queryCate = null
-          this.params = this.LOGIN_TEACHER
-          this.GET_AXIOS(this.params)
         }
       },
       immediate: true,
@@ -552,6 +548,12 @@ export default {
         this.$router.push(`/shop-list?cate=${e}`)
       } else {
         this.$router.push(`/shop-list`)
+        this.$nextTick(() => {
+          this.params = this.LOGIN_TEACHER
+          this.params.type = 'shopList'
+          this.params.queryCate = null
+          this.GET_AXIOS(this.params)
+        })
       }
     },
     onClickItemDetail(e) {
