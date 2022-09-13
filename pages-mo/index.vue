@@ -108,6 +108,32 @@
                 /> -->
                 </div>
                 <div class="name">
+                  <div class="flex">
+                    <!-- <nuxt-link to="/name-style"> -->
+                    <!-- <em
+                        v-if="GET_AXIOS_CALLBACK_DATA_MAIN.student"
+                        class="font-12"
+                        style="line-height: 15px"
+                      >
+                        {{
+                          GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style.split(
+                            '|'
+                          )[0]
+                        }}
+                        <br />
+                        {{
+                          GET_AXIOS_CALLBACK_DATA_MAIN.student.name_style.split(
+                            '|'
+                          )[1]
+                        }}
+                      </em> -->
+                    <!-- <b-icon
+                        class="m-l-1"
+                        icon="chevron-right"
+                        style="margin-top: 2px"
+                      ></b-icon> -->
+                    <!-- </nuxt-link> -->
+                  </div>
                   <strong>
                     {{ LOGIN_CONFIG.reg_name }}
                   </strong>

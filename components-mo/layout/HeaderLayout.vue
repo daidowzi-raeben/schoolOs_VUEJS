@@ -120,7 +120,7 @@ export default {
         console.log('================', res.data)
         this.teacher = res.data.teacher
         this.student = res.data.student
-        this.chuseok()
+        // this.chuseok()
       })
       .catch((res) => {
         console.log('AXIOS FALSE', res)
