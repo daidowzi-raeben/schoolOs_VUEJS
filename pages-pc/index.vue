@@ -47,19 +47,21 @@
       <div class="flex m-t-3">
         <div class="student__list flex">
           <div class="item" style="width: 200px">
-            <p class="title" style="color: #111">미 검사</p>
-            <div class="text-right" style="color: #111">
-              <strong
-                v-if="GET_AXIOS_CALLBACK_DATA_MAIN.questConfirmCNT"
-                class="font-20"
-              >
-                <em>{{ GET_AXIOS_CALLBACK_DATA_MAIN.questConfirmCNT }}</em>
-              </strong>
-              <strong v-else class="font-20">
-                <em>0</em>
-              </strong>
-              건
-            </div>
+            <nuxt-link to="/todo-list">
+              <p class="title" style="color: #111">미 검사</p>
+              <div class="text-right" style="color: #111">
+                <strong
+                  v-if="GET_AXIOS_CALLBACK_DATA_MAIN.questConfirmCNT"
+                  class="font-20"
+                >
+                  <em>{{ GET_AXIOS_CALLBACK_DATA_MAIN.questConfirmCNT }}</em>
+                </strong>
+                <strong v-else class="font-20">
+                  <em>0</em>
+                </strong>
+                건
+              </div>
+            </nuxt-link>
           </div>
           <div class="item" style="width: 200px">
             <nuxt-link to="/sue-list">

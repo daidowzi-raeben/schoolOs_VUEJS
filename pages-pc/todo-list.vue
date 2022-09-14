@@ -57,11 +57,12 @@
                 class="jelly-table"
               >
                 <tr>
+                  <th>시작일</th>
+                  <th>종료일</th>
                   <th>제목</th>
                   <th>읽음</th>
                   <th>수락</th>
                   <th>검사요청</th>
-                  <th>기간</th>
                   <th>관리</th>
                 </tr>
                 <tr
@@ -69,6 +70,12 @@
                   :key="`shopItem${i}`"
                   style="cursor: pointer"
                 >
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.start_day | moment('YY.MM.DD') }}
+                  </td>
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.end_day | moment('YY.MM.DD') }}
+                  </td>
                   <td @click="onClickItemDetail(v.idx)">{{ v.subject }}</td>
                   <td @click="onClickItemDetail(v.idx)">
                     {{ v.is_read ? v.is_read : 0 }}
@@ -79,10 +86,7 @@
                   <td @click="onClickItemDetail(v.idx)">
                     {{ v.is_read ? v.is_confirm : 0 }}
                   </td>
-                  <td @click="onClickItemDetail(v.idx)">
-                    {{ v.start_day | moment('YY.MM.DD') }} ~
-                    {{ v.end_day | moment('YY.MM.DD') }}
-                  </td>
+
                   <td>
                     <div class="flex">
                       <button
@@ -91,12 +95,12 @@
                       >
                         검사
                       </button>
-                      <button
+                      <!-- <button
                         class="flex-full jelly-btn jelly-btn--default m-l-1"
                         @click="onClickItemDetail(v.idx)"
                       >
                         수정
-                      </button>
+                      </button> -->
                     </div>
                   </td>
                 </tr>
@@ -320,7 +324,7 @@
       <div class="">
         <!-- <p>검사</p> -->
       </div>
-      <div>
+      <div style="height: 80vh; overflow-y: auto">
         <table
           v-if="GET_AXIOS_CALLBACK_GETTER.participation"
           class="jelly-table"
@@ -353,9 +357,16 @@
                 />
               </th>
               <td>{{ v.reg_name }}</td>
-              <td>{{ v.is_read === 'Y' ? '읽음' : '안읽음' }}</td>
-              <td>{{ v.is_status === 'Y' ? '수락' : '미수락' }}</td>
-              <td v-if="v.is_confirm === 'N'">
+              <td :class="v.is_read === 'Y' ? 'is_activeTable' : ''">
+                {{ v.is_read === 'Y' ? '읽음' : '안읽음' }}
+              </td>
+              <td :class="v.is_status === 'Y' ? 'is_activeTable' : ''">
+                {{ v.is_status === 'Y' ? '수락' : '미수락' }}
+              </td>
+              <td
+                v-if="v.is_confirm === 'N'"
+                :class="v.is_complete === 'Y' ? 'is_activeTable' : ''"
+              >
                 {{ v.is_complete === 'Y' ? '제출' : '미제출' }}
               </td>
               <td v-if="v.is_confirm === 'R'">다시 제출</td>
@@ -365,7 +376,7 @@
               <td v-if="v.is_confirm === 'C'">취소</td>
               <td>
                 <button
-                  v-if="v.is_confirm"
+                  v-if="v.is_complete === 'Y'"
                   class="jelly-btn jelly-btn--default"
                   @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
                 >
@@ -395,7 +406,7 @@
                   성공
                 </button>
                 <button
-                  v-if="v.is_confirm === 'Y'"
+                  v-if="v.is_confirm === 'Y' && checked.length === 0"
                   class="jelly-btn jelly-btn--gray"
                   @click="onSubmitConfirm('C', v.sq_idx, v.idx, '')"
                 >
@@ -404,8 +415,11 @@
               </td>
             </tr>
             <tr v-if="v.content">
-              <td colspan="7" style="white-space: pre">
-                {{ v.content }}
+              <td colspan="7" style="white-space: pre-line">
+                <p class="bold" style="margin-bottom: 0">
+                  {{ v.reg_name }}의 남긴 말
+                </p>
+                {{ v.content.trim() }}
               </td>
             </tr>
           </template>
@@ -781,4 +795,9 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.is_activeTable {
+  background: #6830bd !important;
+  color: #fff;
+}
+</style>

@@ -56,11 +56,12 @@
                 class="jelly-table"
               >
                 <tr>
+                  <th>시작일</th>
+                  <th>종료일</th>
                   <th>제목</th>
                   <th>읽음</th>
                   <th>수락</th>
                   <th>검사요청</th>
-                  <th>기간</th>
                   <th>관리</th>
                 </tr>
                 <tr
@@ -68,6 +69,12 @@
                   :key="`shopItem${i}`"
                   style="cursor: pointer"
                 >
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.start_day | moment('YY.MM.DD') }}
+                  </td>
+                  <td @click="onClickItemDetail(v.idx)">
+                    {{ v.end_day | moment('YY.MM.DD') }}
+                  </td>
                   <td @click="onClickItemDetail(v.idx)">{{ v.subject }}</td>
                   <td @click="onClickItemDetail(v.idx)">
                     {{ v.is_read ? v.is_read : 0 }}
@@ -78,10 +85,7 @@
                   <td @click="onClickItemDetail(v.idx)">
                     {{ v.is_read ? v.is_confirm : 0 }}
                   </td>
-                  <td @click="onClickItemDetail(v.idx)">
-                    {{ v.start_day | moment('YY.MM.DD') }} ~
-                    {{ v.end_day | moment('YY.MM.DD') }}
-                  </td>
+
                   <td>
                     <div class="flex">
                       <button
@@ -90,12 +94,12 @@
                       >
                         검사
                       </button>
-                      <button
+                      <!-- <button
                         class="flex-full jelly-btn jelly-btn--default m-l-1"
                         @click="onClickItemDetail(v.idx)"
                       >
                         수정
-                      </button>
+                      </button> -->
                     </div>
                   </td>
                 </tr>
@@ -364,6 +368,7 @@
               <td v-if="v.is_confirm === 'C'">취소</td>
               <td>
                 <button
+                  v-if="v.is_complete === 'Y'"
                   class="jelly-btn jelly-btn--default"
                   @click="onClickFileDetail(v.sq_idx, v.sms_idx)"
                 >

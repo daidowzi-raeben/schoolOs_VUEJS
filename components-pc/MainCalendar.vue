@@ -1,7 +1,18 @@
 <template>
   <div>
     <div id="calendarList" class="m-t-3">
-      <div v-if="calendar.calendar" class="text-center" style="padding: 8px">
+      <div v-if="calendar.today && LOGIN_CONFIG">
+        <em>
+          {{ calendar.today.year }}년 {{ calendar.today.month }}월
+          {{ calendar.today.day }}일, {{ LOGIN_CONFIG.reg_name }} 담임 선생님
+          반갑습니다!
+        </em>
+      </div>
+      <div
+        v-if="calendar.calendar"
+        class="text-center m-t-3"
+        style="padding: 8px"
+      >
         {{ calendar.calendar[0].year }}년 {{ calendar.calendar[0].month }}월
       </div>
       <ul class="flex">
@@ -43,16 +54,19 @@
     <div id="studentList" class="m-t-3">
       <table class="jelly-table font-14">
         <colgroup>
+          <col style="width: 90px" />
           <col style="width: 100px" />
           <col style="width: 420px" />
           <col style="width: auto" />
         </colgroup>
         <tr>
+          <th>출석번호</th>
           <th>이름</th>
           <th>출결사항</th>
           <th>특이사항</th>
         </tr>
         <tr v-for="(v, i) in student.student" :key="i">
+          <td class="text-center">{{ v.list.class_number }}</td>
           <td>{{ v.list.reg_name }}</td>
           <td>
             <div>

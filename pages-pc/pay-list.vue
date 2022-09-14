@@ -341,6 +341,8 @@ export default {
             this.params = this.LOGIN_TEACHER
             this.params.type = 'teacherPayList'
             this.GET_AXIOS(this.params)
+            this.$refs.inputMemo.value = ''
+            this.$refs.inputPay.value = ''
           })
         })
         .catch((res) => {
