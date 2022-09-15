@@ -37,7 +37,7 @@
       </nuxt-link>
     </div>
     <div class="content">
-      <div class="content__body m-t-1 h60">
+      <div class="content__body m-t-1">
         <div v-if="LOGIN_STUDENT" class="account">
           <h3 v-if="LOGIN_STUDENT.t_todo_name">
             진행중인 나의 {{ LOGIN_STUDENT.t_todo_name }}
@@ -53,7 +53,7 @@
           v-if="!GET_AXIOS_CALLBACK_GETTER.questListMy"
           class="quest__content m-t-3"
         >
-          <div class="p-5 text-center font-14">
+          <div class="text-center font-14 p-t-10 p-b-10">
             할 수 있는 일을 찾아 '수락' 버튼을 눌러보세요.
           </div>
         </div>

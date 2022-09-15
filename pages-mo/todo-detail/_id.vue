@@ -63,19 +63,39 @@
                     <div class="flex-right">
                       <div class="flex m-t-0">
                         <span
-                          class="jelly-point m-t-0 jelly-background--type1 m-l-1"
+                          class="
+                            jelly-point
+                            m-t-0
+                            jelly-background--type1
+                            m-l-1
+                          "
                           >{{ GET_AXIOS_CALLBACK_GETTER.intellect }}</span
                         >
                         <span
-                          class="jelly-point m-t-0 jelly-background--type2 m-l-1"
+                          class="
+                            jelly-point
+                            m-t-0
+                            jelly-background--type2
+                            m-l-1
+                          "
                           >{{ GET_AXIOS_CALLBACK_GETTER.effort }}</span
                         >
                         <span
-                          class="jelly-point m-t-0 jelly-background--type3 m-l-1"
+                          class="
+                            jelly-point
+                            m-t-0
+                            jelly-background--type3
+                            m-l-1
+                          "
                           >{{ GET_AXIOS_CALLBACK_GETTER.health }}</span
                         >
                         <span
-                          class="jelly-point m-t-0 jelly-background--type4 m-l-1"
+                          class="
+                            jelly-point
+                            m-t-0
+                            jelly-background--type4
+                            m-l-1
+                          "
                           >{{ GET_AXIOS_CALLBACK_GETTER.etiquette }}</span
                         >
                       </div>
@@ -111,19 +131,39 @@
                       <div class="flex-right">
                         <div class="flex m-t-0">
                           <span
-                            class="jelly-point m-t-0 jelly-background--type1 m-l-1"
+                            class="
+                              jelly-point
+                              m-t-0
+                              jelly-background--type1
+                              m-l-1
+                            "
                             >{{ GET_AXIOS_CALLBACK_GETTER.m_intellect }}</span
                           >
                           <span
-                            class="jelly-point m-t-0 jelly-background--type2 m-l-1"
+                            class="
+                              jelly-point
+                              m-t-0
+                              jelly-background--type2
+                              m-l-1
+                            "
                             >{{ GET_AXIOS_CALLBACK_GETTER.m_effort }}</span
                           >
                           <span
-                            class="jelly-point m-t-0 jelly-background--type3 m-l-1"
+                            class="
+                              jelly-point
+                              m-t-0
+                              jelly-background--type3
+                              m-l-1
+                            "
                             >{{ GET_AXIOS_CALLBACK_GETTER.m_health }}</span
                           >
                           <span
-                            class="jelly-point m-t-0 jelly-background--type4 m-l-1"
+                            class="
+                              jelly-point
+                              m-t-0
+                              jelly-background--type4
+                              m-l-1
+                            "
                             >{{ GET_AXIOS_CALLBACK_GETTER.m_etiquette }}</span
                           >
                         </div>
@@ -188,7 +228,7 @@
         class="jelly-btn jelly-btn--pink"
         @click="$bvModal.show('completeFile')"
       >
-        완료하기
+        제출하기
       </button>
 
       <button
@@ -241,7 +281,7 @@
           style="border-radius: 0"
           @click="onSubmitComplete()"
         >
-          제출하기
+          완료하기
         </button>
       </div>
     </b-modal>
@@ -366,9 +406,20 @@ export default {
     },
     onSubmitComplete() {
       this.btn.onSubmitComplete = true
-      this.LOADING_TRUE()
       const frm = new FormData()
       const photoFile = document.getElementById('photo')
+
+      if (photoFile.files.length === 0) {
+        if (
+          confirm(
+            '인증샷이 등록되지 않았어요\n인증샷 없이 선생님에게 제출할까요?'
+          )
+        ) {
+          console.log('OK')
+        } else {
+          return
+        }
+      }
 
       console.log(photoFile.files)
       for (let i = 0; i < photoFile.files.length; i++) {
@@ -382,6 +433,7 @@ export default {
       frm.append('sms_idx', this.params.sms_idx)
       frm.append('smt_idx', this.LOGIN_STUDENT.smt_idx)
       console.log(frm)
+      this.LOADING_TRUE()
       // axiosForm(frm, '/student.php')
       this.$axios
         .post(process.env.VUE_APP_API + '/student.php', frm, {

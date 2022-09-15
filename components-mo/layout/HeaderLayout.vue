@@ -41,6 +41,36 @@
         <em>선생님이 승인해야 사용할 수 있어요</em>
       </div>
     </div>
+    <div v-if="student && student.del === 'Y'">
+      <div
+        style="
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          background: #fff;
+          top: 0;
+          left: 0;
+          z-index: 99;
+          opacity: 0.9;
+        "
+      ></div>
+      <div
+        style="
+          position: absolute;
+          color: #000;
+          z-index: 100;
+          width: 100%;
+          padding-top: 45%;
+          height: 100%;
+        "
+        class="text-center"
+      >
+        사용할 수 없는 아이디에요<br />
+        <nuxt-link to="/member/sign-out/">
+          <em>다른 아이디로 로그인 하기 </em>
+        </nuxt-link>
+      </div>
+    </div>
     <header>
       <div class="flex">
         <h1 class="relative" @click="onClickEasterEgg">

@@ -182,6 +182,9 @@ export default {
       ) {
         return alert('모든 항목을 입력해 주세요')
       }
+      if (Number(this.alba.personnel) < 1) {
+        return alert('인원은 최소 1명부터 가능합니다.')
+      }
       if (confirm('등록할까요?')) {
         this.LOADING_TRUE()
         const frm = new FormData()
