@@ -299,6 +299,48 @@
             </div>
           </div>
         </div>
+        <div class="box quest m-b-3">
+          <div class="quest__title flex">
+            <nuxt-link v-if="LOGIN_CONFIG" to="/todo-my-list/0">
+              <h3 v-if="LOGIN_CONFIG.t_todo_name">
+                새로 등록된 {{ LOGIN_CONFIG.t_todo_name }}
+              </h3>
+            </nuxt-link>
+            <b-icon
+              class="m-l-1"
+              icon="chevron-right"
+              style="margin-top: 2px"
+            ></b-icon>
+          </div>
+          <div
+            v-if="GET_AXIOS_CALLBACK_DATA_MAIN.questListMain"
+            class="quest__content"
+          >
+            <div
+              v-for="(v, index) in GET_AXIOS_CALLBACK_DATA_MAIN.questListMain"
+              :key="index"
+              class="flex m-t-3"
+              @click="onClickTodoDetail(v.idx)"
+            >
+              <div class="label blue">{{ v.subject_cate }}</div>
+              <div class="txt m-l-2">
+                <p>{{ v.subject }}</p>
+                <span>{{ v.start_day }} ~ {{ v.end_day }}</span>
+              </div>
+              <div class="pay text-right flex-right">
+                <p>
+                  <em class="bold">
+                    {{ v.price | comma }}
+                  </em>
+                  <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
+                    LOGIN_CONFIG.t_reg_pay_unit
+                  }}</span>
+                </p>
+                <span>{{ v.d_day }}일남음</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="box quest">
           <div class="quest__title flex">
             <nuxt-link v-if="LOGIN_CONFIG" to="/todo-my-list/0">
