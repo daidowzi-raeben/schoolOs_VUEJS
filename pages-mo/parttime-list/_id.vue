@@ -53,12 +53,18 @@
             <!-- </nuxt-link> -->
           </div>
         </div>
-        <div v-if="!STATE_STUDENT_ALBA.albaList" class="quest__content m-t-3">
+        <div
+          v-if="!STATE_STUDENT_ALBA.albaListTeaher"
+          class="quest__content m-t-3"
+        >
           <div class="p-5 text-center font-14">
             아직 할 수 있는 일이 없어요.
           </div>
         </div>
-        <div v-if="STATE_STUDENT_ALBA.albaList" class="quest__content m-t-3">
+        <div
+          v-if="STATE_STUDENT_ALBA.albaListTeaher"
+          class="quest__content m-t-3"
+        >
           <div
             v-for="(v, index) in STATE_STUDENT_ALBA.albaListTeaher"
             :key="index"
