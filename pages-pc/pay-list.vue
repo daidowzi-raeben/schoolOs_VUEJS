@@ -18,7 +18,7 @@
               class="spanBox m-r-2"
               :class="queryCate === '' ? 'is_active' : ''"
               @click="onClickCategory('')"
-              >전체
+              >통화량
               {{
                 GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
                   ? GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
@@ -32,7 +32,7 @@
                 :class="queryCate === '1' ? 'is_active' : ''"
                 @click="onClickCategory('1')"
               >
-                입금
+                잔액
                 {{
                   GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
                     ? Number(

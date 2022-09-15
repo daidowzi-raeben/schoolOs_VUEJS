@@ -3,16 +3,16 @@
     <div class="">
       <div class="flex">
         <h4 v-if="LOGIN_TEACHER" class="is_active">
-          진행중 {{ LOGIN_TEACHER.todo_name }}
+          {{ LOGIN_TEACHER.todo_name }} 관리
         </h4>
-        <h4
+        <!-- <h4
           v-if="LOGIN_TEACHER"
           class="m-l-3"
           style="cursor: pointer"
           @click="$router.push('/todo-list-end')"
         >
           완료 {{ LOGIN_TEACHER.todo_name }}
-        </h4>
+        </h4> -->
         <div class="flex-right">
           <button
             v-if="LOGIN_TEACHER"
@@ -456,7 +456,7 @@ export default {
       swiperOption: {
         slidesPerView: 1,
         spaceBetween: 30,
-        loop: true,
+        loop: false,
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
