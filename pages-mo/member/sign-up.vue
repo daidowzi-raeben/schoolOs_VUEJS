@@ -132,16 +132,33 @@ export default {
       }
     },
     onClickLogin() {
-      this.paramsPost.type = 'register'
-      this.paramsPost.reg_code = this.$route.query.reg_code
-      this.paramsPost.reg_code = this.$route.query.reg_code
-      this.paramsPost.reg_id = this.params.reg_id
-      this.paramsPost.reg_pw = this.params.reg_pw
-      this.paramsPost.reg_name = this.params.reg_name
-      this.paramsPost.class_number = this.params.class_number
-      this.POST_AXIOS(this.paramsPost)
-      alert('가입이 완료되었어요.')
-      this.$router.push('/member/sign-in')
+      const FORM_DATA = new FormData()
+      FORM_DATA.append('type', 'register')
+      FORM_DATA.append('reg_code', this.$route.query.reg_code)
+      FORM_DATA.append('reg_id', this.params.reg_id)
+      FORM_DATA.append('reg_pw', this.params.reg_pw)
+      FORM_DATA.append('reg_name', this.params.reg_name)
+      FORM_DATA.append('class_number', this.params.class_number)
+      console.log('FORM_DATA', FORM_DATA)
+      this.$axios
+        .post(process.env.VUE_APP_API + '/student.php', FORM_DATA, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          if (res.data === 'ID') {
+            return alert('이미 가입이 되어있어요')
+          }
+          setTimeout(() => {
+            alert('가입이 완료되었어요.')
+            this.$router.push('/member/sign-in')
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
   },
 }

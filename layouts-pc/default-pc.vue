@@ -86,8 +86,10 @@
                   </li>
                   <li @click="onClickLinkTo($event, 'bill-list')">SOC 납부</li>
                   <li @click="onClickLinkTo($event, 'bill-student')">
-                    고지서관리
+                    세금고지서관리
                   </li>
+                  <!-- <li @click="onClickLinkTo($event, 'bill-student')"> -->
+                  <li onclick="alert('준비중')">벌금고지서관리</li>
                   <li
                     v-if="LOGIN_CONFIG"
                     @click="onClickLinkTo($event, 'pay-list')"
@@ -98,6 +100,7 @@
                   <li @click="onClickLinkTo($event, 'lottery-list')">
                     복권구매내역
                   </li>
+                  <li onclick="alert('준비중')">학생정보관리</li>
                 </ul>
               </div>
             </li>

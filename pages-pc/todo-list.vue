@@ -27,6 +27,9 @@
           >
             카테고리 추가
           </button>
+          <button v-b-modal.cateEdit class="jelly-btn jelly-btn--default m-l-1">
+            카테고리 관리
+          </button>
         </div>
       </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
@@ -302,6 +305,55 @@
         </button>
       </div>
     </b-modal>
+    <b-modal id="cateEdit" ref="ref-cateEdit" size="lg" hide-footer hide-header>
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.questCate" class="">
+        <p>카테고리 관리</p>
+        <div class="m-t-3">
+          <table class="jelly-table">
+            <col style="width: auto" />
+            <col style="width: 250px" />
+            <tr>
+              <th>카테고리 이름</th>
+              <th>관리</th>
+            </tr>
+            <tr v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.questCate" :key="i">
+              <td>
+                <input
+                  :ref="`inputCateEdit${i}`"
+                  type="text"
+                  class="jelly-text wd-full"
+                  :value="v.subject"
+                />
+              </td>
+              <td>
+                <button
+                  class="m-l-1 jelly-btn jelly-btn--default"
+                  @click="onSubmitCateDel(v.idx)"
+                >
+                  삭제하기
+                </button>
+                <button
+                  class="jelly-btn jelly-btn--pink"
+                  @click="
+                    onSubmitCateEdit(v.idx, $refs[`inputCateEdit${i}`][0].value)
+                  "
+                >
+                  수정하기
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="m-t-5 text-center">
+          <button
+            class="jelly-btn jelly-btn--default"
+            @click="$bvModal.hide('cateEdit')"
+          >
+            닫기
+          </button>
+        </div>
+      </div>
+    </b-modal>
     <b-modal id="fileDataSlide" size="lg" hide-footer hide-header>
       <div v-if="GET_AXIOS_CALLBACK_GETTER.participationFile">
         <swiper :options="swiperOption">
@@ -325,9 +377,13 @@
         <!-- <p>검사</p> -->
       </div>
       <div style="height: 80vh; overflow-y: auto">
+        <div class="text-right">
+          <b-icon icon="grid3x3-gap" @click="onClickThumbMode"></b-icon>
+          <b-icon icon="list-check"></b-icon>
+        </div>
         <table
           v-if="GET_AXIOS_CALLBACK_GETTER.participation"
-          class="jelly-table"
+          class="jelly-table m-t-2"
         >
           <thead>
             <tr>
@@ -505,6 +561,61 @@ export default {
         end_day: '',
         type: '',
       },
+      fields: [
+        {
+          key: 'start_day',
+          label: '시작일',
+          sortable: true,
+        },
+        {
+          key: 'end_day',
+          label: '종료일',
+          sortable: true,
+        },
+        {
+          key: 'subject',
+          label: '제목',
+          sortable: true,
+        },
+        {
+          key: 'is_read',
+          label: '읽음',
+          sortable: true,
+        },
+        {
+          key: 'is_status',
+          label: '수락',
+          sortable: true,
+        },
+        {
+          key: 'is_status',
+          label: '검사요청',
+          sortable: true,
+        },
+        {
+          key: 'is_confirm',
+          label: '관리',
+          sortable: false,
+        },
+      ],
+      items: [
+        {
+          isActive: true,
+          start_day: '',
+          end_day: '',
+          is_read: '',
+          is_status: '',
+          is_confirm: '',
+        },
+        {
+          isActive: true,
+          start_day: '',
+          end_day: '',
+          is_read: '',
+          is_status: '',
+          is_confirm: '',
+        },
+      ],
       confirm: {},
       fileData: {},
       cateForm: {},
@@ -789,6 +900,88 @@ export default {
       this.fileData.sms_idx = sms
       this.GET_AXIOS(this.fileData)
       this.$bvModal.show('fileDataSlide')
+    },
+    onSubmitCateEdit(e, v) {
+      console.log(e, v)
+      const frm = new FormData()
+      frm.append('type', 'cateEditQuest')
+      frm.append('idx', e)
+      frm.append('subject', v)
+      frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      console.log(frm)
+      this.LOADING_TRUE()
+      // axiosForm(frm, '/student.php')
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log('[onSubmitComplete]', res.data)
+          this.$bvModal.hide('completeFile')
+          setTimeout(() => {
+            this.params = this.LOGIN_TEACHER
+            this.params.type = 'questList'
+            this.params.queryCate = null
+            this.GET_AXIOS(this.params)
+            this.$bvModal.hide('cateEdit')
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
+    },
+    onSubmitCateDel(e) {
+      if (
+        confirm(
+          '카테고리를 삭제하면 포함된 글이 모두 삭제됩니다.\n삭제하시겠습니까?'
+        )
+      ) {
+        console.log('Y')
+        const frm = new FormData()
+        frm.append('type', 'cateDeltQuest')
+        frm.append('idx', e)
+        frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+        console.log(frm)
+        this.LOADING_TRUE()
+        // axiosForm(frm, '/student.php')
+        this.$axios
+          .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            console.log('[onSubmitComplete]', res.data)
+            this.$bvModal.hide('completeFile')
+            setTimeout(() => {
+              this.params = this.LOGIN_TEACHER
+              this.params.type = 'questList'
+              this.params.queryCate = null
+              this.GET_AXIOS(this.params)
+              this.$bvModal.hide('cateEdit')
+            })
+          })
+          .catch((res) => {
+            console.log('AXIOS FALSE', res)
+          })
+      }
+    },
+    onClickThumbMode() {
+      console.log(this.noticeIdx)
+      this.$axios
+        .get(
+          process.env.VUE_APP_API +
+            `/teacher.php?idx=${this.noticeIdx}&type=questThumb`
+        )
+        .then((res) => {
+          console.log('[onClickThumbMode]', res.data)
+          setTimeout(() => {})
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
     // onClickCheckbox(e, idx, i) {
     //   this.checked[i] = idx

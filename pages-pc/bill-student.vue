@@ -121,6 +121,21 @@
                       {{ v.reg_name }}
                       ({{ v.reg_id }})
                     </label>
+                    <div class="flex-right m-t-2">
+                      <span v-if="v.PtotalAccount">
+                        {{
+                          v.MtotalAccount
+                            ? v.PtotalAccount
+                            : (Number(v.PtotalAccount) -
+                                Number(v.MtotalAccount))
+                              | comma
+                        }}
+                      </span>
+                      <span v-else>0</span>
+                      <span v-if="LOGIN_TEACHER">
+                        {{ LOGIN_TEACHER.reg_pay_unit }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -180,7 +195,6 @@
             </div>
           </div>
         </div>
-        <div>미납 연체 수수료</div>
         <div class="m-t-5">
           <div class="flex-full m-l-1">
             <p>내용</p>

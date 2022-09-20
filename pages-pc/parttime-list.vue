@@ -5,8 +5,8 @@
         <h4 v-if="LOGIN_TEACHER">알바고 관리</h4>
         <div class="flex-right">
           <button
-            v-b-modal.itemInsertSubmit
             class="jelly-btn jelly-btn--default"
+            @click="onclickInsertItemNew"
           >
             알바고 추가
           </button>
@@ -181,6 +181,11 @@
               class="jelly-text jelly-text--h wd-full text-right p-r-10 m-t-1"
               placeholder="한명당 알바비는 얼마인가요?"
               @input="payComma($event)"
+              @click="
+                ($event) => {
+                  $event.target.value = ''
+                }
+              "
             />
             <span
               v-if="LOGIN_TEACHER && LOGIN_TEACHER.reg_pay_unit"
@@ -195,6 +200,11 @@
               type="tel"
               class="jelly-text jelly-text--h wd-full text-right p-r-10 m-t-1"
               placeholder="몇명이 할 수 있는 일인가요?"
+              @click="
+                ($event) => {
+                  $event.target.value = ''
+                }
+              "
             />
             <span style="position: absolute; right: 10px; top: 36px">명</span>
           </div>
@@ -217,14 +227,14 @@
             ></b-form-datepicker>
           </div>
         </div>
-        <div>
+        <div class="m-t-3">
           <p class="m-b-0">무슨 일을 하나요?</p>
-          <textarea
+          <vue-editor
             v-model="alba.content"
-            style="height: 300px"
-            class="jelly-text jelly-text--h wd-full flex-full m-t-1"
+            class="m-t-1"
             placeholder="무슨 일을 하는지, 알바를 하며 주의해야 하는 점, 규칙 등을 자세하게 써주세요!"
-          ></textarea>
+          >
+          </vue-editor>
         </div>
         <div class="m-t-5 text-center">
           <button
@@ -360,6 +370,19 @@ export default {
         return false
       }
       this.$bvModal.hide('itemInsert')
+    },
+    onclickInsertItemNew() {
+      const today = new Date()
+
+      const year = today.getFullYear()
+      const month = ('0' + (today.getMonth() + 1)).slice(-2)
+      const day = ('0' + today.getDate()).slice(-2)
+
+      const dateString = year + '-' + month + '-' + day
+      console.log(dateString)
+      this.alba.start_day = dateString
+      this.alba.end_day = dateString
+      this.$bvModal.show('itemInsertSubmit')
     },
     onSubmitItem() {
       //   const itemThumb = document.getElementById('itemThumb')

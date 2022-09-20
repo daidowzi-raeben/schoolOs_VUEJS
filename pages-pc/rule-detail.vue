@@ -236,8 +236,8 @@
               style="padding: 10px"
             >
               <div class="font-14">{{ e + 1 }}항. {{ k.subject }}</div>
-              <div v-if="LOGIN_CONFIG" class="m-t-1 jelly-color--888 font-12">
-                {{ k.penalty + LOGIN_CONFIG.t_reg_pay_unit }}
+              <div v-if="LOGIN_TEACHER" class="m-t-1 jelly-color--888 font-12">
+                {{ k.penalty + LOGIN_TEACHER.t_reg_pay_unit }}
                 {{ k.penalty_etc ? ' / ' + k.penalty_etc : k.penalty_etc }}
               </div>
             </div>
@@ -288,17 +288,10 @@ export default {
       handler(value) {
         console.log(value)
         this.params.type = 'rule'
-
         if (value) {
           this.queryCate = value
           this.params = this.LOGIN_TEACHER
           this.params.queryCate = value
-          this.params.type = 'rule'
-          this.GET_AXIOS(this.params)
-        } else {
-          this.params.queryCate = null
-          this.queryCate = null
-          this.params = this.LOGIN_TEACHER
           this.params.type = 'rule'
           this.GET_AXIOS(this.params)
         }
@@ -439,6 +432,7 @@ export default {
       } else {
         this.queryCate = null
         this.$router.push(`/rule-detail`)
+        this.initAxios()
       }
     },
     async initAxios() {
