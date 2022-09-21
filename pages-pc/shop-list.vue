@@ -30,7 +30,7 @@
           <div class="m-t-5">
             <span
               class="spanBox m-r-2"
-              :class="queryCate ? '' : 'is_active'"
+              :class="queryCate || queryCate !== '' ? '' : 'is_active'"
               @click="onClickCategory('')"
               >전체</span
             >
@@ -547,13 +547,12 @@ export default {
       if (e) {
         this.$router.push(`/shop-list?cate=${e}`)
       } else {
+        this.params.queryCate = ''
+        this.queryCate = ''
         this.$router.push(`/shop-list`)
-        this.$nextTick(() => {
-          this.params = this.LOGIN_TEACHER
-          this.params.type = 'shopList'
-          this.params.queryCate = null
-          this.GET_AXIOS(this.params)
-        })
+        this.params = this.LOGIN_TEACHER
+        this.params.type = 'shopList'
+        this.GET_AXIOS(this.params)
       }
     },
     onClickItemDetail(e) {
@@ -615,11 +614,16 @@ export default {
         })
     },
     onClickItemInsert() {
+      this.params.detailIdx = ''
+      this.GET_AXIOS_CALLBACK_GETTER.shopDetail = ''
+      this.GET_AXIOS_CALLBACK_GETTER.buyStudent = ''
       this.calendarSales = ''
       this.calendarDiscountSales = ''
       this.cateIdx = ''
+      this.itemInt = 0
       this.itemPrice = 0
       this.price2 = 0
+      this.item_price_inp = 0
       this.itemContent = ''
       this.itemName = ''
       this.itemPriceDiscount = 0

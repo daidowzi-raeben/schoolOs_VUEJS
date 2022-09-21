@@ -13,7 +13,9 @@
           >
             주급지급하기 (최근 지급일 :
             <span
-              v-if="GET_AXIOS_CALLBACK_GETTER.lastWeek"
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER && GET_AXIOS_CALLBACK_GETTER.lastWeek
+              "
               style="font-size: 12px"
             >
               {{ GET_AXIOS_CALLBACK_GETTER.lastWeek.lastWeek }} </span
@@ -317,14 +319,21 @@
     <b-modal id="studentAttendance" size="xl" hide-footer hide-header>
       <div>
         <div class="">
-          <h3 v-if="GET_AXIOS_CALLBACK_DATA_SUB.total">
+          <h3
+            v-if="
+              GET_AXIOS_CALLBACK_DATA_SUB && GET_AXIOS_CALLBACK_DATA_SUB.total
+            "
+          >
             벌칙 관리
             <em class="font-14">{{ GET_AXIOS_CALLBACK_DATA_SUB.total }}건</em>
           </h3>
           <h3 v-else>신고내역이 없습니다.</h3>
           <div class="m-t-5">
             <table
-              v-if="GET_AXIOS_CALLBACK_DATA_SUB.rulesCate"
+              v-if="
+                GET_AXIOS_CALLBACK_DATA_SUB &&
+                GET_AXIOS_CALLBACK_DATA_SUB.rulesCate
+              "
               class="jelly-table"
             >
               <tr>

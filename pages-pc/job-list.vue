@@ -91,6 +91,27 @@
         </button>
       </div>
     </b-modal>
+    <b-modal id="jobEdit" size="lg" hide-footer hide-header>
+      <div class="">
+        <p>직업명</p>
+        <input v-model="edit.job_name" type="text" class="jelly-text wd-full" />
+      </div>
+      <div class="m-t-5">
+        <p>주급</p>
+        <input v-model="edit.pay" type="text" class="jelly-text wd-full" />
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('jobEdit')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onSubmitEdit">
+          수정하기
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -107,6 +128,11 @@ export default {
       pay: 0,
       job_name: '',
       paramsPostDel: {},
+      edit: {
+        pay: 0,
+        job_name: '',
+        idx: '',
+      },
     }
   },
 
@@ -142,6 +168,20 @@ export default {
         this.GET_AXIOS(this.params)
       }, 1000)
     },
+    // EVENT
+    onSubmitEdit() {
+      const FORM_DATA = new FormData()
+      FORM_DATA.append('type', 'joblEdit')
+      FORM_DATA.append('pay', this.edit.pay)
+      FORM_DATA.append('job_name', this.edit.job_name)
+      FORM_DATA.append('idx', this.edit.idx)
+      FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      axiosForm(FORM_DATA, '/teacher.php')
+      this.$bvModal.hide('jobEdit')
+      setTimeout(() => {
+        this.GET_AXIOS(this.params)
+      }, 1000)
+    },
     onClickAutoInsert() {
       this.paramsPost = this.LOGIN_TEACHER
       this.paramsPost.type = 'jobDefault'
@@ -159,10 +199,11 @@ export default {
       this.GET_AXIOS(this.params)
       // jobIdx
       setTimeout(() => {
-        this.job_name = this.GET_AXIOS_CALLBACK_GETTER.jobDetail.job_name
-        this.pay = this.GET_AXIOS_CALLBACK_GETTER.jobDetail.pay
+        this.edit.job_name = this.GET_AXIOS_CALLBACK_GETTER.jobDetail.job_name
+        this.edit.pay = this.GET_AXIOS_CALLBACK_GETTER.jobDetail.pay
+        this.edit.idx = this.GET_AXIOS_CALLBACK_GETTER.jobDetail.idx
       }, 1000)
-      this.$bvModal.show('jobInsert')
+      this.$bvModal.show('jobEdit')
     },
     onClickJobInsert() {
       this.job_name = ''
