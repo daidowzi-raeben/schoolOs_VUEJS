@@ -5,7 +5,7 @@
       <div v-if="!queryStep">
         <h1 class="dancing" style="font-size: 80px">Hello, Jelly World</h1>
         <div class="font-16 m-t-10" style="line-height: 30px">
-          스쿨오에스 젤리는 학급의 사회 문화와 경제학에 도움을 주며 무료로
+          스쿨오에스 젤리는 학급의 사회 문화와 경제교육에 도움을 주며 무료로
           사용할 수 있습니다.
           <br />
           주 거래 은행을 통해 대출을 받아 이자를 상환하고, 학생들에게 직업을
