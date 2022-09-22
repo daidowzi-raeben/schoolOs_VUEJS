@@ -123,7 +123,7 @@
             v-model="quest.cate"
             class="jelly-text jelly-text--h wd-full"
           >
-            <option value="">선택하세요</option>
+            <option :value="null">선택하세요</option>
             <option
               v-for="v in GET_AXIOS_CALLBACK_GETTER.questCate"
               :key="v.idx"
@@ -865,6 +865,14 @@ export default {
     onClickitemInsertTodo() {
       this.noticeIdx = null
       this.quest = {}
+      this.quest = {
+        m_price: '0',
+        m_intellect: '0',
+        m_effort: '0',
+        m_health: '0',
+        m_etiquette: '0',
+        cate: null,
+      }
       if (!this.GET_AXIOS_CALLBACK_GETTER.questCate) {
         return alert('카테고리를 먼저 추가해 주세요')
       }
