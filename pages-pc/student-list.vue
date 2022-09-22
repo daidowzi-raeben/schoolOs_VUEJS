@@ -11,7 +11,7 @@
             class="jelly-btn jelly-btn--default m-l-1"
             @click="onClickWeeklyPay"
           >
-            주급지급하기 (최근 지급일 :
+            급여지급하기 (최근 지급일 :
             <span
               v-if="
                 GET_AXIOS_CALLBACK_GETTER && GET_AXIOS_CALLBACK_GETTER.lastWeek
@@ -291,8 +291,8 @@
                 <td v-if="v.case_result === '벌금'" style="color: #111">
                   {{ v.penalty_memo }}
                 </td>
-                <td v-if="v.case_result === '주급'" style="color: #111">
-                  주급 지급
+                <td v-if="v.case_result === '급여'" style="color: #111">
+                  급여 지급
                 </td>
                 <td v-if="v.case_result === '현금'" style="color: #111">
                   현금 출금
@@ -583,13 +583,13 @@ export default {
       this.POST_AXIOS(this.paramsPost)
     },
     onClickWeeklyPay() {
-      if (confirm('주급을 지급하겠습니까?')) {
+      if (confirm('급여를 지급하겠습니까?')) {
         this.paramsPost = this.LOGIN_TEACHER
         this.paramsPost.type = 'weeklyPay'
         console.log('paramsPost', this.paramsPost)
         this.POST_AXIOS(this.paramsPost)
         setTimeout(() => {
-          alert('주급이 지급되었습니다.')
+          alert('급여가 지급되었습니다.')
           this.params = this.LOGIN_TEACHER
           this.params.type = 'studentList'
           this.GET_AXIOS(this.params)
