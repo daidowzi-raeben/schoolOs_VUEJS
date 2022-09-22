@@ -162,7 +162,10 @@
           </div>
         </div>
       </div>
-      <div class="m-t-5 flex">
+      <div class="m-t-5">
+        지혜,노력,건강,예절은 1~5정도의 수치가 적당합니다.
+      </div>
+      <div class="m-t-2 flex">
         <div class="flex-full m-r-1">
           <p>보상금</p>
           <input
@@ -448,7 +451,7 @@
                   실패
                 </button>
                 <button
-                  v-if="v.is_complete && v.is_confirm !== 'R'"
+                  v-if="v.is_complete != 'Y' && v.is_confirm !== 'R'"
                   class="jelly-btn jelly-btn--default"
                   @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
                 >
@@ -860,6 +863,8 @@ export default {
       this.$bvModal.show('questConfirm')
     },
     onClickitemInsertTodo() {
+      this.noticeIdx = null
+      this.quest = {}
       if (!this.GET_AXIOS_CALLBACK_GETTER.questCate) {
         return alert('카테고리를 먼저 추가해 주세요')
       }

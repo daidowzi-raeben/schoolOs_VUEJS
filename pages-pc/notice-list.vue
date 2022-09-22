@@ -37,7 +37,7 @@
                         height: 2px;
                         position: absolute;
                       "
-                      :style="`width:${v.progress}%`"
+                      :style="`width:${v.progress ? v.progress : 0}%`"
                     ></div>
                     {{ v.bd_subject }}
                   </td>
