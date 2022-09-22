@@ -20,9 +20,9 @@
                 <b-collapse
                   id="gnbSetupToggle"
                   :visible="
-                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.jobCnt !== '0' &&
-                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.ruleCnt !== '0' &&
-                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt !== '0'
+                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.jobCnt === '0' &&
+                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.ruleCnt === '0' &&
+                    GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt === '0'
                       ? true
                       : false
                   "
@@ -89,7 +89,7 @@
                     세금고지서관리
                   </li>
                   <!-- <li @click="onClickLinkTo($event, 'bill-student')"> -->
-                  <li onclick="alert('준비중')">벌금고지서관리</li>
+
                   <li
                     v-if="LOGIN_CONFIG"
                     @click="onClickLinkTo($event, 'pay-list')"
@@ -120,6 +120,7 @@
                       >{{ GET_AXIOS_CALLBACK_GETTER_LAYOUT.sueCnt }}</b-badge
                     >
                   </li>
+                  <li onclick="alert('준비중')">벌금고지서관리</li>
                 </ul>
               </div>
             </li>
