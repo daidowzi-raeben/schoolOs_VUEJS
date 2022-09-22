@@ -64,9 +64,35 @@
                         }}</b-badge
                       >
                     </li>
+                    <li onclick="alert('준비중')">학생정보관리</li>
                   </ul>
                 </b-collapse>
               </div>
+            </li>
+            <li
+              style="cursor: pointer"
+              @click="onClickLinkTo($event, 'todo-list')"
+            >
+              <b-icon icon="card-list" class="m-r-2"></b-icon>
+              {{ LOGIN_CONFIG.todo_name }} 관리
+              <b-badge
+                v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.questCnt !== 0"
+                variant="warning"
+                class="m-l-1"
+                >{{ GET_AXIOS_CALLBACK_GETTER_LAYOUT.questCnt }}</b-badge
+              >
+            </li>
+            <li
+              style="cursor: pointer"
+              @click="onClickLinkTo($event, 'notice-list')"
+            >
+              <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 알림장 관리
+              <b-badge
+                v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.todayNotice === '0'"
+                variant="warning"
+                class="m-l-1"
+                >오늘 미등록</b-badge
+              >
             </li>
             <li>
               <b-icon icon="house" class="m-r-2"></b-icon> 학급관리
@@ -100,7 +126,6 @@
                   <li @click="onClickLinkTo($event, 'lottery-list')">
                     복권구매내역
                   </li>
-                  <li onclick="alert('준비중')">학생정보관리</li>
                 </ul>
               </div>
             </li>
@@ -136,31 +161,6 @@
               </div>
             </li>
 
-            <li
-              style="cursor: pointer"
-              @click="onClickLinkTo($event, 'todo-list')"
-            >
-              <b-icon icon="card-list" class="m-r-2"></b-icon>
-              {{ LOGIN_CONFIG.todo_name }} 관리
-              <b-badge
-                v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.questCnt !== 0"
-                variant="warning"
-                class="m-l-1"
-                >{{ GET_AXIOS_CALLBACK_GETTER_LAYOUT.questCnt }}</b-badge
-              >
-            </li>
-            <li
-              style="cursor: pointer"
-              @click="onClickLinkTo($event, 'notice-list')"
-            >
-              <b-icon icon="clipboard-check" class="m-r-2"></b-icon> 알림장 관리
-              <b-badge
-                v-if="GET_AXIOS_CALLBACK_GETTER_LAYOUT.todayNotice === '0'"
-                variant="warning"
-                class="m-l-1"
-                >오늘 미등록</b-badge
-              >
-            </li>
             <li
               style="cursor: pointer"
               onclick="window.open('https://open.kakao.com/o/sf8I8jxe')"
