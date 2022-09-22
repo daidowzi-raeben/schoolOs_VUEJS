@@ -21,7 +21,7 @@
                   기본 세금
                   <span
                     v-b-tooltip.hover
-                    title="소득세, 원천징수 등 세금을 이름을 설정하여 주급 지급 시 부과할 수 있습니다."
+                    title="소득세, 원천징수 등 세금을 이름을 설정하여 급여 지급 시 부과할 수 있습니다."
                   >
                     <b-icon icon="exclamation-circle"></b-icon>
                   </span>
@@ -45,7 +45,7 @@
                   고정 세금
                   <span
                     v-b-tooltip.hover
-                    title="주급 지급 시 비율이 아닌 고정 금액의 세금을 부과할 수 있습니다."
+                    title="급여 지급 시 비율이 아닌 고정 금액의 세금을 부과할 수 있습니다."
                   >
                     <b-icon icon="exclamation-circle"></b-icon>
                   </span>

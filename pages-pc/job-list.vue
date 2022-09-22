@@ -43,7 +43,7 @@
               <tr>
                 <th>번호</th>
                 <th>직업명</th>
-                <th>주급</th>
+                <th>급여</th>
                 <th>관리</th>
               </tr>
               <tr
@@ -76,7 +76,7 @@
         <input v-model="job_name" type="text" class="jelly-text wd-full" />
       </div>
       <div class="m-t-5">
-        <p>주급</p>
+        <p>급여</p>
         <input v-model="pay" type="text" class="jelly-text wd-full" />
       </div>
       <div class="m-t-5 text-center">
@@ -97,7 +97,7 @@
         <input v-model="edit.job_name" type="text" class="jelly-text wd-full" />
       </div>
       <div class="m-t-5">
-        <p>주급</p>
+        <p>급여</p>
         <input v-model="edit.pay" type="text" class="jelly-text wd-full" />
       </div>
       <div class="m-t-5 text-center">

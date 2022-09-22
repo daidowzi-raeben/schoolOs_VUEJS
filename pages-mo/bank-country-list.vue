@@ -78,7 +78,7 @@
                   <div class="txt flex">
                     <p class="">
                       <span v-if="v.status === '0'">대출</span>
-                      <span v-if="v.status === '1'">주급</span>
+                      <span v-if="v.status === '1'">급여</span>
                       <span v-if="v.status === '2'">이자</span>
                       <span v-if="v.status === '3'">기타</span>
                       <span v-if="v.status === '4'">수수료</span>
@@ -90,7 +90,7 @@
                       <br />
                       <em v-if="v.status === '0'">{{ v.bank_memo }} 대출</em>
                       <em v-if="v.status === '1'"
-                        >{{ v.student_memo }} 주급 지급</em
+                        >{{ v.student_memo }} 급여 지급</em
                       >
                       <em v-if="v.status === '2'">{{ v.bank_memo }} 이자</em>
                       <em v-if="v.status === '3'">

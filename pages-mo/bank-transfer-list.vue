@@ -103,8 +103,8 @@
                       <em v-if="v.case_result === '벌금'" style="color: #111">
                         {{ v.penalty_memo }}</em
                       >
-                      <em v-if="v.case_result === '주급'" style="color: #111"
-                        >주급 지급</em
+                      <em v-if="v.case_result === '급여'" style="color: #111"
+                        >급여 지급</em
                       >
                       <em v-if="v.case_result === '현금'" style="color: #111"
                         >현금 출금</em

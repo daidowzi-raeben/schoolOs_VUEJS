@@ -163,7 +163,7 @@
                     <th>내용</th>
                   </tr>
                 </thead>
-                <!-- 0:대출,1:주급,2:이자,3:기타,4:상품등록수수료,5:세금,6:정부마켓,7:마켓,8:가입,9:알바 -->
+                <!-- 0:대출,1:급여,2:이자,3:기타,4:상품등록수수료,5:세금,6:정부마켓,7:마켓,8:가입,9:알바 -->
                 <tbody v-if="GET_AXIOS_CALLBACK_GETTER.teacherPayList">
                   <tr
                     v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.teacherPayList"
@@ -171,7 +171,7 @@
                   >
                     <td>{{ v.datetime }}</td>
                     <td v-if="v.status === '0'">대출</td>
-                    <td v-if="v.status === '1'">주급</td>
+                    <td v-if="v.status === '1'">급여</td>
                     <td v-if="v.status === '2'">이자</td>
                     <td v-if="v.status === '3'">기타</td>
                     <td v-if="v.status === '4'">수수료</td>
@@ -188,7 +188,7 @@
                     </td>
                     <td v-if="v.status === '0'">{{ v.bank_memo }} 대출</td>
                     <td v-if="v.status === '1'">
-                      {{ v.student_memo }} 주급 지급
+                      {{ v.student_memo }} 급여 지급
                     </td>
                     <td v-if="v.status === '2'">{{ v.bank_memo }} 이자</td>
                     <td v-if="v.status === '3'">
