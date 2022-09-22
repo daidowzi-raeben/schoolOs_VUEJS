@@ -703,34 +703,34 @@ export default {
 
     // EVENT
     onSubmit() {
-      if (this.quest.subject === '') {
+      if (!this.quest.subject) {
         return alert('제목을 입력하세요')
       }
-      if (this.quest.contents === '') {
+      if (!this.quest.contents) {
         return alert('내용을 입력하세요')
       }
-      if (this.quest.cate === '') {
+      if (!this.quest.cate) {
         return alert('카테고리를 선택하세요')
       }
-      if (this.quest.price === '') {
+      if (!this.quest.price) {
         return alert('보상 금액을 입력하세요')
       }
-      if (this.quest.start_day === '') {
+      if (!this.quest.start_day) {
         return alert('시작일을 입력하세요')
       }
-      if (this.quest.end_day === '') {
+      if (!this.quest.end_day) {
         return alert('종료일을 입력하세요')
       }
-      if (this.quest.intellect === '') {
+      if (!this.quest.intellect) {
         return alert('보상이 모두 입력되어야 합니다')
       }
-      if (this.quest.effort === '') {
+      if (!this.quest.effort) {
         return alert('보상이 모두 입력되어야 합니다')
       }
-      if (this.quest.health === '') {
+      if (!this.quest.health) {
         return alert('보상이 모두 입력되어야 합니다')
       }
-      if (this.quest.etiquette === '') {
+      if (!this.quest.etiquette) {
         return alert('보상이 모두 입력되어야 합니다')
       }
       this.LOADING_TRUE()
