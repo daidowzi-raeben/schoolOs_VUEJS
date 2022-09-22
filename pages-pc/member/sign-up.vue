@@ -99,7 +99,7 @@
               type="password"
               class="jelly-text"
               style="height: 50px; width: 300px"
-              placeholder="패스워드"
+              placeholder="패스워드 확인"
             />
           </div>
           <div class="m-t-5">
