@@ -449,7 +449,7 @@
               </td>
               <td class="text-left">
                 <button
-                  v-if="v.is_confirm !== 'F'"
+                  v-if="v.is_confirm !== 'F' && v.is_confirm !== 'Y'"
                   class="jelly-btn jelly-btn--default"
                   @click="onSubmitConfirm('F', v.sq_idx, v.idx, '')"
                 >

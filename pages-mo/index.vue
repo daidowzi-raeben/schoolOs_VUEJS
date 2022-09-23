@@ -266,7 +266,7 @@
                   <p>{{ v.subject }}</p>
                   <span>{{ v.code }}</span>
                 </div>
-                <div class="pay text-right flex-right">
+                <div class="pay text-right flex-right" style="flex-shrink: 0">
                   <p>
                     <em class="bold">
                       {{ v.over_day ? v.over_day : v.pay | comma }}
@@ -327,7 +327,7 @@
                 <p>{{ v.subject }}</p>
                 <span>{{ v.start_day }} ~ {{ v.end_day }}</span>
               </div>
-              <div class="pay text-right flex-right">
+              <div class="pay text-right flex-right" style="flex-shrink: 0">
                 <p>
                   <em class="bold">
                     {{ v.price | comma }}
@@ -377,7 +377,7 @@
                 <p>{{ v.subject }}</p>
                 <span>{{ v.start_day }} ~ {{ v.end_day }}</span>
               </div>
-              <div class="pay text-right flex-right">
+              <div class="pay text-right flex-right" style="flex-shrink: 0">
                 <p>
                   <em class="bold">
                     {{ v.price | comma }}

@@ -50,7 +50,7 @@
                     <li @click="onClickLinkTo($event, 'student-insert')">
                       학생등록
                     </li>
-                    <li @click="onClickLinkTo($event, 'student-apply')">
+                    <!-- <li @click="onClickLinkTo($event, 'student-apply')">
                       회원승인
                       <b-badge
                         v-if="
@@ -63,7 +63,7 @@
                           GET_AXIOS_CALLBACK_GETTER_LAYOUT.studentApplyCnt
                         }}</b-badge
                       >
-                    </li>
+                    </li> -->
                     <li onclick="alert('준비중')">학생정보관리</li>
                   </ul>
                 </b-collapse>

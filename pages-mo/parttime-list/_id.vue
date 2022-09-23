@@ -75,7 +75,7 @@
               <!-- 0:공고중,1:모집완료,2:지급완료,3:모집취소 -->
               <div v-if="v.status === '3'" class="label gray">취소</div>
               <div v-if="v.status === '2'" class="label gray">완료</div>
-              <div v-if="v.status === '1'" class="label blue">종료</div>
+              <div v-if="v.status === '1'" class="label gray">종료</div>
               <div v-if="v.status === '0'" class="label blue">모집</div>
               <div class="flex-full m-l-2">
                 <div class="flex m-t-0">
@@ -149,7 +149,7 @@
               <!-- 0:공고중,1:모집완료,2:지급완료,3:모집취소 -->
               <div v-if="v.status === '3'" class="label gray">취소</div>
               <div v-if="v.status === '2'" class="label gray">완료</div>
-              <div v-if="v.status === '1'" class="label blue">종료</div>
+              <div v-if="v.status === '1'" class="label gray">종료</div>
               <div v-if="v.status === '0'" class="label blue">모집</div>
               <div class="flex-full m-l-2">
                 <div class="flex m-t-0">
@@ -234,7 +234,7 @@
               <!-- 0:공고중,1:모집완료,2:지급완료,3:모집취소 -->
               <div v-if="v.status === '3'" class="label gray">취소</div>
               <div v-if="v.status === '2'" class="label gray">완료</div>
-              <div v-if="v.status === '1'" class="label blue">종료</div>
+              <div v-if="v.status === '1'" class="label gray">종료</div>
               <div v-if="v.status === '0'" class="label blue">모집</div>
               <div class="flex-full m-l-2">
                 <div class="flex m-t-0">
