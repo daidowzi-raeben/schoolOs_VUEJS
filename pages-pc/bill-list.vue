@@ -2,7 +2,7 @@
   <div>
     <div class="">
       <div class="flex">
-        <h4 v-if="LOGIN_TEACHER">SOC납부</h4>
+        <h4 v-if="LOGIN_TEACHER" class="is_active">SOC납부</h4>
         <div class="flex-right">
           <button
             v-b-tooltip.hover

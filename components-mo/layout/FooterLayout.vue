@@ -83,14 +83,60 @@
                 </p>
               </nuxt-link>
             </li> -->
-            <li :class="$nuxt._route.name === 'sue-request' ? 'is_active' : ''">
+            <!-- <li :class="$nuxt._route.name === 'sue-request' ? 'is_active' : ''">
               <nuxt-link to="/sue-request">
                 <b-icon icon="exclamation-triangle"></b-icon>
                 <p>신고</p>
-              </nuxt-link>
+              </nuxt-link> -->
+            <li>
+              <a v-b-toggle href="#footerGnbMore" @click.prevent>
+                <b-icon icon="plus-square"></b-icon>
+                <p>더보기</p>
+              </a>
             </li>
           </ul>
         </nav>
+        <b-sidebar id="footerGnbMore" shadow right visible>
+          <div class="m-t-3 p-l-3">
+            <ul>
+              <li>
+                <nuxt-link to="/sue-request" class="flex">
+                  <!-- <b-icon icon="upc-scan"></b-icon> -->
+                  <img src="~/static/mo/icon/attention.png" width="25" />
+                  <span class="m-l-2 m-t-1">신고</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/market-list/0" class="flex m-t-4">
+                  <!-- <b-icon icon="upc-scan"></b-icon> -->
+                  <img src="~/static/mo/icon/store.png" width="25" />
+                  <span class="m-l-2 m-t-1">마켓</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/lottery-buy" class="flex m-t-4">
+                  <!-- <b-icon icon="upc-scan"></b-icon> -->
+                  <img src="~/static/mo/icon/gambling.png" width="25" />
+                  <span class="m-l-2 m-t-1">젤리복권</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/rank-list" class="flex m-t-4">
+                  <!-- <b-icon icon="upc-scan"></b-icon> -->
+                  <img src="~/static/mo/icon/top-three.png" width="25" />
+                  <span class="m-l-2 m-t-1">랭킹</span>
+                </nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/member/sign-out" class="flex m-t-15">
+                  <!-- <b-icon icon="upc-scan"></b-icon> -->
+                  <img src="~/static/mo/icon/power-off.png" width="25" />
+                  <span class="m-l-2 m-t-1">로그아웃</span>
+                </nuxt-link>
+              </li>
+            </ul>
+          </div>
+        </b-sidebar>
       </div>
     </footer>
     <div v-if="GET_AXIOS_CALLBACK_GETTER_PW">
@@ -236,4 +282,8 @@ export default {
 <style lang="scss">
 @import '~/assets-mo/layout.scss';
 @import '~/assets-mo/common.scss';
+.b-sidebar.b-sidebar-right > .b-sidebar-header .close {
+  margin-right: unset !important;
+  margin-left: auto;
+}
 </style>

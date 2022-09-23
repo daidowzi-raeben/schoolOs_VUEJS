@@ -2,7 +2,7 @@
   <div>
     <div class="">
       <div class="flex">
-        <h4 v-if="LOGIN_TEACHER">상점 관리</h4>
+        <h4 v-if="LOGIN_TEACHER" class="is_active">상점 관리</h4>
         <div class="flex-right">
           <button
             v-if="!GET_AXIOS_CALLBACK_GETTER.shopCate"

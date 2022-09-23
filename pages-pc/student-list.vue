@@ -2,7 +2,7 @@
   <div>
     <div class="">
       <div class="flex">
-        <h4 v-if="LOGIN_TEACHER">학생관리</h4>
+        <h4 v-if="LOGIN_TEACHER" class="is_active">학생관리</h4>
         <div class="flex-right">
           <button v-b-modal.studentInsert class="jelly-btn jelly-btn--default">
             학생 추가

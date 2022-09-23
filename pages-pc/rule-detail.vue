@@ -6,7 +6,7 @@
     </div> -->
     <div class="">
       <div class="flex">
-        <h4 v-if="LOGIN_TEACHER">규칙설정</h4>
+        <h4 v-if="LOGIN_TEACHER" class="is_active">규칙설정</h4>
         <div class="flex-right">
           <button
             class="jelly-btn jelly-btn--default"

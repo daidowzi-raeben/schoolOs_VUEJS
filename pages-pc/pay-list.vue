@@ -6,7 +6,7 @@
     </div> -->
     <div class="">
       <div class="">
-        <h4 v-if="LOGIN_TEACHER">
+        <h4 v-if="LOGIN_TEACHER" class="is_active">
           {{ LOGIN_TEACHER.reg_country }}
           통장
         </h4>

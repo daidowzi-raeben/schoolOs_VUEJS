@@ -13,7 +13,7 @@
   </div> -->
   <div class="">
     <div class="flex">
-      <h4 v-if="LOGIN_TEACHER">직업설정</h4>
+      <h4 class="is_active" v-if="LOGIN_TEACHER">직업설정</h4>
       <div class="flex-right">
         <button class="jelly-btn jelly-btn--default" @click="onClickJobInsert">
           직업 생성

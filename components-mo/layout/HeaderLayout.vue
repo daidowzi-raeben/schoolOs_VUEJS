@@ -79,7 +79,7 @@
         </h1>
 
         <div class="flex-right notification">
-          <div class="flex">
+          <div class="flex" style="display: none">
             <!-- <nuxt-link
               to="/market-list/0"
               style="margin-top: 2px"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="">
-      <h4 v-if="LOGIN_TEACHER">신고관리</h4>
+      <h4 v-if="LOGIN_TEACHER" class="is_active">신고관리</h4>
 
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="m-t-5">

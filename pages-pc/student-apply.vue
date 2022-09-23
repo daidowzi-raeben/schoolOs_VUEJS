@@ -2,7 +2,7 @@
   <div>
     <div class="">
       <div class="flex">
-        <h4 v-if="LOGIN_TEACHER">회원승인</h4>
+        <h4 v-if="LOGIN_TEACHER" class="is_active">회원승인</h4>
       </div>
       <div id="jellyAdminheader" style="padding-top: 0vh">
         <div class="student form">
