@@ -8,30 +8,31 @@
     </div>
     <div class="content">
       <div class="m-t-1 h60">
-        <div class="account">
+        <div class="account" v-if="GET_AXIOS_CALLBACK_GETTER.view">
           <div
-            v-if="GET_AXIOS_CALLBACK_GETTER.subject"
+            v-if="GET_AXIOS_CALLBACK_GETTER.view.subject"
             class="quest__content m-t-3"
           >
             <div class="box quest m-b-3">
               <div class="flex">
                 <div class="label blue">
-                  {{ GET_AXIOS_CALLBACK_GETTER.cate_subject }}
+                  {{ GET_AXIOS_CALLBACK_GETTER.view.cate_subject }}
                 </div>
                 <div class="flex-full m-l-3 m-r-3">
                   <div class="flex m-t-0">
                     <div class="txt">
                       <p class="bold">
-                        {{ GET_AXIOS_CALLBACK_GETTER.subject }}
+                        {{ GET_AXIOS_CALLBACK_GETTER.view.subject }}
                       </p>
                       <span
                         >{{
-                          GET_AXIOS_CALLBACK_GETTER.start_day
+                          GET_AXIOS_CALLBACK_GETTER.view.start_day
                             | moment('YY.MM.DD')
                         }}
                         ~
                         {{
-                          GET_AXIOS_CALLBACK_GETTER.end_day | moment('YY.MM.DD')
+                          GET_AXIOS_CALLBACK_GETTER.view.end_day
+                            | moment('YY.MM.DD')
                         }}</span
                       >
                     </div>
@@ -43,7 +44,7 @@
                   </div>
                   <!-- <div class="m-t-2 jelly-color--888 limit limit-3">
                     {{
-                      GET_AXIOS_CALLBACK_GETTER.contents.replaceAll(
+                      GET_AXIOS_CALLBACK_GETTER.view.contents.replaceAll(
                         /\!\[|\].*.[)]/g,
                         ''
                       )
@@ -54,7 +55,9 @@
                     <div>
                       보상
                       <strong class="bold font-18 m-l-1"
-                        ><em>{{ GET_AXIOS_CALLBACK_GETTER.price }}</em></strong
+                        ><em>{{
+                          GET_AXIOS_CALLBACK_GETTER.view.price
+                        }}</em></strong
                       >
                       <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
                         LOGIN_STUDENT.t_reg_pay_unit
@@ -69,7 +72,7 @@
                             jelly-background--type1
                             m-l-1
                           "
-                          >{{ GET_AXIOS_CALLBACK_GETTER.intellect }}</span
+                          >{{ GET_AXIOS_CALLBACK_GETTER.view.intellect }}</span
                         >
                         <span
                           class="
@@ -78,7 +81,7 @@
                             jelly-background--type2
                             m-l-1
                           "
-                          >{{ GET_AXIOS_CALLBACK_GETTER.effort }}</span
+                          >{{ GET_AXIOS_CALLBACK_GETTER.view.effort }}</span
                         >
                         <span
                           class="
@@ -87,7 +90,7 @@
                             jelly-background--type3
                             m-l-1
                           "
-                          >{{ GET_AXIOS_CALLBACK_GETTER.health }}</span
+                          >{{ GET_AXIOS_CALLBACK_GETTER.view.health }}</span
                         >
                         <span
                           class="
@@ -96,18 +99,18 @@
                             jelly-background--type4
                             m-l-1
                           "
-                          >{{ GET_AXIOS_CALLBACK_GETTER.etiquette }}</span
+                          >{{ GET_AXIOS_CALLBACK_GETTER.view.etiquette }}</span
                         >
                       </div>
                     </div>
                   </div>
                   <div
                     v-if="
-                      GET_AXIOS_CALLBACK_GETTER.m_price != '0' ||
-                      GET_AXIOS_CALLBACK_GETTER.m_intellect != '0' ||
-                      GET_AXIOS_CALLBACK_GETTER.m_effort != '0' ||
-                      GET_AXIOS_CALLBACK_GETTER.m_health != '0' ||
-                      GET_AXIOS_CALLBACK_GETTER.m_etiquette != '0'
+                      GET_AXIOS_CALLBACK_GETTER.view.m_price != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.view.m_intellect != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.view.m_effort != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.view.m_health != '0' ||
+                      GET_AXIOS_CALLBACK_GETTER.view.m_etiquette != '0'
                     "
                   >
                     <h4
@@ -121,7 +124,7 @@
                         패널티
                         <strong class="bold font-18 m-l-1"
                           ><em>{{
-                            GET_AXIOS_CALLBACK_GETTER.m_price
+                            GET_AXIOS_CALLBACK_GETTER.view.m_price
                           }}</em></strong
                         >
                         <span v-if="LOGIN_STUDENT.t_reg_pay_unit">{{
@@ -137,7 +140,9 @@
                               jelly-background--type1
                               m-l-1
                             "
-                            >{{ GET_AXIOS_CALLBACK_GETTER.m_intellect }}</span
+                            >{{
+                              GET_AXIOS_CALLBACK_GETTER.view.m_intellect
+                            }}</span
                           >
                           <span
                             class="
@@ -146,7 +151,7 @@
                               jelly-background--type2
                               m-l-1
                             "
-                            >{{ GET_AXIOS_CALLBACK_GETTER.m_effort }}</span
+                            >{{ GET_AXIOS_CALLBACK_GETTER.view.m_effort }}</span
                           >
                           <span
                             class="
@@ -155,7 +160,7 @@
                               jelly-background--type3
                               m-l-1
                             "
-                            >{{ GET_AXIOS_CALLBACK_GETTER.m_health }}</span
+                            >{{ GET_AXIOS_CALLBACK_GETTER.view.m_health }}</span
                           >
                           <span
                             class="
@@ -164,7 +169,9 @@
                               jelly-background--type4
                               m-l-1
                             "
-                            >{{ GET_AXIOS_CALLBACK_GETTER.m_etiquette }}</span
+                            >{{
+                              GET_AXIOS_CALLBACK_GETTER.view.m_etiquette
+                            }}</span
                           >
                         </div>
                       </div>
@@ -174,7 +181,7 @@
               </div>
             </div>
             <div
-              v-if="GET_AXIOS_CALLBACK_GETTER.contents"
+              v-if="GET_AXIOS_CALLBACK_GETTER.view.contents"
               style="
                 background-color: #f2f3f5;
                 padding: 10px;
@@ -182,24 +189,49 @@
                 white-space: pre-line;
               "
               class="m-l-3 m-r-3 img-full m-t-5"
-              v-html="GET_AXIOS_CALLBACK_GETTER.contents"
+              v-html="GET_AXIOS_CALLBACK_GETTER.view.contents"
             ></div>
+            <div class="m-t-5 flex p-3">
+              <button
+                class="jelly-btn jelly-btn--default wd-full m-r-1"
+                :disabled="GET_AXIOS_CALLBACK_GETTER.content ? false : true"
+                @click="$bvModal.show('myContent')"
+              >
+                내가 남긴 말
+              </button>
+              <button
+                class="jelly-btn jelly-btn--default wd-full m-l-1"
+                :disabled="GET_AXIOS_CALLBACK_GETTER.files ? false : true"
+                @click="$bvModal.show('myFiles')"
+              >
+                나의 인증샷
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="GET_AXIOS_CALLBACK_GETTER.is_end === 'END'" class="quest-fixed">
+    <div
+      v-if="
+        GET_AXIOS_CALLBACK_GETTER.view &&
+        GET_AXIOS_CALLBACK_GETTER.view.is_end === 'END'
+      "
+      class="quest-fixed"
+    >
       <button class="jelly-btn jelly-btn--gray">기간이 종료되었습니다.</button>
     </div>
     <div
-      v-if="GET_AXIOS_CALLBACK_GETTER.is_end !== 'END'"
+      v-if="
+        GET_AXIOS_CALLBACK_GETTER.view &&
+        GET_AXIOS_CALLBACK_GETTER.view.is_end !== 'END'
+      "
       class="quest-fixed flex"
     >
       <button
         v-if="
-          !GET_AXIOS_CALLBACK_GETTER.is_apply &&
-          !GET_AXIOS_CALLBACK_GETTER.is_complete &&
-          !GET_AXIOS_CALLBACK_GETTER.is_confirm
+          !GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
+          !GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
+          !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
         "
         class="jelly-btn jelly-btn--pink"
         :disabled="btn.onSubmitApply"
@@ -209,9 +241,9 @@
       </button>
       <button
         v-if="
-          GET_AXIOS_CALLBACK_GETTER.is_apply &&
-          !GET_AXIOS_CALLBACK_GETTER.is_complete &&
-          !GET_AXIOS_CALLBACK_GETTER.is_confirm
+          GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
+          !GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
+          !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
         "
         class="jelly-btn jelly-btn--default"
         style="width: 30%"
@@ -221,9 +253,9 @@
       </button>
       <button
         v-if="
-          GET_AXIOS_CALLBACK_GETTER.is_apply &&
-          !GET_AXIOS_CALLBACK_GETTER.is_complete &&
-          !GET_AXIOS_CALLBACK_GETTER.is_confirm
+          GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
+          !GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
+          !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
         "
         class="jelly-btn jelly-btn--pink"
         @click="$bvModal.show('completeFile')"
@@ -233,16 +265,16 @@
 
       <button
         v-if="
-          !GET_AXIOS_CALLBACK_GETTER.is_apply &&
-          GET_AXIOS_CALLBACK_GETTER.is_complete &&
-          !GET_AXIOS_CALLBACK_GETTER.is_confirm
+          !GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
+          GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
+          !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
         "
         class="jelly-btn jelly-btn--default"
       >
         선생님이 검사중이에요!
       </button>
       <button
-        v-if="GET_AXIOS_CALLBACK_GETTER.is_confirm"
+        v-if="GET_AXIOS_CALLBACK_GETTER.view.is_confirm"
         class="jelly-btn jelly-btn--blue"
       >
         보상지급완료
@@ -285,14 +317,68 @@
         </button>
       </div>
     </b-modal>
+    <b-modal id="myContent" size="lg" hide-footer hide-header>
+      <div>
+        <p>내가 남길 말</p>
+      </div>
+      <div v-if="GET_AXIOS_CALLBACK_GETTER.content" class="m-t-5">
+        {{ GET_AXIOS_CALLBACK_GETTER.content.content }}
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          style="width: 30%; border-radius: 0"
+          @click="$bvModal.hide('myContent')"
+        >
+          <!-- $bvModal.hide('completeFile') -->
+          닫기
+        </button>
+      </div>
+    </b-modal>
+    <b-modal id="myFiles" size="lg" hide-footer hide-header>
+      <div class="m-t-5">
+        <div v-if="GET_AXIOS_CALLBACK_GETTER.files">
+          <b-carousel
+            id="carousel-1"
+            v-model="slide"
+            :interval="4000"
+            controls
+            indicators
+            background="#ababab"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333"
+            @sliding-start="onSlideStart"
+            @sliding-end="onSlideEnd"
+          >
+            <!-- Slides with image only -->
+            <b-carousel-slide
+              v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.files"
+              :key="i"
+              :img-src="`http://api.school-os.net/data/student/quest/${v.file_name}`"
+            ></b-carousel-slide>
+          </b-carousel>
+        </div>
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          style="width: 30%; border-radius: 0"
+          @click="$bvModal.hide('myFiles')"
+        >
+          <!-- $bvModal.hide('completeFile') -->
+          닫기
+        </button>
+      </div>
+    </b-modal>
   </div>
   <!-- <div v-if="GET_AXIOS_CALLBACK_GETTER">
-    <h1>{{ GET_AXIOS_CALLBACK_GETTER.bd_subject }}</h1>
+    <h1>{{ GET_AXIOS_CALLBACK_GETTER.view.bd_subject }}</h1>
     <button
       v-if="
-        !GET_AXIOS_CALLBACK_GETTER.is_apply &&
-        !GET_AXIOS_CALLBACK_GETTER.is_complete &&
-        !GET_AXIOS_CALLBACK_GETTER.is_confirm
+        !GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
+        !GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
+        !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
       "
       @click="onSubmitApply"
     >
@@ -300,9 +386,9 @@
     </button>
     <button
       v-if="
-        GET_AXIOS_CALLBACK_GETTER.is_apply &&
-        !GET_AXIOS_CALLBACK_GETTER.is_complete &&
-        !GET_AXIOS_CALLBACK_GETTER.is_confirm
+        GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
+        !GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
+        !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
       "
       @click="onSubmitComplete"
     >
@@ -310,14 +396,14 @@
     </button>
     <button
       v-if="
-        !GET_AXIOS_CALLBACK_GETTER.is_apply &&
-        GET_AXIOS_CALLBACK_GETTER.is_complete &&
-        !GET_AXIOS_CALLBACK_GETTER.is_confirm
+        !GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
+        GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
+        !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
       "
     >
       완료
     </button>
-    <button v-if="GET_AXIOS_CALLBACK_GETTER.is_confirm">보상지급완료</button>
+    <button v-if="GET_AXIOS_CALLBACK_GETTER.view.is_confirm">보상지급완료</button>
 
     <form>
       <input id="photo" type="file" name="photo" multiple />
@@ -349,6 +435,8 @@ export default {
       paramsPostApply: {},
       a: 100000000,
       completeContent: '',
+      slide: 0,
+      sliding: null,
       btn: {
         onSubmitApply: false,
         onSubmitComplete: false,
@@ -377,7 +465,12 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS', 'POST_AXIOS_FORM']),
     ...mapMutations(['LOADING_TRUE']),
-
+    onSlideStart(slide) {
+      this.sliding = true
+    },
+    onSlideEnd(slide) {
+      this.sliding = false
+    },
     // 퀘스트 수락
     onSubmitApply() {
       this.btn.onSubmitApply = true
