@@ -430,7 +430,12 @@
               </td>
               <td v-if="v.is_confirm === 'R'">다시 제출</td>
               <td v-if="!v.is_confirm">미제출</td>
-              <td v-if="v.is_confirm === 'Y'">완료</td>
+              <td
+                v-if="v.is_confirm === 'Y'"
+                :class="v.is_confirm === 'Y' ? 'is_activeTable' : ''"
+              >
+                완료
+              </td>
               <td v-if="v.is_confirm === 'F'">실패</td>
               <td v-if="v.is_confirm === 'C'">취소</td>
               <td>
@@ -451,7 +456,7 @@
                   실패
                 </button>
                 <button
-                  v-if="v.is_complete != 'Y' && v.is_confirm !== 'R'"
+                  v-if="v.is_confirm != 'Y' && v.is_confirm !== 'R'"
                   class="jelly-btn jelly-btn--default"
                   @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
                 >

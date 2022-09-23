@@ -659,4 +659,8 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.b-form-btn-label-control.form-control > .form-control {
+  height: 40px;
+}
+</style>
