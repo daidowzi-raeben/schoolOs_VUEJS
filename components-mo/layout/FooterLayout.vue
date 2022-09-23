@@ -96,7 +96,7 @@
             </li>
           </ul>
         </nav>
-        <b-sidebar id="footerGnbMore" shadow right visible>
+        <b-sidebar id="footerGnbMore" shadow right>
           <div class="m-t-3 p-l-3">
             <ul>
               <li>
