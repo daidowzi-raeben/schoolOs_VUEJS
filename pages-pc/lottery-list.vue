@@ -34,7 +34,7 @@
                         }}</b-badge>
                         <b-badge pill variant="info">{{ v.num5 }}</b-badge>
                       </span>
-                      <span v-else> {{ v.end_day }} 14시 발표 예정 </span>
+                      <span v-else> {{ v.end_day }} 15시 발표 예정 </span>
                     </th>
                     <th colspan="2">
                       판매기간 {{ v.start_day }} ~ {{ v.end_day }}

@@ -359,20 +359,26 @@
     </b-modal>
     <b-modal id="fileDataSlide" size="lg" hide-footer hide-header>
       <div v-if="GET_AXIOS_CALLBACK_GETTER.participationFile">
-        <swiper :options="swiperOption">
-          <swiper-slide
+        <b-carousel
+          id="carousel-1"
+          v-model="slide"
+          :interval="4000"
+          controls
+          indicators
+          background="#ababab"
+          img-width="1024"
+          img-height="480"
+          style="text-shadow: 1px 1px 2px #333"
+          @sliding-start="onSlideStart"
+          @sliding-end="onSlideEnd"
+        >
+          <!-- Slides with image only -->
+          <b-carousel-slide
             v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.participationFile"
             :key="i"
-          >
-            <img
-              :src="`http://api.school-os.net/data/student/quest/${v.file_name}`"
-              width="100%"
-            />
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
+            :img-src="`http://api.school-os.net/data/student/quest/${v.file_name}`"
+          ></b-carousel-slide>
+        </b-carousel>
       </div>
     </b-modal>
     <b-modal id="questConfirm" size="xl" hide-footer hide-header>
@@ -629,6 +635,8 @@ export default {
       cateForm: {},
       checked: [],
       checkedTF: false,
+      slide: 0,
+      sliding: null,
     }
   },
 
@@ -705,7 +713,12 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     ...mapMutations(['LOADING_TRUE']),
-
+    onSlideStart(slide) {
+      this.sliding = true
+    },
+    onSlideEnd(slide) {
+      this.sliding = false
+    },
     // EVENT
     onSubmit() {
       if (!this.quest.subject) {
@@ -1013,5 +1026,11 @@ export default {
 .is_activeTable {
   background: #6830bd !important;
   color: #fff;
+}
+#fileDataSlide {
+  .carousel-indicators {
+    bottom: unset;
+    top: 0;
+  }
 }
 </style>

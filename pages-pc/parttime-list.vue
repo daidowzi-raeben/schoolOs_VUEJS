@@ -90,7 +90,7 @@
           </tr>
           <tr>
             <td colspan="6">
-              {{ GET_AXIOS_CALLBACK_GETTER.albaDetail.content }}
+              <div v-html="GET_AXIOS_CALLBACK_GETTER.albaDetail.content"></div>
             </td>
           </tr>
         </table>
