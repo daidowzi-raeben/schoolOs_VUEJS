@@ -21,7 +21,9 @@
           >
             규칙 자동 생성
           </button>
-          <button class="jelly-btn jelly-btn--default">카테고리 추가</button>
+          <button v-b-modal.cateInsert class="jelly-btn jelly-btn--default">
+            카테고리 추가
+          </button>
         </div>
       </div>
     </div>
@@ -253,6 +255,29 @@
         </button>
       </div>
     </b-modal>
+    <b-modal
+      id="cateInsert"
+      ref="ref-cateInsert"
+      size="lg"
+      hide-footer
+      hide-header
+    >
+      <div class="">
+        <p>카테고리 이름</p>
+        <input v-model="cate_name" type="text" class="jelly-text wd-full" />
+      </div>
+      <div class="m-t-5 text-center">
+        <button
+          class="jelly-btn jelly-btn--default"
+          @click="$bvModal.hide('cateInsert')"
+        >
+          닫기
+        </button>
+        <button class="jelly-btn jelly-btn--pink" @click="onSubmitCate">
+          등록하기
+        </button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -277,6 +302,8 @@ export default {
       rulePay: [],
       rulePenalty: [],
       queryCate: null,
+      cate_name: '',
+      cateForm: {},
     }
   },
   computed: {
@@ -430,10 +457,23 @@ export default {
       if (e) {
         this.$router.push(`/rule-detail?cate=${e}`)
       } else {
-        this.queryCate = null
+        this.params.queryCate = null
+        this.queryCate = ''
         this.$router.push(`/rule-detail`)
         this.initAxios()
       }
+    },
+
+    onSubmitCate() {
+      this.cateForm.subject = this.cate_name
+      this.cateForm.smt_idx = this.LOGIN_TEACHER.smt_idx
+      this.cateForm.type = 'cateRuleWrite'
+      this.POST_AXIOS(this.cateForm)
+
+      this.$bvModal.hide('cateInsert')
+      setTimeout(() => {
+        this.initAxios()
+      }, 1000)
     },
     async initAxios() {
       this.params = this.LOGIN_TEACHER
