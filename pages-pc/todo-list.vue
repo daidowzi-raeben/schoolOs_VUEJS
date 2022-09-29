@@ -114,144 +114,221 @@
         <div class="m-t-15 m-l-4"></div>
       </div>
     </div>
-    <b-modal id="itemInsertTodo" size="lg" hide-footer hide-header>
-      <div class="m-t-5 flex">
-        <div class="flex-full m-r-1">
-          <p>카테고리</p>
-          <select
-            v-if="GET_AXIOS_CALLBACK_GETTER.questCate"
-            v-model="quest.cate"
-            class="jelly-text jelly-text--h wd-full"
-          >
-            <option :value="null">선택하세요</option>
-            <option
-              v-for="v in GET_AXIOS_CALLBACK_GETTER.questCate"
-              :key="v.idx"
-              :value="v.idx"
-            >
-              {{ v.subject }}
-            </option>
-          </select>
-        </div>
-        <div class="flex-full m-l-1">
-          <p>제목</p>
-          <input
-            v-model="quest.subject"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-      </div>
-      <div class="m-t-5 flex">
-        <div class="flex-full m-r-1">
-          <p>시작일</p>
+    <b-modal id="itemInsertTodo" size="xl" hide-footer hide-header>
+      <div class="flex">
+        <div
+          class="m-t-5"
+          style="
+            width: 430px;
+            margin-right: 20px;
+            padding-right: 20px;
+            border-right: 1px solid #eee;
+          "
+        >
+          <p>
+            <b-form-checkbox v-model="questChecked" name="check-button" switch>
+              필수퀘스트
+            </b-form-checkbox>
+          </p>
           <div>
-            <b-form-datepicker
-              v-model="quest.start_day"
-              class="jelly-text jelly-text--h wd-full"
-            ></b-form-datepicker>
+            <div class="studentScrollArea">
+              <div>
+                <div class="flex">
+                  <label class="m-l-2 m-t-2">
+                    <input
+                      v-model="selectAllStudent"
+                      type="checkbox"
+                      :disabled="questChecked === false ? true : false"
+                    />
+                    전체선택
+                    <!-- {{ questStudentCheck }} -->
+                  </label>
+                </div>
+              </div>
+              <div
+                v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.studentList"
+                :key="i"
+                class="m-t-2"
+              >
+                <div
+                  class="flex"
+                  :style="questChecked === false ? 'color:#888' : 'color:#111;'"
+                >
+                  <b-avatar
+                    variant="success"
+                    icon="people-fill"
+                    :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                  ></b-avatar>
+                  <label class="m-l-2 m-t-2">
+                    <input
+                      :id="`checkedStudent${v.idx}`"
+                      :ref="`student${v.idx}`"
+                      :key="v.idx"
+                      v-model="questStudentCheck"
+                      type="checkbox"
+                      :disabled="questChecked === false ? true : false"
+                      :value="v.idx"
+                    />
+                    {{ v.reg_name }}
+                    ({{ v.reg_id }})
+                  </label>
+                  <div class="flex-right m-t-2">
+                    <span v-if="v.PtotalAccount">
+                      {{
+                        v.MtotalAccount
+                          ? v.PtotalAccount
+                          : (Number(v.PtotalAccount) - Number(v.MtotalAccount))
+                            | comma
+                      }}
+                    </span>
+                    <span v-else>0</span>
+                    <span v-if="LOGIN_TEACHER">
+                      {{ LOGIN_TEACHER.reg_pay_unit }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="flex-full m-l-1">
-          <p>종료일</p>
-          <div>
-            <b-form-datepicker
-              v-model="quest.end_day"
-              class="jelly-text jelly-text--h wd-full"
-            ></b-form-datepicker>
+        <div>
+          <div class="m-t-5 flex">
+            <div class="flex-full m-r-1">
+              <p>카테고리</p>
+              <select
+                v-if="GET_AXIOS_CALLBACK_GETTER.questCate"
+                v-model="quest.cate"
+                class="jelly-text jelly-text--h wd-full"
+              >
+                <option :value="null">선택하세요</option>
+                <option
+                  v-for="v in GET_AXIOS_CALLBACK_GETTER.questCate"
+                  :key="v.idx"
+                  :value="v.idx"
+                >
+                  {{ v.subject }}
+                </option>
+              </select>
+            </div>
+            <div class="flex-full m-l-1">
+              <p>제목</p>
+              <input
+                v-model="quest.subject"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="m-t-5">
-        지혜,노력,건강,예절은 1~5정도의 수치가 적당합니다.
-      </div>
-      <div class="m-t-2 flex">
-        <div class="flex-full m-r-1">
-          <p>보상금</p>
-          <input
-            v-model="quest.price"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full">
-          <p>지혜</p>
-          <input
-            v-model="quest.intellect"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full m-r-1 m-l-1">
-          <p>노력</p>
-          <input
-            v-model="quest.effort"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full m-r-1">
-          <p>건강</p>
-          <input
-            v-model="quest.health"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full">
-          <p>예절</p>
-          <input
-            v-model="quest.etiquette"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-      </div>
-      <div class="m-t-5">실패 시 패널티 사용</div>
-      <span>- 부호를 사용하지 않고 작성해 주세요</span>
-      <div class="flex m-t-2">
-        <div class="flex-full m-r-1">
-          <p>보상금</p>
-          <input
-            v-model="quest.m_price"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full">
-          <p>지혜</p>
-          <input
-            v-model="quest.m_intellect"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full m-r-1 m-l-1">
-          <p>노력</p>
-          <input
-            v-model="quest.m_effort"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full m-r-1">
-          <p>건강</p>
-          <input
-            v-model="quest.m_health"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-        <div class="flex-full">
-          <p>예절</p>
-          <input
-            v-model="quest.m_etiquette"
-            type="text"
-            class="jelly-text jelly-text--h wd-full"
-          />
-        </div>
-      </div>
-      <!-- <div class="m-t-5">
+          <div class="m-t-5 flex">
+            <div class="flex-full m-r-1">
+              <p>시작일</p>
+              <div>
+                <b-form-datepicker
+                  v-model="quest.start_day"
+                  class="jelly-text jelly-text--h wd-full"
+                ></b-form-datepicker>
+              </div>
+            </div>
+            <div class="flex-full m-l-1">
+              <p>종료일</p>
+              <div>
+                <b-form-datepicker
+                  v-model="quest.end_day"
+                  class="jelly-text jelly-text--h wd-full"
+                ></b-form-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="m-t-5">
+            <em>지혜,노력,건강,예절은 1~5정도의 수치가 적당합니다.</em>
+          </div>
+          <div class="m-t-2 flex">
+            <div class="flex-full m-r-1">
+              <p>보상금</p>
+              <input
+                v-model="quest.price"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full">
+              <p>지혜</p>
+              <input
+                v-model="quest.intellect"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full m-r-1 m-l-1">
+              <p>노력</p>
+              <input
+                v-model="quest.effort"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full m-r-1">
+              <p>건강</p>
+              <input
+                v-model="quest.health"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full">
+              <p>예절</p>
+              <input
+                v-model="quest.etiquette"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+          </div>
+          <div class="m-t-5">실패 시 패널티 사용</div>
+          <span><em>- 부호를 사용하지 않고 작성해 주세요</em></span>
+          <div class="flex m-t-2">
+            <div class="flex-full m-r-1">
+              <p>보상금</p>
+              <input
+                v-model="quest.m_price"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full">
+              <p>지혜</p>
+              <input
+                v-model="quest.m_intellect"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full m-r-1 m-l-1">
+              <p>노력</p>
+              <input
+                v-model="quest.m_effort"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full m-r-1">
+              <p>건강</p>
+              <input
+                v-model="quest.m_health"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+            <div class="flex-full">
+              <p>예절</p>
+              <input
+                v-model="quest.m_etiquette"
+                type="text"
+                class="jelly-text jelly-text--h wd-full"
+              />
+            </div>
+          </div>
+          <!-- <div class="m-t-5">
         <p>첨부파일</p>
         <input
           id="itemThumb"
@@ -259,30 +336,32 @@
           class="jelly-text jelly-text--h wd-full"
         />
       </div> -->
-      <div class="m-t-5">
-        <vue-editor v-model="quest.contents"> </vue-editor>
-      </div>
-      <div class="m-t-5 text-center">
-        <button
-          class="jelly-btn jelly-btn--default"
-          @click="$bvModal.hide('itemInsertTodo')"
-        >
-          닫기
-        </button>
-        <button
-          v-if="noticeIdx"
-          class="jelly-btn jelly-btn--pink"
-          @click="onSubmitItem"
-        >
-          수정하기
-        </button>
-        <button
-          v-if="!noticeIdx"
-          class="jelly-btn jelly-btn--pink"
-          @click="onSubmit"
-        >
-          등록하기
-        </button>
+          <div class="m-t-5">
+            <vue-editor v-model="quest.contents"> </vue-editor>
+          </div>
+          <div class="m-t-5 text-center">
+            <button
+              class="jelly-btn jelly-btn--default"
+              @click="$bvModal.hide('itemInsertTodo')"
+            >
+              닫기
+            </button>
+            <button
+              v-if="noticeIdx"
+              class="jelly-btn jelly-btn--pink"
+              @click="onSubmitItem"
+            >
+              수정하기
+            </button>
+            <button
+              v-if="!noticeIdx"
+              class="jelly-btn jelly-btn--pink"
+              @click="onSubmit"
+            >
+              등록하기
+            </button>
+          </div>
+        </div>
       </div>
     </b-modal>
     <b-modal
@@ -397,6 +476,7 @@
           <thead>
             <tr>
               <th><input v-model="selectAll" type="checkbox" /></th>
+              <th>번호</th>
               <th>이름</th>
               <th>읽음여부</th>
               <th>수락여부</th>
@@ -421,6 +501,9 @@
                   :value="v.sqm_idx"
                 />
               </th>
+              <td>
+                {{ v.class_number }}
+              </td>
               <td>{{ v.reg_name }}</td>
               <td :class="v.is_read === 'Y' ? 'is_activeTable' : ''">
                 {{ v.is_read === 'Y' ? '읽음' : '안읽음' }}
@@ -637,6 +720,8 @@ export default {
       checkedTF: false,
       slide: 0,
       sliding: null,
+      questChecked: false,
+      questStudentCheck: [],
     }
   },
 
@@ -662,6 +747,27 @@ export default {
         }
 
         this.checked = selected
+      },
+    },
+    selectAllStudent: {
+      get() {
+        return this.GET_AXIOS_CALLBACK_GETTER.studentList
+          ? this.questStudentCheck
+            ? this.questStudentCheck.length ===
+              this.GET_AXIOS_CALLBACK_GETTER.studentList.length
+            : false
+          : false
+      },
+      set(value) {
+        const selectedStudent = []
+
+        if (value) {
+          this.GET_AXIOS_CALLBACK_GETTER.studentList.forEach((com) => {
+            selectedStudent.push(com.idx)
+          })
+        }
+
+        this.questStudentCheck = selectedStudent
       },
     },
   },
@@ -721,6 +827,9 @@ export default {
     },
     // EVENT
     onSubmit() {
+      if (this.questChecked === true && this.questStudentCheck.length === 0) {
+        return alert('학생을 선택해 주세요')
+      }
       if (!this.quest.subject) {
         return alert('제목을 입력하세요')
       }
@@ -751,6 +860,7 @@ export default {
       if (!this.quest.etiquette) {
         return alert('보상이 모두 입력되어야 합니다')
       }
+
       this.LOADING_TRUE()
       const frm = new FormData()
       frm.append('type', 'questWrite')
@@ -770,6 +880,7 @@ export default {
       frm.append('m_etiquette', this.quest.m_etiquette)
       frm.append('start_day', this.quest.start_day)
       frm.append('end_day', this.quest.end_day)
+      frm.append('studentList', this.questStudentCheck)
       console.log(frm)
       // axiosForm(frm, '/student.php')
       this.$axios
@@ -814,7 +925,9 @@ export default {
       FORM_DATA.append('m_etiquette', this.quest.m_etiquette)
       FORM_DATA.append('start_day', this.quest.start_day)
       FORM_DATA.append('end_day', this.quest.end_day)
+      FORM_DATA.append('mandatory', this.quest.mandatory)
       FORM_DATA.append('idx', this.noticeIdx)
+      FORM_DATA.append('studentList', this.questStudentCheck)
       axiosForm(FORM_DATA, '/teacher.php')
       setTimeout(() => {
         this.params = this.LOGIN_TEACHER
@@ -851,6 +964,10 @@ export default {
       }, 1000)
     },
     onClickItemDetail(e) {
+      // const aa = 283
+      // document.getElementById('checkedStudent283').checked = true
+      this.questStudentCheck = []
+      this.questChecked = false
       this.noticeIdx = e
       this.paramsDetail = this.LOGIN_TEACHER
       this.paramsDetail.type = 'questList'
@@ -861,7 +978,27 @@ export default {
         this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.view.subject
         this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.view.contents
         this.quest = this.GET_AXIOS_CALLBACK_GETTER.view
+        this.quest.mandatory === '1'
+          ? (this.questChecked = true)
+          : (this.questChecked = false)
+
         this.$bvModal.show('itemInsertTodo')
+        if (
+          this.questChecked === true &&
+          this.GET_AXIOS_CALLBACK_GETTER.participation.length > 0
+        ) {
+          this.$nextTick(() => {
+            this.GET_AXIOS_CALLBACK_GETTER.participation.forEach((v, i) => {
+              console.log(
+                '====================',
+                v.idx,
+                this.$refs[`student${v.idx}`]
+              )
+              this.$refs[`student${v.idx}`][0].checked = true
+              this.questStudentCheck.push(v.idx)
+            })
+          })
+        }
       }, 1500)
     },
     onClickItemDetailConfirm(e) {
@@ -882,6 +1019,9 @@ export default {
     },
     onClickitemInsertTodo() {
       this.noticeIdx = null
+      this.questChecked = false
+      this.questStudentCheck = []
+
       this.quest = {}
       this.quest = {
         m_price: '0',
@@ -889,6 +1029,11 @@ export default {
         m_effort: '0',
         m_health: '0',
         m_etiquette: '0',
+        price: '0',
+        intellect: '0',
+        effort: '0',
+        health: '0',
+        etiquette: '0',
         cate: null,
       }
       if (!this.GET_AXIOS_CALLBACK_GETTER.questCate) {

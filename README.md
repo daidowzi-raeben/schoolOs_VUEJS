@@ -6,46 +6,26 @@
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
+$ npm run pc-dev # serve with hot reload at localhost:3000
+$ npm run mo-dev # serve with hot reload at localhost:4000
 
 # generate static project
-$ npm run generate
+$ npm run master
 ```
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
 ## Special Directories
 
-### `Device Check`
+### `setting`
 
 ```bash
-context.isDesktop
-context.isMobile
-context.isTablet
-context.isMobileOrTablet
-context.isDesktopOrTablet
-context.isIos
-context.isWindows
-context.isMacOS
-context.isAndroid
-
-instance.$device.isDesktop
-instance.$device.isMobile
-instance.$device.isTablet
-instance.$device.isMobileOrTablet
-instance.$device.isDesktopOrTablet
-instance.$device.isIos
-instance.$device.isWindows
-instance.$device.isMacOS
-instance.$device.isAndroid
+#.env 파일 수정
+VUE_APP_API=http://localhost:3095 #주석
+VUE_APP_API=http://api.school-os.net #주석해제
 ```
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+`.env` 파일 원격에 커밋 금지
 
 ### `assets`
 
