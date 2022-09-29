@@ -545,21 +545,32 @@
                   실패
                 </button>
                 <button
-                  v-if="v.is_confirm != 'Y' && v.is_confirm !== 'R'"
+                  v-if="
+                    v.is_confirm != 'Y' &&
+                    v.is_confirm !== 'R' &&
+                    v.is_confirm !== 'F'
+                  "
                   class="jelly-btn jelly-btn--default"
                   @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
                 >
                   다시 제출
                 </button>
                 <button
-                  v-if="v.is_complete && v.is_confirm !== 'Y'"
+                  v-if="
+                    v.is_complete &&
+                    v.is_confirm !== 'Y' &&
+                    v.is_confirm !== 'F'
+                  "
                   class="jelly-btn jelly-btn--pink"
                   @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
                 >
                   성공
                 </button>
                 <button
-                  v-if="v.is_confirm === 'Y' && checked.length === 0"
+                  v-if="
+                    (v.is_confirm === 'Y' || v.is_confirm === 'F') &&
+                    checked.length === 0
+                  "
                   class="jelly-btn jelly-btn--gray"
                   @click="onSubmitConfirm('C', v.sq_idx, v.idx, '')"
                 >
