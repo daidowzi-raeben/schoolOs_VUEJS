@@ -243,7 +243,8 @@
         v-if="
           GET_AXIOS_CALLBACK_GETTER.view.is_apply &&
           !GET_AXIOS_CALLBACK_GETTER.view.is_complete &&
-          !GET_AXIOS_CALLBACK_GETTER.view.is_confirm
+          !GET_AXIOS_CALLBACK_GETTER.view.is_confirm &&
+          GET_AXIOS_CALLBACK_GETTER.view.mandatory !== '1'
         "
         class="jelly-btn jelly-btn--default"
         style="width: 30%"

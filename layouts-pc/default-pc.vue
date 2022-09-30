@@ -163,7 +163,7 @@
 
             <li
               style="cursor: pointer"
-              onclick="window.open('https://open.kakao.com/o/sf8I8jxe')"
+              onclick="window.open('http://pf.kakao.com/_RTaCxj/chat')"
             >
               <b-icon icon="question-square" class="m-r-2"></b-icon> 카카오 문의
             </li>

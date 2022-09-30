@@ -113,7 +113,13 @@
                   <span class="m-l-2 m-t-1">마켓</span>
                 </nuxt-link>
               </li>
-              <li>
+              <li
+                v-if="
+                  GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT &&
+                  GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT.jb_mode &&
+                  GET_AXIOS_CALLBACK_DATA_LAYOUT_STUDENT.jb_mode.jb_mode === 'Y'
+                "
+              >
                 <nuxt-link to="/lottery-buy" class="flex m-t-4">
                   <!-- <b-icon icon="upc-scan"></b-icon> -->
                   <img src="~/static/mo/icon/gambling.png" width="25" />
