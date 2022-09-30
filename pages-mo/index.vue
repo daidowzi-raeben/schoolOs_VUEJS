@@ -372,7 +372,9 @@
               class="flex m-t-3"
               @click="onClickTodoDetail(v.idx)"
             >
-              <div class="label blue">{{ v.subject_cate }}</div>
+              <div class="label blue" style="flex-shrink: 0">
+                {{ v.subject_cate }}
+              </div>
               <div class="txt m-l-2">
                 <p>{{ v.subject }}</p>
                 <span>{{ v.start_day }} ~ {{ v.end_day }}</span>

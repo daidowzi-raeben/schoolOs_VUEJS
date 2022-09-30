@@ -54,7 +54,9 @@
           </div>
         </div>
         <div
-          v-if="!STATE_STUDENT_ALBA.albaListTeaher"
+          v-if="
+            !STATE_STUDENT_ALBA.albaListTeaher && !STATE_STUDENT_ALBA.albaList
+          "
           class="quest__content m-t-3"
         >
           <div class="p-5 text-center font-14">
@@ -62,7 +64,9 @@
           </div>
         </div>
         <div
-          v-if="STATE_STUDENT_ALBA.albaListTeaher"
+          v-if="
+            STATE_STUDENT_ALBA.albaListTeaher || STATE_STUDENT_ALBA.albaList
+          "
           class="quest__content m-t-3"
         >
           <div
