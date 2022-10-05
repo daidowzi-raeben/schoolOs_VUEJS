@@ -12,7 +12,7 @@ export const axiosForm = function (frm, url) {
       },
     })
     .then((res) => {
-      console.log(res.data)
+      console.log('axiosForm', res.data)
     })
     .catch((res) => {
       console.log('AXIOS FALSE', res)

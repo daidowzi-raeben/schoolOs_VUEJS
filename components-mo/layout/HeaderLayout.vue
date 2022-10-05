@@ -77,7 +77,9 @@
           JELLY
           <div ref="animationElementMoon" class="logoBack"></div>
         </h1>
-
+        <div style="position: absolute; margin-top: -10px; right: 10px">
+          <img src="~/static/mo/month/hangul.png" width="50" />
+        </div>
         <div class="flex-right notification">
           <div class="flex" style="display: none">
             <!-- <nuxt-link

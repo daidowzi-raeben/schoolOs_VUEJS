@@ -127,7 +127,7 @@
         >
           <p>
             <b-form-checkbox v-model="questChecked" name="check-button" switch>
-              필수퀘스트
+              필수퀘스트 {{ questChecked }}
             </b-form-checkbox>
           </p>
           <div>
@@ -822,7 +822,7 @@ export default {
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_TEACHER
     this.params.type = 'questList'
-    this.params.queryCate = null
+    this.params.queryCate = ''
     this.GET_AXIOS(this.params)
     this.params.type = ''
   },
@@ -936,7 +936,13 @@ export default {
       FORM_DATA.append('m_etiquette', this.quest.m_etiquette)
       FORM_DATA.append('start_day', this.quest.start_day)
       FORM_DATA.append('end_day', this.quest.end_day)
-      FORM_DATA.append('mandatory', this.quest.mandatory)
+      if (this.questChecked === false) {
+        FORM_DATA.append('mandatory', null)
+      } else {
+        FORM_DATA.append('mandatory', '1')
+      }
+
+      console.log('this.questChecked', this.questChecked)
       FORM_DATA.append('idx', this.noticeIdx)
       FORM_DATA.append('studentList', this.questStudentCheck)
       axiosForm(FORM_DATA, '/teacher.php')
