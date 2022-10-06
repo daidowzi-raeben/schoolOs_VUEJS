@@ -84,10 +84,10 @@
                     {{ v.is_read ? v.is_read : 0 }}
                   </td>
                   <td @click="onClickItemDetail(v.idx)">
-                    {{ v.is_read ? v.is_status : 0 }}
+                    {{ v.is_status ? v.is_status : 0 }}
                   </td>
                   <td @click="onClickItemDetail(v.idx)">
-                    {{ v.is_read ? v.is_confirm : 0 }}
+                    {{ v.is_confirm ? v.is_confirm : 0 }}
                   </td>
 
                   <td>
