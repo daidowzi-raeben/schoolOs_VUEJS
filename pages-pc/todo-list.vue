@@ -127,11 +127,11 @@
         >
           <p>
             <b-form-checkbox v-model="questChecked" name="check-button" switch>
-              필수퀘스트 {{ questChecked }}
+              필수퀘스트
             </b-form-checkbox>
           </p>
           <div>
-            <div class="studentScrollArea">
+            <div class="studentScrollArea" style="height: unset">
               <div>
                 <div class="flex">
                   <label class="m-l-2 m-t-2">
