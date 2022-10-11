@@ -19,9 +19,15 @@
               :class="queryCate === '' ? 'is_active' : ''"
               @click="onClickCategory('')"
               >통화량
+
               {{
                 GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
-                  ? GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                  ? Number(
+                      GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                    ) -
+                    Number(
+                      GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
+                    )
                   : '0' | comma
               }}
               {{ LOGIN_TEACHER.reg_pay_unit }}</span
@@ -35,12 +41,7 @@
                 잔액
                 {{
                   GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
-                    ? Number(
-                        GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
-                      ) -
-                      Number(
-                        GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
-                      )
+                    ? GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
                     : '0' | comma
                 }}
                 {{ LOGIN_TEACHER.reg_pay_unit }}</span
