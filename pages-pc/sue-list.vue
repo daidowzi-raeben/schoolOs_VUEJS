@@ -267,24 +267,12 @@ export default {
       console.log(this.idx)
       FORM_DATA.append('type', 'billListStudentSue')
       FORM_DATA.append('sueIdx', this.idx)
-      FORM_DATA.append(
-        'billStudent',
-        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.rule_pay
-      )
-      FORM_DATA.append(
-        'sms_idx',
-        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.sms_idx_to
-      )
+      FORM_DATA.append('billStudent', this.STATE_TEACHER_SUE.detail.rule_pay)
+      FORM_DATA.append('sms_idx', this.STATE_TEACHER_SUE.detail.sms_idx_to)
       FORM_DATA.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
       FORM_DATA.append('billSubject', '규칙위반')
-      FORM_DATA.append(
-        'billContent',
-        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.new_subject
-      )
-      FORM_DATA.append(
-        'billPay',
-        this.ACTIONS_TEACHER_CALLBACK_GETTER.detail.rule_pay
-      )
+      FORM_DATA.append('billContent', this.STATE_TEACHER_SUE.detail.new_subject)
+      FORM_DATA.append('billPay', this.STATE_TEACHER_SUE.detail.rule_pay)
       console.log('FORM_DATA', FORM_DATA)
       this.$axios
         .post(process.env.VUE_APP_API + '/teacher.php', FORM_DATA, {
@@ -329,8 +317,8 @@ export default {
         this.$bvModal.show('itemInsert')
       })
       //   setTimeout(() => {
-      //     this.noticeSubject = this.ACTIONS_TEACHER_CALLBACK_GETTER.detil.subject
-      //     this.noticeContent = this.ACTIONS_TEACHER_CALLBACK_GETTER.detil.content
+      //     this.noticeSubject = this.STATE_TEACHER_SUE.detil.subject
+      //     this.noticeContent = this.STATE_TEACHER_SUE.detil.content
       //   }, 1500)
     },
 

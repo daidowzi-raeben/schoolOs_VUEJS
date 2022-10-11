@@ -540,7 +540,7 @@
                 <button
                   v-if="v.is_confirm !== 'F' && v.is_confirm !== 'Y'"
                   class="jelly-btn jelly-btn--default"
-                  @click="onSubmitConfirm('F', v.sq_idx, v.idx, '')"
+                  @click="onSubmitConfirm('F', v.sq_idx, v.idx, '', $event)"
                 >
                   실패
                 </button>
@@ -551,7 +551,7 @@
                     v.is_confirm !== 'F'
                   "
                   class="jelly-btn jelly-btn--default"
-                  @click="onSubmitConfirm('R', v.sq_idx, v.idx, '')"
+                  @click="onSubmitConfirm('R', v.sq_idx, v.idx, '', $event)"
                 >
                   다시 제출
                 </button>
@@ -561,8 +561,9 @@
                     v.is_confirm !== 'Y' &&
                     v.is_confirm !== 'F'
                   "
+                  :refs="`success${v.idx}`"
                   class="jelly-btn jelly-btn--pink"
-                  @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '')"
+                  @click="onSubmitConfirm('Y', v.sq_idx, v.idx, '', $event)"
                 >
                   성공
                 </button>
@@ -572,7 +573,7 @@
                     checked.length === 0
                   "
                   class="jelly-btn jelly-btn--gray"
-                  @click="onSubmitConfirm('C', v.sq_idx, v.idx, '')"
+                  @click="onSubmitConfirm('C', v.sq_idx, v.idx, '', $event)"
                 >
                   취소
                 </button>
@@ -753,7 +754,9 @@ export default {
 
         if (value) {
           this.GET_AXIOS_CALLBACK_GETTER.participation.forEach((com) => {
-            selected.push(com.sqm_idx)
+            if (com.is_read === 'Y' && com.is_confirm !== 'Y') {
+              selected.push(com.sqm_idx)
+            }
           })
         }
 
@@ -1069,7 +1072,8 @@ export default {
       this.noticeContent = ''
       this.$bvModal.show('itemInsertTodo')
     },
-    onSubmitConfirm(isStatus, sqIdx, smsIdx, mode) {
+    onSubmitConfirm(isStatus, sqIdx, smsIdx, mode, e) {
+      e.target.style.display = 'none'
       this.confirm.type = 'questconfirm'
       this.confirm.sms_idx = smsIdx
       this.confirm.idx = sqIdx
@@ -1083,6 +1087,7 @@ export default {
         this.paramsDetail.type = 'questList'
         this.paramsDetail.idx = this.noticeIdx
         console.log(sqIdx)
+        e.target.style.display = 'unset'
         this.GET_AXIOS(this.paramsDetail)
       }, 1500)
     },

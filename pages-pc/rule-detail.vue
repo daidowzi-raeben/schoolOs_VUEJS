@@ -239,8 +239,9 @@
             >
               <div class="font-14">{{ e + 1 }}항. {{ k.subject }}</div>
               <div v-if="LOGIN_TEACHER" class="m-t-1 jelly-color--888 font-12">
-                {{ k.penalty + LOGIN_TEACHER.t_reg_pay_unit }}
-                {{ k.penalty_etc ? ' / ' + k.penalty_etc : k.penalty_etc }}
+                {{ k.penalty | comma }}
+                {{ LOGIN_TEACHER.t_reg_pay_unit }}
+                {{ k.penalty_etc ? ' / ' + k.penalty_etc : '' }}
               </div>
             </div>
           </li>

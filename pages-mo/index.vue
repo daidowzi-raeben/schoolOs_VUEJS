@@ -631,7 +631,7 @@ export default {
     },
     onSubmit() {
       console.log(this.detailIdx)
-
+      this.$bvModal.hide('billDetail')
       this.paramsPost.type = 'billListStudent'
       this.paramsPost.idx = this.detailIdx
       this.paramsPost.sms_idx = this.LOGIN_CONFIG.sms_idx
@@ -642,7 +642,6 @@ export default {
         this.params.type = 'main'
         this.GET_AXIOS(this.params)
         alert('정상적으로 납부되었습니다.')
-        this.$bvModal.hide('billDetail')
       }, 1000)
     },
     onSubmitProfile() {
