@@ -39,22 +39,42 @@
                 v-if="GET_AXIOS_CALLBACK_GETTER.albaList"
                 class="jelly-table"
               >
+                <col style="width: 100px" />
+                <col style="width: auto" />
+                <col style="width: 180px" />
+                <col style="width: 65px" />
+                <col style="width: 65px" />
+                <col style="width: 65px" />
+                <col style="width: 65px" />
+                <col style="width: 100px" />
                 <tr>
                   <th>작성자</th>
                   <th>알바명</th>
                   <th>기간</th>
+                  <th>신청</th>
+                  <th>수락</th>
+                  <th>취소</th>
+                  <th>완료</th>
                   <th>알바비</th>
                 </tr>
                 <tr
                   v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.albaList"
                   :key="`albaList${i}`"
-                  style="cursor: pointer"
+                  style=""
+                  :class="v.status !== '0' ? 'is_acticeTable' : ''"
                   @click="onClickItemDetail(v.idx)"
                 >
                   <td>{{ v.reg_name ? v.reg_name : '선생님' }}</td>
                   <td>{{ v.subject }}</td>
-                  <td>{{ v.start_day }} ~ {{ v.end_day }}</td>
-                  <td class="text-right">{{ v.pay }}</td>
+                  <td>
+                    {{ v.start_day | moment('YY.MM.DD') }} ~
+                    {{ v.end_day | moment('YY.MM.DD') }}
+                  </td>
+                  <td>{{ v.is_status0 ? v.is_status0 : 0 }}</td>
+                  <td>{{ v.is_status1 ? v.is_status1 : 0 }}</td>
+                  <td>{{ v.is_status2 ? v.is_status2 : 0 }}</td>
+                  <td>{{ v.is_status3 ? v.is_status3 : 0 }}</td>
+                  <td class="text-right">{{ v.pay | comma }}</td>
                 </tr>
               </table>
             </div>
@@ -156,7 +176,13 @@
           >
             닫기
           </button>
-          <button class="jelly-btn jelly-btn--pink" @click="onSubmitDelete">
+          <button class="jelly-btn jelly-btn--pink" @click="onSubmitComplete">
+            완료하기
+          </button>
+          <button
+            class="jelly-btn jelly-btn--default m-l-3"
+            @click="onSubmitDelete"
+          >
             삭제하기
           </button>
         </div>
@@ -438,6 +464,32 @@ export default {
       this.noticeContent = ''
       this.$bvModal.show('itemInsert')
     },
+    onSubmitComplete() {
+      if (confirm('알바고를 완료하시겠습니까?')) {
+        this.LOADING_TRUE()
+        const frm = new FormData()
+        frm.append('type', 'albaComplete')
+        frm.append('idx', this.noticeIdx)
+        this.$axios
+          .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            setTimeout(() => {
+              this.params = this.LOGIN_TEACHER
+              this.params.type = 'albaList'
+              this.GET_AXIOS(this.params)
+              this.$bvModal.hide('itemInsert')
+            })
+          })
+          .catch((res) => {
+            console.error('AXIOS FALSE', res)
+          })
+      }
+    },
     onSubmitDelete() {
       if (confirm('삭제하시겠습니까?')) {
         this.LOADING_TRUE()
@@ -552,4 +604,8 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.is_acticeTable > td {
+  background: #eee;
+}
+</style>

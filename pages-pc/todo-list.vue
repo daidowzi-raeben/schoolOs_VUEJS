@@ -127,7 +127,7 @@
         >
           <p>
             <b-form-checkbox v-model="questChecked" name="check-button" switch>
-              필수퀘스트
+              필수퀘스트 {{ questChecked }}
             </b-form-checkbox>
           </p>
           <div>
@@ -473,6 +473,13 @@
           v-if="GET_AXIOS_CALLBACK_GETTER.participation"
           class="jelly-table m-t-2"
         >
+          <col style="width: 50px" />
+          <col style="width: 70px" />
+          <col style="width: 120px" />
+          <col style="width: 130px" />
+          <col style="width: 130px" />
+          <col style="width: 130px" />
+          <col style="width: auto" />
           <thead>
             <tr>
               <th><input v-model="selectAll" type="checkbox" /></th>
@@ -600,7 +607,7 @@
         <button
           v-if="checked.length > 0"
           class="jelly-btn jelly-btn--pink"
-          @click="onSubmitConfirm('Y', noticeIdx, noticeIdx, 'all')"
+          @click="onSubmitConfirm('Y', noticeIdx, noticeIdx, 'all', $event)"
         >
           일괄 완료 처리
         </button>
@@ -895,6 +902,11 @@ export default {
       frm.append('start_day', this.quest.start_day)
       frm.append('end_day', this.quest.end_day)
       frm.append('studentList', this.questStudentCheck)
+      if (this.questChecked === true) {
+        frm.append('questChecked', 1)
+      } else {
+        frm.append('questChecked', 0)
+      }
       console.log(frm)
       // axiosForm(frm, '/student.php')
       this.$axios
@@ -904,6 +916,7 @@ export default {
           },
         })
         .then((res) => {
+          console.log('===========', res)
           setTimeout(() => {
             //   this.$bvModal.hide('itemInsert')
             this.params = this.LOGIN_TEACHER

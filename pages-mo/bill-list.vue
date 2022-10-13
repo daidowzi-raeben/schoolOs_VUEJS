@@ -33,7 +33,7 @@
                       {{ v.code }}
                     </span>
                     <p class="bold">
-                      {{ v.pay }}
+                      {{ v.pay | comma }}
                       <span v-if="LOGIN_STUDENT.t_reg_pay_unit">
                         {{ LOGIN_STUDENT.t_reg_pay_unit }}
                       </span>
@@ -73,7 +73,7 @@
                         {{ v.code }}
                       </span>
                       <p class="bold">
-                        {{ v.pay }}
+                        {{ v.pay | comma }}
                         <span v-if="LOGIN_STUDENT.t_reg_pay_unit">
                           {{ LOGIN_STUDENT.t_reg_pay_unit }}
                         </span>
