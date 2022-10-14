@@ -79,7 +79,11 @@
         style="height: 150px"
       ></textarea>
       <div class="m-t-3">
-        <button class="jelly-btn jelly-btn--pink wd-full" @click="onSubmit">
+        <button
+          class="jelly-btn jelly-btn--pink wd-full"
+          :disabled="isDisabled"
+          @click="onSubmit"
+        >
           전송
         </button>
       </div>
@@ -114,6 +118,7 @@ export default {
       sueContent: '',
       sms_idx_to: null,
       sueSubjectEtc: null,
+      isDisabled: false,
     }
   },
   computed: {
@@ -147,6 +152,8 @@ export default {
         alert('모든 내용을 입력해 주세요.')
         return false
       }
+      this.LOADING_TRUE()
+      this.isDisabled = true
       this.paramsPost = this.LOGIN_STUDENT
       this.paramsPost.type = 'sueInsert'
       if (this.sueSubject === 'etc') {
