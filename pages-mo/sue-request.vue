@@ -71,7 +71,14 @@
         v-model="sueSubjectEtc"
         class="jelly-text jelly-text--h wd-full m-t-2"
       />
-      <p class="m-t-3">자세한 내용</p>
+      <p class="m-t-3">증명할 물건이나 사람이 있나요?</p>
+
+      <textarea
+        v-model="sueContentEvidence"
+        class="jelly-text m-t-2 jelly-text--h wd-full"
+        style="height: 150px"
+      ></textarea>
+      <p class="m-t-3">자세한 내용을 알려주세요</p>
 
       <textarea
         v-model="sueContent"
@@ -119,6 +126,7 @@ export default {
       sms_idx_to: null,
       sueSubjectEtc: null,
       isDisabled: false,
+      sueContentEvidence: '',
     }
   },
   computed: {
@@ -163,6 +171,7 @@ export default {
       }
       this.paramsPost.content = this.sueContent
       this.paramsPost.sms_idx_to = this.sms_idx_to
+      this.paramsPost.evidence = this.sueContentEvidence
       this.paramsPost.status = '1'
       this.paramsPost.sue_date = this.sueDate
       this.POST_AXIOS(this.paramsPost)

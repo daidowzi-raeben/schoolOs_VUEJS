@@ -127,7 +127,7 @@
         >
           <p>
             <b-form-checkbox v-model="questChecked" name="check-button" switch>
-              필수퀘스트 {{ questChecked }}
+              필수퀘스트
             </b-form-checkbox>
           </p>
           <div>
@@ -156,6 +156,7 @@
                 >
                   <b-avatar
                     variant="success"
+                    class="m-t-2"
                     icon="people-fill"
                     :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
                   ></b-avatar>
@@ -169,7 +170,7 @@
                       :disabled="questChecked === false ? true : false"
                       :value="v.idx"
                     />
-                    {{ v.reg_name }}
+                    {{ v.reg_name }}<br />
                     ({{ v.reg_id }})
                   </label>
                   <div class="flex-right m-t-2">
