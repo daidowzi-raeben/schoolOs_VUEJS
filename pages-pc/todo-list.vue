@@ -587,7 +587,7 @@
               </td>
             </tr>
             <tr v-if="v.content">
-              <td colspan="7" style="white-space: pre-line">
+              <td colspan="8" style="white-space: pre-line">
                 <p class="bold" style="margin-bottom: 0">
                   {{ v.reg_name }}의 남긴 말
                 </p>
