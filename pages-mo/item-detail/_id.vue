@@ -3,6 +3,7 @@
     <div class="historyBack m-l-3 m-b-5">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
     </div>
+    <!-- ㅁㄴㅇ -->
     <div
       v-if="GET_AXIOS_CALLBACK_GETTER"
       class="content"
