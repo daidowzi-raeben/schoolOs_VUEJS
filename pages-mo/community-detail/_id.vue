@@ -1,5 +1,7 @@
 <template>
   <div id="school-content">
+    <div>asdasdasd</div>
+    <b-icon icon="box-arrow-up-right" style="color: blue"></b-icon>
     <!-- <div v-if="LOADING" id="LOADING">
       <img src="~/static/img/loading.gif" />
     </div> -->
@@ -18,7 +20,10 @@
                 <div class="flex-full m-l-3 m-r-3">
                   <div class="flex m-t-0">
                     <div class="txt">
-                      <p class="bold">제목입니다 제목을 다시 입력합니다.</p>
+                      <p class="bold">
+                        제목입니다 제목ㅁㄴㅇ을 다시 입력합니다.
+                        <Park />
+                      </p>
                       <span>00.00.00</span>
                     </div>
                     <div class="pay text-right flex-right">
@@ -69,6 +74,13 @@
             >
               내용
             </div>
+            <div>
+              <b-form-rating
+                v-model="value"
+                variant="warning"
+                class="mb-2"
+              ></b-form-rating>
+            </div>
           </div>
         </div>
       </div>
@@ -77,9 +89,13 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+import Park from '~/components-mo/test/TestStyle.vue'
 // import { historyBack } from '~/config/util'
 
 export default {
+  components: {
+    Park,
+  },
   validate({ params }) {
     return /^\d+$/.test(params.id)
   },
@@ -93,8 +109,10 @@ export default {
     return {
       params: {},
       paramsPost: {},
+      value: 4,
     }
   },
+
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
@@ -111,6 +129,10 @@ export default {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
     ...mapMutations(['LOADING_TRUE']),
+
+    onClick() {
+      console.log(0)
+    },
   },
 }
 </script>
