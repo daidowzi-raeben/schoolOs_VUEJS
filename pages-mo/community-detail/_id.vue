@@ -18,7 +18,7 @@
                 <div class="flex-full m-l-3 m-r-3">
                   <div class="flex m-t-0">
                     <div class="txt">
-                      <p class="bold">제목입니다</p>
+                      <p class="bold">제목입니다 제목을 다시 입력합니다.</p>
                       <span>00.00.00</span>
                     </div>
                     <div class="pay text-right flex-right">
