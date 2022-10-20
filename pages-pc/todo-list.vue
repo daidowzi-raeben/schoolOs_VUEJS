@@ -98,12 +98,12 @@
                       >
                         검사
                       </button>
-                      <!-- <button
+                      <button
                         class="flex-full jelly-btn jelly-btn--default m-l-1"
-                        @click="onClickItemDetail(v.idx)"
+                        @click="onClickItemDetailCopy(v.idx)"
                       >
-                        수정
-                      </button> -->
+                        복사
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -996,6 +996,44 @@ export default {
         this.params.type = 'questList'
         this.GET_AXIOS(this.params)
       }, 1000)
+    },
+    onClickItemDetailCopy(e) {
+      // const aa = 283
+      // document.getElementById('checkedStudent283').checked = true
+      this.questStudentCheck = []
+      this.questChecked = false
+      this.noticeIdx = null
+      this.paramsDetail = this.LOGIN_TEACHER
+      this.paramsDetail.type = 'questList'
+      this.paramsDetail.idx = e
+      console.log(e)
+      this.GET_AXIOS(this.paramsDetail)
+      setTimeout(() => {
+        this.noticeSubject = this.GET_AXIOS_CALLBACK_GETTER.view.subject
+        this.noticeContent = this.GET_AXIOS_CALLBACK_GETTER.view.contents
+        this.quest = this.GET_AXIOS_CALLBACK_GETTER.view
+        this.quest.mandatory === '1'
+          ? (this.questChecked = true)
+          : (this.questChecked = false)
+
+        this.$bvModal.show('itemInsertTodo')
+        if (
+          this.questChecked === true &&
+          this.GET_AXIOS_CALLBACK_GETTER.participation.length > 0
+        ) {
+          this.$nextTick(() => {
+            this.GET_AXIOS_CALLBACK_GETTER.participation.forEach((v, i) => {
+              console.log(
+                '====================',
+                v.idx,
+                this.$refs[`student${v.idx}`]
+              )
+              this.$refs[`student${v.idx}`][0].checked = true
+              this.questStudentCheck.push(v.idx)
+            })
+          })
+        }
+      }, 1500)
     },
     onClickItemDetail(e) {
       // const aa = 283
