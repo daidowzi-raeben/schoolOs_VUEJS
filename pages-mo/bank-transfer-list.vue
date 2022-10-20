@@ -100,7 +100,7 @@
                         v-if="v.case_result === '대출'"
                         style="color: #111"
                       ></em>
-                      <em v-if="v.case_result === '벌금'" style="color: #111">
+                      <em v-if="v.case_result === '고지서'" style="color: #111">
                         {{ v.penalty_memo }}</em
                       >
                       <em v-if="v.case_result === '급여'" style="color: #111"

@@ -18,7 +18,7 @@
               class="spanBox m-r-2"
               :class="queryCate === '' ? 'is_active' : ''"
               @click="onClickCategory('')"
-              >통화량
+              >잔액 {{ queryCate }}
 
               {{
                 GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
@@ -38,7 +38,7 @@
                 :class="queryCate === '1' ? 'is_active' : ''"
                 @click="onClickCategory('1')"
               >
-                잔액
+                입금
                 {{
                   GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
                     ? GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
@@ -64,6 +64,10 @@
             </span>
           </div>
         </div>
+        <!-- <div class="m-t-3 p-4 text-center" style="background: #eee">
+          전체 통화량
+          <strong>123123</strong>
+        </div> -->
         <div class="m-t-3">
           <div class="flex" style="padding: 20px">
             <div class="m-r-1">
@@ -313,6 +317,7 @@ export default {
       if (e) {
         this.$router.push(`/pay-list?cate=${e}`)
       } else {
+        this.queryCate = ''
         this.$router.push(`/pay-list`)
         this.params.type = 'teacherPayList'
         this.params.queryCate = null

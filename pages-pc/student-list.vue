@@ -288,7 +288,7 @@
                   {{ v.etc_memo }}
                 </td>
                 <td v-if="v.case_result === '대출'" style="color: #111"></td>
-                <td v-if="v.case_result === '벌금'" style="color: #111">
+                <td v-if="v.case_result === '고지서'" style="color: #111">
                   {{ v.penalty_memo }}
                 </td>
                 <td v-if="v.case_result === '급여'" style="color: #111">
