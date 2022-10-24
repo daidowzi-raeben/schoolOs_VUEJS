@@ -18,7 +18,7 @@
               class="spanBox m-r-2"
               :class="queryCate === '' ? 'is_active' : ''"
               @click="onClickCategory('')"
-              >잔액 {{ queryCate }}
+              >잔액
 
               {{
                 GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
@@ -64,10 +64,35 @@
             </span>
           </div>
         </div>
-        <!-- <div class="m-t-3 p-4 text-center" style="background: #eee">
+        <div
+          v-if="GET_AXIOS_CALLBACK_GETTER.teacherPayList"
+          class="m-t-3 p-4 text-center"
+          style="background: #eee"
+        >
           전체 통화량
-          <strong>123123</strong>
-        </div> -->
+          <strong v-if="LOGIN_TEACHER">
+            <br />
+            {{
+              GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                ? Number(
+                    GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay
+                  ) -
+                  Number(
+                    GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].total_pay_m
+                  ) +
+                  Number(
+                    GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].studentTotal
+                  )
+                : '0' | comma
+            }}
+            (학생 총 잔액 :
+            {{
+              GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].studentTotal
+                ? GET_AXIOS_CALLBACK_GETTER.teacherPayList[0].studentTotal
+                : 0 | comma
+            }}) {{ LOGIN_TEACHER.reg_pay_unit }}</strong
+          >
+        </div>
         <div class="m-t-3">
           <div class="flex" style="padding: 20px">
             <div class="m-r-1">

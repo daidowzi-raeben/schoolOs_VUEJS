@@ -17,6 +17,13 @@
           <button
             v-if="LOGIN_TEACHER"
             class="jelly-btn jelly-btn--default"
+            @click="onClickShare"
+          >
+            공유 {{ LOGIN_TEACHER.todo_name }}
+          </button>
+          <button
+            v-if="LOGIN_TEACHER"
+            class="jelly-btn jelly-btn--default"
             @click="onClickitemInsertTodo"
           >
             {{ LOGIN_TEACHER.todo_name }} 추가
@@ -460,6 +467,9 @@
           ></b-carousel-slide>
         </b-carousel>
       </div>
+    </b-modal>
+    <b-modal id="shareData" size="xl" hide-footer hide-header>
+      <div>asdasd</div>
     </b-modal>
     <b-modal id="questConfirm" size="xl" hide-footer hide-header>
       <div class="">
@@ -1237,6 +1247,9 @@ export default {
     //   this.checked[i] = idx
     // },
     //
+    onClickShare() {
+      this.$bvModal.show('shareData')
+    },
   },
 }
 </script>

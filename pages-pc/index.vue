@@ -46,7 +46,7 @@
       </div>
       <div class="flex m-t-3">
         <div class="student__list flex">
-          <div class="item" style="width: 200px">
+          <div class="item" style="width: 150px">
             <nuxt-link to="/todo-list">
               <p class="title" style="color: #111">미 검사</p>
               <div class="text-right" style="color: #111">
@@ -63,7 +63,7 @@
               </div>
             </nuxt-link>
           </div>
-          <div class="item" style="width: 200px">
+          <div class="item" style="width: 150px">
             <nuxt-link to="/sue-list">
               <p class="title" style="color: #111">신고접수</p>
               <div class="text-right" style="color: #111">
@@ -77,7 +77,7 @@
               </div>
             </nuxt-link>
           </div>
-          <div class="item" style="width: 200px">
+          <div class="item" style="width: 150px">
             <p class="title" style="color: #111">현재자산</p>
             <div class="text-right" style="color: #111">
               <strong
@@ -91,6 +91,20 @@
               <span v-if="LOGIN_TEACHER">
                 {{ LOGIN_TEACHER.reg_pay_unit }}
               </span>
+            </div>
+          </div>
+          <div class="item" style="width: 150px">
+            <p class="title" style="color: #111">벌금/세금 미납</p>
+            <div class="text-right" style="color: #111">
+              <strong
+                v-if="GET_AXIOS_CALLBACK_DATA_MAIN.total_pay"
+                class="font-20"
+              >
+                <em>{{
+                  GET_AXIOS_CALLBACK_DATA_MAIN.total_pay.total_pay | comma
+                }}</em>
+              </strong>
+              건
             </div>
           </div>
           <div class="item" style="width: 200px">

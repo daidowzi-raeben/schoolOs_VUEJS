@@ -21,14 +21,20 @@
               @click="onClickCategory('')"
               >전체</span
             >
-            <span>
-              <span
-                class="spanBox m-r-2"
-                :class="queryCate === '1' ? 'is_active' : ''"
-                @click="onClickCategory(1)"
-              >
-                선생님 알바고
-              </span>
+
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate === '2' ? 'is_active' : ''"
+              @click="onClickCategory(2)"
+            >
+              학생 알바고
+            </span>
+            <span
+              class="spanBox m-r-2"
+              :class="queryCate === '1' ? 'is_active' : ''"
+              @click="onClickCategory(1)"
+            >
+              선생님 알바고
             </span>
           </div>
         </div>
@@ -82,7 +88,7 @@
         </div>
       </div>
     </div>
-    <b-modal id="itemInsert" size="lg" hide-footer hide-header>
+    <b-modal id="" size="lg" hide-footer hide-header>
       <div v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail">
         <table class="jelly-table">
           <tr>
@@ -122,6 +128,83 @@
           class="jelly-text jelly-text--h wd-full"
         />
       </div> -->
+      </div>
+    </b-modal>
+    <b-modal id="itemInsert" size="lg" hide-footer hide-header>
+      <div>
+        <div class="flex-full">
+          <p class="m-b-0">제목</p>
+          <input
+            v-model="albaDetail.subject"
+            type="text"
+            class="jelly-text jelly-text--h wd-full m-t-1"
+          />
+        </div>
+        <div class="flex-full flex m-t-3">
+          <div class="relative flex-full m-r-3">
+            <p class="m-b-0">알바비</p>
+            <input
+              v-model="albaDetail.pay"
+              type="tel"
+              class="jelly-text jelly-text--h wd-full text-right p-r-10 m-t-1"
+              placeholder="한명당 알바비는 얼마인가요?"
+              @input="payComma($event)"
+              @click="
+                ($event) => {
+                  $event.target.value = ''
+                }
+              "
+            />
+            <span
+              v-if="LOGIN_TEACHER && LOGIN_TEACHER.reg_pay_unit"
+              style="position: absolute; right: 10px; top: 36px"
+              >{{ LOGIN_TEACHER.reg_pay_unit }}</span
+            >
+          </div>
+          <div class="relative flex-full">
+            <p class="m-b-0">인원</p>
+            <input
+              v-model="albaDetail.personnel"
+              type="tel"
+              class="jelly-text jelly-text--h wd-full text-right p-r-10 m-t-1"
+              placeholder="몇명이 할 수 있는 일인가요?"
+              @click="
+                ($event) => {
+                  $event.target.value = ''
+                }
+              "
+            />
+            <span style="position: absolute; right: 10px; top: 36px">명</span>
+          </div>
+        </div>
+        <div class="flex m-t-3">
+          <div class="m-r-3 flex-full">
+            <p class="m-b-0">알바 시작일</p>
+            <b-form-datepicker
+              v-model="albaDetail.start_day"
+              class="jelly-text jelly-text--h wd-full flex-full m-t-1"
+              placeholder="시작일"
+            ></b-form-datepicker>
+          </div>
+          <div class="flex-full">
+            <p class="m-b-0">알바 종료일</p>
+            <b-form-datepicker
+              v-model="albaDetail.end_day"
+              class="jelly-text jelly-text--h wd-full flex-full m-t-1"
+              placeholder="종료일"
+            ></b-form-datepicker>
+          </div>
+        </div>
+        <div class="m-t-3">
+          <p class="m-b-0">무슨 일을 하나요?</p>
+          <vue-editor
+            v-model="albaDetail.content"
+            class="m-t-1"
+            placeholder="무슨 일을 하는지, 알바를 하며 주의해야 하는 점, 규칙 등을 자세하게 써주세요!"
+          >
+          </vue-editor>
+        </div>
+        {{ albaApply }}
         <div class="m-t-5">
           <table
             v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail"
@@ -175,6 +258,9 @@
             @click="$bvModal.hide('itemInsert')"
           >
             닫기
+          </button>
+          <button class="jelly-btn jelly-btn--default" @click="onSubmitItem">
+            수정하기
           </button>
           <button class="jelly-btn jelly-btn--pink" @click="onSubmitComplete">
             완료하기
@@ -294,6 +380,16 @@ export default {
         start_day: '',
         end_day: '',
       },
+      albaDetail: {
+        subject: '',
+        pay: 0,
+        personnel: 0,
+        content: '',
+        start_day: '',
+        end_day: '',
+        idx: '',
+      },
+      albaApply: {},
       params: {},
       paramsForm: {},
       paramsDetail: {},
@@ -360,7 +456,7 @@ export default {
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
-    ...mapMutations(['LOADING_TRUE']),
+    ...mapMutations(['LOADING_TRUE', 'LOADING_INIT']),
 
     // EVENT
     onSubmit() {
@@ -413,17 +509,21 @@ export default {
     onSubmitItem() {
       //   const itemThumb = document.getElementById('itemThumb')
       const FORM_DATA = new FormData()
-      Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
+      // Object.entries(this.LOGIN_TEACHER).forEach((v, i) => {
+      //   FORM_DATA.append(v[0], v[1])
+      // })
+      Object.entries(this.albaDetail).forEach((v, i) => {
+        console.log(v[0], v[1])
         FORM_DATA.append(v[0], v[1])
       })
-      FORM_DATA.append('type', 'noticeEdit')
-      FORM_DATA.append('noticeSubject', this.noticeSubject)
-      FORM_DATA.append('noticeContent', this.noticeContent)
-      FORM_DATA.append('noticeIdx', this.noticeIdx)
+      FORM_DATA.append('type', 'albaEdit')
+      FORM_DATA.append('pay', this.uncomma(this.albaDetail.pay))
+      // FORM_DATA.append('noticeContent', this.noticeContent)
+      // FORM_DATA.append('noticeIdx', this.noticeIdx)
       axiosForm(FORM_DATA, '/teacher.php')
       setTimeout(() => {
         this.params = this.LOGIN_TEACHER
-        this.params.type = 'noticeList'
+        this.params.type = 'albaList'
         this.GET_AXIOS(this.params)
       }, 1000)
       this.$bvModal.hide('itemInsert')
@@ -439,6 +539,7 @@ export default {
         this.params.type = 'albaList'
         this.params.cate = e
         this.GET_AXIOS(this.params)
+        console.log('=================', this.params.cate)
       } else {
         this.$router.push(`/parttime-list`)
         this.$nextTick(() => {
@@ -446,17 +547,39 @@ export default {
           this.params.cate = ''
           this.params.type = 'albaList'
           this.GET_AXIOS(this.params)
+          console.log('*****************', this.params.cate)
         })
       }
     },
     onClickItemDetail(e) {
-      this.noticeIdx = e
-      this.paramsDetail = this.LOGIN_TEACHER
-      this.paramsDetail.type = 'albaList'
-      this.paramsDetail.albaIdx = e
-      console.log(this.paramsDetail)
-      this.GET_AXIOS(this.paramsDetail)
-      this.$bvModal.show('itemInsert')
+      this.LOADING_TRUE()
+      const frm = new FormData()
+      frm.append('type', 'albaList')
+      frm.append('idx', e)
+      this.albaDetail.idx = e
+      this.$axios
+        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log('onClickItemDetail', res)
+          setTimeout(() => {
+            this.albaDetail = res.data.albaDetail
+            // this.albaDetail.pay = res.data.albaDetail.pay
+            // this.albaDetail.personnel = res.data.albaDetail.personnel
+            // this.albaDetail.content = res.data.albaDetail.content
+            // this.albaDetail.start_day = res.data.albaDetail.start_day
+            // this.albaDetail.end_day = res.data.albaDetail.end_day
+            this.albaApply = res.data.albApplyList
+            this.$bvModal.show('itemInsert')
+            this.LOADING_INIT()
+          })
+        })
+        .catch((res) => {
+          console.error('AXIOS FALSE', res)
+        })
     },
     onClickItemInsert() {
       this.noticeIdx = null

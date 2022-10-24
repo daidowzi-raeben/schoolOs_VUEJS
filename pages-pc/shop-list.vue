@@ -30,7 +30,7 @@
           <div class="m-t-5">
             <span
               class="spanBox m-r-2"
-              :class="queryCate || queryCate !== '' ? '' : 'is_active'"
+              :class="queryCate === '' ? 'is_active' : ''"
               @click="onClickCategory('')"
               >전체</span
             >
@@ -359,7 +359,7 @@ export default {
         input: 'YYYY-MM-DD',
       },
       itemName: '',
-      queryCate: null,
+      queryCate: '',
       test: {
         a: 0,
         b: 1,
