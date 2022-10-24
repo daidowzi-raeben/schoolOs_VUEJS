@@ -78,7 +78,9 @@
           <div ref="animationElementMoon" class="logoBack"></div>
         </h1>
         <div style="position: absolute; margin-top: -10px; right: 10px">
+          <!-- <span style="font-size: 12px; display: inline-block">독도의 날</span> -->
           <!-- <img src="~/static/mo/month/hangul.png" width="50" /> -->
+          <img src="~/static/mo/month/dockdo.png" width="50" />
         </div>
         <div class="flex-right notification">
           <div class="flex" style="display: none">

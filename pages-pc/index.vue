@@ -94,15 +94,13 @@
             </div>
           </div>
           <div class="item" style="width: 150px">
-            <p class="title" style="color: #111">벌금/세금 미납</p>
+            <p class="title" style="color: #111">미납 고지서</p>
             <div class="text-right" style="color: #111">
               <strong
-                v-if="GET_AXIOS_CALLBACK_DATA_MAIN.total_pay"
+                v-if="GET_AXIOS_CALLBACK_DATA_MAIN.billCNT"
                 class="font-20"
               >
-                <em>{{
-                  GET_AXIOS_CALLBACK_DATA_MAIN.total_pay.total_pay | comma
-                }}</em>
+                <em>{{ GET_AXIOS_CALLBACK_DATA_MAIN.billCNT | comma }}</em>
               </strong>
               건
             </div>
