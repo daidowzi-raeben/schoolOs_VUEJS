@@ -20,11 +20,8 @@
                 <div class="flex-full m-l-3 m-r-3">
                   <div class="flex m-t-0">
                     <div class="txt">
-                      <p class="bold">
-                        제목입니다 제목ㅁㄴㅇ을 다시 입력합니다.
-                        <Park />
-                      </p>
-                      <span>00.00.00</span>
+                      <p class="bold flex-shrink">제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출</p>
+                      <span>22.22.22</span>
                     </div>
                     <div class="pay text-right flex-right">
                       <!-- <button class="jelly-btn jelly-btn--default">
@@ -41,23 +38,18 @@
                     }}
                   </div> -->
                   <div class="m-t-2 flex flex-full">
-                    <div>
-                      알바비
-                      <strong class="bold font-18 m-l-1"><em>000</em></strong>
-                    </div>
+                    <div class="font-15">
+                    조회수
+                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
+                    <span>회</span>
+                  </div>
+                  <div class="font-15 m-l-3">
+                    좋아요
+                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
+                    <span>회</span>
+                  </div>
                     <div class="flex-right">
-                      <span
-                        class="
-                          jelly-point
-                          m-t-0
-                          jelly-background--type2
-                          m-l-1
-                          font-12
-                        "
-                        >모집인원
-                        <strong>000</strong>
-                        명</span
-                      >
+                      <div class="font-12 p-l-1 l-h-28">김학생</div>
                     </div>
                   </div>
                 </div>
