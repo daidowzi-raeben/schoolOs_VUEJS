@@ -19,16 +19,22 @@
           <div class="p-5 text-center font-14">커뮤니티 페이지 설명</div>
         </div> -->
 
-        <div v-for="item in 10" :key="item" class="quest__content m-t-3">
+        <div v-for="item in 1" :key="item" class="quest__content m-t-3">
+          <!-- 뱃지영역 -->
+
           <div class="box quest m-b-3">
+            <div class="badge-wrap">
+              <b-badge variant="danger">BEST</b-badge>
+            </div>
             <div class="flex">
               <div class="flex-full">
                 <div class="flex m-t-0">
                   <div class="txt">
-                    <p class="bold ellipsis-list flex-shrink">제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출</p>
-                    <span>22.22.22 ~ 22.22.22</span>
+                    <p class="bold ellipsis-list flex-shrink">
+                      제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출
+                    </p>
+                    <span>22.22.22</span>
                   </div>
-                  
                 </div>
                 <div class="m-t-2 flex flex-full">
                   <div class="font-15">
@@ -36,13 +42,39 @@
                     <strong class="bold font-15 m-l-1"><em>99+</em></strong>
                     <span>회</span>
                   </div>
-                  <div class="font-15 m-l-3">
-                    좋아요
+                  <div class="pay text-right flex-right">
+                    <div class="font-12 p-l-1 l-h-28">김학생</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+           <div v-for="item in 1" :key="item" class="quest__content m-t-3">
+          <!-- 뱃지영역 -->
+
+          <div class="box quest m-b-3">
+            <div class="badge-wrap">
+              <b-badge variant="warning">인기글</b-badge>
+            </div>
+            <div class="flex">
+              <div class="flex-full">
+                <div class="flex m-t-0">
+                  <div class="txt">
+                    <p class="bold ellipsis-list flex-shrink">
+                      제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출
+                    </p>
+                    <span>22.22.22</span>
+                  </div>
+                </div>
+                <div class="m-t-2 flex flex-full">
+                  <div class="font-15">
+                    조회수
                     <strong class="bold font-15 m-l-1"><em>99+</em></strong>
                     <span>회</span>
                   </div>
                   <div class="pay text-right flex-right">
-                    <div class="font-12 p-l-1 l-h-28" >김학생</div>
+                    <div class="font-12 p-l-1 l-h-28">김학생</div>
                   </div>
                 </div>
               </div>
@@ -148,12 +180,16 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-word;
-  
+
   display: -webkit-box;
-  -webkit-line-clamp: 2; 
-  -webkit-box-orient: vertical
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .l-h-28 {
   line-height: 1.8rem;
+}
+.badge-wrap {
+  display: flex;
+  justify-content: end;
 }
 </style>
