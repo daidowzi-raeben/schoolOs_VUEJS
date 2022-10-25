@@ -66,7 +66,7 @@
                 <tr
                   v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.albaList"
                   :key="`albaList${i}`"
-                  style=""
+                  style="cursor: pointer"
                   :class="v.status !== '0' ? 'is_acticeTable' : ''"
                   @click="onClickItemDetail(v.idx)"
                 >
@@ -204,54 +204,7 @@
           >
           </vue-editor>
         </div>
-        {{ albaApply }}
-        <div class="m-t-5">
-          <table
-            v-if="GET_AXIOS_CALLBACK_GETTER.albaDetail"
-            class="jelly-table"
-          >
-            <col style="width: 100px" />
-            <col style="width: 100px" />
-            <col style="width: auto" />
-            <col
-              v-if="!GET_AXIOS_CALLBACK_GETTER.albaDetail.sms_idx"
-              style="width: 100px"
-            />
-            <tr>
-              <th>지원자</th>
-              <th>상태</th>
-              <th>남긴말</th>
-              <th v-if="!GET_AXIOS_CALLBACK_GETTER.albaDetail.sms_idx">관리</th>
-            </tr>
-            <tr
-              v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.albApplyList"
-              :key="i"
-            >
-              <td>{{ v.reg_name }}</td>
-              <td v-if="v.status === '0'">신청중</td>
-              <td v-if="v.status === '1'">알바중</td>
-              <td v-if="v.status === '2'">취소</td>
-              <td v-if="v.status === '3'">알바완료</td>
-              <td>{{ v.memo }}</td>
-              <td v-if="!GET_AXIOS_CALLBACK_GETTER.albaDetail.sms_idx">
-                <button
-                  v-if="v.status === '0'"
-                  class="jelly-btn jelly-btn--default"
-                  @click="onSubmitApproval(v.idx)"
-                >
-                  채용
-                </button>
-                <button
-                  v-if="v.status === '1'"
-                  class="jelly-btn jelly-btn--pink"
-                  @click="onSubmitApprovalPay(v.idx)"
-                >
-                  지급
-                </button>
-              </td>
-            </tr>
-          </table>
-        </div>
+
         <div class="m-t-5 text-center">
           <button
             class="jelly-btn jelly-btn--default"
@@ -271,6 +224,44 @@
           >
             삭제하기
           </button>
+        </div>
+        <div class="m-t-5">
+          <table v-if="albaDetail" class="jelly-table">
+            <col style="width: 100px" />
+            <col style="width: 100px" />
+            <col style="width: auto" />
+            <col v-if="!albaDetail.sms_idx" style="width: 100px" />
+            <tr>
+              <th>지원자</th>
+              <th>상태</th>
+              <th>남긴말</th>
+              <th v-if="!albaDetail.sms_idx">관리</th>
+            </tr>
+            <tr v-for="(v, i) in albaApply" :key="i">
+              <td>{{ v.reg_name }}</td>
+              <td v-if="v.status === '0'">신청중</td>
+              <td v-if="v.status === '1'">알바중</td>
+              <td v-if="v.status === '2'">취소</td>
+              <td v-if="v.status === '3'">알바완료</td>
+              <td>{{ v.memo }}</td>
+              <td v-if="!albaDetail.sms_idx">
+                <button
+                  v-if="v.status === '0'"
+                  class="jelly-btn jelly-btn--default"
+                  @click="onSubmitApproval(v.idx)"
+                >
+                  채용
+                </button>
+                <button
+                  v-if="v.status === '1'"
+                  class="jelly-btn jelly-btn--pink"
+                  @click="onSubmitApprovalPay(v.idx)"
+                >
+                  지급
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </b-modal>
