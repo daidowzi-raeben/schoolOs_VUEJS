@@ -50,7 +50,7 @@
             </div>
           </div>
         </div>
-           <div v-for="item in 1" :key="item" class="quest__content m-t-3">
+        <div v-for="item in 1" :key="'a' + item" class="quest__content m-t-3">
           <!-- 뱃지영역 -->
 
           <div class="box quest m-b-3">
@@ -190,6 +190,6 @@ export default {
 }
 .badge-wrap {
   display: flex;
-  justify-content: end;
+  // justify-content: end;
 }
 </style>

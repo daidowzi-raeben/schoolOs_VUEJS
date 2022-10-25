@@ -20,7 +20,21 @@
     </div>
     <div v-if="lottoView">
       <div class="p-l-3 p-r-3 text-center">
+        <div v-if="isBuy === false" class="p-b-2" style="font-size: 12px">
+          1등 예상 당첨금
+          <em style="font-size: 16px; font-weight: bold">
+            {{
+              ((Number(enterResult.total_pay) +
+                Number(enterResult.before_pay)) /
+                2)
+                | comma
+            }}
+          </em>
+          <br />
+          <!-- <span> 총 당첨금의 1등:50%, 2등:30%, 3등:20% 지급 </span> -->
+        </div>
         젤리복권 {{ enterResult.th }}회차
+
         <div class="font-14">
           구매가격 : {{ enterResult.pay | comma }}
           <span v-if="LOGIN_CONFIG.t_reg_pay_unit">{{
