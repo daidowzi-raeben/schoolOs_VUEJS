@@ -43,7 +43,7 @@
                     <span>회</span>
                   </div>
                   <div class="pay text-right flex-right">
-                    <div class="font-12 p-l-1 l-h-28">김학생</div>
+                    <div class="font-12 p-l-1 l-h-28">김학dsfdf생</div>
                   </div>
                 </div>
               </div>
