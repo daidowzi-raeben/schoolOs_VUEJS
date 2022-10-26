@@ -188,11 +188,8 @@ export default {
 .l-h-28 {
   line-height: 1.8rem;
 }
-// .badge-wrap {
-//   display: flex;
-// }
 .badge-txt {
-  span {
+  &span {
     margin-top: 0!important;
   }
   &--black {
