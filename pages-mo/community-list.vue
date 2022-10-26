@@ -23,8 +23,8 @@
           <!-- 뱃지영역 -->
 
           <div class="box quest m-b-3">
-            <div class="badge-wrap">
-              <b-badge variant="danger">BEST</b-badge>
+            <div class="badge-wrap flex">
+              <b-badge variant="danger" class="flex-right badge-txt--white">BEST</b-badge>
             </div>
             <div class="flex">
               <div class="flex-full">
@@ -54,8 +54,8 @@
           <!-- 뱃지영역 -->
 
           <div class="box quest m-b-3">
-            <div class="badge-wrap">
-              <b-badge variant="warning">인기글</b-badge>
+            <div class="badge-wrap flex">
+              <b-badge variant="warning" class="flex-right badge-txt--black">인기글</b-badge>
             </div>
             <div class="flex">
               <div class="flex-full">
@@ -188,8 +188,18 @@ export default {
 .l-h-28 {
   line-height: 1.8rem;
 }
-.badge-wrap {
-  display: flex;
-  // justify-content: end;
+// .badge-wrap {
+//   display: flex;
+// }
+.badge-txt {
+  span {
+    margin-top: 0!important;
+  }
+  &--black {
+    color: #212529!important;
+  }
+  &--white {
+    color: #fff!important;
+  }
 }
 </style>
