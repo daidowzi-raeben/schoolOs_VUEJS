@@ -55,7 +55,7 @@
 
           <div class="box quest m-b-3">
             <div class="badge-wrap">
-              <b-badge variant="warning">인기글</b-badge>
+              <b-badge variant="warning">adfgsdfgsdfg</b-badge>
             </div>
             <div class="flex">
               <div class="flex-full">
