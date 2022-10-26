@@ -20,7 +20,7 @@
                 <div class="flex-full m-l-3 m-r-3">
                   <div class="flex m-t-0">
                     <div class="txt">
-                      <p class="bold flex-shrink">제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출</p>
+                      <p class="bold flex-shrink">수정1</p>
                       <span>22.22.22</span>
                     </div>
                     <div class="pay text-right flex-right">
