@@ -71,7 +71,7 @@
                     src="../../static/mo/emoji/emoji_like.svg"
                     alt="좋아요 표시 아이콘"
                   />
-                  <p class="name">좋아요</p>
+                  <p class="bold name">좋아요</p>
                   <p class="rating">999</p>
                 </li>
                 <li class="face--fun">
@@ -79,7 +79,7 @@
                     src="../../static/mo/emoji/emoji_fun.svg"
                     alt="재밌어요 표시 아이콘"
                   />
-                  <p class="name">재밌어요</p>
+                  <p class="bold name">재밌어요</p>
                   <p class="rating">999</p>
                 </li>
                 <li class="face--cheer">
@@ -87,7 +87,7 @@
                     src="../../static/mo/emoji/emoji_cheer.svg"
                     alt="힘내요 표시 아이콘"
                   />
-                  <p class="name">힘내요</p>
+                  <p class="bold name">힘내요</p>
                   <p class="rating">999</p>
                 </li>
                 <li class="face--study">
@@ -95,7 +95,7 @@
                     src="../../static/mo/emoji/emoji_study.svg"
                     alt="유익해요 표시 아이콘"
                   />
-                  <p class="name">유익해요</p>
+                  <p class="bold name">유익해요</p>
                   <p class="rating">999</p>
                 </li>
                 <li class="face--wow">
@@ -103,7 +103,7 @@
                     src="../../static/mo/emoji/emoji_wow.svg"
                     alt="놀라워요 표시 아이콘"
                   />
-                  <p class="name">놀라워요</p>
+                  <p class="bold name">놀라워요</p>
                   <p class="rating">999</p>
                 </li>
               </ul>
@@ -182,12 +182,11 @@ export default {
       width: 20%;
       text-align: center;
       img {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         margin-bottom: 10px;
       }
       p {
-        text-align: center;
         &.name {
           font-size: 14px;
         }
