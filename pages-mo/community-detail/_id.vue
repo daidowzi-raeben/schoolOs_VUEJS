@@ -1,7 +1,6 @@
 <template>
   <div id="school-content">
-    <div>asdasdasd</div>
-    <b-icon icon="box-arrow-up-right" style="color: blue"></b-icon>
+    <b-icon icon="box-arrow-up-right" style="color: blue;"></b-icon>
     <!-- <div v-if="LOADING" id="LOADING">
       <img src="~/static/img/loading.gif" />
     </div> -->
@@ -22,9 +21,8 @@
                     <div class="txt">
                       <p class="bold">
                         제목입니다 제목ㅁㄴㅇ을 다시 입력합니다.
-                        <Park />
                       </p>
-                      <span>00.00.00</span>
+                      <span>22.22.22</span>
                     </div>
                     <div class="pay text-right flex-right">
                       <!-- <button class="jelly-btn jelly-btn--default">
@@ -42,22 +40,11 @@
                   </div> -->
                   <div class="m-t-2 flex flex-full">
                     <div>
-                      알바비
+                      조회수
                       <strong class="bold font-18 m-l-1"><em>000</em></strong>
                     </div>
-                    <div class="flex-right">
-                      <span
-                        class="
-                          jelly-point
-                          m-t-0
-                          jelly-background--type2
-                          m-l-1
-                          font-12
-                        "
-                        >모집인원
-                        <strong>000</strong>
-                        명</span
-                      >
+                    <div class="pay text-right flex-right">
+                      <div class="font-12 p-l-1 l-h-28">김학생</div>
                     </div>
                   </div>
                 </div>
@@ -74,12 +61,52 @@
             >
               내용
             </div>
-            <div>
-              <b-form-rating
-                v-model="value"
-                variant="warning"
-                class="mb-2"
-              ></b-form-rating>
+            <div class="emoji-box">
+              <p class="bold">
+                이 게시글을 추천해요
+              </p>
+              <ul class="face flex">
+                <li class="face--like">
+                  <img
+                    src="../../static/mo/emoji/emoji_like.svg"
+                    alt="좋아요 표시 아이콘"
+                  />
+                  <p class="name">좋아요</p>
+                  <p class="rating">999</p>
+                </li>
+                <li class="face--fun">
+                  <img
+                    src="../../static/mo/emoji/emoji_fun.svg"
+                    alt="재밌어요 표시 아이콘"
+                  />
+                  <p class="name">재밌어요</p>
+                  <p class="rating">999</p>
+                </li>
+                <li class="face--cheer">
+                  <img
+                    src="../../static/mo/emoji/emoji_cheer.svg"
+                    alt="힘내요 표시 아이콘"
+                  />
+                  <p class="name">힘내요</p>
+                  <p class="rating">999</p>
+                </li>
+                <li class="face--study">
+                  <img
+                    src="../../static/mo/emoji/emoji_study.svg"
+                    alt="유익해요 표시 아이콘"
+                  />
+                  <p class="name">유익해요</p>
+                  <p class="rating">999</p>
+                </li>
+                <li class="face--wow">
+                  <img
+                    src="../../static/mo/emoji/emoji_wow.svg"
+                    alt="놀라워요 표시 아이콘"
+                  />
+                  <p class="name">놀라워요</p>
+                  <p class="rating">999</p>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -137,4 +164,38 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.emoji-box {
+  position: fixed;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #eee;
+  .face {
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 0 !important;
+    li {
+      width: 20%;
+      text-align: center;
+      img {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+      }
+      p {
+        text-align: center;
+        &.name {
+          font-size: 14px;
+        }
+        &.rating {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+</style>
