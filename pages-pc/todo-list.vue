@@ -529,12 +529,14 @@
               <td :class="v.is_status === 'Y' ? 'is_activeTable' : ''">
                 {{ v.is_status === 'Y' ? '수락' : '미수락' }}
               </td>
+
               <td
                 v-if="v.is_confirm === 'N'"
-                :class="v.is_complete === 'Y' ? 'is_activeTable' : ''"
+                :class="v.is_complete === 'Y' ? 'is_activeTable2' : ''"
               >
                 {{ v.is_complete === 'Y' ? '제출' : '미제출' }}
               </td>
+
               <td v-if="v.is_confirm === 'R'">다시 제출</td>
               <td v-if="!v.is_confirm">미제출</td>
               <td
@@ -1257,6 +1259,10 @@ export default {
 <style lang="scss">
 .is_activeTable {
   background: #6830bd !important;
+  color: #fff;
+}
+.is_activeTable2 {
+  background: #d88c00 !important;
   color: #fff;
 }
 #fileDataSlide {
