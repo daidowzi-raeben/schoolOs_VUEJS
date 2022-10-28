@@ -1,6 +1,5 @@
 <template>
   <div id="school-content">
-    <b-icon icon="box-arrow-up-right" style="color: blue;"></b-icon>
     <!-- <div v-if="LOADING" id="LOADING">
       <img src="~/static/img/loading.gif" />
     </div> -->
@@ -80,7 +79,7 @@
                   <p class="bold name">좋아요</p>
                   <p class="rating"><em>999</em></p>
                 </li>
-                <li class="face--fun">
+                <li class="face--fun is_disabled">
                   <img
                     src="../../static/mo/emoji/emoji_fun.svg"
                     alt="재밌어요 표시 아이콘"
@@ -88,7 +87,7 @@
                   <p class="bold name">재밌어요</p>
                   <p class="rating"><em>999</em></p>
                 </li>
-                <li class="face--cheer">
+                <li class="face--cheer is_disabled">
                   <img
                     src="../../static/mo/emoji/emoji_cheer.svg"
                     alt="힘내요 표시 아이콘"
@@ -96,7 +95,7 @@
                   <p class="bold name">힘내요</p>
                   <p class="rating"><em>999</em></p>
                 </li>
-                <li class="face--study">
+                <li class="face--study is_disabled">
                   <img
                     src="../../static/mo/emoji/emoji_study.svg"
                     alt="유익해요 표시 아이콘"
@@ -104,7 +103,7 @@
                   <p class="bold name">유익해요</p>
                   <p class="rating"><em>999</em></p>
                 </li>
-                <li class="face--wow">
+                <li class="face--wow is_disabled">
                   <img
                     src="../../static/mo/emoji/emoji_wow.svg"
                     alt="놀라워요 표시 아이콘"
@@ -198,6 +197,17 @@ export default {
         }
         &.rating {
           font-size: 12px;
+        }
+      }
+      &.is_disabled {
+        img {
+          opacity: 0.5;
+        }
+        p {
+          color: #888;
+          em {
+            color: #888;
+          }
         }
       }
     }
