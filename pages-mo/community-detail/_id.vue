@@ -72,7 +72,7 @@
                     alt="좋아요 표시 아이콘"
                   />
                   <p class="bold name">좋아요</p>
-                  <p class="rating">999</p>
+                  <p class="rating"><em>999</em></p>
                 </li>
                 <li class="face--fun">
                   <img
@@ -80,7 +80,7 @@
                     alt="재밌어요 표시 아이콘"
                   />
                   <p class="bold name">재밌어요</p>
-                  <p class="rating">999</p>
+                  <p class="rating"><em>999</em></p>
                 </li>
                 <li class="face--cheer">
                   <img
@@ -88,7 +88,7 @@
                     alt="힘내요 표시 아이콘"
                   />
                   <p class="bold name">힘내요</p>
-                  <p class="rating">999</p>
+                  <p class="rating"><em>999</em></p>
                 </li>
                 <li class="face--study">
                   <img
@@ -96,7 +96,7 @@
                     alt="유익해요 표시 아이콘"
                   />
                   <p class="bold name">유익해요</p>
-                  <p class="rating">999</p>
+                  <p class="rating"><em>999</em></p>
                 </li>
                 <li class="face--wow">
                   <img
@@ -104,7 +104,7 @@
                     alt="놀라워요 표시 아이콘"
                   />
                   <p class="bold name">놀라워요</p>
-                  <p class="rating">999</p>
+                  <p class="rating"><em>999</em></p>
                 </li>
               </ul>
             </div>
