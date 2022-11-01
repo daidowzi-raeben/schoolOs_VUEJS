@@ -15,9 +15,26 @@
       class="border rounded p-2 topBtn"
     ></b-icon>
     <div id="target" class="content">
-      <div v-if="GET_AXIOS_CALLBACK_GETTER" class="content__body m-t-1 h60">
-        <div class="account">
-          <h3>재잘재잘(임시)</h3>
+      <div
+        v-if="
+          GET_AXIOS_CALLBACK_GETTER &&
+          GET_AXIOS_CALLBACK_GETTER.auth_read === 'Y'
+        "
+        class="content__body m-t-1 h60"
+      >
+        <div class="account flex">
+          <h3 class="m-t-2">우리끼리</h3>
+          <div class="flex-right">
+            <!-- <nuxt-link to="/parttime-write"> -->
+            <button
+              v-if="GET_AXIOS_CALLBACK_GETTER.auth_create === 'Y'"
+              class="jelly-btn jelly-btn--default"
+              @click="onClickWrite"
+            >
+              글쓰기
+            </button>
+            <!-- </nuxt-link> -->
+          </div>
         </div>
 
         <!-- <div class="quest__content m-t-3">
@@ -181,6 +198,9 @@
           </div>
         </div>
       </div>
+      <div v-else class="text-center">
+        <h3>지금은 이용할 수 없어요</h3>
+      </div>
     </div>
   </div>
 </template>
@@ -198,6 +218,7 @@ export default {
       },
       communityList: [],
       topBtn: false,
+      paramsAuth: {},
     }
   },
 
@@ -218,7 +239,10 @@ export default {
     this.params.type = 'communityList'
     this.params.page = 1
     this.scrollLoadData(this.params)
-    // this.GET_AXIOS(this.params)
+    // 게시판 권한
+    this.paramsAuth.smt_idx = this.LOGIN_CONFIG.smt_idx
+    this.paramsAuth.type = 'communityAuth'
+    this.GET_AXIOS(this.paramsAuth)
     // console.log('this.params.page', this.params)
     // this.$nextTick(() => {
     //   // window.addEventListener('scroll', this.scrollLoad('asd'))
@@ -271,6 +295,24 @@ export default {
     },
     onClickDetail(e) {
       this.$router.push(`/community-detail/${e}`)
+    },
+    onClickWrite() {
+      const pay = Number(this.GET_AXIOS_CALLBACK_GETTER.pay)
+      if (pay > 0) {
+        if (
+          confirm(
+            `글을 작성하려면 ${this.comma(pay)}${
+              this.LOGIN_STUDENT.t_reg_pay_unit
+            }만큼 지불해야 해요.\n작성할까요?`
+          )
+        ) {
+          console.log('TRUE')
+        }
+      }
+    },
+    comma(str) {
+      str = String(str)
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
     },
   },
 }
