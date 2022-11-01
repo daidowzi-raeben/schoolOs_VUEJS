@@ -1,80 +1,137 @@
 <template>
-  <div id="school-content">
+  <div id="school-content" refs="contentLoad">
     <div class="p-3 jelly-tab">
       <ul class="flex">
-        <li class="is_active">커뮤니티</li>
+        <li class="is_active">우리끼리</li>
         <li>
-          <nuxt-link to="/parttime-list/0">커뮤니티</nuxt-link>
+          <nuxt-link to="/parttime-list/0">선생님께</nuxt-link>
         </li>
       </ul>
     </div>
-
-    <div class="content">
-      <div class="content__body m-t-1 h60">
-        <div class="account">
-          <h3>재잘재잘(임시)</h3>
+    <b-icon
+      v-show="topBtn"
+      icon="caret-up"
+      animation="cylon-vertical"
+      class="border rounded p-2 topBtn"
+    ></b-icon>
+    <div id="target" class="content">
+      <div
+        v-if="
+          GET_AXIOS_CALLBACK_GETTER &&
+          GET_AXIOS_CALLBACK_GETTER.auth_read === 'Y'
+        "
+        class="content__body m-t-1 h60"
+      >
+        <div class="account flex">
+          <h3 class="m-t-2">우리끼리</h3>
+          <div class="flex-right">
+            <!-- <nuxt-link to="/parttime-write"> -->
+            <button
+              v-if="GET_AXIOS_CALLBACK_GETTER.auth_create === 'Y'"
+              class="jelly-btn jelly-btn--default"
+              @click="onClickWrite"
+            >
+              글쓰기
+            </button>
+            <!-- </nuxt-link> -->
+          </div>
         </div>
 
         <!-- <div class="quest__content m-t-3">
           <div class="p-5 text-center font-14">커뮤니티 페이지 설명</div>
         </div> -->
 
-        <div v-for="item in 1" :key="item" class="quest__content m-t-3">
-          <!-- 뱃지영역 -->
+        <div v-if="communityList && communityList.length > 0">
+          <div v-for="(k, e) in communityList" :key="'index' + e">
+            <div v-if="e === 0">
+              <div
+                v-for="(v, i) in communityList[0].bestList"
+                :key="i"
+                class="quest__content m-t-3"
+                @click="onClickDetail(v.idx)"
+              >
+                <!-- 뱃지영역 -->
 
-          <div class="box quest m-b-3">
-            <div class="badge-wrap">
-              <b-badge variant="danger">BEST</b-badge>
-            </div>
-            <div class="flex">
-              <div class="flex-full">
-                <div class="flex m-t-0">
-                  <div class="txt">
-                    <p class="bold ellipsis-list flex-shrink">
-                      제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출
-                    </p>
-                    <span>22.22.22</span>
+                <div class="box quest m-b-3">
+                  <div class="badge-wrap flex m-t-0">
+                    <b-badge
+                      variant="danger"
+                      class="flex-right badge-txt--white"
+                      >BEST</b-badge
+                    >
                   </div>
-                </div>
-                <div class="m-t-2 flex flex-full">
-                  <div class="font-15">
-                    조회수
-                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                    <span>회</span>
-                  </div>
-                  <div class="pay text-right flex-right">
-                    <div class="font-12 p-l-1 l-h-28">김학생배고파</div>
+                  <div class="flex">
+                    <div class="flex-full">
+                      <div class="flex m-t-0">
+                        <div class="txt">
+                          <p class="bold ellipsis-list flex-shrink">
+                            {{ v.subject }}
+                          </p>
+                          <span>{{ v.datetime }}</span>
+                        </div>
+                      </div>
+                      <div class="m-t-2 flex flex-full">
+                        <div class="font-15">
+                          조회수
+                          <strong class="bold font-15 m-l-1"
+                            ><em>
+                              {{ Number(v.hit) > 99 ? '99+' : v.hit }}
+                            </em></strong
+                          >
+                          <span>회</span>
+                        </div>
+                        <div class="pay text-right flex-right">
+                          <div class="font-12 p-l-1 l-h-28">
+                            {{ v.reg_name }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div v-for="item in 1" :key="'a' + item" class="quest__content m-t-3">
-          <!-- 뱃지영역 -->
+            <div
+              v-for="(v, i) in communityList[e].list"
+              :key="'list' + i"
+              class="quest__content m-t-3"
+              @click="onClickDetail(v.idx)"
+            >
+              <!-- 뱃지영역 -->
 
-          <div class="box quest m-b-3">
-            <div class="badge-wrap">
-              <b-badge variant="warning">adfgsdfgsdfg</b-badge>
-            </div>
-            <div class="flex">
-              <div class="flex-full">
-                <div class="flex m-t-0">
-                  <div class="txt">
-                    <p class="bold ellipsis-list flex-shrink">
-                      제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출제목은최대두줄까지만노출
-                    </p>
-                    <span>22.22.22</span>
-                  </div>
+              <div class="box quest m-b-3">
+                <div class="badge-wrap flex m-t-0">
+                  <b-badge
+                    v-if="Number(v.hit) > 10"
+                    variant="warning"
+                    class="flex-right badge-txt--black"
+                    >인기글</b-badge
+                  >
                 </div>
-                <div class="m-t-2 flex flex-full">
-                  <div class="font-15">
-                    조회수
-                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                    <span>회</span>
-                  </div>
-                  <div class="pay text-right flex-right">
-                    <div class="font-12 p-l-1 l-h-28">김xcvxcdfgsdfg학생</div>
+                <div class="flex">
+                  <div class="flex-full">
+                    <div class="flex m-t-0">
+                      <div class="txt">
+                        <p class="bold ellipsis-list flex-shrink">
+                          {{ v.subject }}
+                        </p>
+                        <span>{{ v.datetime }}</span>
+                      </div>
+                    </div>
+                    <div class="m-t-2 flex flex-full">
+                      <div class="font-15">
+                        조회수
+                        <strong class="bold font-15 m-l-1"
+                          ><em>
+                            {{ Number(v.hit) > 99 ? '99+' : v.hit }}
+                          </em></strong
+                        >
+                        <span>회</span>
+                      </div>
+                      <div class="pay text-right flex-right">
+                        <div class="font-12 p-l-1 l-h-28">{{ v.reg_name }}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -141,6 +198,9 @@
           </div>
         </div>
       </div>
+      <div v-else class="text-center">
+        <h3>지금은 이용할 수 없어요</h3>
+      </div>
     </div>
   </div>
 </template>
@@ -149,8 +209,17 @@
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
+  layout: 'default-mo',
   data() {
-    return {}
+    return {
+      scrollPostion: true,
+      params: {
+        page: 1,
+      },
+      communityList: [],
+      topBtn: false,
+      paramsAuth: {},
+    }
   },
 
   computed: {
@@ -162,7 +231,23 @@ export default {
   },
   mounted() {
     //   DATA INIT
-    console.log(this.$nuxt, this.$config, this.rangeCalendar)
+    // console.log(this.$nuxt, this.$config, this.rangeCalendar)
+    // DATA INIT
+    this.LOGIN_CONFIG = JSON.parse(localStorage.getItem('STUDENT'))
+    console.log(this.$nuxt, this.$config, this.LOGIN_CONFIG)
+    this.params = this.LOGIN_CONFIG
+    this.params.type = 'communityList'
+    this.params.page = 1
+    this.scrollLoadData(this.params)
+    // 게시판 권한
+    this.paramsAuth.smt_idx = this.LOGIN_CONFIG.smt_idx
+    this.paramsAuth.type = 'communityAuth'
+    this.GET_AXIOS(this.paramsAuth)
+    // console.log('this.params.page', this.params)
+    // this.$nextTick(() => {
+    //   // window.addEventListener('scroll', this.scrollLoad('asd'))
+    // })
+    window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     // init
@@ -170,6 +255,65 @@ export default {
     ...mapMutations(['LOADING_TRUE']),
 
     // EVENT
+    handleScroll() {
+      const documentHeight = document.body.scrollHeight
+      // console.log(documentHeight, window.scrollY, this.params.page)
+      if (documentHeight - 1000 < window.scrollY) {
+        this.scrollPostion === true
+          ? this.scrollAddLoad(documentHeight)
+          : console.log('LoadStop')
+      }
+      if (window.scrollY < 900) {
+        this.topBtn = false
+      }
+    },
+    scrollAddLoad(e) {
+      console.log('Loading...........', this.params)
+      this.scrollPostion = false
+      console.log(e)
+      this.params = this.LOGIN_CONFIG
+      this.params.type = 'communityList'
+      this.params.page = this.params.page + 1
+      this.scrollLoadData(this.params)
+      // window.removeEventListener('scroll', this.handleScroll)
+    },
+    scrollLoadData(params) {
+      // 2페이지부터 탑버튼 생성
+      console.log('params.page', params.page)
+      Number(params.page) > 1 ? (this.topBtn = true) : (this.topBtn = false)
+      this.$axios
+        .get(process.env.VUE_APP_API + '/student.php', { params })
+        .then((res) => {
+          console.log('scrollLoadData', res, params)
+          this.communityList.push(res.data)
+          console.log('communityList', this.communityList)
+          this.scrollPostion = true
+        })
+        .catch((res) => {
+          console.error('scrollLoadDataFaile', res)
+        })
+    },
+    onClickDetail(e) {
+      this.$router.push(`/community-detail/${e}`)
+    },
+    onClickWrite() {
+      const pay = Number(this.GET_AXIOS_CALLBACK_GETTER.pay)
+      if (pay > 0) {
+        if (
+          confirm(
+            `글을 작성하려면 ${this.comma(pay)}${
+              this.LOGIN_STUDENT.t_reg_pay_unit
+            }만큼 지불해야 해요.\n작성할까요?`
+          )
+        ) {
+          console.log('TRUE')
+        }
+      }
+    },
+    comma(str) {
+      str = String(str)
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+    },
   },
 }
 </script>
@@ -188,8 +332,23 @@ export default {
 .l-h-28 {
   line-height: 1.8rem;
 }
-.badge-wrap {
-  display: flex;
-  // justify-content: end;
+.badge-txt {
+  &span {
+    margin-top: 0 !important;
+  }
+  &--black {
+    color: #212529 !important;
+  }
+  &--white {
+    color: #fff !important;
+  }
+}
+.topBtn {
+  position: fixed;
+  z-index: 9999;
+  bottom: 85px;
+  right: 20px;
+  font-size: 40px;
+  background: #fff;
 }
 </style>

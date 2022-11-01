@@ -1,7 +1,5 @@
 <template>
   <div id="school-content">
-    <div>asdasdasd</div>
-    <b-icon icon="box-arrow-up-right" style="color: blue"></b-icon>
     <!-- <div v-if="LOADING" id="LOADING">
       <img src="~/static/img/loading.gif" />
     </div> -->
@@ -20,7 +18,9 @@
                 <div class="flex-full m-l-3 m-r-3">
                   <div class="flex m-t-0">
                     <div class="txt">
-                      <p class="bold flex-shrink">수정1</p>
+                      <p class="bold">
+                        제목입니다 제목ㅁㄴㅇ을 다시 입력합니다.
+                      </p>
                       <span>22.22.22</span>
                     </div>
                     <div class="pay text-right flex-right">
@@ -39,15 +39,15 @@
                   </div> -->
                   <div class="m-t-2 flex flex-full">
                     <div class="font-15">
-                    조회수
-                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                    <span>회</span>
-                  </div>
-                  <div class="font-15 m-l-3">
-                    좋아요
-                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                    <span>회</span>
-                  </div>
+                      조회수
+                      <strong class="bold font-15 m-l-1"><em>99+</em></strong>
+                      <span>회</span>
+                    </div>
+                    <div class="font-15 m-l-3">
+                      좋아요
+                      <strong class="bold font-15 m-l-1"><em>99+</em></strong>
+                      <span>회</span>
+                    </div>
                     <div class="flex-right">
                       <div class="font-12 p-l-1 l-h-28">김학생</div>
                     </div>
@@ -66,12 +66,50 @@
             >
               내용
             </div>
-            <div>
-              <b-form-rating
-                v-model="value"
-                variant="warning"
-                class="mb-2"
-              ></b-form-rating>
+            <div class="emoji-box">
+              <p class="bold">이 게시글을 추천해요</p>
+              <ul class="face flex">
+                <li class="face--like">
+                  <img
+                    src="../../static/mo/emoji/emoji_like.svg"
+                    alt="좋아요 표시 아이콘"
+                  />
+                  <p class="bold name">좋아요</p>
+                  <p class="rating"><em>999</em></p>
+                </li>
+                <li class="face--fun is_disabled">
+                  <img
+                    src="../../static/mo/emoji/emoji_fun.svg"
+                    alt="재밌어요 표시 아이콘"
+                  />
+                  <p class="bold name">재밌어요</p>
+                  <p class="rating"><em>999</em></p>
+                </li>
+                <li class="face--cheer is_disabled">
+                  <img
+                    src="../../static/mo/emoji/emoji_cheer.svg"
+                    alt="힘내요 표시 아이콘"
+                  />
+                  <p class="bold name">힘내요</p>
+                  <p class="rating"><em>999</em></p>
+                </li>
+                <li class="face--study is_disabled">
+                  <img
+                    src="../../static/mo/emoji/emoji_study.svg"
+                    alt="유익해요 표시 아이콘"
+                  />
+                  <p class="bold name">유익해요</p>
+                  <p class="rating"><em>999</em></p>
+                </li>
+                <li class="face--wow is_disabled">
+                  <img
+                    src="../../static/mo/emoji/emoji_wow.svg"
+                    alt="놀라워요 표시 아이콘"
+                  />
+                  <p class="bold name">놀라워요</p>
+                  <p class="rating"><em>999</em></p>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -129,4 +167,48 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.emoji-box {
+  position: fixed;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #eee;
+  .face {
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 0 !important;
+    li {
+      width: 20%;
+      text-align: center;
+      img {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 10px;
+      }
+      p {
+        &.name {
+          font-size: 14px;
+        }
+        &.rating {
+          font-size: 12px;
+        }
+      }
+      &.is_disabled {
+        img {
+          opacity: 0.5;
+        }
+        p {
+          color: #888;
+          em {
+            color: #888;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
