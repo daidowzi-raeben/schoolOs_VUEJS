@@ -6,7 +6,7 @@
     <div class="historyBack m-l-3 m-b-5">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
     </div>
-    <div class="content">
+    <div v-if="GET_AXIOS_CALLBACK_GETTER" class="content">
       <div class="m-t-1 h60">
         <div class="account">
           <div class="quest__content m-t-3">
@@ -19,9 +19,14 @@
                   <div class="flex m-t-0">
                     <div class="txt">
                       <p class="bold">
-                        제목입니다 제목ㅁㄴㅇ을 다시 입력합니다.
+                        {{ GET_AXIOS_CALLBACK_GETTER.subject }}
                       </p>
-                      <span>22.22.22</span>
+                      <span class="font-12">
+                        {{
+                          GET_AXIOS_CALLBACK_GETTER.reg_datetime
+                            | moment('YY.MM.DD')
+                        }}
+                      </span>
                     </div>
                     <div class="pay text-right flex-right">
                       <!-- <button class="jelly-btn jelly-btn--default">
@@ -39,17 +44,23 @@
                   </div> -->
                   <div class="m-t-2 flex flex-full">
                     <div class="font-15">
-                    조회수
-                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                    <span>회</span>
-                  </div>
-                  <div class="font-15 m-l-3">
-                    좋아요
-                    <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                    <span>회</span>
-                  </div>
+                      조회수
+                      <strong class="bold font-15 m-l-1"
+                        ><em>
+                          {{ GET_AXIOS_CALLBACK_GETTER.hit | comma }}
+                        </em></strong
+                      >
+                      <span>회</span>
+                    </div>
+                    <!-- <div class="font-15 m-l-3">
+                      좋아요
+                      <strong class="bold font-15 m-l-1"><em>99+</em></strong>
+                      <span>회</span>
+                    </div> -->
                     <div class="flex-right">
-                      <div class="font-12 p-l-1 l-h-28">김학생</div>
+                      <div class="font-12 p-l-1 l-h-28">
+                        {{ GET_AXIOS_CALLBACK_GETTER.reg_name }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -58,18 +69,16 @@
             <div
               style="
                 background-color: #f2f3f5;
-                padding: 10px;
+                padding: 0px 10px 10px;
                 border-radius: 10px;
                 white-space: pre-line;
               "
               class="m-l-3 m-r-3 img-full m-t-5"
             >
-              내용
+              {{ GET_AXIOS_CALLBACK_GETTER.content }}
             </div>
             <div class="emoji-box">
-              <p class="bold">
-                이 게시글을 추천해요
-              </p>
+              <p class="bold">이 게시글을 추천해요</p>
               <ul class="face flex">
                 <li class="face--like">
                   <img
@@ -121,12 +130,12 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
-import Park from '~/components-mo/test/TestStyle.vue'
+// import Park from '~/components-mo/test/TestStyle.vue'
 // import { historyBack } from '~/config/util'
 
 export default {
   components: {
-    Park,
+    // Park,
   },
   validate({ params }) {
     return /^\d+$/.test(params.id)
@@ -156,6 +165,10 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
+    console.log(this.idx)
+    this.params.type = 'communityView'
+    this.params.idx = this.idx
+    this.GET_AXIOS(this.params)
   },
   methods: {
     // init
