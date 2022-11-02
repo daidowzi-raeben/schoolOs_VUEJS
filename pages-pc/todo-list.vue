@@ -806,17 +806,17 @@ export default {
     },
   },
   watch: {
-    'params.type': {
-      handler(value) {
-        if (value) {
-          this.params = this.LOGIN_TEACHER
-          this.params.type = 'questList'
-          this.params.queryCate = null
-          this.GET_AXIOS(this.params)
-          this.params.type = ''
-        }
-      },
-    },
+    //   'params.type': {
+    //     handler(value) {
+    //       if (value) {
+    //         this.params = this.LOGIN_TEACHER
+    //         this.params.type = 'questList'
+    //         this.params.queryCate = null
+    //         this.GET_AXIOS(this.params)
+    //         this.params.type = ''
+    //       }
+    //     },
+    //   },
     '$route.query.cate': {
       handler(value) {
         console.log(value)
@@ -1145,6 +1145,8 @@ export default {
       this.confirm.checked = this.checked
       mode === 'all' ? (this.confirm.mode = 'all') : (this.confirm.mode = null)
       this.POST_AXIOS(this.confirm)
+      this.selectAll = false
+      this.checked = []
       setTimeout(() => {
         this.noticeIdx = sqIdx
         this.paramsDetail = this.LOGIN_TEACHER
