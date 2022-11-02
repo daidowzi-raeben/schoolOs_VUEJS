@@ -11,66 +11,33 @@
         <div class="account">
           <div class="quest__content m-t-3">
             <div class="box quest m-b-3">
-              <div class="flex">
-                <div class="label blue">
-                  <!-- {{ GET_AXIOS_CALLBACK_GETTER.albaDetail.subject }} -->
+            <div class="m-l-3 m-r-3 m-t-5">
+                <p class="m-t-3">제목</p>
+                <input
+                class="jelly-text jelly-text--h wd-full m-t-2"
+                />
+                <p class="m-t-3">내용</p>
+                <textarea
+                    class="jelly-text m-t-2 jelly-text--h wd-full"
+                    style="height: 150px"
+                ></textarea>
+                <div class="m-t-3">
+                    <p class="m-t-3">글을 작성하려면 <em>80</em> 잼을 지불해야 해요</p>
                 </div>
-                <div class="flex-full m-l-3 m-r-3">
-                  <div class="flex m-t-0">
-                    <div class="txt">
-                      <p class="bold">
-                        제목입니다 제목ㅁㄴㅇ을 다시 입력합니다.
-                      </p>
-                      <span>22.22.22</span>
-                    </div>
-                    <div class="pay text-right flex-right">
-                      <!-- <button class="jelly-btn jelly-btn--default">
-                        자세히 보기
-                      </button> -->
-                    </div>
-                  </div>
-                  <!-- <div class="m-t-2 jelly-color--888 limit limit-3">
-                      {{
-                        GET_AXIOS_CALLBACK_GETTER.contents.replaceAll(
-                          /\!\[|\].*.[)]/g,
-                          ''
-                        )
-                      }}
-                    </div> -->
-                  <div class="m-t-2 flex flex-full">
-                    <div class="font-15">
-                      조회수
-                      <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                      <span>회</span>
-                    </div>
-                    <div class="font-15 m-l-3">
-                      좋아요
-                      <strong class="bold font-15 m-l-1"><em>99+</em></strong>
-                      <span>회</span>
-                    </div>
-                    <div class="flex-right">
-                      <div class="font-12 p-l-1 l-h-28">김학생</div>
-                    </div>
-                  </div>
+                <div class="m-t-3">
+                    <button
+                    class="jelly-btn jelly-btn--pink wd-full"
+                    >
+                    작성하기
+                    </button>
                 </div>
-              </div>
-            </div>
-            <div
-              style="
-                background-color: #f2f3f5;
-                padding: 10px;
-                border-radius: 10px;
-                white-space: pre-line;
-              "
-              class="m-l-3 m-r-3 img-full m-t-5"
-            >
-              내용
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </template>
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
@@ -80,15 +47,6 @@ import Park from '~/components-mo/test/TestStyle.vue'
 export default {
   components: {
     Park,
-  },
-  validate({ params }) {
-    return /^\d+$/.test(params.id)
-  },
-  asyncData({ params }) {
-    console.log(params)
-    return {
-      idx: params.id,
-    }
   },
   data() {
     return {
@@ -122,48 +80,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.emoji-box {
-  position: fixed;
-  width: 100%;
-  padding: 20px;
-  background-color: #fff;
-  bottom: 0;
-  left: 0;
-  border-top: 1px solid #eee;
-  .face {
-    justify-content: space-evenly;
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 0 !important;
-    li {
-      width: 20%;
-      text-align: center;
-      img {
-        width: 35px;
-        height: 35px;
-        margin-bottom: 10px;
-      }
-      p {
-        &.name {
-          font-size: 14px;
-        }
-        &.rating {
-          font-size: 12px;
-        }
-      }
-      &.is_disabled {
-        img {
-          opacity: 0.5;
-        }
-        p {
-          color: #888;
-          em {
-            color: #888;
-          }
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
