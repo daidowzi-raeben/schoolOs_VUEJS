@@ -12,6 +12,13 @@
           <div class="quest__content m-t-3">
             <div class="box quest m-b-3">
             <div class="m-l-3 m-r-3 m-t-5">
+                <p>항목 선택</p>
+                <select
+                    class="jelly-text jelly-text--h wd-full m-t-2"
+                >
+                    <option>우리끼리</option>
+                    <option>선생님께</option>
+                </select>
                 <p class="m-t-3">제목</p>
                 <input
                 class="jelly-text jelly-text--h wd-full m-t-2"
@@ -27,8 +34,9 @@
                 <div class="m-t-3">
                     <button
                     class="jelly-btn jelly-btn--pink wd-full"
+                    :disabled="is_write"
                     >
-                    작성하기
+                    {{ mode === 'w' ? '작성하기' : '수정하기' }}
                     </button>
                 </div>
             </div>
@@ -53,9 +61,12 @@ export default {
       params: {},
       paramsPost: {},
       value: 4,
+      is_write: false,
+      mode : 'w',
     }
   },
-
+  
+  
   computed: {
     ...mapState(['LOGIN']),
     ...mapGetters(['GET_AXIOS_CALLBACK_GETTER', 'LOGIN_STUDENT']),
