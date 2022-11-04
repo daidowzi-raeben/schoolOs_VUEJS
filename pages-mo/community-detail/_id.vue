@@ -77,48 +77,74 @@
             >
               {{ GET_AXIOS_CALLBACK_GETTER.content }}
             </div>
-            <div class="emoji-box">
+            <div
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER &&
+                GET_AXIOS_CALLBACK_GETTER.category === 'S'
+              "
+              class="emoji-box"
+            >
               <p class="bold">이 게시글을 추천해요</p>
               <ul class="face flex">
-                <li class="face--like">
+                <li class="face--like" @click="onClickLike(1)">
                   <img
                     src="../../static/mo/emoji/emoji_like.svg"
                     alt="좋아요 표시 아이콘"
                   />
                   <p class="bold name">좋아요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em
+                      >{{ GET_AXIOS_CALLBACK_GETTER.emotion1_cnt | comma }}
+                    </em>
+                  </p>
                 </li>
-                <li class="face--fun is_disabled">
+                <li class="face--fun">
                   <img
                     src="../../static/mo/emoji/emoji_fun.svg"
                     alt="재밌어요 표시 아이콘"
                   />
                   <p class="bold name">재밌어요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion2_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
-                <li class="face--cheer is_disabled">
+                <li class="face--cheer">
                   <img
                     src="../../static/mo/emoji/emoji_cheer.svg"
                     alt="힘내요 표시 아이콘"
                   />
                   <p class="bold name">힘내요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion3_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
-                <li class="face--study is_disabled">
+                <li class="face--study">
                   <img
                     src="../../static/mo/emoji/emoji_study.svg"
                     alt="유익해요 표시 아이콘"
                   />
                   <p class="bold name">유익해요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion4_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
-                <li class="face--wow is_disabled">
+                <li class="face--wow">
                   <img
                     src="../../static/mo/emoji/emoji_wow.svg"
                     alt="놀라워요 표시 아이콘"
                   />
                   <p class="bold name">놀라워요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion5_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
               </ul>
             </div>
@@ -177,6 +203,38 @@ export default {
 
     onClick() {
       console.log(0)
+    },
+    onClickLike(e) {
+      if (confirm('등록할까요?')) {
+        this.LOADING_TRUE()
+        const frm = new FormData()
+        frm.append('type', 'communityView')
+        frm.append('emotion', e)
+        frm.append('idx', this.idx)
+        frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
+        console.log(frm)
+        // axiosForm(frm, '/student.php')
+        this.$axios
+          .post(process.env.VUE_APP_API + '/student.php', frm, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            alert('등록되었어요')
+            this.$route.query.mode === 'T'
+              ? this.$router.push('/community-teacher-list')
+              : this.$router.push('/community-list')
+
+            console.log(res.data)
+          })
+          .catch((res) => {
+            console.error('AXIOS FALSE', res)
+          })
+      } else {
+        console.log(this.GET_AXIOS_CALLBACK_GETTER.idx)
+        return false
+      }
     },
   },
 }
