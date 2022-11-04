@@ -71,6 +71,13 @@
         v-model="sueSubjectEtc"
         class="jelly-text jelly-text--h wd-full m-t-2"
       />
+      <p class="m-t-3">증거사진</p>
+      <input
+        id="photo"
+        type="file"
+        class="jelly-text m-t-2 jelly-text--h wd-full"
+        multiple
+      />
       <p class="m-t-3">증명할 물건이나 사람이 있나요?</p>
 
       <textarea
@@ -161,24 +168,42 @@ export default {
         return false
       }
       this.LOADING_TRUE()
-      this.isDisabled = true
-      this.paramsPost = this.LOGIN_STUDENT
-      this.paramsPost.type = 'sueInsert'
-      if (this.sueSubject === 'etc') {
-        this.paramsPost.subject = this.sueSubjectEtc
-      } else {
-        this.paramsPost.subject = this.sueSubject
+      const frm = new FormData()
+      const photoFile = document.getElementById('photo')
+      for (let i = 0; i < photoFile.files.length; i++) {
+        frm.append(`photo[${i}]`, photoFile.files[i])
       }
-      this.paramsPost.content = this.sueContent
-      this.paramsPost.sms_idx_to = this.sms_idx_to
-      this.paramsPost.evidence = this.sueContentEvidence
-      this.paramsPost.status = '1'
-      this.paramsPost.sue_date = this.sueDate
-      this.POST_AXIOS(this.paramsPost)
-      setTimeout(() => {
-        alert('선생님께 안전하게 전달했어요!')
-        this.$router.push('/')
-      }, 1500)
+      frm.append('type', 'sueInsert')
+      if (this.sueSubject === 'etc') {
+        frm.append('subject', this.sueSubjectEtc)
+      } else {
+        frm.append('subject', this.sueSubject)
+      }
+      frm.append('sms_idx_to', this.sms_idx_to)
+      frm.append('content', this.sueContent)
+      frm.append('evidence', this.sueContentEvidence)
+      frm.append('sue_date', this.sueDate)
+      frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
+      frm.append('smt_idx', this.LOGIN_STUDENT.smt_idx)
+      frm.append('status', 1)
+      this.isDisabled = true
+      this.$axios
+        .post(process.env.VUE_APP_API + '/student.php', frm, {
+          header: {
+            'Context-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log('[onSubmitComplete]', res.data)
+          this.$bvModal.hide('completeFile')
+          setTimeout(() => {
+            alert('선생님께 안전하게 전달했어요!')
+            this.$router.push('/')
+          })
+        })
+        .catch((res) => {
+          console.log('AXIOS FALSE', res)
+        })
     },
   },
 }

@@ -6,7 +6,7 @@
     <div class="historyBack m-l-3 m-b-5">
       <b-icon icon="arrow-left" onclick="history.back()"></b-icon>
     </div>
-    <div class="content">
+    <div v-if="GET_AXIOS_CALLBACK_GETTER" class="content">
       <div class="m-t-1 h60">
         <div class="account">
           <div class="quest__content m-t-3">
@@ -19,9 +19,14 @@
                   <div class="flex m-t-0">
                     <div class="txt">
                       <p class="bold">
-                        제목입니다 제목ㅁㄴㅇ을 다시 입력합니다.
+                        {{ GET_AXIOS_CALLBACK_GETTER.subject }}
                       </p>
-                      <span>22.22.22</span>
+                      <span class="font-12">
+                        {{
+                          GET_AXIOS_CALLBACK_GETTER.reg_datetime
+                            | moment('YY.MM.DD')
+                        }}
+                      </span>
                     </div>
                     <div class="pay text-right flex-right">
                       <!-- <button class="jelly-btn jelly-btn--default">
@@ -40,16 +45,22 @@
                   <div class="m-t-2 flex flex-full">
                     <div class="font-15">
                       조회수
-                      <strong class="bold font-15 m-l-1"><em>99+</em></strong>
+                      <strong class="bold font-15 m-l-1"
+                        ><em>
+                          {{ GET_AXIOS_CALLBACK_GETTER.hit | comma }}
+                        </em></strong
+                      >
                       <span>회</span>
                     </div>
-                    <div class="font-15 m-l-3">
+                    <!-- <div class="font-15 m-l-3">
                       좋아요
                       <strong class="bold font-15 m-l-1"><em>99+</em></strong>
                       <span>회</span>
-                    </div>
+                    </div> -->
                     <div class="flex-right">
-                      <div class="font-12 p-l-1 l-h-28">김학생</div>
+                      <div class="font-12 p-l-1 l-h-28">
+                        {{ GET_AXIOS_CALLBACK_GETTER.reg_name }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -58,56 +69,82 @@
             <div
               style="
                 background-color: #f2f3f5;
-                padding: 10px;
+                padding: 0px 10px 10px;
                 border-radius: 10px;
                 white-space: pre-line;
               "
               class="m-l-3 m-r-3 img-full m-t-5"
             >
-              내용
+              {{ GET_AXIOS_CALLBACK_GETTER.content }}
             </div>
-            <div class="emoji-box">
+            <div
+              v-if="
+                GET_AXIOS_CALLBACK_GETTER &&
+                GET_AXIOS_CALLBACK_GETTER.category === 'S'
+              "
+              class="emoji-box"
+            >
               <p class="bold">이 게시글을 추천해요</p>
               <ul class="face flex">
-                <li class="face--like">
+                <li class="face--like" @click="onClickLike(1)">
                   <img
                     src="../../static/mo/emoji/emoji_like.svg"
                     alt="좋아요 표시 아이콘"
                   />
                   <p class="bold name">좋아요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em
+                      >{{ GET_AXIOS_CALLBACK_GETTER.emotion1_cnt | comma }}
+                    </em>
+                  </p>
                 </li>
-                <li class="face--fun is_disabled">
+                <li class="face--fun">
                   <img
                     src="../../static/mo/emoji/emoji_fun.svg"
                     alt="재밌어요 표시 아이콘"
                   />
                   <p class="bold name">재밌어요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion2_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
-                <li class="face--cheer is_disabled">
+                <li class="face--cheer">
                   <img
                     src="../../static/mo/emoji/emoji_cheer.svg"
                     alt="힘내요 표시 아이콘"
                   />
                   <p class="bold name">힘내요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion3_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
-                <li class="face--study is_disabled">
+                <li class="face--study">
                   <img
                     src="../../static/mo/emoji/emoji_study.svg"
                     alt="유익해요 표시 아이콘"
                   />
                   <p class="bold name">유익해요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion4_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
-                <li class="face--wow is_disabled">
+                <li class="face--wow">
                   <img
                     src="../../static/mo/emoji/emoji_wow.svg"
                     alt="놀라워요 표시 아이콘"
                   />
                   <p class="bold name">놀라워요</p>
-                  <p class="rating"><em>999</em></p>
+                  <p class="rating">
+                    <em>{{
+                      GET_AXIOS_CALLBACK_GETTER.emotion5_cnt | comma
+                    }}</em>
+                  </p>
                 </li>
               </ul>
             </div>
@@ -119,12 +156,12 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
-import Park from '~/components-mo/test/TestStyle.vue'
+// import Park from '~/components-mo/test/TestStyle.vue'
 // import { historyBack } from '~/config/util'
 
 export default {
   components: {
-    Park,
+    // Park,
   },
   validate({ params }) {
     return /^\d+$/.test(params.id)
@@ -154,6 +191,10 @@ export default {
     //   DATA INIT
     console.log(this.$nuxt, this.$config)
     this.params = this.LOGIN_STUDENT
+    console.log(this.idx)
+    this.params.type = 'communityView'
+    this.params.idx = this.idx
+    this.GET_AXIOS(this.params)
   },
   methods: {
     // init
@@ -162,6 +203,38 @@ export default {
 
     onClick() {
       console.log(0)
+    },
+    onClickLike(e) {
+      if (confirm('등록할까요?')) {
+        this.LOADING_TRUE()
+        const frm = new FormData()
+        frm.append('type', 'communityView')
+        frm.append('emotion', e)
+        frm.append('idx', this.idx)
+        frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
+        console.log(frm)
+        // axiosForm(frm, '/student.php')
+        this.$axios
+          .post(process.env.VUE_APP_API + '/student.php', frm, {
+            header: {
+              'Context-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            alert('등록되었어요')
+            this.$route.query.mode === 'T'
+              ? this.$router.push('/community-teacher-list')
+              : this.$router.push('/community-list')
+
+            console.log(res.data)
+          })
+          .catch((res) => {
+            console.error('AXIOS FALSE', res)
+          })
+      } else {
+        console.log(this.GET_AXIOS_CALLBACK_GETTER.idx)
+        return false
+      }
     },
   },
 }

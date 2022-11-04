@@ -24,10 +24,11 @@
           1등 예상 당첨금
           <em style="font-size: 16px; font-weight: bold">
             {{
-              ((Number(enterResult.total_pay) +
-                Number(enterResult.before_pay)) /
-                2)
-                | comma
+              (
+                (Number(enterResult.total_pay) +
+                  Number(enterResult.before_pay)) /
+                2
+              ).toFixed() | comma
             }}
           </em>
           <br />
