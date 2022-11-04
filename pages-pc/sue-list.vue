@@ -164,6 +164,31 @@
             >
             <em v-else>고지서가 이미 발송되었습니다.</em>
           </div>
+          <div v-if="STATE_TEACHER_SUE.photo" class="m-t-8">
+            <p class="bold">증거사진</p>
+            <div>
+              <b-carousel
+                id="carousel-1"
+                v-model="slide"
+                :interval="4000"
+                controls
+                indicators
+                background="#ababab"
+                img-width="1024"
+                img-height="480"
+                style="text-shadow: 1px 1px 2px #333"
+                @sliding-start="onSlideStart"
+                @sliding-end="onSlideEnd"
+              >
+                <!-- Slides with image only -->
+                <b-carousel-slide
+                  v-for="(v, i) in STATE_TEACHER_SUE.photo"
+                  :key="i"
+                  :img-src="`http://api.school-os.net/data/student/sue/${v.file_name}`"
+                ></b-carousel-slide>
+              </b-carousel>
+            </div>
+          </div>
         </div>
         <div class="m-t-8 text-center">
           <button
@@ -231,6 +256,8 @@ export default {
       },
       confirm: {},
       idx: '',
+      slide: 0,
+      sliding: null,
     }
   },
 
@@ -278,6 +305,12 @@ export default {
     ...mapMutations(['LOADING_INIT', 'LOADING_TRUE']),
 
     // EVENT
+    onSlideStart(slide) {
+      this.sliding = true
+    },
+    onSlideEnd(slide) {
+      this.sliding = false
+    },
     onSubmit(e) {
       this.LOADING_TRUE()
       const frm = new FormData()

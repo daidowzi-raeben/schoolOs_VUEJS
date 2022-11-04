@@ -2,10 +2,8 @@
   <div id="school-content" refs="contentLoad">
     <div class="p-3 jelly-tab">
       <ul class="flex">
-        <li class="is_active">우리끼리</li>
-        <li>
-          <nuxt-link to="/community-teacher-list">선생님께</nuxt-link>
-        </li>
+        <li class=""><nuxt-link to="/community-list">우리끼리</nuxt-link></li>
+        <li class="is_active">선생님께</li>
       </ul>
     </div>
     <b-icon
@@ -23,7 +21,7 @@
         class="content__body m-t-1 h60"
       >
         <div class="account flex">
-          <h3 class="m-t-2">우리끼리</h3>
+          <h3 class="m-t-2">선생님께</h3>
           <div class="flex-right">
             <!-- <nuxt-link to="/parttime-write"> -->
             <button
@@ -40,7 +38,6 @@
         <!-- <div class="quest__content m-t-3">
           <div class="p-5 text-center font-14">커뮤니티 페이지 설명</div>
         </div> -->
-
         <div
           v-if="
             communityList &&
@@ -193,7 +190,6 @@ export default {
     this.params = this.LOGIN_CONFIG
     this.params.type = 'communityList'
     this.params.page = 1
-    console.log('params', this.params)
     this.scrollLoadData(this.params)
     // 게시판 권한
     this.paramsAuth.smt_idx = this.LOGIN_CONFIG.smt_idx
@@ -228,14 +224,13 @@ export default {
       this.scrollPostion = false
       console.log(e)
       this.params = this.LOGIN_CONFIG
-      this.params.cate = 'S'
       this.params.type = 'communityList'
       this.params.page = this.params.page + 1
       this.scrollLoadData(this.params)
       // window.removeEventListener('scroll', this.handleScroll)
     },
     scrollLoadData(params) {
-      this.params.cate = 'S'
+      this.params.cate = 'T'
 
       // 2페이지부터 탑버튼 생성
       console.log('params.page', params.page)
@@ -256,19 +251,8 @@ export default {
       this.$router.push(`/community-detail/${e}`)
     },
     onClickWrite() {
-      const pay = Number(this.GET_AXIOS_CALLBACK_GETTER.pay)
-      if (pay > 0) {
-        if (
-          confirm(
-            `글을 작성하려면 ${this.comma(pay)}${
-              this.LOGIN_STUDENT.t_reg_pay_unit
-            }만큼 지불해야 해요.\n작성할까요?`
-          )
-        ) {
-          console.log('TRUE')
-          this.$router.push('/community-write')
-        }
-      }
+      console.log('TRUE')
+      this.$router.push('/community-write?mode=T')
     },
     comma(str) {
       str = String(str)
