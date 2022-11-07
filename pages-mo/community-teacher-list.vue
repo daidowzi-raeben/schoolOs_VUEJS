@@ -181,6 +181,7 @@ export default {
   beforeCreate() {
     // 인스턴스가 초기화 된 직후
   },
+
   mounted() {
     //   DATA INIT
     // console.log(this.$nuxt, this.$config, this.rangeCalendar)
@@ -200,6 +201,9 @@ export default {
     //   // window.addEventListener('scroll', this.scrollLoad('asd'))
     // })
     window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
     // init

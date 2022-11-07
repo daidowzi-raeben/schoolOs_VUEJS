@@ -77,6 +77,12 @@
             >
               {{ GET_AXIOS_CALLBACK_GETTER.content }}
             </div>
+            <div class="flex">
+              <div>
+                <button>삭제</button>
+              </div>
+              <div><button>수정</button></div>
+            </div>
             <div
               v-if="
                 GET_AXIOS_CALLBACK_GETTER &&
@@ -86,10 +92,21 @@
             >
               <p class="bold">이 게시글을 추천해요</p>
               <ul class="face flex">
-                <li class="face--like" @click="onClickLike(1)">
+                <li
+                  class="face--like"
+                  :class="
+                    (emotion === true &&
+                      !GET_AXIOS_CALLBACK_GETTER.is_emotion) ||
+                    GET_AXIOS_CALLBACK_GETTER.is_emotion === '1'
+                      ? ''
+                      : 'is_disabled'
+                  "
+                  @click="onClickLike(1, $event)"
+                >
                   <img
                     src="../../static/mo/emoji/emoji_like.svg"
                     alt="좋아요 표시 아이콘"
+                    class="asd"
                   />
                   <p class="bold name">좋아요</p>
                   <p class="rating">
@@ -98,7 +115,17 @@
                     </em>
                   </p>
                 </li>
-                <li class="face--fun">
+                <li
+                  class="face--fun"
+                  :class="
+                    (emotion === true &&
+                      !GET_AXIOS_CALLBACK_GETTER.is_emotion) ||
+                    GET_AXIOS_CALLBACK_GETTER.is_emotion === '2'
+                      ? ''
+                      : 'is_disabled'
+                  "
+                  @click="onClickLike(2, $event)"
+                >
                   <img
                     src="../../static/mo/emoji/emoji_fun.svg"
                     alt="재밌어요 표시 아이콘"
@@ -110,7 +137,17 @@
                     }}</em>
                   </p>
                 </li>
-                <li class="face--cheer">
+                <li
+                  class="face--cheer"
+                  :class="
+                    (emotion === true &&
+                      !GET_AXIOS_CALLBACK_GETTER.is_emotion) ||
+                    GET_AXIOS_CALLBACK_GETTER.is_emotion === '3'
+                      ? ''
+                      : 'is_disabled'
+                  "
+                  @click="onClickLike(3, $event)"
+                >
                   <img
                     src="../../static/mo/emoji/emoji_cheer.svg"
                     alt="힘내요 표시 아이콘"
@@ -122,7 +159,17 @@
                     }}</em>
                   </p>
                 </li>
-                <li class="face--study">
+                <li
+                  class="face--study"
+                  :class="
+                    (emotion === true &&
+                      !GET_AXIOS_CALLBACK_GETTER.is_emotion) ||
+                    GET_AXIOS_CALLBACK_GETTER.is_emotion === '4'
+                      ? ''
+                      : 'is_disabled'
+                  "
+                  @click="onClickLike(4, $event)"
+                >
                   <img
                     src="../../static/mo/emoji/emoji_study.svg"
                     alt="유익해요 표시 아이콘"
@@ -134,7 +181,17 @@
                     }}</em>
                   </p>
                 </li>
-                <li class="face--wow">
+                <li
+                  class="face--wow"
+                  :class="
+                    (emotion === true &&
+                      !GET_AXIOS_CALLBACK_GETTER.is_emotion) ||
+                    GET_AXIOS_CALLBACK_GETTER.is_emotion === '5'
+                      ? ''
+                      : 'is_disabled'
+                  "
+                  @click="onClickLike(5, $event)"
+                >
                   <img
                     src="../../static/mo/emoji/emoji_wow.svg"
                     alt="놀라워요 표시 아이콘"
@@ -177,6 +234,7 @@ export default {
       params: {},
       paramsPost: {},
       value: 4,
+      emotion: true,
     }
   },
 
@@ -204,11 +262,13 @@ export default {
     onClick() {
       console.log(0)
     },
-    onClickLike(e) {
-      if (confirm('등록할까요?')) {
+    onClickLike(e, t) {
+      if (this.emotion === true && !this.GET_AXIOS_CALLBACK_GETTER.is_emotion) {
+        console.log('????????')
+        this.emotion = false
         this.LOADING_TRUE()
         const frm = new FormData()
-        frm.append('type', 'communityView')
+        frm.append('type', 'communityLike')
         frm.append('emotion', e)
         frm.append('idx', this.idx)
         frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
@@ -221,18 +281,18 @@ export default {
             },
           })
           .then((res) => {
-            alert('등록되었어요')
-            this.$route.query.mode === 'T'
-              ? this.$router.push('/community-teacher-list')
-              : this.$router.push('/community-list')
-
-            console.log(res.data)
+            console.log('onClickLike', res.data)
+            this.params.type = 'communityView'
+            this.params.idx = this.idx
+            this.GET_AXIOS(this.params)
+            this.$nextTick(() => {
+              t.target.parentElement.classList.remove('is_disabled')
+            })
           })
           .catch((res) => {
             console.error('AXIOS FALSE', res)
           })
       } else {
-        console.log(this.GET_AXIOS_CALLBACK_GETTER.idx)
         return false
       }
     },

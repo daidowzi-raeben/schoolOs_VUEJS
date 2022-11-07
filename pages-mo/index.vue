@@ -576,6 +576,7 @@ export default {
       detailIdx: '',
       detailPay: '',
       profile: '',
+      onSubmitBtn: true,
     }
   },
   computed: {
@@ -630,19 +631,23 @@ export default {
       }
     },
     onSubmit() {
-      console.log(this.detailIdx)
-      this.$bvModal.hide('billDetail')
-      this.paramsPost.type = 'billListStudent'
-      this.paramsPost.idx = this.detailIdx
-      this.paramsPost.sms_idx = this.LOGIN_CONFIG.sms_idx
-      this.paramsPost.smt_idx = this.LOGIN_CONFIG.smt_idx
-      this.POST_AXIOS(this.paramsPost)
-      setTimeout(() => {
-        this.params = this.LOGIN_CONFIG
-        this.params.type = 'main'
-        this.GET_AXIOS(this.params)
-        alert('정상적으로 납부되었습니다.')
-      }, 1000)
+      if (this.onSubmitBtn === true) {
+        this.onSubmitBtn = false
+        console.log(this.detailIdx)
+        this.$bvModal.hide('billDetail')
+        this.paramsPost.type = 'billListStudent'
+        this.paramsPost.idx = this.detailIdx
+        this.paramsPost.sms_idx = this.LOGIN_CONFIG.sms_idx
+        this.paramsPost.smt_idx = this.LOGIN_CONFIG.smt_idx
+        this.POST_AXIOS(this.paramsPost)
+        setTimeout(() => {
+          this.params = this.LOGIN_CONFIG
+          this.params.type = 'main'
+          this.GET_AXIOS(this.params)
+          alert('정상적으로 납부되었습니다.')
+          this.onSubmitBtn = true
+        }, 1000)
+      }
     },
     onSubmitProfile() {
       if (!this.$refs.reg_photo.value) {

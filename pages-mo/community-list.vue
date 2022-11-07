@@ -205,6 +205,9 @@ export default {
     // })
     window.addEventListener('scroll', this.handleScroll)
   },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   methods: {
     // init
     ...mapActions(['POST_AXIOS', 'GET_AXIOS']),
