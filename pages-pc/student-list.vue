@@ -583,6 +583,27 @@ export default {
       this.POST_AXIOS(this.paramsPost)
     },
     onClickWeeklyPay() {
+      // console.log(this.LOGIN_TEACHER)
+
+      // // this.LOADING_TRUE()
+      // const frm = new FormData()
+      // frm.append('smt_idx', this.LOGIN_TEACHER.smt_idx)
+      // frm.append('type', 'weeklyPayChk')
+
+      // this.$axios
+      //   .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+      //     header: {
+      //       'Context-Type': 'multipart/form-data',
+      //     },
+      //   })
+      //   .then((res) => {
+      //     // this.LOADING_TRUE()
+      //     console.log(res.data)
+      //   })
+      //   .catch((res) => {
+      //     console.log('AXIOS FALSE', res)
+      //   })
+      // return
       if (confirm('급여를 지급하겠습니까?')) {
         this.paramsPost = this.LOGIN_TEACHER
         this.paramsPost.type = 'weeklyPay'

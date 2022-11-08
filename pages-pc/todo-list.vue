@@ -79,12 +79,14 @@
                   v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.questList"
                   :key="`shopItem${i}`"
                   style="cursor: pointer"
+                  :class="v.is_date === '2' ? 'is_gray' : ''"
                 >
                   <td @click="onClickItemDetail(v.idx)">
                     {{ v.start_day | moment('YY.MM.DD') }}
                   </td>
                   <td @click="onClickItemDetail(v.idx)">
                     {{ v.end_day | moment('YY.MM.DD') }}
+                    {{ v.is_date === '2' ? '(마감)' : '' }}
                   </td>
                   <td @click="onClickItemDetail(v.idx)">{{ v.subject }}</td>
                   <td @click="onClickItemDetail(v.idx)">
@@ -1271,6 +1273,11 @@ export default {
   .carousel-indicators {
     bottom: unset;
     top: 0;
+  }
+}
+.is_gray {
+  > td {
+    background: #eee;
   }
 }
 </style>
