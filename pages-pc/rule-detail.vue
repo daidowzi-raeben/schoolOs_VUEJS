@@ -56,7 +56,7 @@
               <col style="width: 80px" />
               <col style="width: 150px" />
               <col style="width: auto" />
-              <col style="width: 80px" />
+              <col style="width: 120px" />
               <col style="width: 200px" />
               <col style="width: 170px" />
               <tr>
