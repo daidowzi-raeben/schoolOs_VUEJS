@@ -89,9 +89,18 @@
                 GET_AXIOS_CALLBACK_GETTER.category === 'S'
               "
               class="emoji-box"
+              @click="onClickToggle($event);"
             >
-              <p class="bold">이 게시글을 추천해요</p>
-              <ul class="face flex">
+
+              <div class="title-area flex" >
+                <p class="bold mr-2">이 게시글을 추천해요
+                {{tempData}}
+                </p>
+                <div class="flex-right">
+                  <b-icon icon="chevron-up" font-scale="1"/>
+                </div>
+              </div>
+              <ul v-show="tempData" class="face flex" >
                 <li
                   class="face--like"
                   :class="
@@ -235,6 +244,7 @@ export default {
       paramsPost: {},
       value: 4,
       emotion: true,
+      tempData : true
     }
   },
 
@@ -296,6 +306,11 @@ export default {
         return false
       }
     },
+    onClickToggle(e) {
+    console.log(e.target)
+    this.tempData === true ? this.tempData = false : this.tempData = true
+      
+    }
   },
 }
 </script>
@@ -304,16 +319,19 @@ export default {
 .emoji-box {
   position: fixed;
   width: 100%;
-  padding: 20px;
   background-color: #fff;
   bottom: 0;
   left: 0;
   border-top: 1px solid #eee;
+  .title-area {
+    padding: 20px;
+    border-bottom: 1px solid #f2f2f2;
+  }
   .face {
     justify-content: space-evenly;
     width: 100%;
-    margin-top: 20px;
     margin-bottom: 0 !important;
+    padding: 20px;
     li {
       width: 20%;
       text-align: center;
