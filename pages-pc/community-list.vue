@@ -14,6 +14,7 @@
           <b-form-input type="text" min="0.00"></b-form-input>
           <b-input-group-append>
             <b-button variant="outline-primary">검색</b-button>
+            <!-- 버튼에 클래스를 넣을 수 있어 부트스트랩은 다 클래스 넣을 수 있으니까 원하는 부분에 넣는건데 -->
           </b-input-group-append>
         </b-input-group>
       </div>
@@ -38,7 +39,7 @@
       </tr>
       <tr>
         <td v-b-modal.list>글제목입니다글제목입니다글제목입니다</td>
-        <td id="tooltip-target-1">김수한무거북이와두루미</td>
+        <td id="tooltip-target-1" class="cursor-active">김수한무거북이와두루미</td>
         <td v-b-modal.list>22.22.22</td>
         <td v-b-modal.list>999</td>
         <td>
@@ -64,10 +65,17 @@
     <b-modal id="list" title="리스트내용">커뮤니티리스트내용</b-modal>
     <b-modal id="writer">작성자정보</b-modal>
     <b-modal id="modify">수정</b-modal>
+    <b-modal id="info">작성자 정보</b-modal>
     <!-- 툴팁 -->
-    <b-tooltip target="tooltip-target-1" triggers="click" placement="right">
-      <div>작성자 글 보기</div>
-      <div>작성자 정보 보기</div>
+    <b-tooltip  custom-class="tooltipCustom" target="tooltip-target-1" triggers="click" placement="right">
+      <!-- 여기는 툴팁 넣을 때 이렇게 하나만 넣으면 되잖아 근데 이거를 개도구로 보니까 이렇게 뭐가 존나 많은 거임 -->
+     <!-- 그래서 이걸 스타일로 찾아가야 하는데 함 보여줄게 -->
+     <!-- 지금 클래스 들어간거보여? 이런식으로 조금 씩 다른게 있어서 문서를 확인해야 하는 경우도 있어 아놔 -->
+      <div>
+        <a href="#">작성자 글 보기</a>
+      </div>
+      <!-- 모달 -->
+      <div v-b-modal.info>작성자 정보 보기</div>
     </b-tooltip>
   </div>
 </template>
@@ -90,4 +98,26 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+.cursor-active {
+  cursor: pointer!important;
+}
+.tooltipCustom {
+  top: -3px!important;
+  left: -190px!important;
+  .tooltip-inner {
+    padding: 10px 8px;
+    div {
+      font-size: 15px;
+      a {
+        &:link { color: #fff; text-decoration: none;}
+        &:visited { color: #fff; text-decoration: none;}
+        &:hover { color: #fff; text-decoration: none;}
+      }
+    }
+    div:first-child {
+      margin-bottom: 6px;
+    }
+  }
+}
+</style>
