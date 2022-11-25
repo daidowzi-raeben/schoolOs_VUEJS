@@ -39,7 +39,9 @@
       </tr>
       <tr>
         <td v-b-modal.list>글제목입니다글제목입니다글제목입니다</td>
-        <td id="tooltip-target-1" class="cursor-active">김수한무거북이와두루미</td>
+        <td id="tooltip-target-1" class="cursor-active">
+          김수한무거북이와두루미
+        </td>
         <td v-b-modal.list>22.22.22</td>
         <td v-b-modal.list>999</td>
         <td>
@@ -67,10 +69,15 @@
     <b-modal id="modify">수정</b-modal>
     <b-modal id="info">작성자 정보</b-modal>
     <!-- 툴팁 -->
-    <b-tooltip  custom-class="tooltipCustom" target="tooltip-target-1" triggers="click" placement="right">
+    <b-tooltip
+      custom-class="tooltip-custom"
+      target="tooltip-target-1"
+      triggers="click"
+      placement="right"
+    >
       <!-- 여기는 툴팁 넣을 때 이렇게 하나만 넣으면 되잖아 근데 이거를 개도구로 보니까 이렇게 뭐가 존나 많은 거임 -->
-     <!-- 그래서 이걸 스타일로 찾아가야 하는데 함 보여줄게 -->
-     <!-- 지금 클래스 들어간거보여? 이런식으로 조금 씩 다른게 있어서 문서를 확인해야 하는 경우도 있어 아놔 -->
+      <!-- 그래서 이걸 스타일로 찾아가야 하는데 함 보여줄게 -->
+      <!-- 지금 클래스 들어간거보여? 이런식으로 조금 씩 다른게 있어서 문서를 확인해야 하는 경우도 있어 아놔 -->
       <div>
         <a href="#">작성자 글 보기</a>
       </div>
@@ -100,19 +107,28 @@ export default {
 
 <style lang="scss">
 .cursor-active {
-  cursor: pointer!important;
+  cursor: pointer !important;
 }
-.tooltipCustom {
-  top: -3px!important;
-  left: -190px!important;
+.tooltip-custom {
+  top: -3px !important;
+  left: -190px !important;
   .tooltip-inner {
     padding: 10px 8px;
     div {
       font-size: 15px;
       a {
-        &:link { color: #fff; text-decoration: none;}
-        &:visited { color: #fff; text-decoration: none;}
-        &:hover { color: #fff; text-decoration: none;}
+        &:link {
+          color: #fff;
+          text-decoration: none;
+        }
+        &:visited {
+          color: #fff;
+          text-decoration: none;
+        }
+        &:hover {
+          color: #fff;
+          text-decoration: none;
+        }
       }
     }
     div:first-child {
