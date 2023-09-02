@@ -302,7 +302,7 @@ const createStore = () => {
         commit('LOADING_TRUE')
         console.log('ACTIONS_TEACHER_PARAMS', params)
         axios
-          .get(process.env.VUE_APP_API + '/teacher.php', { params })
+          .get('http://api.school-os.net' + '/teacher.php', { params })
           .then((res) => {
             // // 고지서
             // commit('MUTATIONS_TEACHER_BILL_STUDENT', res.data)
@@ -362,7 +362,7 @@ const createStore = () => {
         commit('LOADING_TRUE')
         console.log('ACTIONS_TEACHER_SUE_PARAMS', params)
         axios
-          .get(process.env.VUE_APP_API + '/teacher.php', { params })
+          .get('http://api.school-os.net' + '/teacher.php', { params })
           .then((res) => {
             console.log('ACTIONS_TEACHER_SUE', res, params)
 
@@ -383,7 +383,7 @@ const createStore = () => {
           ? (URL_TYPE = 'student')
           : (URL_TYPE = 'teacher')
         axios
-          .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', { params })
+          .get('http://api.school-os.net' + '/' + URL_TYPE + '.php', { params })
           .then((res) => {
             console.log('ACTIONS_STUDENT_ALBA', res, params)
             commit('MUTATIONS_STUDENT_ALBA', res.data)
@@ -402,17 +402,17 @@ const createStore = () => {
           ? (URL_TYPE = 'student')
           : (URL_TYPE = 'teacher')
         axios
-          // .get(process.env.VUE_APP_API + apiUrl.apiMain)
+          // .get('http://api.school-os.net' + apiUrl.apiMain)
           .get(
-            process.env.VUE_APP_API +
-              '/' +
-              URL_TYPE +
-              '.php?type=' +
-              params.type +
-              '&smt_idx=' +
-              params.smt_idx +
-              '&sms_idx=' +
-              params.sms_idx
+            'http://api.school-os.net' +
+            '/' +
+            URL_TYPE +
+            '.php?type=' +
+            params.type +
+            '&smt_idx=' +
+            params.smt_idx +
+            '&sms_idx=' +
+            params.sms_idx
           )
           .then((res) => {
             commit('getMainSuccess', res.data)
@@ -430,7 +430,7 @@ const createStore = () => {
         let URL_TYPE = ''
         console.log(process.env.DEVICE, process.env.DEVICE, process.env.DEVICE)
         console.log(
-          process.env.VUE_APP_API,
+          'http://api.school-os.net',
           process.env.DEVICE,
           process.env.DEVICE
         )
@@ -442,7 +442,7 @@ const createStore = () => {
           FORM_DATA.append(v[0], v[1])
         })
         axios
-          .post(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', FORM_DATA, {
+          .post('http://api.school-os.net' + '/' + URL_TYPE + '.php', FORM_DATA, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -475,7 +475,7 @@ const createStore = () => {
           ? (URL_TYPE = 'student')
           : (URL_TYPE = 'teacher')
         axios
-          .post(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', params, {
+          .post('http://api.school-os.net' + '/' + URL_TYPE + '.php', params, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -502,7 +502,7 @@ const createStore = () => {
           ? (URL_TYPE = 'student')
           : (URL_TYPE = 'teacher')
         axios
-          .get(process.env.VUE_APP_API + '/' + URL_TYPE + '.php', { params })
+          .get('http://api.school-os.net' + '/' + URL_TYPE + '.php', { params })
           .then((res) => {
             // 메인 데이터 합계
             if (
@@ -541,7 +541,7 @@ const createStore = () => {
       GET_AXIOS_LAYOUT({ commit }, params) {
         console.log('LAYOUT params', params)
         axios
-          .get(process.env.VUE_APP_API + '/teacher.php', { params })
+          .get('http://api.school-os.net' + '/teacher.php', { params })
           .then((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT', res)
             commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT', res.data)
@@ -553,7 +553,7 @@ const createStore = () => {
       GET_AXIOS_LAYOUT_STUDENT({ commit }, params) {
         console.log('LAYOUT params', params)
         axios
-          .get(process.env.VUE_APP_API + '/student.php', { params })
+          .get('http://api.school-os.net' + '/student.php', { params })
           .then((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT_STUDENT', res)
             commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_LAYOUT_STUDENT', res.data)
@@ -565,7 +565,7 @@ const createStore = () => {
       GET_AXIOS_PW({ commit }, params) {
         console.log('LAYOUT params', params)
         axios
-          .get(process.env.VUE_APP_API + '/student.php', { params })
+          .get('http://api.school-os.net' + '/student.php', { params })
           .then((res) => {
             console.log('GET_AXIOS_CALLBACK_DATA_SUCCESS_PW', res)
             commit('GET_AXIOS_CALLBACK_DATA_SUCCESS_PW', res.data)
@@ -606,7 +606,7 @@ const createStore = () => {
         commit('LOADING_TRUE')
 
         axios
-          .get(process.env.VUE_APP_API + '/student.php', { params })
+          .get('http://api.school-os.net' + '/student.php', { params })
           .then((res) => {
             commit('GET_API_MY_SCHOOL_SUCCESS', JSON.parse(res.data))
             commit('LOADING_INIT')
@@ -619,7 +619,7 @@ const createStore = () => {
       GET_STUDENT_ID({ commit }, params) {
         commit('LOADING_TRUE')
         axios
-          .get(process.env.VUE_APP_API + '/student.php', { params })
+          .get('http://api.school-os.net' + '/student.php', { params })
           .then((res) => {
             commit('GET_STUDENT_ID_SUCCESS', res.data)
             commit('LOADING_INIT')

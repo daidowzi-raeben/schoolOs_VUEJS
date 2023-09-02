@@ -89,18 +89,18 @@
                 GET_AXIOS_CALLBACK_GETTER.category === 'S'
               "
               class="emoji-box"
-              @click="onClickToggle($event);"
+              @click="onClickToggle($event)"
             >
-
-              <div class="title-area flex" >
-                <p class="bold mr-2">이 게시글을 추천해요
-                {{tempData}}
+              <div class="title-area flex">
+                <p class="bold mr-2">
+                  이 게시글을 추천해요
+                  {{ tempData }}
                 </p>
                 <div class="flex-right">
-                  <b-icon icon="chevron-up" font-scale="1"/>
+                  <b-icon icon="chevron-up" font-scale="1" />
                 </div>
               </div>
-              <ul v-show="tempData" class="face flex" >
+              <ul v-show="tempData" class="face flex">
                 <li
                   class="face--like"
                   :class="
@@ -244,7 +244,7 @@ export default {
       paramsPost: {},
       value: 4,
       emotion: true,
-      tempData : true
+      tempData: true,
     }
   },
 
@@ -285,7 +285,7 @@ export default {
         console.log(frm)
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post(process.env.VUE_APP_API + '/student.php', frm, {
+          .post('http://api.school-os.net' + '/student.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -307,10 +307,9 @@ export default {
       }
     },
     onClickToggle(e) {
-    console.log(e.target)
-    this.tempData === true ? this.tempData = false : this.tempData = true
-      
-    }
+      console.log(e.target)
+      this.tempData === true ? (this.tempData = false) : (this.tempData = true)
+    },
   },
 }
 </script>

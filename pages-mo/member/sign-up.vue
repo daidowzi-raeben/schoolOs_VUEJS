@@ -141,7 +141,7 @@ export default {
       FORM_DATA.append('class_number', this.params.class_number)
       console.log('FORM_DATA', FORM_DATA)
       this.$axios
-        .post(process.env.VUE_APP_API + '/student.php', FORM_DATA, {
+        .post('http://api.school-os.net' + '/student.php', FORM_DATA, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

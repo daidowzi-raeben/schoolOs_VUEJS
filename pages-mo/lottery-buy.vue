@@ -141,7 +141,7 @@ export default {
     frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
     frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
     this.$axios
-      .post(process.env.VUE_APP_API + '/lotto.php', frm)
+      .post('http://api.school-os.net' + '/lotto.php', frm)
       .then((res) => {
         if (res.data.result) {
           this.lottoIdx = res.data.result.idx
@@ -247,7 +247,7 @@ export default {
       frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
       frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
       this.$axios
-        .post(process.env.VUE_APP_API + '/lotto.php', frm)
+        .post('http://api.school-os.net' + '/lotto.php', frm)
         .then((res) => {
           console.log(res)
           const numArry = this.lottoNumber
@@ -300,7 +300,7 @@ export default {
           frm.append('sl_idx', this.lottoIdx)
           frm.append('pay', this.enterResult.pay)
           this.$axios
-            .post(process.env.VUE_APP_API + '/lotto.php', frm)
+            .post('http://api.school-os.net' + '/lotto.php', frm)
             .then((res) => {
               console.log(res.data)
               if (res.data.success === 'FALSE') {

@@ -591,7 +591,7 @@ export default {
       // frm.append('type', 'weeklyPayChk')
 
       // this.$axios
-      //   .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+      //   .post('http://api.school-os.net' + '/teacher.php', frm, {
       //     header: {
       //       'Context-Type': 'multipart/form-data',
       //     },
@@ -629,7 +629,7 @@ export default {
       frm.append('type', 'register')
 
       this.$axios
-        .post(process.env.VUE_APP_API + '/student.php', frm, {
+        .post('http://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -657,7 +657,7 @@ export default {
         frm.append('sms_idx', this.student.sms_idx)
         frm.append('type', 'studentDel')
         this.$axios
-          .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          .post('http://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },

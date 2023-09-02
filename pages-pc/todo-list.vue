@@ -925,7 +925,7 @@ export default {
       console.log(frm)
       // axiosForm(frm, '/student.php')
       this.$axios
-        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+        .post('http://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -1178,7 +1178,7 @@ export default {
       this.LOADING_TRUE()
       // axiosForm(frm, '/student.php')
       this.$axios
-        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+        .post('http://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -1213,7 +1213,7 @@ export default {
         this.LOADING_TRUE()
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+          .post('http://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -1238,7 +1238,7 @@ export default {
       console.log(this.noticeIdx)
       this.$axios
         .get(
-          process.env.VUE_APP_API +
+          'http://api.school-os.net' +
             `/teacher.php?idx=${this.noticeIdx}&type=questThumb`
         )
         .then((res) => {

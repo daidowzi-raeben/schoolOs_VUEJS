@@ -164,7 +164,7 @@ export default {
     frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
     frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
     this.$axios
-      .post(process.env.VUE_APP_API + '/lotto.php', frm)
+      .post('http://api.school-os.net' + '/lotto.php', frm)
       .then((res) => {
         console.log(res.data)
         this.myNum = res.data.myNumber

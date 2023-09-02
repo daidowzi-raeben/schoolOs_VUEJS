@@ -32,7 +32,7 @@ export default {
     frm.append('master', 'true')
     frm.append('sms_idx', this.$route.query.sms_idx)
     this.$axios
-      .post(process.env.VUE_APP_API + '/student.php', frm, {
+      .post('http://api.school-os.net' + '/student.php', frm, {
         header: {
           'Context-Type': 'multipart/form-data',
         },

@@ -168,7 +168,7 @@ export default {
     frm.append('type', 'teacherPayList')
     frm.append('smt_idx', this.LOGIN_STUDENT.smt_idx)
     this.$axios
-      .post(process.env.VUE_APP_API + '/student.php', frm, {
+      .post('http://api.school-os.net' + '/student.php', frm, {
         header: {
           'Context-Type': 'multipart/form-data',
         },

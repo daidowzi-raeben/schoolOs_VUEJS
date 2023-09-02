@@ -66,39 +66,19 @@
                     <div class="flex-right">
                       <div class="flex m-t-0">
                         <span
-                          class="
-                            jelly-point
-                            m-t-0
-                            jelly-background--type1
-                            m-l-1
-                          "
+                          class="jelly-point m-t-0 jelly-background--type1 m-l-1"
                           >{{ GET_AXIOS_CALLBACK_GETTER.view.intellect }}</span
                         >
                         <span
-                          class="
-                            jelly-point
-                            m-t-0
-                            jelly-background--type2
-                            m-l-1
-                          "
+                          class="jelly-point m-t-0 jelly-background--type2 m-l-1"
                           >{{ GET_AXIOS_CALLBACK_GETTER.view.effort }}</span
                         >
                         <span
-                          class="
-                            jelly-point
-                            m-t-0
-                            jelly-background--type3
-                            m-l-1
-                          "
+                          class="jelly-point m-t-0 jelly-background--type3 m-l-1"
                           >{{ GET_AXIOS_CALLBACK_GETTER.view.health }}</span
                         >
                         <span
-                          class="
-                            jelly-point
-                            m-t-0
-                            jelly-background--type4
-                            m-l-1
-                          "
+                          class="jelly-point m-t-0 jelly-background--type4 m-l-1"
                           >{{ GET_AXIOS_CALLBACK_GETTER.view.etiquette }}</span
                         >
                       </div>
@@ -134,41 +114,21 @@
                       <div class="flex-right">
                         <div class="flex m-t-0">
                           <span
-                            class="
-                              jelly-point
-                              m-t-0
-                              jelly-background--type1
-                              m-l-1
-                            "
+                            class="jelly-point m-t-0 jelly-background--type1 m-l-1"
                             >{{
                               GET_AXIOS_CALLBACK_GETTER.view.m_intellect
                             }}</span
                           >
                           <span
-                            class="
-                              jelly-point
-                              m-t-0
-                              jelly-background--type2
-                              m-l-1
-                            "
+                            class="jelly-point m-t-0 jelly-background--type2 m-l-1"
                             >{{ GET_AXIOS_CALLBACK_GETTER.view.m_effort }}</span
                           >
                           <span
-                            class="
-                              jelly-point
-                              m-t-0
-                              jelly-background--type3
-                              m-l-1
-                            "
+                            class="jelly-point m-t-0 jelly-background--type3 m-l-1"
                             >{{ GET_AXIOS_CALLBACK_GETTER.view.m_health }}</span
                           >
                           <span
-                            class="
-                              jelly-point
-                              m-t-0
-                              jelly-background--type4
-                              m-l-1
-                            "
+                            class="jelly-point m-t-0 jelly-background--type4 m-l-1"
                             >{{
                               GET_AXIOS_CALLBACK_GETTER.view.m_etiquette
                             }}</span
@@ -481,7 +441,7 @@ export default {
       frm.append('idx', this.idx)
       frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
       this.$axios
-        .post(process.env.VUE_APP_API + '/student.php', frm)
+        .post('http://api.school-os.net' + '/student.php', frm)
         .then((res) => {
           this.params = this.LOGIN_STUDENT
           this.params.type = 'questView'
@@ -530,7 +490,7 @@ export default {
       this.LOADING_TRUE()
       // axiosForm(frm, '/student.php')
       this.$axios
-        .post(process.env.VUE_APP_API + '/student.php', frm, {
+        .post('http://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

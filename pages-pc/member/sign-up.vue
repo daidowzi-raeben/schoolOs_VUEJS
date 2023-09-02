@@ -377,7 +377,7 @@ export default {
           frm.append('type', 'teacherId_chk')
           frm.append('reg_id', this.reg_id)
           this.$axios
-            .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+            .post('http://api.school-os.net' + '/teacher.php', frm, {
               header: {
                 'Context-Type': 'multipart/form-data',
               },

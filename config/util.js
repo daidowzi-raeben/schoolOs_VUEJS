@@ -6,7 +6,7 @@ export const historyBack = function () {
 
 export const axiosForm = function (frm, url) {
   axios
-    .post(process.env.VUE_APP_API + url, frm, {
+    .post('http://api.school-os.net' + url, frm, {
       header: {
         'Context-Type': 'multipart/form-data',
       },

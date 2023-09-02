@@ -47,7 +47,7 @@ export default {
     frm.append('type', 'logout')
     frm.append('sms_idx', logChk.sms_idx)
     this.$axios
-      .post(process.env.VUE_APP_API + '/student.php', frm, {
+      .post('http://api.school-os.net' + '/student.php', frm, {
         header: {
           'Context-Type': 'multipart/form-data',
         },

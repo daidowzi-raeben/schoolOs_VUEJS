@@ -595,7 +595,7 @@ export default {
       frm.append('type', 'shopAuto')
 
       this.$axios
-        .post(process.env.VUE_APP_API + '/teacher.php', frm, {
+        .post('http://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

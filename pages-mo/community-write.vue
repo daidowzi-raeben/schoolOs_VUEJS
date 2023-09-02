@@ -133,7 +133,7 @@ export default {
         console.log(frm)
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post(process.env.VUE_APP_API + '/student.php', frm, {
+          .post('http://api.school-os.net' + '/student.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },

@@ -593,7 +593,7 @@ export default {
   mounted() {
     console.log('[ENV]', process.env.VUE_APP_STR)
     console.log('[ENV]', process.env.DB_URL)
-    console.log('[ENV]', process.env.VUE_APP_API)
+    console.log('[ENV]', 'http://api.school-os.net')
     console.log('[mounted]')
 
     // DATA INIT
@@ -665,7 +665,7 @@ export default {
       frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
       frm.append('reg_id', this.LOGIN_CONFIG.reg_id)
       this.$axios
-        .post(process.env.VUE_APP_API + '/student.php', frm, {
+        .post('http://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
