@@ -43,7 +43,7 @@
             <div class="image">
               <img
                 v-if="v.item_thumb"
-                :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
+                :src="`https://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
               />
               <div v-if="!v.item_thumb">
                 <b-icon icon="flower2"></b-icon>
@@ -68,7 +68,7 @@
             <div class="image">
               <img
                 v-if="v.item_thumb"
-                :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
+                :src="`https://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
               />
               <div v-if="!v.item_thumb">
                 <b-icon icon="flower2"></b-icon>

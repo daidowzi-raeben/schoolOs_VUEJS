@@ -197,7 +197,7 @@ export default {
       frm.append('type', 'studentAllInsert')
 
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

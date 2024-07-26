@@ -221,7 +221,7 @@ export default {
         frm.append('mode', '0')
       }
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

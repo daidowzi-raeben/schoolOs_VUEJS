@@ -10,7 +10,7 @@ export default {
     frm.append('type', 'logoutChk')
     frm.append('sms_idx', this.$route.query.sms_idx)
     this.$axios
-      .post('http://api.school-os.net' + '/student.php', frm, {
+      .post('https://api.school-os.net' + '/student.php', frm, {
         header: {
           'Context-Type': 'multipart/form-data',
         },

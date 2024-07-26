@@ -309,7 +309,7 @@
             :key="i"
           >
             <img
-              :src="`http://api.school-os.net/data/student/quest/${v.file_name}`"
+              :src="`https://api.school-os.net/data/student/quest/${v.file_name}`"
               width="100%"
             />
           </swiper-slide>
@@ -600,7 +600,7 @@ export default {
       console.log(frm)
       // axiosForm(frm, '/student.php')
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

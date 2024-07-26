@@ -360,7 +360,7 @@ export default {
       frm.append('url', this.request.url)
       console.log('frm', frm)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

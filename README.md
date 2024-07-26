@@ -22,7 +22,7 @@ For detailed explanation on how things work, check out the [documentation](https
 ```bash
 #.env 파일 수정
 VUE_APP_API=http://localhost:3095 #주석
-VUE_APP_API=http://api.school-os.net #주석해제
+VUE_APP_API=https://api.school-os.net #주석해제
 ```
 
 `.env` 파일 원격에 커밋 금지

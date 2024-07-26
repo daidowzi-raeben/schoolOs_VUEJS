@@ -87,7 +87,7 @@ export default {
       frm.append('level', this.params.level)
       frm.append('school', this.params.school)
       this.$axios
-        .post('http://api.school-os.net' + '/student.php', frm, {
+        .post('https://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

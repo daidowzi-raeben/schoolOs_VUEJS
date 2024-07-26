@@ -125,7 +125,7 @@
                     <b-avatar
                       variant="success"
                       icon="people-fill"
-                      :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                      :src="`https://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
                     ></b-avatar>
                     <label class="m-l-2 m-t-2">
                       <input
@@ -360,7 +360,7 @@ export default {
       frm.append('type', 'pay_etc_insert')
 
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

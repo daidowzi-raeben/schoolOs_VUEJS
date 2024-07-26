@@ -43,7 +43,7 @@
             <div class="image relative">
               <img
                 v-if="v.item_thumb"
-                :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
+                :src="`https://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
               />
               <!-- <div class="market-caption"></div> -->
               <div v-if="!v.item_thumb">

@@ -21,7 +21,7 @@
             <div class="shopDetailImage">
               <img
                 v-if="GET_AXIOS_CALLBACK_GETTER.item_thumb"
-                :src="`http://api.school-os.net/data/teacher/shop/${GET_AXIOS_CALLBACK_GETTER.item_thumb}`"
+                :src="`https://api.school-os.net/data/teacher/shop/${GET_AXIOS_CALLBACK_GETTER.item_thumb}`"
               />
               <div v-if="!GET_AXIOS_CALLBACK_GETTER.item_thumb">
                 <b-icon icon="flower2"></b-icon>

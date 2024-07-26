@@ -200,7 +200,7 @@ export default {
         console.log(frm)
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post('http://api.school-os.net' + '/student.php', frm, {
+          .post('https://api.school-os.net' + '/student.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },

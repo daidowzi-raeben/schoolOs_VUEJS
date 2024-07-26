@@ -51,7 +51,7 @@
                         variant="success"
                         class="m-r-2"
                         icon="people-fill"
-                        :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                        :src="`https://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
                       ></b-avatar>
                       <div>
                         {{ v.reg_name }}
@@ -591,7 +591,7 @@ export default {
       // frm.append('type', 'weeklyPayChk')
 
       // this.$axios
-      //   .post('http://api.school-os.net' + '/teacher.php', frm, {
+      //   .post('https://api.school-os.net' + '/teacher.php', frm, {
       //     header: {
       //       'Context-Type': 'multipart/form-data',
       //     },
@@ -629,7 +629,7 @@ export default {
       frm.append('type', 'register')
 
       this.$axios
-        .post('http://api.school-os.net' + '/student.php', frm, {
+        .post('https://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -657,7 +657,7 @@ export default {
         frm.append('sms_idx', this.student.sms_idx)
         frm.append('type', 'studentDel')
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },

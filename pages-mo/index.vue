@@ -64,11 +64,11 @@
                 <div v-if="LOGIN_CONFIG" v-b-modal.profileImage class="photo">
                   <img
                     v-if="!LOGIN_CONFIG.reg_photo"
-                    src="http://api.school-os.net/data/student/profile/default.png"
+                    src="https://api.school-os.net/data/student/profile/default.png"
                   />
                   <img
                     v-if="LOGIN_CONFIG.reg_photo"
-                    :src="`http://api.school-os.net/data/student/profile/thumb/${LOGIN_CONFIG.reg_photo}`"
+                    :src="`https://api.school-os.net/data/student/profile/thumb/${LOGIN_CONFIG.reg_photo}`"
                   />
                   <!-- <img
                   v-if="
@@ -512,12 +512,12 @@
       <div v-if="LOGIN_CONFIG">
         <img
           v-if="!LOGIN_CONFIG.reg_photo"
-          src="http://api.school-os.net/data/student/profile/default.png"
+          src="https://api.school-os.net/data/student/profile/default.png"
           width="100%"
         />
         <img
           v-if="LOGIN_CONFIG.reg_photo"
-          :src="`http://api.school-os.net/data/student/profile/${LOGIN_CONFIG.reg_photo}`"
+          :src="`https://api.school-os.net/data/student/profile/${LOGIN_CONFIG.reg_photo}`"
           width="100%"
         />
       </div>
@@ -593,7 +593,7 @@ export default {
   mounted() {
     console.log('[ENV]', process.env.VUE_APP_STR)
     console.log('[ENV]', process.env.DB_URL)
-    console.log('[ENV]', 'http://api.school-os.net')
+    console.log('[ENV]', 'https://api.school-os.net')
     console.log('[mounted]')
 
     // DATA INIT
@@ -665,7 +665,7 @@ export default {
       frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
       frm.append('reg_id', this.LOGIN_CONFIG.reg_id)
       this.$axios
-        .post('http://api.school-os.net' + '/student.php', frm, {
+        .post('https://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

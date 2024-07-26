@@ -344,7 +344,7 @@ export default {
     frm.append('type', 'calendar')
     frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
     this.$axios
-      .post('http://api.school-os.net' + '/teacher.php', frm, {
+      .post('https://api.school-os.net' + '/teacher.php', frm, {
         header: {
           'Context-Type': 'multipart/form-data',
         },
@@ -392,7 +392,7 @@ export default {
       frm.append('y', postYear)
       frm.append('m', postMonth)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -450,7 +450,7 @@ export default {
       frm.append('ymd', this.nowDate)
       console.log(this.btnData.type, this.btnData.type, this.btnData.type)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -484,7 +484,7 @@ export default {
         frm.append('type_etc2', this.btnData2.type_etc2)
       frm.append('ymd', this.nowDate)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -520,7 +520,7 @@ export default {
         frm.append('sms_idx', e)
         frm.append('ymd', this.nowDate)
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -550,7 +550,7 @@ export default {
       frm.append('ymd', this.nowDate)
       console.log(frm)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -571,7 +571,7 @@ export default {
       frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
       frm.append('ymd', e)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

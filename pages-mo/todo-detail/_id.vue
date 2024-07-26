@@ -316,7 +316,7 @@
             <b-carousel-slide
               v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.files"
               :key="i"
-              :img-src="`http://api.school-os.net/data/student/quest/${v.file_name}`"
+              :img-src="`https://api.school-os.net/data/student/quest/${v.file_name}`"
             ></b-carousel-slide>
           </b-carousel>
         </div>
@@ -441,7 +441,7 @@ export default {
       frm.append('idx', this.idx)
       frm.append('sms_idx', this.LOGIN_STUDENT.sms_idx)
       this.$axios
-        .post('http://api.school-os.net' + '/student.php', frm)
+        .post('https://api.school-os.net' + '/student.php', frm)
         .then((res) => {
           this.params = this.LOGIN_STUDENT
           this.params.type = 'questView'
@@ -490,7 +490,7 @@ export default {
       this.LOADING_TRUE()
       // axiosForm(frm, '/student.php')
       this.$axios
-        .post('http://api.school-os.net' + '/student.php', frm, {
+        .post('https://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

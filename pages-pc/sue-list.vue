@@ -184,7 +184,7 @@
                 <b-carousel-slide
                   v-for="(v, i) in STATE_TEACHER_SUE.photo"
                   :key="i"
-                  :img-src="`http://api.school-os.net/data/student/sue/${v.file_name}`"
+                  :img-src="`https://api.school-os.net/data/student/sue/${v.file_name}`"
                 ></b-carousel-slide>
               </b-carousel>
             </div>
@@ -318,7 +318,7 @@ export default {
       frm.append('idx', this.idx)
       frm.append('status', e)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -344,7 +344,7 @@ export default {
       frm.append('idx', idx)
       frm.append('status', e)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -382,7 +382,7 @@ export default {
       }
       console.log('FORM_DATA', FORM_DATA)
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', FORM_DATA, {
+        .post('https://api.school-os.net' + '/teacher.php', FORM_DATA, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

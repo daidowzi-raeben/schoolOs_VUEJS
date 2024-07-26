@@ -188,7 +188,7 @@ export default {
       frm.append('status', 1)
       this.isDisabled = true
       this.$axios
-        .post('http://api.school-os.net' + '/student.php', frm, {
+        .post('https://api.school-os.net' + '/student.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

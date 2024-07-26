@@ -34,11 +34,11 @@
               <div class="rankProfile" @click="profileDetail(v.reg_photo)">
                 <img
                   v-if="!v.reg_photo"
-                  src="http://api.school-os.net/data/student/profile/default.png"
+                  src="https://api.school-os.net/data/student/profile/default.png"
                 />
                 <img
                   v-if="v.reg_photo"
-                  :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                  :src="`https://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
                 />
               </div>
               <div class="flex-full m-l-2">
@@ -163,7 +163,7 @@ export default {
       if (!image) {
         return false
       }
-      this.profileDetailImage = `http://api.school-os.net/data/student/profile/${image}`
+      this.profileDetailImage = `https://api.school-os.net/data/student/profile/${image}`
       this.$bvModal.show('profileImage')
     },
   },

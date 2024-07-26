@@ -244,7 +244,7 @@ export default {
       console.log('params.page', params.page)
       Number(params.page) > 1 ? (this.topBtn = true) : (this.topBtn = false)
       this.$axios
-        .get('http://api.school-os.net' + '/student.php', { params })
+        .get('https://api.school-os.net' + '/student.php', { params })
         .then((res) => {
           console.log('scrollLoadData', res, params)
           this.communityList.push(res.data)

@@ -167,7 +167,7 @@
                     variant="success"
                     class="m-t-2"
                     icon="people-fill"
-                    :src="`http://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
+                    :src="`https://api.school-os.net/data/student/profile/thumb/${v.reg_photo}`"
                   ></b-avatar>
                   <label class="m-l-2 m-t-2">
                     <input
@@ -465,7 +465,7 @@
           <b-carousel-slide
             v-for="(v, i) in GET_AXIOS_CALLBACK_GETTER.participationFile"
             :key="i"
-            :img-src="`http://api.school-os.net/data/student/quest/${v.file_name}`"
+            :img-src="`https://api.school-os.net/data/student/quest/${v.file_name}`"
           ></b-carousel-slide>
         </b-carousel>
       </div>
@@ -925,7 +925,7 @@ export default {
       console.log(frm)
       // axiosForm(frm, '/student.php')
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -1178,7 +1178,7 @@ export default {
       this.LOADING_TRUE()
       // axiosForm(frm, '/student.php')
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -1213,7 +1213,7 @@ export default {
         this.LOADING_TRUE()
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -1238,7 +1238,7 @@ export default {
       console.log(this.noticeIdx)
       this.$axios
         .get(
-          'http://api.school-os.net' +
+          'https://api.school-os.net' +
             `/teacher.php?idx=${this.noticeIdx}&type=questThumb`
         )
         .then((res) => {

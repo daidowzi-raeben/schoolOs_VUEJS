@@ -64,7 +64,7 @@
                 >
                   <td>
                     <img
-                      :src="`http://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
+                      :src="`https://api.school-os.net/data/teacher/shop/${v.item_thumb}`"
                       width="100"
                       height="100"
                     />
@@ -595,7 +595,7 @@ export default {
       frm.append('type', 'shopAuto')
 
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },

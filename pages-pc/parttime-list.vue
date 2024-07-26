@@ -465,7 +465,7 @@ export default {
         console.log(frm)
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -549,7 +549,7 @@ export default {
       frm.append('idx', e)
       this.albaDetail.idx = e
       this.$axios
-        .post('http://api.school-os.net' + '/teacher.php', frm, {
+        .post('https://api.school-os.net' + '/teacher.php', frm, {
           header: {
             'Context-Type': 'multipart/form-data',
           },
@@ -585,7 +585,7 @@ export default {
         frm.append('type', 'albaComplete')
         frm.append('idx', this.noticeIdx)
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -611,7 +611,7 @@ export default {
         frm.append('type', 'albadel')
         frm.append('idx', this.noticeIdx)
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -653,7 +653,7 @@ export default {
         console.log(frm)
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -689,7 +689,7 @@ export default {
         console.log(frm)
         // axiosForm(frm, '/student.php')
         this.$axios
-          .post('http://api.school-os.net' + '/teacher.php', frm, {
+          .post('https://api.school-os.net' + '/teacher.php', frm, {
             header: {
               'Context-Type': 'multipart/form-data',
             },

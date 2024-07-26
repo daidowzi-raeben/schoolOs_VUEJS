@@ -149,7 +149,7 @@ export default {
     frm.append('smt_idx', this.LOGIN_CONFIG.smt_idx)
     frm.append('sms_idx', this.LOGIN_CONFIG.sms_idx)
     this.$axios
-      .post('http://api.school-os.net' + '/student.php', frm)
+      .post('https://api.school-os.net' + '/student.php', frm)
       .then((res) => {
         console.log('================', res.data)
         this.teacher = res.data.teacher
